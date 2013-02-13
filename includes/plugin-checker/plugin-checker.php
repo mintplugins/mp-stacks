@@ -3,8 +3,8 @@
  * Plugin Checker Class for the Foundation Theme by Move Plugins
  * http://moveplugins.com/plugin-checker-class/
  */
-if ( !class_exists( 'mp_core_plugin_checker' ) ){
-	class mp_core_plugin_checker{
+if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
+	class MP_CORE_Plugin_Checker{
 		
 		public function __construct($args){
 			
@@ -27,7 +27,7 @@ if ( !class_exists( 'mp_core_plugin_checker' ) ){
 		public function mp_core_plugin_check_notice() {
 
 			//Check to see if the user has ever dismissed this message
-			if (get_option( 'mp_core_plugin_checker_' . $this->_args['plugin_slug'] ) != "false"){
+			if (get_option( 'MP_CORE_Plugin_Checker_' . $this->_args['plugin_slug'] ) != "false"){
 							
 				//Check if plugin exists but is just not active
 				if (file_exists('../wp-content/plugins/' . $this->pluginpath) && !in_array( $this->pluginpath, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ){
@@ -77,9 +77,9 @@ if ( !class_exists( 'mp_core_plugin_checker' ) ){
 		 public function mp_core_dismiss_button(){
 			$this->_args['plugin_required'] = (!isset($this->_args['plugin_required']) ? true : $this->_args['plugin_required']);
 			if ($this->_args['plugin_required'] == false){
-				echo '<form id="mp_core_plugin_checker_close_notice" method="post" style="display:inline-block; margin-left:.7em;">
-							<input type="hidden" name="mp_core_plugin_checker_' . $this->_args['plugin_slug'] . '" value="false"/>
-							<input type="submit" id="mp_core_plugin_checker_dismiss" class="button" value="Dismiss" /> 
+				echo '<form id="MP_CORE_Plugin_Checker_close_notice" method="post" style="display:inline-block; margin-left:.7em;">
+							<input type="hidden" name="MP_CORE_Plugin_Checker_' . $this->_args['plugin_slug'] . '" value="false"/>
+							<input type="submit" id="MP_CORE_Plugin_Checker_dismiss" class="button" value="Dismiss" /> 
 					   </form>'; 
 			}
 		 }
@@ -89,8 +89,8 @@ if ( !class_exists( 'mp_core_plugin_checker' ) ){
 		 *
 		 */
 		 public function mp_core_close_message(){
-			if (isset($_POST['mp_core_plugin_checker_' . $this->_args['plugin_slug']])){
-				update_option( 'mp_core_plugin_checker_' . $this->_args['plugin_slug'], "false" );
+			if (isset($_POST['MP_CORE_Plugin_Checker_' . $this->_args['plugin_slug']])){
+				update_option( 'MP_CORE_Plugin_Checker_' . $this->_args['plugin_slug'], "false" );
 			}
 		 }
 	

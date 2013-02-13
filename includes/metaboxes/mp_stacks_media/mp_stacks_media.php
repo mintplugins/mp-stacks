@@ -63,6 +63,6 @@ function mp_stacks_media_create_meta_box(){
 	 * Create Metabox class
 	 */
 	global $mp_stacks_media_meta_box;
-	$mp_stacks_media_meta_box = new mp_stacks_New_Metabox($mp_stacks_media_add_meta_box, $mp_stacks_media_items_array);
+	$mp_stacks_media_meta_box = new MP_CORE_Metabox($mp_stacks_media_add_meta_box, $mp_stacks_media_items_array);
 }
 add_action('plugins_loaded', 'mp_stacks_media_create_meta_box');

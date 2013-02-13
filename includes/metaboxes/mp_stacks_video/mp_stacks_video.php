@@ -53,6 +53,6 @@ function mp_stacks_video_create_meta_box(){
 	 * Create Metabox class
 	 */
 	global $mp_stacks_video_meta_box;
-	$mp_stacks_video_meta_box = new mp_stacks_New_Metabox($mp_stacks_video_add_meta_box, $mp_stacks_video_items_array);
+	$mp_stacks_video_meta_box = new MP_CORE_Metabox($mp_stacks_video_add_meta_box, $mp_stacks_video_items_array);
 }
 add_action('plugins_loaded', 'mp_stacks_video_create_meta_box');
