@@ -3,7 +3,11 @@
  * Enqueue stylesheet used for shortcode
  */
 function mp_stacks_stylesheet(){
-	 wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp_stacks_style.css', dirname(__FILE__)) );
+	//css
+	wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp_stacks_style.css', dirname(__FILE__)) );
+	//js
+	wp_enqueue_script( 'mp_stacks_fit_text', plugins_url( '/js/jquery.fittext.js', dirname(__FILE__)),  array( 'jquery') );
+	wp_enqueue_script( 'mp_stacks_apply_fit_text', plugins_url( '/js/mp_fit_text.js', dirname(__FILE__)),  array( 'jquery', 'mp_stacks_fit_text') );
 }
 add_action('wp_enqueue_scripts', 'mp_stacks_stylesheet');
 
