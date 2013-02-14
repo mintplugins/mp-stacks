@@ -21,8 +21,9 @@
 	text-align:center;
 	width:100%;	
 }
-#mp_stack .mp_stack h2{
+#mp_stack .mp_stack .mp_title, #mp_stack .mp_stack .mp_text{
 	margin:0px;	
+	line-height:100%;
 }
 #mp_stack .mp_stack .mp_stack_inner iframe{
 	margin:0;

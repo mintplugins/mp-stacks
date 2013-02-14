@@ -11,40 +11,42 @@ function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_typ
 		//Set default value for $media_output to NULL
 		$media_output = NULL;	
 		
+		/**
+		 * Title Settings
+		 */
+ 
 		//Show title?
 		$stack_show_title = get_post_meta($post_id, 'stack_show_title', true);
-		
-		//Title Color
-		$stack_title_color = get_post_meta($post_id, 'stack_title_color', true);
-		
-		//Title Font CSS
-		$stack_title_font_css = get_post_meta($post_id, 'stack_title_font_css', true);
 				
-		//Title Style
-		$stack_title_style = isset($stack_title_color) || isset($stack_title_font_family) ? 'style="' : NULL;
-		$stack_title_style .= isset($stack_title_color) ? 'color: ' . $stack_title_color . '; '  : NULL;
-		$stack_title_style .= isset($stack_title_font_css) ? $stack_title_font_css  : NULL;
-		$stack_title_style .= !empty($stack_title_style) ? '"' : NULL;
+		//Title Style Filter
+		$stack_title_style = NULL;
+		$stack_title_style = has_filter('mp_stacks_title_style') ? apply_filters( 'mp_stacks_title_style', $stack_title_style, $post_id) : NULL;
 		
+		//Echo style tag for title into <head>
+		echo !empty($stack_title_style) ? '<style>#post-' . $post_id . ' .mp_title {' . $stack_title_style .'} </style>' : NULL;
+		
+		/**
+		 * Text Settings
+		 */
+		 
 		//Set $text
 		$text = get_the_content($post_id);
 		
-		//Text Color
-		$stack_text_color = get_post_meta($post_id, 'stack_text_color', true);
+		//Text Style
+		$stack_text_style = NULL;
+		$stack_text_style = has_filter('mp_stacks_text_style') ? apply_filters( 'mp_stacks_text_style', $stack_text_style, $post_id) : NULL;
 		
-		//Title Font CSS
-		$stack_text_font_css = get_post_meta($post_id, 'stack_text_font_css', true);
+		//Put css into <head>
+		echo !empty($stack_text_style) ? '<style>#post-' . $post_id . ' .mp_text {' . $stack_text_style .'} </style>' : NULL;
 		
-		//Title Style
-		$stack_text_style = isset($stack_title_color) || isset($stack_title_font_family) ? 'style="' : NULL;
-		$stack_text_style .= isset($stack_text_color) ? 'color: ' . $stack_text_color . '; '  : NULL;
-		$stack_text_style .= isset($stack_text_font_css) ? $stack_text_font_css  : NULL;
-		$stack_text_style .= !empty($stack_text_style) ? '"' : NULL;
-		
+		/**
+		 * Create Output
+		 */
+		 
 		//First Output
 		$media_output .= !empty($stack_show_title) || !empty($text) ? '<div class="text">' : NULL;
-		$media_output .= !empty($stack_show_title) ? '<h2 ' . $stack_title_style . '>' . get_the_title($post_id) . '</h2>' : '';
-		$media_output .= !empty($text) ? '<h3 ' . $stack_text_style . '>' . $text . '</h3>': NULL;
+		$media_output .= !empty($stack_show_title) ? '<h2 class="mp_title">' . get_the_title($post_id) . '</h2>' : '';
+		$media_output .= !empty($text) ? '<h3 class="mp_text">' . $text . '</h3>': NULL;
 		$media_output .= !empty($stack_show_title) || !empty($text) ? '</div>' : NULL;
 		
 		//Return

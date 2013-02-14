@@ -5,9 +5,6 @@
 function mp_stacks_stylesheet(){
 	//css
 	wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp_stacks_style.css', dirname(__FILE__)) );
-	//js
-	wp_enqueue_script( 'mp_stacks_fit_text', plugins_url( '/js/jquery.fittext.js', dirname(__FILE__)),  array( 'jquery') );
-	wp_enqueue_script( 'mp_stacks_apply_fit_text', plugins_url( '/js/mp_fit_text.js', dirname(__FILE__)),  array( 'jquery', 'mp_stacks_fit_text') );
 }
 add_action('wp_enqueue_scripts', 'mp_stacks_stylesheet');
 
@@ -100,7 +97,7 @@ function mp_stacks_display_stack_group( $atts ) {
 			}
 			
 			//Actual output
-			$html_output .= '<div class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
+			$html_output .= '<div id="post-' . $post_id . '" class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
 				$html_output .= $content_output;
 			$html_output .= '</div>';
 			
