@@ -1,10 +1,15 @@
 /* Stylesheet for mp_stacks shortcode */
-
+#mp_stack{
+	padding:0px!important;
+	margin:0px!important;
+	}
 #mp_stack .mp_stack{
 	width: 100%; 
 	display:table;
 	background-size:100%;
 	background-position:50%; 
+	padding:0px;
+	margin:0px;
 }
 #mp_stack .mp_stack_inner{
 	display:table-cell; 

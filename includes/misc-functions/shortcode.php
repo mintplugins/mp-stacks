@@ -38,6 +38,7 @@ function mp_stacks_display_stack_group( $atts ) {
 		
 	//Loop through the stack group		
 	if ( $stack_group->have_posts() ) : 
+		$html_output .= '<div id="mp_stack">';
 		while( $stack_group->have_posts() ) : $stack_group->the_post(); 
     		
 			//Default outputs back to null
@@ -95,13 +96,12 @@ function mp_stacks_display_stack_group( $atts ) {
 			}
 			
 			//Actual output
-	  		$html_output .= '<div id="mp_stack">';
-				$html_output .= '<div class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
-					$html_output .= $content_output;
-				$html_output .= '</div>';
+			$html_output .= '<div class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
+				$html_output .= $content_output;
 			$html_output .= '</div>';
 			
 		endwhile;
+		$html_output .= '</div>';
 	endif;
 	
 	//Return

@@ -16,19 +16,35 @@ function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_typ
 		
 		//Title Color
 		$stack_title_color = get_post_meta($post_id, 'stack_title_color', true);
-		$stack_title_color = isset($stack_title_color) ? 'style="color: ' . $stack_title_color . ';"' : NULL;
-			
+		
+		//Title Font CSS
+		$stack_title_font_css = get_post_meta($post_id, 'stack_title_font_css', true);
+				
+		//Title Style
+		$stack_title_style = isset($stack_title_color) || isset($stack_title_font_family) ? 'style="' : NULL;
+		$stack_title_style .= isset($stack_title_color) ? 'color: ' . $stack_title_color . '; '  : NULL;
+		$stack_title_style .= isset($stack_title_font_css) ? $stack_title_font_css  : NULL;
+		$stack_title_style .= !empty($stack_title_style) ? '"' : NULL;
+		
 		//Set $text
 		$text = get_the_content($post_id);
 		
 		//Text Color
 		$stack_text_color = get_post_meta($post_id, 'stack_text_color', true);
-		$stack_text_color = isset($stack_title_color) ? 'style="color: ' . $stack_text_color . ';"' : NULL;
+		
+		//Title Font CSS
+		$stack_text_font_css = get_post_meta($post_id, 'stack_text_font_css', true);
+		
+		//Title Style
+		$stack_text_style = isset($stack_title_color) || isset($stack_title_font_family) ? 'style="' : NULL;
+		$stack_text_style .= isset($stack_text_color) ? 'color: ' . $stack_text_color . '; '  : NULL;
+		$stack_text_style .= isset($stack_text_font_css) ? $stack_text_font_css  : NULL;
+		$stack_text_style .= !empty($stack_text_style) ? '"' : NULL;
 		
 		//First Output
-		$media_output .= !empty($stack_show_title) || !empty($text) ? '<div class="text" ' . $stack_text_color . '>' : NULL;
-		$media_output .= !empty($stack_show_title) ? '<h2 ' . $stack_title_color . '>' . get_the_title($post_id) . '</h2>' : '';
-		$media_output .= $text;
+		$media_output .= !empty($stack_show_title) || !empty($text) ? '<div class="text">' : NULL;
+		$media_output .= !empty($stack_show_title) ? '<h2 ' . $stack_title_style . '>' . get_the_title($post_id) . '</h2>' : '';
+		$media_output .= !empty($text) ? '<h3 ' . $stack_text_style . '>' . $text . '</h3>': NULL;
 		$media_output .= !empty($stack_show_title) || !empty($text) ? '</div>' : NULL;
 		
 		//Return
