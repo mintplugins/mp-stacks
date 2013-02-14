@@ -10,39 +10,16 @@ function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_typ
 		
 		//Set default value for $media_output to NULL
 		$media_output = NULL;	
-		
-		/**
-		 * Title Settings
-		 */
  
 		//Show title?
 		$stack_show_title = get_post_meta($post_id, 'stack_show_title', true);
-				
-		//Title Style Filter
-		$stack_title_style = NULL;
-		$stack_title_style = has_filter('mp_stacks_title_style') ? apply_filters( 'mp_stacks_title_style', $stack_title_style, $post_id) : NULL;
 		
-		//Echo style tag for title into <head>
-		echo !empty($stack_title_style) ? '<style>#post-' . $post_id . ' .mp_title {' . $stack_title_style .'} </style>' : NULL;
-		
-		/**
-		 * Text Settings
-		 */
-		 
 		//Set $text
 		$text = get_the_content($post_id);
+				
+		//Action hook to add changes to the text
+		has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
 		
-		//Text Style
-		$stack_text_style = NULL;
-		$stack_text_style = has_filter('mp_stacks_text_style') ? apply_filters( 'mp_stacks_text_style', $stack_text_style, $post_id) : NULL;
-		
-		//Put css into <head>
-		echo !empty($stack_text_style) ? '<style>#post-' . $post_id . ' .mp_text {' . $stack_text_style .'} </style>' : NULL;
-		
-		/**
-		 * Create Output
-		 */
-		 
 		//First Output
 		$media_output .= !empty($stack_show_title) || !empty($text) ? '<div class="text">' : NULL;
 		$media_output .= !empty($stack_show_title) ? '<h2 class="mp_title">' . get_the_title($post_id) . '</h2>' : '';

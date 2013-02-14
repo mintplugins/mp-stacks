@@ -97,7 +97,7 @@ function mp_stacks_display_stack_group( $atts ) {
 			}
 			
 			//Actual output
-			$html_output .= '<div id="post-' . $post_id . '" class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
+			$html_output .= '<div id="stack-' . $post_id . '" class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
 				$html_output .= $content_output;
 			$html_output .= '</div>';
 			
