@@ -70,12 +70,12 @@ function mp_stacks_textdomain() {
 
 
 	// Traditional WordPress plugin locale filter
-	$locale        = apply_filters( 'plugin_locale',  get_locale(), 'mp_stacks' );
-	$mofile        = sprintf( '%1$s-%2$s.mo', 'mp_stacks', $locale );
+	$locale        = apply_filters( 'plugin_locale',  get_locale(), 'mp-stacks' );
+	$mofile        = sprintf( '%1$s-%2$s.mo', 'mp-stacks', $locale );
 
 	// Setup paths to current locale file
 	$mofile_local  = $mp_stacks_lang_dir . $mofile;
-	$mofile_global = WP_LANG_DIR . '/mp_stacks/' . $mofile;
+	$mofile_global = WP_LANG_DIR . '/mp-stacks/' . $mofile;
 
 	if ( file_exists( $mofile_global ) ) {
 		// Look in global /wp-content/languages/mp_stacks folder
@@ -110,7 +110,7 @@ if (!function_exists('mp_core_textdomain')){
 	/**
 	 * Check if wp_core in installed
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp_core_check.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp-core-check.php' );
 	
 }
 /**
@@ -121,32 +121,32 @@ else{
 	/**
 	 * Instructions metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_instructions/mp_stacks_instructions.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-instructions/mp-stacks-instructions.php' );
 	
 	/**
 	 * Settings Metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_meta/mp_stacks_meta.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-meta/mp-stacks-meta.php' );
 	
 	/**
 	 * Media metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_media/mp_stacks_media.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-media/mp-stacks-media.php' );
 	
 	/**
 	 * Text metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_text/mp_stacks_text.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-text.php' );
 	
 	/**
 	 * Image metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_image/mp_stacks_image.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-image/mp-stacks-image.php' );
 	
 	/**
 	 * Video metabox for mp_stacks
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp_stacks_video/mp_stacks_video.php' );
+	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-video/mp-stacks-video.php' );
 	
 	/**
 	 * Stacks Custom Post Type

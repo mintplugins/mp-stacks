@@ -48,8 +48,6 @@ function mp_stacks_display_stack_group( $atts ) {
 			$content_output = NULL;
 			
 			$post_id = get_the_ID();
-			$title = get_the_title();
-			$text = get_the_content();
 	
 			//Min stack height
 			$stack_min_height = get_post_meta($post_id, 'stack_min_height', true);
@@ -96,8 +94,23 @@ function mp_stacks_display_stack_group( $atts ) {
 				$content_output .= '</div>';
 			}
 			
+			//CSS
+			echo '<style scoped>';
+			echo '#stack-' . $post_id . ' {min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');}';
+			echo '</style>';
+			
+			//Tablet sized CSS
+			echo '<style scoped>';
+			echo '@media screen and (max-width: 980px){#stack-' . $post_id . ' {min-height:' . ($stack_min_height*.70) . 'px; height:' . ($stack_min_height*.70) . 'px; }}';
+			echo '</style>';
+			
+			//Mobile Sized CSS
+			echo '<style scoped>';
+			echo '@media screen and (max-width: 420px){#stack-' . $post_id . ' {min-height:' . ($stack_min_height*.30) . 'px; height:' . ($stack_min_height*.30) . 'px; }}';
+			echo '</style>';
+			
 			//Actual output
-			$html_output .= '<div id="stack-' . $post_id . '" class="mp_stack" style="min-height:' . $stack_min_height . 'px; height:' . $stack_min_height . 'px; background-image: url(\'' . $stack_bg_image . '\');">';
+			$html_output .= '<div id="stack-' . $post_id . '" class="mp_stack">';
 				$html_output .= $content_output;
 			$html_output .= '</div>';
 			

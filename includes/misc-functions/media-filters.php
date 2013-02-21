@@ -15,8 +15,10 @@ function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_typ
 		$stack_show_title = get_post_meta($post_id, 'stack_show_title', true);
 		
 		//Set $text
-		$text = get_the_content($post_id);
+		//$text = get_the_content($post_id);
 				
+		$text = do_shortcode( get_the_content($post_id) );
+		
 		//Action hook to add changes to the text
 		has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
 		
