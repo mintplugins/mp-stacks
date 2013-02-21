@@ -9,8 +9,8 @@
 			'plugin_name' => __('Move Plugins Core', 'mp_stacks'), 
 			'plugin_message' => __('You require the Move Plugins Core plugin. Install it here.', 'mp_stacks'), 
 			'plugin_slug' => 'mp_core', 
-			'plugin_subdirectory' => 'mp_core/', 
-			'plugin_filename' => 'mp_core.php',
+			'plugin_subdirectory' => 'mp-core/', 
+			'plugin_filename' => 'mp-core.php',
 			'plugin_required' => true,
 			'plugin_download_link' => 'http://moveplugins.com'
 		);
