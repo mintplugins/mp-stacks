@@ -17,5 +17,5 @@
 		$mp_core_plugin_check = new MP_CORE_Plugin_Checker($args);
 	}
  }
-add_action( 'admin_init', 'mp_core_plugin_check' );
+add_action( 'init', 'mp_core_plugin_check' );
 
