@@ -96,71 +96,73 @@ add_action( 'init', 'mp_stacks_textdomain', 1 );
 | INCLUDES
 |--------------------------------------------------------------------------
 */
-
-/**
- * If mp_core isn't active, stop and install it now
- */
-if (!function_exists('mp_core_textdomain')){
-	
+function mp_stacks_include_files(){
 	/**
-	 * Include Plugin Checker
+	 * If mp_core isn't active, stop and install it now
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/plugin-checker.php' );
-	
+	if (!function_exists('mp_core_textdomain')){
+		
+		/**
+		 * Include Plugin Checker
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/plugin-checker.php' );
+		
+		/**
+		 * Check if wp_core in installed
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp-core-check.php' );
+		
+	}
 	/**
-	 * Check if wp_core in installed
+	 * Otherwise, if mp_core is active, carry out the plugin's functions
 	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/included-plugins/mp-core-check.php' );
-	
+	else{
+		
+		/**
+		 * Instructions metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-instructions/mp-stacks-instructions.php' );
+		
+		/**
+		 * Settings Metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-meta/mp-stacks-meta.php' );
+		
+		/**
+		 * Media metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-media/mp-stacks-media.php' );
+		
+		/**
+		 * Text metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-text.php' );
+		
+		/**
+		 * Image metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-image/mp-stacks-image.php' );
+		
+		/**
+		 * Video metabox for mp_stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-video/mp-stacks-video.php' );
+		
+		/**
+		 * Stacks Custom Post Type
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/custom-post-types/stacks.php' );
+		
+		/**
+		 * Stacks shortcode
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcode.php' );
+		
+		/**
+		 * Media Filters
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/media-filters.php' );
+		
+	}
 }
-/**
- * Otherwise, if mp_core is active, carry out the plugin's functions
- */
-else{
-	
-	/**
-	 * Instructions metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-instructions/mp-stacks-instructions.php' );
-	
-	/**
-	 * Settings Metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-meta/mp-stacks-meta.php' );
-	
-	/**
-	 * Media metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-media/mp-stacks-media.php' );
-	
-	/**
-	 * Text metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-text.php' );
-	
-	/**
-	 * Image metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-image/mp-stacks-image.php' );
-	
-	/**
-	 * Video metabox for mp_stacks
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-video/mp-stacks-video.php' );
-	
-	/**
-	 * Stacks Custom Post Type
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/custom-post-types/stacks.php' );
-	
-	/**
-	 * Stacks shortcode
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcode.php' );
-	
-	/**
-	 * Media Filters
-	 */
-	require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/media-filters.php' );
-	
-}
+add_action('plugins_loaded', 'mp_stacks_include_files', 9);

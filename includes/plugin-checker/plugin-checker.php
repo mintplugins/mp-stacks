@@ -10,17 +10,21 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			
 			//Get args
 			$this->_args = $args;
-			$this->pluginpath = $this->_args['plugin_subdirectory'] . $this->_args['plugin_filename'];
 			
 			//If the user has just clicked "Dismiss", than add that to the options table
 			add_action( 'admin_init', array( $this, 'mp_core_close_message') );
 			
-			//Check for plugin in question
-			add_action( 'admin_notices', array( $this, 'mp_core_plugin_check_notice') );
-			
 			// Create update/install plugin page
 			add_action('admin_menu', array( $this, 'mp_core_update_plugin_page') );
-					
+			
+			//Make sure we are not on the "plugin install" page - where this message isn't necessary
+			$page = isset($_GET['page']) ?$_GET['page'] : NULL;
+			if ($page != 'mp_core_update_plugin_page_' . $this->_args['plugin_slug']){
+				//Check for plugin in question
+				add_action( 'admin_notices', array( $this, 'mp_core_plugin_check_notice') );
+			}
+			
+								
 		}
 		
 		/**
@@ -28,58 +32,135 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 		 *
 		 */
 		public function mp_core_plugin_check_notice() {
-			
+						
 			//Check to see if the user has ever dismissed this message
 			if (get_option( 'mp_core_plugin_checker_' . $this->_args['plugin_slug'] ) != "false"){
-							
-				//Check if plugin exists but is just not active
-				if (file_exists('../wp-content/plugins/' . $this->pluginpath) && !in_array( $this->pluginpath, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ){
-					
-					echo '<div class="updated fade"><p>';
-					
-					echo __( $this->_args['plugin_message'] . '</p>');					
-					
-					//Activate button
-					echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $this->pluginpath . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $this->pluginpath) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
-					
-					//Dismiss button
-					$this->mp_core_dismiss_button();
-					
-					echo '</p></div>';
 				
-				//Check if plugin neither exists on this server, nor is it active	 	
-				}elseif ( !file_exists('../wp-content/plugins/' . $this->pluginpath) && !in_array( $this->pluginpath, apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
-					
-					echo '<div class="updated fade"><p>';
-					
-					echo __( $this->_args['plugin_message'] . '</p>');
-					
-					/** If plugins_api isn't available, load the file that holds the function */
-					if ( ! function_exists( 'plugins_api' ) )
-						require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
- 
- 
-					//Check if this plugin exists in the WordPress Repo
-					$args = array( 'slug' => $this->_args['plugin_slug']);
-					$api = plugins_api( 'plugin_information', $args );
-					
-					//If it doesn't, display link which downloads it from your custom URL
-					if (isset($api->errors)){ 
-						// "Oops! this plugin doesn't exist in the repo. So lets display a custom download button."; 
-						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
+				/**
+				 * Take steps to see if the 
+				 * Plugin is installed
+				 */	
+					 
+				//Get array of active plugins
+				$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ));
+				
+				//Set default for $plugin_active
+				$plugin_active = false;
+				
+				//Loop through each active plugin's string EG: (subdirectory/filename.php)
+				foreach ($active_plugins as $active_plugin){
+					//Check if the filename of the plugin in question exists in any of the plugin strings
+					if (strpos($active_plugin, $this->_args['plugin_filename'])){	
 						
-					}else{
-						//Otherwise display the WordPress.org Repo Install button
-						printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->_args['plugin_slug'] . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_slug'] ) ) ) );	
-					
+						//Plugin is active
+						$plugin_active = true;
+						
+						//Stop looping
+						break;
 					}
-										
-					//Dismiss button
-					$this->mp_core_dismiss_button();
-					
-					echo '</p></div>';
 				}
 				
+				
+				//If this plugin is not active
+				if (!$plugin_active){
+										
+					/**
+					 * Take steps to see if the 
+					 * Plugin already exists or not
+					 */	
+					 
+					//Check if the plugin file exists in the plugin root
+					$plugin_root_files = array_filter(glob('../wp-content/plugins/' . '*'), 'is_file');
+					
+					//Preset value for plugin_exists to false
+					$plugin_exists = false;
+					
+					//Preset value for $plugin_directory
+					$plugin_directory = NULL;
+					
+					//Check if the plugin file is directly in the plugin root
+					if (in_array( '../wp-content/plugins/' . $this->_args['plugin_filename'], $plugin_root_files ) ){
+						
+						//Set plugin_exists to true
+						$plugin_exists = true;
+						
+					}
+					//Check if plugin exists in a subfolder inside the plugin root
+					else{	
+										 
+						//Find all directories in the plugins directory
+						$plugin_dirs = array_filter(glob('../wp-content/plugins/' . '*'), 'is_dir');
+																							
+						//Loop through each plugin directory
+						foreach ($plugin_dirs as $plugin_dir){
+							
+							//Scan all files in this plugin and store them in an array
+							$plugins_files = scandir($plugin_dir);
+							
+							//If the plugin filename in question is in this plugin's array, than this plugin exists but it is not active
+							if (in_array( $this->_args['plugin_filename'], $plugins_files ) ){
+								
+								//Set plugin_exists to true
+								$plugin_exists = true;
+								
+								//Set the plugin directory for later use
+								$plugin_directory = explode('../wp-content/plugins/', $plugin_dir);
+								$plugin_directory = !empty($plugin_directory[1]) ? $plugin_directory[1] . '/' : NULL;
+								
+								//Stop checking through plugins
+								break;	
+							}							
+						}
+					}
+			
+					//This plugin exists but is just not active
+					if ($plugin_exists){
+						
+						echo '<div class="updated fade"><p>';
+						
+						echo __( $this->_args['plugin_message'] . '</p>');					
+						
+						//Activate button
+						echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $plugin_directory . $this->_args['plugin_filename'] . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $plugin_directory . $this->_args['plugin_filename']) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
+						
+						//Dismiss button
+						$this->mp_core_dismiss_button();
+						
+						echo '</p></div>';
+					
+					//This plugin doesn't even exist on this server	 	
+					}else{
+						
+						echo '<div class="updated fade"><p>';
+						
+						echo __( $this->_args['plugin_message'] . '</p>');
+						
+						/** If plugins_api isn't available, load the file that holds the function */
+						if ( ! function_exists( 'plugins_api' ) )
+							require_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+	 
+	 
+						//Check if this plugin exists in the WordPress Repo
+						$args = array( 'slug' => $this->_args['plugin_slug']);
+						$api = plugins_api( 'plugin_information', $args );
+						
+						//If it doesn't, display link which downloads it from your custom URL
+						if (isset($api->errors)){ 
+							// "Oops! this plugin doesn't exist in the repo. So lets display a custom download button."; 
+							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
+							
+						}else{
+							//Otherwise display the WordPress.org Repo Install button
+							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->_args['plugin_slug'] . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_slug'] ) ) ) );	
+						
+						}
+											
+						//Dismiss button
+						$this->mp_core_dismiss_button();
+						
+						echo '</p></div>';
+					}
+				}
 			}
 		}
 		
@@ -138,7 +219,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 		 * Callback function for the update plugin page above. This page uses the filesystem api to install a plugin
 		 */
 		public function mp_core_update_check_callback() {
-			
+											
 			echo '<div class="wrap">';
 			
 			screen_icon();
@@ -195,7 +276,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						
 			//Place the temp zipped file in the plugins directory
 			$created_file = $wp_filesystem->put_contents( $filename, $saved_file, FS_CHMOD_FILE);
-			
+						
 			//Unzip the temp zip file
 			unzip_file($filename, trailingslashit($upload_dir) . '/' . $this->_args['plugin_slug']);
 			
@@ -206,11 +287,14 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			if ( ! $created_file ) {
 				echo '<p>' . __('Error saving file!', 'mp_core') . '</p>';
 				echo '<p>' . __('Try downloading it directly:', 'mp_core') . $this->_args['plugin_download_link'] . '</p>';
-			}
+			}			
 			
 			//Display a successfully installed message
-			echo '<p>' . __('Successfully Activated ', 'mp_core') .  $this->_args['plugin_name']  . '</p>';
+			echo '<p>' . __('Successfully Installed ', 'mp_core') .  $this->_args['plugin_name']  . '</p>';
 			
+			//Activate button
+			echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $this->_args['plugin_slug'] . '/' . $this->_args['plugin_filename'] . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $this->_args['plugin_slug'] . '/' . $this->_args['plugin_filename']) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
+						
 			//Display link to plugins page
 			echo '<p><a href="' . network_admin_url('plugins.php') . '">' . __('View all Plugins', 'mp_core') . '</a></p>'; 
 			
@@ -219,7 +303,6 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			return true;
 			
 		}
-
 	}
 }
 

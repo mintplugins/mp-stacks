@@ -4,7 +4,7 @@
  */
 function mp_stacks_stylesheet(){
 	//css
-	wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp_stacks_style.css', dirname(__FILE__)) );
+	wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp-stacks-style.css', dirname(__FILE__)) );
 }
 add_action('wp_enqueue_scripts', 'mp_stacks_stylesheet');
 
@@ -35,7 +35,7 @@ function mp_stacks_display_stack_group( $atts ) {
 	);	
 	
 	//Create new query for stacks
-	$stack_group = new WP_Query( apply_filters( 'latest_news_args', $stack_group_args ) );
+	$stack_group = new WP_Query( apply_filters( 'stack_group_args', $stack_group_args ) );
 		
 	//Loop through the stack group		
 	if ( $stack_group->have_posts() ) : 
