@@ -35,7 +35,7 @@ function mp_stacks_media_create_meta_box(){
 			'field_description' => 'Select the second media type to use for this stack. (Media types are handled on the left hand side of this page.)',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('None', 'Text', 'Image', 'Video')
+			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
 		),
 		array(
 			'field_id'	 => 'stack_alignment',
