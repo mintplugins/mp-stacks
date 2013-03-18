@@ -6,7 +6,7 @@
 function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_type, $post_id){
 	
 	//If this stack media type is set to be an image	
-	if ($mp_stacks_media_type == 'Text'){
+	if ($mp_stacks_media_type == 'text'){
 		
 		//Set default value for $media_output to NULL
 		$media_output = NULL;	
@@ -16,7 +16,7 @@ function mp_stacks_media_output_text($default_media_output, $mp_stacks_media_typ
 		
 		//Set $text
 		//$text = get_the_content($post_id);
-				
+			
 		$text = do_shortcode( get_the_content($post_id) );
 		
 		//Action hook to add changes to the text
@@ -44,7 +44,7 @@ add_filter('mp_stacks_media_output', 'mp_stacks_media_output_text', 10, 3);
 function mp_stacks_media_output_image($default_media_output, $mp_stacks_media_type, $post_id){
 	
 	//If this stack media type is set to be an image	
-	if ($mp_stacks_media_type == 'Image'){
+	if ($mp_stacks_media_type == 'image'){
 		
 		//Set default value for $media_output to NULL
 		$media_output = NULL;
@@ -76,7 +76,7 @@ add_filter('mp_stacks_media_output', 'mp_stacks_media_output_image', 10, 3);
 function mp_stacks_media_output_video($default_media_output, $mp_stacks_media_type, $post_id){
 	
 	//If this stack media type is set to be an image	
-	if ($mp_stacks_media_type == 'Video'){
+	if ($mp_stacks_media_type == 'video'){
 		
 		//Set default value for $media_output to NULL
 		$media_output = NULL;

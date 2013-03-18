@@ -72,7 +72,7 @@ function mp_stacks_display_stack_group( $atts ) {
 			$second_output .= has_filter('mp_stacks_media_output') ? apply_filters( 'mp_stacks_media_output', $second_output, $mp_stacks_second_media_type, $post_id) : NULL;
 			
 			//Centered - dont use left and right
-			if ($post_specific_alignment == "Centered"){
+			if ($post_specific_alignment == "centered"){
 				$content_output .= '<div class="mp_stack_inner mp_stack_centered">';
 				$content_output .= $first_output;
 				$content_output .= $second_output;

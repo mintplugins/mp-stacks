@@ -27,12 +27,12 @@ function mp_stacks_media_create_meta_box(){
 			'field_description' => 'Select the first media type to use for this stack. (Media types are handled on the right hand side of this page.)',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('None', 'Text', 'Image', 'Video')
+			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
 		),
 		array(
 			'field_id'	 => 'stack_second_media_type',
 			'field_title' => __( '2nd Media Type', 'mp_stacks'),
-			'field_description' => 'Select the second media type to use for this stack. (Media types are handled on the right hand side of this page.)',
+			'field_description' => 'Select the second media type to use for this stack. (Media types are handled on the left hand side of this page.)',
 			'field_type' => 'select',
 			'field_value' => '',
 			'field_select_values' => array('None', 'Text', 'Image', 'Video')
@@ -43,7 +43,7 @@ function mp_stacks_media_create_meta_box(){
 			'field_description' => 'How would you like this stack to be aligned?',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('Standard', 'Centered')
+			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered')
 		),
 	);
 	
