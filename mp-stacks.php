@@ -1,10 +1,10 @@
 <?php
 /*
-Plugin Name: Move Plugins - Stacks
+Plugin Name: MP Stacks
 Plugin URI: http://moveplugins.com
 Description: Stack images and text up. Show it with a shortcode or function call.
 Version: 1.0
-Author: Phil Johnston
+Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_stacks
 Domain Path: languages
@@ -117,6 +117,11 @@ function mp_stacks_include_files(){
 	 * Otherwise, if mp_core is active, carry out the plugin's functions
 	 */
 	else{
+		
+		/**
+		 * Update script - keeps this plugin up to date
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/updater/mp-stacks-update.php' );
 		
 		/**
 		 * Instructions metabox for mp_stacks

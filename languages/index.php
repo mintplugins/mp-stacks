@@ -1,6 +1,6 @@
 <?php
 /**
- * Do not put custom translations here. They will be deleted on mp_stacks updates.
+ * Do not put custom translations here. They will be deleted on mp-stacks updates.
  *
- * Keep custom mp_stacks translations in /wp-content/languages/mp_stacks/
+ * Keep custom mp-stacks translations in /wp-content/languages/mp-stacks/
  */

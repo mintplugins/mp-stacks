@@ -11,6 +11,9 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			//Get args
 			$this->_args = $args;
 			
+			//Plugin Name Slug
+			$this->plugin_name_slug = sanitize_title ( $this->_args['plugin_name'] ); //EG move-plugins-core		
+			
 			//If the user has just clicked "Dismiss", than add that to the options table
 			add_action( 'admin_init', array( $this, 'mp_core_close_message') );
 			
@@ -141,7 +144,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 	 
 	 
 						//Check if this plugin exists in the WordPress Repo
-						$args = array( 'slug' => $this->_args['plugin_slug']);
+						$args = array( 'slug' => $this->plugin_name_slug);
 						$api = plugins_api( 'plugin_information', $args );
 						
 						//If it doesn't, display link which downloads it from your custom URL
@@ -151,7 +154,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 							
 						}else{
 							//Otherwise display the WordPress.org Repo Install button
-							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->_args['plugin_slug'] . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_slug'] ) ) ) );	
+							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->plugin_name_slug . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->plugin_name_slug ) ) ) );	
 						
 						}
 											
