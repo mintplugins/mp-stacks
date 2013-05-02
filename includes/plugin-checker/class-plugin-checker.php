@@ -121,7 +121,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						
 						echo '<div class="updated fade"><p>';
 						
-						echo __( $this->_args['plugin_message'] . '</p>');					
+						echo $this->_args['plugin_message'] . '</p>';					
 						
 						//Activate button
 						echo '<a href="' . wp_nonce_url('plugins.php?action=activate&amp;plugin=' . $plugin_directory . $this->_args['plugin_filename'] . '&amp;plugin_status=all&amp;paged=1&amp;s=', 'activate-plugin_' . $plugin_directory . $this->_args['plugin_filename']) . '" title="' . esc_attr__('Activate this plugin') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>'; 	
@@ -136,7 +136,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						
 						echo '<div class="updated fade"><p>';
 						
-						echo __( $this->_args['plugin_message'] . '</p>');
+						echo $this->_args['plugin_message'] . '</p>';
 						
 						/** If plugins_api isn't available, load the file that holds the function */
 						if ( ! function_exists( 'plugins_api' ) )
@@ -150,11 +150,11 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						//If it doesn't, display link which downloads it from your custom URL
 						if (isset($api->errors)){ 
 							// "Oops! this plugin doesn't exist in the repo. So lets display a custom download button."; 
-							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
+							printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>', admin_url( sprintf( 'plugins.php?page=mp_core_update_plugin_page_' .  $this->_args['plugin_slug'] . '&action=install-plugin&plugin=' . $this->_args['plugin_slug']  . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->_args['plugin_download_link']  ) ) ) );	
 							
 						}else{
 							//Otherwise display the WordPress.org Repo Install button
-							printf( __( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>' , 'mp_core' ), admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->plugin_name_slug . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->plugin_name_slug ) ) ) );	
+							printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $this->_args['plugin_name'] . '"</a>', admin_url( sprintf( 'update.php?action=install-plugin&plugin=' . $this->plugin_name_slug . '&_wpnonce=%s', wp_create_nonce( 'install-plugin_' . $this->plugin_name_slug ) ) ) );	
 						
 						}
 											
@@ -281,7 +281,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			$created_file = $wp_filesystem->put_contents( $filename, $saved_file, FS_CHMOD_FILE);
 						
 			//Unzip the temp zip file
-			unzip_file($filename, trailingslashit($upload_dir) . '/' . $this->_args['plugin_slug']);
+			unzip_file($filename, trailingslashit($upload_dir) . '/' );
 			
 			//Delete the temp zipped file
 			$wp_filesystem->rmdir($filename);

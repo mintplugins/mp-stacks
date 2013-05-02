@@ -105,7 +105,7 @@ function mp_stacks_include_files(){
 		/**
 		 * Include Plugin Checker
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/plugin-checker.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-checker/class-plugin-checker.php' );
 		
 		/**
 		 * Check if wp_core in installed
