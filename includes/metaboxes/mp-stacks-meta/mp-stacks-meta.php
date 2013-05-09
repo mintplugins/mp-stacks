@@ -11,7 +11,7 @@ function mp_stacks_create_meta_box(){
 	$mp_stacks_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_metabox', 
 		'metabox_title' => __( 'Stack Settings', 'mp_stacks'), 
-		'metabox_posttype' => 'mp_stack', 
+		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
 		'metabox_priority' => 'low' 
 	);
@@ -22,14 +22,14 @@ function mp_stacks_create_meta_box(){
 	 */
 	$mp_stacks_items_array = array(
 		array(
-			'field_id'			=> 'stack_bg_image',
+			'field_id'			=> 'brick_bg_image',
 			'field_title' 	=> __( 'Background Image (Optional)', 'mp_stacks'),
 			'field_description' 	=> 'Select an image to use as your background image for this stack item.',
 			'field_type' 	=> 'mediaupload',
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'stack_min_height',
+			'field_id'			=> 'brick_min_height',
 			'field_title' 	=> __( 'Minimum Height (Optional)', 'mp_stacks'),
 			'field_description' 	=> 'Enter the minimum height (in pixels) for this stack. Default: 50',
 			'field_type' 	=> 'number',

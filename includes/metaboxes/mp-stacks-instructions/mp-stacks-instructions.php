@@ -11,7 +11,7 @@ function mp_stacks_instructions_create_meta_box(){
 	$mp_stacks_instructions_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_instructions_metabox', 
 		'metabox_title' => __( 'Stack Instructions', 'mp_stacks'), 
-		'metabox_posttype' => 'mp_stack', 
+		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
 		'metabox_priority' => 'high' 
 	);
@@ -22,9 +22,9 @@ function mp_stacks_instructions_create_meta_box(){
 	 */
 	$mp_stacks_instructions_items_array = array(
 		array(
-			'field_id'			=> 'stack_url',
+			'field_id'			=> 'stack_instructions',
 			'field_title' 	=> __( 'Stack Instructions', 'mp_stacks'),
-			'field_description' 	=> '<br /> 1. Put the stack in a group. <br /><br /> 2. Put this shortcode on any page or post: [stack_group group="slug"] <br /><br /> 3. To find the slug for a group, click <a href="">here.</a>',
+			'field_description' 	=> '<br /> 1. Put the stack in a group. <br /><br /> 2. Put this shortcode on any page or post: [mp_stacks stack="slug"] <br /><br /> 3. To find the slug for a group, click <a href="">here.</a>',
 			'field_type' 	=> 'basictext',
 			'field_value' => ''
 		)

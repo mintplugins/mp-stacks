@@ -11,7 +11,7 @@ function mp_stacks_media_create_meta_box(){
 	$mp_stacks_media_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_media_metabox', 
 		'metabox_title' => __( 'Media Settings', 'mp_stacks'), 
-		'metabox_posttype' => 'mp_stack', 
+		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'advanced', 
 		'metabox_priority' => 'high' 
 	);
@@ -22,7 +22,7 @@ function mp_stacks_media_create_meta_box(){
 	 */
 	$mp_stacks_media_items_array = array(
 		array(
-			'field_id'	 => 'stack_first_media_type',
+			'field_id'	 => 'brick_first_media_type',
 			'field_title' => __( '1st Media Type', 'mp_stacks'),
 			'field_description' => 'Select the first media type to use for this stack. (Media types are handled on the right hand side of this page.)',
 			'field_type' => 'select',
@@ -30,7 +30,7 @@ function mp_stacks_media_create_meta_box(){
 			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
 		),
 		array(
-			'field_id'	 => 'stack_second_media_type',
+			'field_id'	 => 'brick_second_media_type',
 			'field_title' => __( '2nd Media Type', 'mp_stacks'),
 			'field_description' => 'Select the second media type to use for this stack. (Media types are handled on the left hand side of this page.)',
 			'field_type' => 'select',
@@ -38,7 +38,7 @@ function mp_stacks_media_create_meta_box(){
 			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
 		),
 		array(
-			'field_id'	 => 'stack_alignment',
+			'field_id'	 => 'brick_alignment',
 			'field_title' => __( 'Alignment', 'mp_stacks'),
 			'field_description' => 'How would you like this stack to be aligned?',
 			'field_type' => 'select',

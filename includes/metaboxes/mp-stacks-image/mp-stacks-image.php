@@ -11,7 +11,7 @@ function mp_stacks_image_create_meta_box(){
 	$mp_stacks_image_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_image_metabox', 
 		'metabox_title' => __( 'Media Type - Image', 'mp_stacks'), 
-		'metabox_posttype' => 'mp_stack', 
+		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'advanced', 
 		'metabox_priority' => 'low' 
 	);
@@ -22,14 +22,14 @@ function mp_stacks_image_create_meta_box(){
 	 */
 	$mp_stacks_image_items_array = array(
 		array(
-			'field_id'			=> 'stack_main_image',
+			'field_id'			=> 'brick_main_image',
 			'field_title' 	=> __( 'Main Image', 'mp_stacks'),
 			'field_description' 	=> 'Select an image to display beside the text on this stack item.',
 			'field_type' 	=> 'mediaupload',
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'stack_url',
+			'field_id'			=> 'brick_url',
 			'field_title' 	=> __( 'Link URL', 'mp_stacks'),
 			'field_description' 	=> 'Enter the URL the above image will go to when clicked. EG: http://mylink.com',
 			'field_type' 	=> 'url',
