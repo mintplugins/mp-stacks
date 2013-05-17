@@ -83,14 +83,19 @@ function mp_stacks_brick_media_output_video($default_media_output, $mp_stacks_me
 		
 		//Get video URL
 		$brick_video = get_post_meta($post_id, 'brick_video_url', true);
+				
+		//Get video min width
+		$brick_video_min_width = get_post_meta($post_id, 'brick_video_min_width', true);
+		$brick_video_min_width = !empty( $brick_video_min_width ) ? $brick_video_min_width : NULL;
 		
-		//Get video width
-		$brick_video_width = get_post_meta($post_id, 'brick_video_width', true);
+		//Get video max width
+		$brick_video_max_width = get_post_meta($post_id, 'brick_video_max_width', true);
+		$brick_video_max_width = !empty( $brick_video_max_width ) ? $brick_video_max_width : NULL;
 			
 		//Media output
 		if (!empty($brick_video)){
 			$media_output .= '<div class="margin-twenty">';
-			$media_output .= wp_oembed_get( esc_url( $brick_video ), array('width' => $brick_video_width) );
+			$media_output .= mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ); 
 			$media_output .= '</div>';
 		}
 		

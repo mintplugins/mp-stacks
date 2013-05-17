@@ -29,9 +29,16 @@ function mp_stacks_video_create_meta_box(){
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'brick_video_width',
-			'field_title' 	=> __( 'Video Width', 'mp_stacks'),
-			'field_description' 	=> 'Enter the width of the video (in pixels). EG \'300\'',
+			'field_id'			=> 'brick_video_min_width',
+			'field_title' 	=> __( 'Minimum Video Width (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Enter the min width of the video (in pixels). EG \'300\'',
+			'field_type' 	=> 'number',
+			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_video_max_width',
+			'field_title' 	=> __( 'Maximum Video Width (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Enter the max width of the video (in pixels). EG \'300\'',
 			'field_type' 	=> 'number',
 			'field_value' => ''
 		),
