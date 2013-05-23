@@ -11,22 +11,20 @@ function mp_stacks_brick_media_output_text($default_media_output, $mp_stacks_med
 		//Set default value for $media_output to NULL
 		$media_output = NULL;	
  
-		//Show title?
-		$brick_show_title = get_post_meta($post_id, 'brick_show_title', true);
+		//First line of text
+		$brick_text_line_1 = do_shortcode( get_post_meta($post_id, 'brick_text_line_1', true) );
 		
-		//Set $text
-		//$text = get_the_content($post_id);
-			
-		$text = do_shortcode( get_the_content($post_id) );
-		
+		//Second line of text
+		$brick_text_line_2 = do_shortcode( get_post_meta($post_id, 'brick_text_line_2', true) );
+				
 		//Action hook to add changes to the text
 		has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
 		
 		//First Output
-		$media_output .= !empty($brick_show_title) || !empty($text) ? '<div class="text">' : NULL;
-		$media_output .= !empty($brick_show_title) ? '<h2 class="mp_title">' . get_the_title($post_id) . '</h2>' : '';
-		$media_output .= !empty($text) ? '<h3 class="mp_text">' . $text . '</h3>': NULL;
-		$media_output .= !empty($brick_show_title) || !empty($text) ? '</div>' : NULL;
+		$media_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '<div class="text">' : NULL;
+		$media_output .= !empty($brick_text_line_1) ? '<div class="mp-brick-text-line-1">' . $brick_text_line_1 . '</div>' : '';
+		$media_output .= !empty($brick_text_line_2) ? '<div class="mp-brick-text-line-2">' . $brick_text_line_2 . '</div>': NULL;
+		$media_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '</div>' : NULL;
 		
 		//Return
 		return $media_output;

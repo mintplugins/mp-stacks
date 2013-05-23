@@ -24,14 +24,28 @@ function mp_stacks_create_meta_box(){
 		array(
 			'field_id'			=> 'brick_bg_image',
 			'field_title' 	=> __( 'Background Image (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Select an image to use as your background image for this stack item.',
+			'field_description' 	=> 'Select an image to use as your background image for this brick.',
 			'field_type' 	=> 'mediaupload',
+			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_bg_color',
+			'field_title' 	=> __( 'Background Color (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Select a color as your background color for this brick.',
+			'field_type' 	=> 'colorpicker',
+			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_max_width',
+			'field_title' 	=> __( 'Maximum Width (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Enter the maximum width (in pixels) for this brick',
+			'field_type' 	=> 'number',
 			'field_value' => ''
 		),
 		array(
 			'field_id'			=> 'brick_min_height',
 			'field_title' 	=> __( 'Minimum Height (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Enter the minimum height (in pixels) for this stack. Default: 50',
+			'field_description' 	=> 'Enter the minimum height (in pixels) for this brick. Default: 50',
 			'field_type' 	=> 'number',
 			'field_value' => '',
 		),

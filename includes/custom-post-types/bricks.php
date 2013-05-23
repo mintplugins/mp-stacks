@@ -41,7 +41,7 @@ function mp_brick_post_type() {
 			'capability_type' 	=> 'post',
 			'has_archive' 		=> false, 
 			'hierarchical' 		=> false,
-			'supports' 			=> apply_filters('mp_stacks_slide_supports', array( 'title', 'editor' ) ),
+			'supports' 			=> apply_filters('mp_stacks_slide_supports', array( 'title') ),
 		); 
 		register_post_type( 'mp_brick', apply_filters( 'mp_stacks_slide_post_type_args', $slide_args ) );
 	}

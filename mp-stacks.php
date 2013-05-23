@@ -159,6 +159,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/custom-post-types/bricks.php' );
 		
 		/**
+		 * Stack function
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/mp-stack.php' );
+		
+		/**
 		 * Stacks shortcode
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcode.php' );

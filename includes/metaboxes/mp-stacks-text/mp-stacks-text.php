@@ -22,11 +22,18 @@ function mp_stacks_text_create_meta_box(){
 	 */
 	$mp_stacks_text_items_array = array(
 		array(
-			'field_id'	 => 'brick_show_title',
-			'field_title' => __( 'Show Title?', 'mp_stacks'),
-			'field_description' => 'Do you want to display the title in this stack item?',
-			'field_type' => 'checkbox',
-			'field_value' => 'show'
+			'field_id'	 => 'brick_text_line_1',
+			'field_title' => __( 'Text Line 1', 'mp_stacks'),
+			'field_description' => 'Enter the text to display on line 1',
+			'field_type' => 'textarea',
+			'field_value' => ''
+		),
+		array(
+			'field_id'	 => 'brick_text_line_2',
+			'field_title' => __( 'Text Line 2', 'mp_stacks'),
+			'field_description' => 'Enter the text to display on line 2',
+			'field_type' => 'textarea',
+			'field_value' => ''
 		)
 	);
 	
