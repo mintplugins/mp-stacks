@@ -12,10 +12,10 @@ function mp_stacks_brick_media_output_text($default_media_output, $mp_stacks_med
 		$media_output = NULL;	
  
 		//First line of text
-		$brick_text_line_1 = do_shortcode( get_post_meta($post_id, 'brick_text_line_1', true) );
+		$brick_text_line_1 = html_entity_decode(do_shortcode( get_post_meta($post_id, 'brick_text_line_1', true) ) );
 		
 		//Second line of text
-		$brick_text_line_2 = do_shortcode( get_post_meta($post_id, 'brick_text_line_2', true) );
+		$brick_text_line_2 = html_entity_decode (do_shortcode( get_post_meta($post_id, 'brick_text_line_2', true) ) );
 				
 		//Action hook to add changes to the text
 		has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
