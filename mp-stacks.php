@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://moveplugins.com
 Description: Stack images and text up. Show it with a shortcode or function call.
-Version: 1.0
+Version: beta1.0.0.6
 Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_stacks
