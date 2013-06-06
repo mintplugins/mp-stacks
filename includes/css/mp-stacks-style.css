@@ -70,3 +70,6 @@
 .mp-stack .margin-twenty{
 	margin:20px;	
 }
+.mp-stack-edit-link{
+	position:absolute;
+}

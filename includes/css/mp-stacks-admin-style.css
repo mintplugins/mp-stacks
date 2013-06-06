@@ -1,0 +1,5 @@
+/* Stylesheet for mp_stacks admin */
+#wp-brick_text_line_1-media-buttons,
+#wp-brick_text_line_2-media-buttons{
+	display:none;	
+}

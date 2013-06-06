@@ -15,7 +15,7 @@ function mp_brick_post_type() {
 		$slide_labels =  apply_filters( 'mp_stacks_slide_labels', array(
 			'name' 				=> 'Bricks',
 			'singular_name' 	=> 'Brick Item',
-			'add_new' 			=> __('Add New', 'mp_stacks'),
+			'add_new' 			=> __('Add New Brick', 'mp_stacks'),
 			'add_new_item' 		=> __('Add New Brick', 'mp_stacks'),
 			'edit_item' 		=> __('Edit Brick', 'mp_stacks'),
 			'new_item' 			=> __('New Brick', 'mp_stacks'),
@@ -25,7 +25,7 @@ function mp_brick_post_type() {
 			'not_found' 		=>  __('No Bricks found', 'mp_stacks'),
 			'not_found_in_trash'=> __('No Bricks found in Trash', 'mp_stacks'), 
 			'parent_item_colon' => '',
-			'menu_name' 		=> __('Bricks', 'mp_stacks')
+			'menu_name' 		=> __('Stacks & Bricks', 'mp_stacks')
 		) );
 		
 			
@@ -40,7 +40,7 @@ function mp_brick_post_type() {
 			'rewrite' 			=> array( 'slug' => 'stack' ),
 			'capability_type' 	=> 'post',
 			'has_archive' 		=> false, 
-			'hierarchical' 		=> false,
+			'hierarchical' 		=> true,
 			'supports' 			=> apply_filters('mp_stacks_slide_supports', array( 'title') ),
 		); 
 		register_post_type( 'mp_brick', apply_filters( 'mp_stacks_slide_post_type_args', $slide_args ) );
@@ -70,7 +70,7 @@ function mp_stacks_taxonomy() {
 			'update_item'         => __( 'Update Stack', 'mp_core' ),
 			'add_new_item'        => __( 'Add New Stack', 'mp_core' ),
 			'new_item_name'       => __( 'New Stack Name', 'mp_core' ),
-			'menu_name'           => __( 'Stacks', 'mp_core' ),
+			'menu_name'           => __( 'Manage Stacks', 'mp_core' ),
 		); 	
   
 		register_taxonomy(  
@@ -88,3 +88,60 @@ function mp_stacks_taxonomy() {
 	}
 }  
 add_action( 'init', 'mp_stacks_taxonomy' );  
+
+ /**
+ * Add ability to filter bricks by stack on "list all bricks" page
+ */
+function mp_stacks_restrict_bricks_by_stack() {
+	global $typenow;
+	$post_type = 'mp_brick'; // change HERE
+	$taxonomy = 'mp_stacks'; // change HERE
+	if ($typenow == $post_type) {
+		$selected = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
+		$info_taxonomy = get_taxonomy($taxonomy);
+		wp_dropdown_categories(array(
+			'show_option_all' => __("Show All {$info_taxonomy->label}"),
+			'taxonomy' => $taxonomy,
+			'name' => $taxonomy,
+			'orderby' => 'name',
+			'selected' => $selected,
+			'show_count' => true,
+			'hide_empty' => true,
+		));
+	};
+}
+
+add_action('restrict_manage_posts', 'mp_stacks_restrict_bricks_by_stack');
+
+function mp_stacks_convert_id_to_term_in_query($query) {
+	global $pagenow;
+	$post_type = 'mp_brick'; // change HERE
+	$taxonomy = 'mp_stacks'; // change HERE
+	$q_vars = &$query->query_vars;
+	if ($pagenow == 'edit.php' && isset($q_vars['post_type']) && $q_vars['post_type'] == $post_type && isset($q_vars[$taxonomy]) && is_numeric($q_vars[$taxonomy]) && $q_vars[$taxonomy] != 0) {
+		$term = get_term_by('id', $q_vars[$taxonomy], $taxonomy);
+		$q_vars[$taxonomy] = $term->slug;
+	}
+}
+
+add_filter('parse_query', 'mp_stacks_convert_id_to_term_in_query');
+
+/**
+ * Add each stack to the bricks button in the WP menu
+ */
+function mp_stacks_show_each_stack_in_menu(){
+	
+	$stacks = mp_core_get_all_terms_by_tax('mp_stacks');
+ 	
+	foreach( $stacks as $id => $stack){
+	
+		add_submenu_page( 'edit.php?post_type=mp_brick', $stack, $stack, 'manage_options', add_query_arg( array('mp_stacks' => $id), 'edit.php?post_type=mp_brick' ) );
+	}	
+}
+add_action('admin_menu', 'mp_stacks_show_each_stack_in_menu');
+
+/**
+ * These actions make the mp_brick post type drag and drop re-order-able
+ */
+add_filter('manage_mp_brick_posts_columns', 'mp_core_add_new_post_column');
+add_action('manage_mp_brick_posts_custom_column','mp_core_show_order_column');

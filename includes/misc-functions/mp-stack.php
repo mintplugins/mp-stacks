@@ -11,6 +11,8 @@ function mp_stack( $stack_id ){
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
 		'posts_per_page' => 0,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',
 			array(
@@ -75,6 +77,7 @@ function mp_stack( $stack_id ){
 				$content_output .= '<div class="mp-brick-media-container mp-brick-centered">';
 				$content_output .= $first_output;
 				$content_output .= $second_output;
+				$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_knapstack' ) . '</a>';
 				$content_output .= '</div>';
 			//Set left and right outputs
 			}else{
@@ -89,6 +92,7 @@ function mp_stack( $stack_id ){
 				$content_output .= '<div class="mp-brick-media-container">';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
+						$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_knapstack' ) . '</a>';
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 			}
@@ -124,7 +128,7 @@ function mp_stack( $stack_id ){
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '">';
 				$html_output .= '<div class="mp-brick-outer">';
 					$html_output .= '<div class="mp-brick-inner">';
-						$html_output .= $content_output;
+						$html_output .= $content_output; 
 					$html_output .= '</div>';
 				$html_output .= '</div>';
 			$html_output .= '</div>';
@@ -135,6 +139,9 @@ function mp_stack( $stack_id ){
 	
 	//Filter for adding output to the html output 
 	$html_output = apply_filters( 'mp_stacks_html_output', $html_output );
+	
+	//Reset query
+	wp_reset_query();
 	
 	//Return
 	return $html_output;	

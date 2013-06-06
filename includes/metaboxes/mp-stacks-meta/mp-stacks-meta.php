@@ -10,7 +10,7 @@ function mp_stacks_create_meta_box(){
 	 */
 	$mp_stacks_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_metabox', 
-		'metabox_title' => __( 'Stack Settings', 'mp_stacks'), 
+		'metabox_title' => __( 'Brick Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
 		'metabox_priority' => 'low' 
