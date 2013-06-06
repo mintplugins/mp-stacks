@@ -77,7 +77,9 @@ function mp_stack( $stack_id ){
 				$content_output .= '<div class="mp-brick-media-container mp-brick-centered">';
 				$content_output .= $first_output;
 				$content_output .= $second_output;
-				$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_knapstack' ) . '</a>';
+				if ( is_user_logged_in() ) {
+					$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+				}
 				$content_output .= '</div>';
 			//Set left and right outputs
 			}else{
@@ -92,7 +94,9 @@ function mp_stack( $stack_id ){
 				$content_output .= '<div class="mp-brick-media-container">';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
-						$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_knapstack' ) . '</a>';
+						if ( is_user_logged_in() ) {
+							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 			}
