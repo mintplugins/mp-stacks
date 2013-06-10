@@ -34,6 +34,13 @@ function mp_stacks_image_create_meta_box(){
 			'field_description' 	=> 'Enter the URL the above image will go to when clicked. EG: http://mylink.com',
 			'field_type' 	=> 'url',
 			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_image_retina_width',
+			'field_title' 	=> __( 'Retina Width (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Set the width this image should show at. If Retina (2x), put half the amount pf pixels so it shows at half size.',
+			'field_type' 	=> 'number',
+			'field_value' => ''
 		)
 	);
 	
