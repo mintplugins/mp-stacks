@@ -57,6 +57,9 @@ function mp_stack( $stack_id ){
 			//Get background color
 			$brick_bg_color = get_post_meta($post_id, 'brick_bg_color', true);
 			
+			//Get background display type
+			$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
+			
 			//Alignment
 			$post_specific_alignment = get_post_meta($post_id, 'brick_alignment', true);
 			
@@ -103,7 +106,8 @@ function mp_stack( $stack_id ){
 			
 			//CSS
 			$content_output .= '<style scoped>';
-			$content_output .= '#mp-brick-' . $post_id . ' {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
+			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-bg {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
+			$content_output .= $brick_display_type == 'fill' ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: 100%;}' : NULL;
 			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{max-width:' . $brick_max_width . 'px;}';
 			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{min-height:' . $brick_min_height . 'px; height:' . $brick_min_height . 'px;}';
 			$content_output .= '</style>';
@@ -121,16 +125,26 @@ function mp_stack( $stack_id ){
 			$content_output .= '</style>';
 			
 			//Post class for this brick
-			$post_class_string = 'mp-brick';
+			$post_class_string = apply_filters( 'mp_stacks_brick_class', 'mp-brick' );
 			$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
+			
+			//Extra Brick Attributes
+			$extra_brick_attributes = apply_filters( 'mp_stacks_extra_brick_attributes', NULL, $post_id );
+			
+			//Extra Brick Background Attributes
+			$extra_brick_bg_attributes = apply_filters( 'mp_stacks_extra_brick_bg_attributes', NULL, $post_id );
+			
+			//Extra Brick Outer Attributes
+			$extra_brick_outer_attributes = apply_filters( 'mp_stacks_extra_brick_outer_attributes', NULL, $post_id );
 			
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
 		       
 			//Actual output
-			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '">';
-				$html_output .= '<div class="mp-brick-outer">';
+			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '></div>';
+				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
 					$html_output .= '<div class="mp-brick-inner">';
 						$html_output .= $content_output; 
 					$html_output .= '</div>';

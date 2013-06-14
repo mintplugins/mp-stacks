@@ -13,7 +13,7 @@ function mp_stacks_create_meta_box(){
 		'metabox_title' => __( 'Brick Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
-		'metabox_priority' => 'low' 
+		'metabox_priority' => 'default' 
 	);
 	
 	/**
@@ -34,6 +34,14 @@ function mp_stacks_create_meta_box(){
 			'field_description' 	=> 'Select a color as your background color for this brick.',
 			'field_type' 	=> 'colorpicker',
 			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_display_type',
+			'field_title' 	=> __( 'Background Display', 'mp_stacks'),
+			'field_description' 	=> 'Select how you want this background to display',
+			'field_type' 	=> 'select',
+			'field_value' 	=> '',
+			'field_select_values' => array( 'fill' => 'Fill Area', 'tiled' => 'Tiled' )
 		),
 		array(
 			'field_id'			=> 'brick_max_width',

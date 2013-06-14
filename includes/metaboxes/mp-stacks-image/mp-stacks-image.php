@@ -36,9 +36,16 @@ function mp_stacks_image_create_meta_box(){
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'brick_image_retina_width',
-			'field_title' 	=> __( 'Retina Width (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Set the width this image should show at. If Retina (2x), put half the amount pf pixels so it shows at half size.',
+			'field_id'			=> 'brick_image_width',
+			'field_title' 	=> __( 'Image Width (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Set the width this image should show at. Leave blank for actual image size.',
+			'field_type' 	=> 'number',
+			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_image_height',
+			'field_title' 	=> __( 'Image Height (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Set the height this image should show at. Leave blank for actual image size.',
 			'field_type' 	=> 'number',
 			'field_value' => ''
 		)

@@ -53,15 +53,21 @@ function mp_stacks_brick_media_output_image($default_media_output, $mp_stacks_me
 		//Get Link URL
 		$brick_url = get_post_meta($post_id, 'brick_url', true);
 		
-		//Get retina settings
-		$brick_image_retina_width = get_post_meta($post_id, 'brick_image_retina_width', true);
+		//Get image width settings
+		$brick_image_width = get_post_meta($post_id, 'brick_image_width', true);
+		
+		//Get image height settings
+		$brick_image_height = get_post_meta($post_id, 'brick_image_height', true);
 		
 		//Media output
+		$media_output .= '<div class="mp-stacks-image">';
 		$media_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
 		$media_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
-		$media_output .= !empty($brick_image_retina_width) ? ' width="' . $brick_image_retina_width . '" ' : NULL;
+		$media_output .= !empty($brick_image_width) ? ' width="' . $brick_image_width . '" ' : NULL;
+		$media_output .= !empty($brick_image_height) ? ' height="' . $brick_image_height . '" ' : NULL;
 		$media_output .= '/>';
 		$media_output .= !empty($brick_url) ? '</a>' : '';
+		$media_output .= '</div>';
 		
 		//Return
 		return $media_output;

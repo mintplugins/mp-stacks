@@ -4,17 +4,30 @@
 	margin:0px!important;
 	}
 .mp-stack .mp-brick {
+	position:relative;
 	width: 100%; 
 	display:table;
-	background-size:100%;
-	background-position:50%; 
 	padding:0px;
 	margin:0px;
+	z-index:1;
+	overflow:hidden;
+}
+.mp-stack .mp-brick .mp-brick-bg{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	background-size: 100%;
+	background-position: 50%;
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 100%;
+	z-index:-100;
 }
 .mp-stack .mp-brick .mp-brick-outer{
 	display:block;
 	width:100%;
-	margin: 0px auto;	
+	margin: 0px auto;
+	z-index:1;	
 }
 .mp-stack .mp-brick .mp-brick-inner{
 	width: 100%; 
@@ -46,6 +59,12 @@
 	z-index:2;
 }
 
+.mp-stack .mp-brick-left .mp-stacks-image{
+	float:right;
+}
+.mp-stack .mp-brick-right .mp-stacks-image{
+	float:left;
+}
 .mp-stack .mp-brick-left .text{
 	margin:0 10% 0 10%;	
 	float:right;
@@ -72,4 +91,5 @@
 }
 .mp-stack-edit-link{
 	position:absolute;
+	z-index:100;
 }
