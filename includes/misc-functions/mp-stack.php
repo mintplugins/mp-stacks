@@ -104,26 +104,6 @@ function mp_stack( $stack_id ){
 				$content_output .= '</div>';
 			}
 			
-			//CSS
-			$content_output .= '<style scoped>';
-			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-bg {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
-			$content_output .= $brick_display_type == 'fill' ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: 100%;}' : NULL;
-			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{max-width:' . $brick_max_width . 'px;}';
-			$content_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{min-height:' . $brick_min_height . 'px; height:' . $brick_min_height . 'px;}';
-			$content_output .= '</style>';
-			
-			//Tablet sized CSS
-			$content_output .= '<style scoped>';
-			$content_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
-			$content_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
-			$content_output .= '</style>';
-			
-			//Mobile Sized CSS
-			$content_output .= '<style scoped>';
-			$content_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
-			$content_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
-			$content_output .= '</style>';
-			
 			//Post class for this brick
 			$post_class_string = apply_filters( 'mp_stacks_brick_class', 'mp-brick' );
 			$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
@@ -140,8 +120,29 @@ function mp_stack( $stack_id ){
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
-		       
+		    
+			//CSS
+			$css_output .= '<style scoped>';
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-bg {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
+			$css_output .= $brick_display_type == 'fill' ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: 100%;}' : NULL;
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{max-width:' . $brick_max_width . 'px;}';
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{min-height:' . $brick_min_height . 'px; height:' . $brick_min_height . 'px;}';
+			$css_output .= '</style>';
+			
+			//Tablet sized CSS
+			$css_output .= '<style scoped>';
+			$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
+			$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
+			$css_output .= '</style>';
+			
+			//Mobile Sized CSS
+			$css_output .= '<style scoped>';
+			$css_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
+			$css_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
+			$css_output .= '</style>';
+			   
 			//Actual output
+			$html_output .= $css_output;
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
 				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '></div>';
 				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
