@@ -53,6 +53,7 @@ function mp_stack( $stack_id ){
 			
 			//Get background image URL
 			$brick_bg_image = get_post_meta($post_id, 'brick_bg_image', true);
+			$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
 			
 			//Get background color
 			$brick_bg_color = get_post_meta($post_id, 'brick_bg_color', true);
@@ -122,7 +123,7 @@ function mp_stack( $stack_id ){
 			}
 		    
 			//CSS
-			$css_output .= '<style scoped>';
+			$css_output = '<style scoped>';
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-bg {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
 			$css_output .= $brick_display_type == 'fill' ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: 100%;}' : NULL;
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{max-width:' . $brick_max_width . 'px;}';
