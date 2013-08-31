@@ -135,13 +135,7 @@ function mp_stack( $stack_id ){
 			$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
 			$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
 			$css_output .= '</style>';
-			
-			//Mobile Sized CSS
-			$css_output .= '<style scoped>';
-			$css_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
-			$css_output .= '@media screen and (max-width: 420px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.30) . 'px; height:' . ($brick_min_height*.30) . 'px; }}';
-			$css_output .= '</style>';
-			   
+						   
 			//Actual output
 			$html_output .= $css_output;
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
