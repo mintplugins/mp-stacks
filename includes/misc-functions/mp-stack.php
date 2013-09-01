@@ -125,7 +125,7 @@ function mp_stack( $stack_id ){
 			//CSS
 			$css_output = '<style scoped>';
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-bg {background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';}';
-			$css_output .= $brick_display_type == 'fill' ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: cover;}' : NULL;
+			$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? '#mp-brick-' . $post_id . ' .mp-brick-bg {background-size: cover;}' : NULL;
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{max-width:' . $brick_max_width . 'px;}';
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{min-height:' . $brick_min_height . 'px; height:' . $brick_min_height . 'px;}';
 			$css_output .= '</style>';
