@@ -1,20 +1,42 @@
 <?php
 /**
- * Install Theme Updater Plugin
+ * This file contains a function which checks if the MP Core plugin is installed.
  *
+ * @since 1.0.0
+ *
+ * @package    MP Core
+ * @subpackage Functions
+ *
+ * @copyright  Copyright (c) 2013, Move Plugins
+ * @license    http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @author     Philip Johnston
  */
- if (!function_exists('mp_core_plugin_check')){
-	function mp_core_plugin_check() {
-		$args = array(
-			'plugin_name' => 'Move Plugins Core',  //<--Make sure this matches the name of the plugin and the name of the plugin in mp_repo
-			'plugin_message' => __('You require the Move Plugins Core plugin. Install it here.', 'mp_stacks'), 
-			'plugin_slug' => 'mp-core', //<--This will be the name of the subdirectory where the plugin is located
-			'plugin_filename' => 'mp-core.php',
-			'plugin_required' => true,
-			'plugin_download_link' => 'http://repo.moveplugins.com/repo/move-plugins-core/?downloadfile=true'
+ 
+/**
+* Check to make sure the MP Core Plugin is installed.
+*
+* @since    1.0.0
+* @link     http://moveplugins.com/doc/plugin-checker-class/
+* @return   array $plugins An array of plugins to be installed. This is passed in through the mp_core_check_plugins filter.
+* @return   array $plugins An array of plugins to be installed. This is passed to the mp_core_check_plugins filter. (see link).
+*/
+if (!function_exists('mp_core_plugin_check')){
+	function mp_core_plugin_check( $plugins ) {
+		
+		$add_plugins = array(
+			array(
+				'plugin_name' => 'MP Core',
+				'plugin_message' => __('You require the MP Core plugin. Install it here.', 'textdomain'), 
+				'plugin_filename' => 'mp-core.php',
+				'plugin_download_link' => 'http://moveplugins.com/repo/mp-core/?downloadfile=true',
+				'plugin_info_link' => 'http://moveplugins.com/plugins/mp-core',
+				'plugin_group_install' => true,
+				'plugin_required' => true,
+				'plugin_wp_repo' => true,
+			)
 		);
-		$mp_core_plugin_check = new MP_CORE_Plugin_Checker($args);
+		
+		return array_merge( $plugins, $add_plugins );
 	}
- }
-add_action( '_admin_menu', 'mp_core_plugin_check' );
-
+}
+add_filter( 'mp_core_check_plugins', 'mp_core_plugin_check' );
