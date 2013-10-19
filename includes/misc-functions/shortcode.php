@@ -29,6 +29,7 @@ function mp_stacks_show_insert_shortcode(){
 		'shortcode_id' => 'mp_stack',
 		'shortcode_title' => __('Stack', 'mp_stacks'),
 		'shortcode_description' => __( 'Use the form below to insert the shortcode for a Stack ', 'mp_stacks' ),
+		'shortcode_plugin_dir_url' => MP_STACKS_PLUGIN_URL,
 		'shortcode_options' => array(
 			array(
 				'option_id' => 'stack',

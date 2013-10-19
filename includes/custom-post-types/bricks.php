@@ -140,8 +140,20 @@ function mp_stacks_show_each_stack_in_menu(){
 }
 add_action('admin_menu', 'mp_stacks_show_each_stack_in_menu');
 
-/**
- * These actions make the mp_brick post type drag and drop re-order-able
+ /**
+ * Fetch Repo Button
+ * Add ?fetch=true to the permalink in the backend
  */
-add_filter('manage_mp_brick_posts_columns', 'mp_core_add_new_post_column');
-add_action('manage_mp_brick_posts_custom_column','mp_core_show_order_column');
+function mp_stacks_perm($return, $id, $new_title, $new_slug){
+	global $post;
+	if (isset($post->post_type)){
+		if($post->post_type == 'mp_brick'){
+			
+			$return = NULL;
+			
+		}
+	}
+
+	return $return;
+}
+add_filter('get_sample_permalink_html', 'mp_stacks_perm', '',4);
