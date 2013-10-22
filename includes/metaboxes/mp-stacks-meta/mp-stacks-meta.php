@@ -10,7 +10,7 @@ function mp_stacks_create_meta_box(){
 	 */
 	$mp_stacks_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_metabox', 
-		'metabox_title' => __( 'Brick Settings', 'mp_stacks'), 
+		'metabox_title' => __( 'Brick Size Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
 		'metabox_priority' => 'default' 
@@ -22,38 +22,23 @@ function mp_stacks_create_meta_box(){
 	 */
 	$mp_stacks_items_array = array(
 		array(
-			'field_id'			=> 'brick_bg_image',
-			'field_title' 	=> __( 'Background Image (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Select an image to use as your background image for this brick.',
-			'field_type' 	=> 'mediaupload',
-			'field_value' => ''
-		),
-		array(
-			'field_id'			=> 'brick_bg_color',
-			'field_title' 	=> __( 'Background Color (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Select a color as your background color for this brick.',
-			'field_type' 	=> 'colorpicker',
-			'field_value' => ''
-		),
-		array(
-			'field_id'			=> 'brick_display_type',
-			'field_title' 	=> __( 'Background Display', 'mp_stacks'),
-			'field_description' 	=> 'Select how you want this background to display',
-			'field_type' 	=> 'select',
-			'field_value' 	=> '',
-			'field_select_values' => array( 'fill' => 'Fill Area', 'tiled' => 'Tiled' )
+			'field_id'			=> 'brick_min_height',
+			'field_title' 	=> __( 'Min Height: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Enter the minimum height (in pixels) for this brick. Default: 50',
+			'field_type' 	=> 'number',
+			'field_value' => '',
 		),
 		array(
 			'field_id'			=> 'brick_max_width',
-			'field_title' 	=> __( 'Maximum Width (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Enter the maximum width (in pixels) for this brick',
+			'field_title' 	=> __( 'Media Area - Max Width: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Enter the maximum width for the media area (in pixels) for this brick',
 			'field_type' 	=> 'number',
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'brick_min_height',
-			'field_title' 	=> __( 'Minimum Height (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Enter the minimum height (in pixels) for this brick. Default: 50',
+			'field_id'			=> 'brick_min_above_below',
+			'field_title' 	=> __( 'Media Area - Min Height Above/Below: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Enter the minimum height above/below the media area (in pixels) for this brick. Default: 10',
 			'field_type' 	=> 'number',
 			'field_value' => '',
 		),
