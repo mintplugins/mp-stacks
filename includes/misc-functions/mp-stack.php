@@ -83,8 +83,12 @@ function mp_brick( $post_id ){
 			//Centered - dont use left and right
 			if ($post_specific_alignment == "centered"){
 				$content_output .= '<div class="mp-brick-media-container mp-brick-centered">';
+				$content_output .= '<div class="mp-brick-centered-first">';
 				$content_output .= $first_output;
+				$content_output .= '</div>';
+				$content_output .= '<div class="mp-brick-centered-second">';
 				$content_output .= $second_output;
+				$content_output .= '</div>';
 				if ( is_user_logged_in() ) {
 					$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
 				}

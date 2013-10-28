@@ -103,9 +103,7 @@ function mp_stacks_brick_media_output_video($default_media_output, $mp_stacks_me
 			
 		//Media output
 		if (!empty($brick_video)){
-			$media_output .= '<div class="margin-twenty">';
 			$media_output .= mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ); 
-			$media_output .= '</div>';
 		}
 		
 		//Return

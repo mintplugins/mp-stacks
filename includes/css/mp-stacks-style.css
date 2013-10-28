@@ -64,7 +64,7 @@
 	float:left;
 }
 .mp-stack .mp-brick-left .text{
-	margin:0 10% 0 10%;	
+	margin:0 10px 0 10px;	
 	float:right;
 }
 .mp-stack .mp-brick-right .text{
@@ -83,11 +83,10 @@
 .mp-stack .mp-brick-main-link{
 	display:inline-block;	
 }
-
-.mp-stack .margin-twenty{
-	margin:20px;	
-}
 .mp-stack-edit-link{
+	background-color:#333!important;
+	color:#FFFFFF!important;
+	padding:3px;
 	position:absolute;
 	z-index:100;
 }
