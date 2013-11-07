@@ -5,7 +5,7 @@
  */
 function mp_stacks_brick_media_output_text($default_media_output, $mp_stacks_media_type, $post_id){
 	
-	//If this stack media type is set to be an image	
+	//If this stack media type is set to be text	
 	if ($mp_stacks_media_type == 'text'){
 		
 		//Set default value for $media_output to NULL
@@ -53,19 +53,18 @@ function mp_stacks_brick_media_output_image($default_media_output, $mp_stacks_me
 		//Get Link URL
 		$brick_url = get_post_meta($post_id, 'brick_url', true);
 		
-		//Get image width settings
-		$brick_image_width = get_post_meta($post_id, 'brick_image_width', true);
-		
 		//Get image height settings
-		$brick_image_height = get_post_meta($post_id, 'brick_image_height', true);
+		$brick_image_height = get_post_meta($post_id, 'brick_image_max_height', true);
+		
+		//Set Image URL
+		//$brick_main_image = !empty($brick_image_width) ? mp_aq_resize( $brick_main_image, $brick_image_width, $brick_image_height ) : $brick_main_image;
 		
 		//Media output
 		$media_output .= '<div class="mp-stacks-image">';
 		$media_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
 		$media_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
-		$media_output .= !empty($brick_image_width) ? ' width="' . $brick_image_width . '" ' : NULL;
-		$media_output .= !empty($brick_image_height) ? ' height="' . $brick_image_height . '" ' : NULL;
-		$media_output .= '/>';
+		$media_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
+		$media_output .= ' />';
 		$media_output .= !empty($brick_url) ? '</a>' : '';
 		$media_output .= '</div>';
 		
@@ -103,7 +102,8 @@ function mp_stacks_brick_media_output_video($default_media_output, $mp_stacks_me
 			
 		//Media output
 		if (!empty($brick_video)){
-			$media_output .= mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ); 
+			
+			$media_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ) . '</div>'; 
 		}
 		
 		//Return

@@ -40,10 +40,10 @@ function mp_stacks_media_create_meta_box(){
 		array(
 			'field_id'	 => 'brick_alignment',
 			'field_title' => __( 'Alignment', 'mp_stacks'),
-			'field_description' => 'How would you like this stack to be aligned?',
+			'field_description' => 'How would you like these media types to be aligned?',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered')
+			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered', 'allleft' => 'All on left', 'allright' => 'All on right')
 		),
 	);
 	

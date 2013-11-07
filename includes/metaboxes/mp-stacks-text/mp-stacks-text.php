@@ -23,15 +23,15 @@ function mp_stacks_text_create_meta_box(){
 	$mp_stacks_text_items_array = array(
 		array(
 			'field_id'	 => 'brick_text_line_1',
-			'field_title' => __( 'Text Line 1', 'mp_stacks'),
-			'field_description' => 'Enter the text to display on line 1',
+			'field_title' => __( 'Text Area 1', 'mp_stacks'),
+			'field_description' => 'Enter the text to display on area 1',
 			'field_type' => 'wp_editor',
 			'field_value' => ''
 		),
 		array(
 			'field_id'	 => 'brick_text_line_2',
-			'field_title' => __( 'Text Line 2', 'mp_stacks'),
-			'field_description' => 'Enter the text to display on line 2',
+			'field_title' => __( 'Text Area 2', 'mp_stacks'),
+			'field_description' => 'Enter the text to display on area 2',
 			'field_type' => 'wp_editor',
 			'field_value' => ''
 		)
