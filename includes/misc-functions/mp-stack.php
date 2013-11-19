@@ -93,8 +93,51 @@ function mp_brick( $post_id ){
 					$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
 				}
 				$content_output .= '</div>';
+			}
+			//All Left - all on left
+			else if ($post_specific_alignment == "allleft"){
+				//Left side HTML output
+				$content_output .= '<div class="mp-brick-media-container">';
+					$content_output .= '<div class="mp-brick-left">';
+						$content_output .= $first_output;
+					$content_output .= '</div>';
+					$content_output .= '<div class="mp-brick-left">';
+						$content_output .= $second_output;
+						if ( is_user_logged_in() ) {
+							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+						}
+					$content_output .= '</div>';
+				$content_output .= '</div>';
+					
+				//Right side HTML output
+				$content_output .= '<div class="mp-brick-media-container">';
+					$content_output .= '<div class="mp-brick-right">';
+					$content_output .= '</div>';
+				$content_output .= '</div>';
+			}
+			//All Right - all on right
+			else if ($post_specific_alignment == "allright"){
+				//Left side HTML output
+				$content_output .= '<div class="mp-brick-media-container">';
+					$content_output .= '<div class="mp-brick-left">';
+					$content_output .= '</div>';
+				$content_output .= '</div>';
+					
+				//Right side HTML output
+				$content_output .= '<div class="mp-brick-media-container">';
+					$content_output .= '<div class="mp-brick-right">';
+						$content_output .= $first_output;
+					$content_output .= '</div>';
+					$content_output .= '<div class="mp-brick-right">';
+						$content_output .= $second_output;
+						if ( is_user_logged_in() ) {
+							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+						}
+					$content_output .= '</div>';
+				$content_output .= '</div>';
+			}
 			//Set left and right outputs
-			}else{
+			else{
 				//Left side HTML output
 				$content_output .= '<div class="mp-brick-media-container">';
 					$content_output .= '<div class="mp-brick-left">';
@@ -125,7 +168,7 @@ function mp_brick( $post_id ){
 			
 			//Extra Brick Outer Attributes
 			$extra_brick_outer_attributes = apply_filters( 'mp_stacks_extra_brick_outer_attributes', NULL, $post_id );
-			
+						
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
@@ -153,6 +196,11 @@ function mp_brick( $post_id ){
 			$css_output = apply_filters( 'mp_brick_inner_css', $css_output, $post_id );
 			$css_output .= '}';
 			
+			//Brick Container CSS
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-media-container>div{';
+			$css_output = apply_filters( 'mp_brick_container_css', $css_output, $post_id );
+			$css_output .= '}';
+						
 			//Additional CSS
 			$css_output .= apply_filters( 'mp_brick_additional_css', $css_output, $post_id );
 			
@@ -225,19 +273,35 @@ function mp_stacks_default_brick_outer_css( $css_output, $post_id ){
 	//Max brick width
 	$brick_max_width = get_post_meta($post_id, 'brick_max_width', true);
 	$brick_max_width = !empty($brick_max_width) ? $brick_max_width : '5000';
-	
-	//Min media margin
-	$brick_media_margin = get_post_meta($post_id, 'brick_min_above_below', true);
-	$brick_media_margin = !empty($brick_media_margin) ? $brick_media_margin : '10';
-			
+				
 	//Outer style lines
-	$css_output .= 'max-width:' . $brick_max_width . 'px; margin-top:' . $brick_media_margin . 'px; margin-bottom:' . $brick_media_margin . 'px;';
+	$css_output .= 'max-width:' . $brick_max_width . 'px;';
 			
 	//Return CSS Output
 	return $css_output;
 	
 }
 add_filter( 'mp_brick_outer_css', 'mp_stacks_default_brick_outer_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for a brick's media container div
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_default_brick_container_css( $css_output, $post_id ){
+	
+	//Min media margin
+	$brick_media_margin = get_post_meta($post_id, 'brick_min_above_below', true);
+	$brick_media_margin = is_numeric($brick_media_margin) ? $brick_media_margin : '10';
+			
+	//Outer style lines
+	$css_output .= 'margin-top:' . $brick_media_margin . 'px; margin-bottom:' . $brick_media_margin . 'px;';
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_container_css', 'mp_stacks_default_brick_container_css', 10, 2);
 
 /**
  * Filter Function which returns the css style lines for a brick's inner div

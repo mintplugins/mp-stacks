@@ -47,6 +47,8 @@
 .mp-stack .mp-brick .mp-brick-text-line-1, .mp-stack .mp-brick .mp-brick-text-line-2{
 	margin:0px;	
 	line-height:100%;
+	word-wrap: normal;
+	word-break: break-word;
 }
 .mp-stack .mp-brick .mp-brick-media-container iframe{
 	margin:0;
@@ -55,21 +57,16 @@
 /* Left and right sides */
 .mp-stack .mp-brick-left, .mp-stack .mp-brick-right {
 	z-index:2;
-}
-
-.mp-stack .mp-brick-left .mp-stacks-image{
-	float:right;
-}
-.mp-stack .mp-brick-right .mp-stacks-image{
-	float:left;
+	margin:0 5% 0 5%;	
+	text-align: center;
 }
 .mp-stack .mp-brick-left .text{
-	margin:0 10px 0 10px;	
-	float:right;
+	text-align: -webkit-auto;
+	display: inline-block;
 }
 .mp-stack .mp-brick-right .text{
-	margin:0 10% 0 10%;	
-	float:left;
+	text-align: -webkit-auto;
+	display: inline-block;
 }
 
 /*Image*/

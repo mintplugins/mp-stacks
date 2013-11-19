@@ -10,7 +10,7 @@ function mp_stacks_text_create_meta_box(){
 	 */
 	$mp_stacks_text_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_text_metabox', 
-		'metabox_title' => __( 'Media Type - Text', 'mp_stacks'), 
+		'metabox_title' => __( '"Text" - Media Type', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'advanced', 
 		'metabox_priority' => 'low' 

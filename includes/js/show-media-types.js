@@ -38,4 +38,29 @@ jQuery(document).ready(function($){
 		reset_media_types();
 	});
 	
+	$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
+		//Set TinyMCE default font size dynamically	
+		
+		//Text area 1	
+		$('#brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		$('#brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		//Text area 2
+		$('#brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		$('#brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		
+	});
+	
+	$( document ).on( 'mousemove', function() {
+		//Set TinyMCE default font size dynamically		
+		
+		//Text area 1
+		$('#brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		$('#brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		
+		//Text area 2
+		$('#brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		$('#brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		
+	});
+
 });
