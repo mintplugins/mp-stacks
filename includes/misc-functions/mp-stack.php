@@ -186,6 +186,11 @@ function mp_brick( $post_id ){
 			$css_output = apply_filters( 'mp_brick_bg_css', $css_output, $post_id );
 			$css_output .= '}';
 			
+			//Brick Background:after CSS
+			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg:after {';
+			$css_output = apply_filters( 'mp_brick_bg_after_css', $css_output, $post_id );
+			$css_output .= '}';
+			
 			//Brick Outer CSS
 			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{';
 			$css_output = apply_filters( 'mp_brick_outer_css', $css_output, $post_id );
@@ -243,25 +248,46 @@ function mp_stacks_default_brick_css( $css_output, $post_id ){
  */
 function mp_stacks_default_brick_bg_css( $css_output, $post_id ){
 	
-	//Get background image URL
-	$brick_bg_image = get_post_meta($post_id, 'brick_bg_image', true);
-	$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
-	
 	//Get background color
 	$brick_bg_color = get_post_meta($post_id, 'brick_bg_color', true);
 	
-	//Get background display type
-	$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
-	
 	//Add style lines to css output
-	$css_output .= 'background-image: url(\'' . $brick_bg_image . '\'); background-color:' . $brick_bg_color . ';';
-	$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? 'background-size: cover;' : NULL;
+	$css_output .= 'background-color:' . $brick_bg_color . ';';
 			
 	//Return CSS Output
 	return $css_output;
 	
 }
 add_filter( 'mp_brick_bg_css', 'mp_stacks_default_brick_bg_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for a brick background:after
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_default_brick_bg_after_css( $css_output, $post_id ){
+	
+	//Get background image URL
+	$brick_bg_image = get_post_meta($post_id, 'brick_bg_image', true);
+	$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
+	
+	//Get background image opacity
+	$brick_bg_opacity = get_post_meta( $post_id, 'brick_bg_opacity', true );
+	$brick_bg_opacity = empty($brick_bg_opacity) ? 1 : $brick_bg_opacity/100;
+	
+	//Get background display type
+	$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
+	
+	//Add style lines to css output
+	$css_output .= 'background-image: url(\'' . $brick_bg_image . '\');';
+	$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? 'background-size: cover;' : NULL;
+	$css_output .= 'opacity:' . $brick_bg_opacity . ';';
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_bg_after_css', 'mp_stacks_default_brick_bg_after_css', 10, 2);
 
 /**
  * Filter Function which returns the css style lines for a brick's outer div

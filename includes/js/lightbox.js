@@ -4,14 +4,7 @@
 
 jQuery(document).ready(function($){
 	$('.mp-stack-edit-link').magnificPopup({ 
-	  type: 'iframe',
-	  callbacks: {
-		close: function() {
-		  // Will fire when popup is closed
-		  location.reload();
-		}
-	  }
-		
+	  type: 'iframe', 		
 	});	
 });
 
@@ -20,6 +13,7 @@ function close_lightbox(){
 	jQuery(document).ready(function($){
 		$('.mfp-iframe').load(function(){
 			$.magnificPopup.instance.close();
+			location.reload();
 		});
 	});
 }	
