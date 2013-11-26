@@ -90,7 +90,7 @@ function mp_brick( $post_id ){
 				$content_output .= $second_output;
 				$content_output .= '</div>';
 				if ( is_user_logged_in() ) {
-					$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) ) . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 				}
 				$content_output .= '</div>';
 			}
@@ -104,7 +104,7 @@ function mp_brick( $post_id ){
 					$content_output .= '<div class="mp-brick-left">';
 						$content_output .= $second_output;
 						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
@@ -131,7 +131,7 @@ function mp_brick( $post_id ){
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
 						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
@@ -150,7 +150,7 @@ function mp_brick( $post_id ){
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
 						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . get_edit_post_link( $post_id ) . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';

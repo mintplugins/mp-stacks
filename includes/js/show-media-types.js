@@ -62,5 +62,12 @@ jQuery(document).ready(function($){
 		$('#brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 		
 	});
-
+	
+	$( '#post' ).on( 'submit', function(event) {
+		//this.submit();
+		//Close lightbox on update if we are loaded in a lightbox	
+		parent.close_lightbox();
+		
+	});
+	
 });
