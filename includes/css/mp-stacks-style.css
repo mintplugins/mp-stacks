@@ -57,7 +57,7 @@
 }
 .mp-stack .mp-brick .mp-brick-text-line-1, .mp-stack .mp-brick .mp-brick-text-line-2{
 	margin:0px;	
-	line-height:100%;
+	line-height:140%;
 	word-wrap: normal;
 	word-break: break-word;
 }
@@ -97,4 +97,15 @@
 	padding:3px;
 	position:absolute;
 	z-index:100;
+}
+.mp-stack-updating{
+	position: absolute;
+	top: 50%;
+	width: auto;
+	text-align: center;
+	margin-top: -0.8em;
+	left: 8px;
+	right: 8px;
+	z-index: 99999999999999;	
+	color:#FFF;
 }

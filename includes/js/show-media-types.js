@@ -64,7 +64,7 @@ jQuery(document).ready(function($){
 	});
 	
 	$( '#post' ).on( 'submit', function(event) {
-		//this.submit();
+	
 		//Close lightbox on update if we are loaded in a lightbox	
 		parent.close_lightbox();
 		
