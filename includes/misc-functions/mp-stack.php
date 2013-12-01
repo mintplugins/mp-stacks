@@ -361,8 +361,8 @@ function mp_stacks_default_brick_tablet_css( $css_output, $post_id ){
 	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '50';
 	
 	//Tablet sized CSS
-	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
-	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; height:' . ($brick_min_height*.70) . 'px; }}';
+	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; }}';
+	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; }}';
 				
 	//Return CSS Output
 	return $css_output;

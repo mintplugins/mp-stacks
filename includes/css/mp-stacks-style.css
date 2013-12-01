@@ -6,7 +6,7 @@
 .mp-stack .mp-brick {
 	position:relative;
 	width: 100%; 
-	display:table;
+	display:block;
 	padding:0px;
 	margin:0px;
 	z-index:1;
