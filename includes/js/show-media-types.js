@@ -15,13 +15,19 @@ jQuery(document).ready(function($){
 			//Hide metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
 			
+			//Move metabox to the top of the metaboxes
+			$('#mp_stacks_media_metabox').after($('#mp_stacks_' + $(this).val() + '_metabox'));
+			
 		});
 		
 		//Show correct media type metaboxes by looping through each item in the 2nd drodown
 		var values = $("#mp_stacks_media_metabox .brick_second_media_type>option:selected").map(function() { 
 			
-			//Hide metaboxes with the matching name to this select item
+			//Show metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+			
+			//Move metabox to the second-from-the-top of the metaboxes
+			$('#mp_stacks_media_metabox').next().after($('#mp_stacks_' + $(this).val() + '_metabox'));
 			
 		});
 	

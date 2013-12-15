@@ -1,13 +1,18 @@
 /* Stylesheet for mp_stacks admin */
 
 /* Hide Media Button  */
-#wp-brick_text_line_1-media-buttons a,
-#wp-brick_text_line_2-media-buttons a{
-	display:none;	
+#wp-mp_core_wp_editor_brick_text_line_1-media-buttons a,
+#wp-mp_core_wp_editor_brick_text_line_2-media-buttons a{
+	/*display:none;	*/
 }
 
 /*Show Add Media Button though */
-#wp-brick_text_line_1-media-buttons #insert-media-button,
-#wp-brick_text_line_2-media-buttons #insert-media-button{
+#mp-brick_text_line_1-media-buttons #insert-media-button,
+#mp-brick_text_line_2-media-buttons #insert-media-button{
 	display:inline-block;	
+}
+/*hide slug div*/
+.post-type-mp_brick #normal-sortables,
+.post-type-mp_brick #edit-slug-box{
+	display:none;	
 }
