@@ -89,9 +89,6 @@ function mp_brick( $post_id ){
 				$content_output .= '<div class="mp-brick-centered-second">';
 				$content_output .= $second_output;
 				$content_output .= '</div>';
-				if ( is_user_logged_in() ) {
-					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) ) . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
-				}
 				$content_output .= '</div>';
 			}
 			//All Left - all on left
@@ -103,9 +100,6 @@ function mp_brick( $post_id ){
 					$content_output .= '</div>';
 					$content_output .= '<div class="mp-brick-left">';
 						$content_output .= $second_output;
-						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
-						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 					
@@ -130,9 +124,6 @@ function mp_brick( $post_id ){
 					$content_output .= '</div>';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
-						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
-						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 			}
@@ -149,9 +140,6 @@ function mp_brick( $post_id ){
 				$content_output .= '<div class="mp-brick-media-container">';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
-						if ( is_user_logged_in() ) {
-							$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
-						}
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 			}
@@ -213,9 +201,22 @@ function mp_brick( $post_id ){
 			$css_output .= '</style>';			
 									   
 			//Actual output
-			$html_output .= $css_output;
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+				
+				//Brick Meta Div
+				$html_output .= '<div class="mp-brick-meta">';
+					//Edit Brick Link
+					if ( is_user_logged_in() ) {
+					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+					}
+					//Brick CSS
+					$html_output .= $css_output;
+				$html_output .= '</div>';
+				
+				//Brick BG Div
 				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '></div>';
+				
+				//Brick Content Divs
 				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
 					$html_output .= '<div class="mp-brick-inner">';
 						$html_output .= $content_output; 
@@ -298,13 +299,16 @@ function mp_stacks_default_brick_outer_css( $css_output, $post_id ){
 	
 	//Max brick width
 	$brick_max_width = get_post_meta($post_id, 'brick_max_width', true);
-	$brick_max_width = !empty($brick_max_width) ? $brick_max_width : '5000';
-				
-	//Outer style lines
-	$css_output .= 'max-width:' . $brick_max_width . 'px;';
+	
+	if (!empty($brick_max_width)){
+		
+		//Outer style lines
+		$css_output .= 'max-width:' . $brick_max_width . 'px;';
 			
+	}
+	
 	//Return CSS Output
-	return $css_output;
+	return $css_output;	
 	
 }
 add_filter( 'mp_brick_outer_css', 'mp_stacks_default_brick_outer_css', 10, 2);

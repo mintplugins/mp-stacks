@@ -72,7 +72,7 @@ jQuery(document).ready(function($){
 	$( '#post' ).on( 'submit', function(event) {
 	
 		//Close lightbox on update if we are loaded in a lightbox	
-		parent.close_lightbox();
+		parent.mp_stacks_close_lightbox();
 		
 	});
 	
