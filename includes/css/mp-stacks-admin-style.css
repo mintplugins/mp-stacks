@@ -16,3 +16,11 @@
 .post-type-mp_brick #edit-slug-box{
 	display:none;	
 }
+
+/*Shortcode edit buttons*/
+#mp_stack_btns{
+	padding: 2px;
+	position: absolute;
+	display: none;
+	z-index: 155000;	
+}

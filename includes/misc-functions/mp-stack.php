@@ -207,7 +207,7 @@ function mp_brick( $post_id ){
 				$html_output .= '<div class="mp-brick-meta">';
 					//Edit Brick Link
 					if ( is_user_logged_in() ) {
-					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-edit-link' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 					}
 					//Brick CSS
 					$html_output .= $css_output;

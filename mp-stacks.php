@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://moveplugins.com
 Description: Stack images and text up. Show it with a shortcode or function call.
-Version: beta1.0.3.1
+Version: beta1.0.3.2
 Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_stacks
@@ -187,6 +187,11 @@ function mp_stacks_include_files(){
 		 * Enqueue Scripts
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/enqueue-scripts.php' );
+		
+		/**
+		 * Enqueue Scripts
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/misc-functions.php' );
 	
 	}
 }

@@ -46,13 +46,13 @@ jQuery(document).ready(function($){
 	
 	$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
 		//Set TinyMCE default font size dynamically	
-		
+				
 		//Text area 1	
-		$('#brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
-		$('#brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
 		//Text area 2
-		$('#brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
-		$('#brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 		
 	});
 	
@@ -60,12 +60,12 @@ jQuery(document).ready(function($){
 		//Set TinyMCE default font size dynamically		
 		
 		//Text area 1
-		$('#brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
-		$('#brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
 		
 		//Text area 2
-		$('#brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
-		$('#brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 		
 	});
 	
@@ -77,3 +77,18 @@ jQuery(document).ready(function($){
 	});
 	
 });
+
+
+
+//Close the lightbox when the update button is clicked
+function mp_stacks_close_lightbox(){
+	
+	//Close the iframe and reload the window
+	jQuery(document).ready(function($){
+		
+		//Close iframe
+		$('.mfp-iframe').load(function(){
+			$.magnificPopup.instance.close();
+		});
+	});
+}

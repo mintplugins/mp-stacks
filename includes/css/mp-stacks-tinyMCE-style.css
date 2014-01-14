@@ -1,0 +1,7 @@
+img.mp-stack {
+	border: 1px dashed #888;
+	background: #F8F8F8 url("../../assets/images/mp_stack-icon-2x.png") no-repeat scroll center center;
+	
+	width: 100%;
+	height: 250px;
+}

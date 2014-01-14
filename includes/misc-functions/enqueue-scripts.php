@@ -4,19 +4,28 @@
  */
 function mp_stacks_admin_enqueue(){
 	
-	//enqueue js after tiny mce 
-	function custom_after_wp_tiny_mce() {
-		 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__)), array( 'jquery') );
-	}
-	add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );
-	
 	//css
 	wp_enqueue_style( 'mp_stacks_admin_style', plugins_url('css/mp-stacks-admin-style.css', dirname(__FILE__)) );
 	
-	if ( !empty( $_GET['mp-stacks-edit-link'] ) ){
+	if ( !empty( $_GET['mp-stacks-minimal-admin'] ) ){
 		//Hide admin items for edit brick screen - css
-		wp_enqueue_style( 'mp_stacks_admin_brick', plugins_url('css/mp-stacks-admin-brick.css', dirname(__FILE__)) );
+		wp_enqueue_style( 'mp_stacks_minimal-admin-css', plugins_url('css/mp-stacks-minimal-admin.css', dirname(__FILE__)) );
+		
+		//Append minimal admin variable to all urls if set
+		wp_enqueue_script( 'mp_stacks_minimal-admin-js', plugins_url('js/mp-stacks-minimal-admin.js', dirname(__FILE__)), array('jquery') );	
 	}
+	
+	//lightbox
+	wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ) );
+	
+	//lightbox css
+	wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ) );
+	
+	//enqueue js after tiny mce 
+	function custom_after_wp_tiny_mce() {
+		 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__)), array( 'jquery, mp_stacks_lightbox') );
+	}
+	add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );	
 	
 }
 add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');

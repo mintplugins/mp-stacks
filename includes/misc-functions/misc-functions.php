@@ -13,49 +13,50 @@
  */
 
 /**
-* Show the "Font Size" in the TinyMCE editor 
-*
-* @since    1.0.0
-* @link     http://moveplugins.com/doc/
-* @see      function_name()
-* @param    array $options See link for description.
-* @return   array $options
-*/
-function mp_stacks_wp_editor_fontsize_filter( $options ) {
-        array_shift( $options );
-        array_unshift( $options, 'fontsizeselect');
-		array_unshift( $options, 'font_size_style_values' );		
-	    return $options;
-}
-add_filter('mce_buttons_2', 'mp_stacks_wp_editor_fontsize_filter');
-
-
-/**
- * Add custom text sizes in the font size drop down list of the rich text editor (TinyMCE) in WordPress
- * $initArray is a variable of type array that contains all default TinyMCE parameters.
- * Value 'theme_advanced_font_sizes' needs to be added, if an overwrite to the default font sizes in the list, is needed.
+ * Make the mp_stacks shortcode display the stack editor for TinyMCE
  *
  * @since   1.0.0
  * @link    http://moveplugins.com/doc/
- * @param   array $$initArray See link for description.
- * @return  array $initArray
+ * @param   array $plugin_array See link for description.
+ * @return  array $plugin_array
  */
-function customize_text_sizes($initArray){
-	
-	$number_string = NULL;
-	
-	for ($i = 1; $i <= 100; $i++) {
-		$number_string .= $i . '%,';
+function mp_stacks_add_stacks_tinymce_plugin($plugin_array) {
+ 	if ( get_user_option('rich_editing') == 'true') {
+		$plugin_array['mpstacks'] =  plugins_url( '/js/', dirname(__FILE__) ) . 'mp-stacks-tinymce.js';
 	}
-	
-   $initArray['theme_advanced_font_sizes'] = $number_string;
-   
-   //$initArray['font_size_style_values'] = $number_string;
-   
-   //Show the "Kitchen Sink" in the TinyMCE editor by default
-   $initArray['wordpress_adv_hidden'] = false;
-      
-   return $initArray;
+    return $plugin_array;
 }
-// Assigns customize_text_sizes() to "tiny_mce_before_init" filter
-add_filter('tiny_mce_before_init', 'customize_text_sizes');
+add_filter("mce_external_plugins", "mp_stacks_add_stacks_tinymce_plugin");
+
+/**
+ * Add mp_stack stylesheet to the TinyMCE styles
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    array $wp See link for description.
+ * @return   void
+ */
+function mp_stacks_addTinyMCELinkClasses( $wp ) {	
+	add_editor_style( plugins_url( '/css/', dirname(__FILE__) ) . 'mp-stacks-tinyMCE-style.css' ); 
+}
+add_action( 'mp_core_editor_styles', 'mp_stacks_addTinyMCELinkClasses' );
+
+/**
+ * Ajax callback...
+ *
+ * @since   1.0.0
+ * @link    http://moveplugins.com/doc/
+ * @return  array $plugin_array
+ */
+function mp_stacks_tinyMCE_shortcode_callback() {
+
+	$whatever = $_POST['whatever'];
+
+	$whatever .=  "Hooligans!@";
+
+        echo $whatever;
+
+	die(); // this is required to return a proper result
+}
+add_action( 'wp_ajax_mp_stacks_tinyMCE_shortcode', 'mp_stacks_tinyMCE_shortcode_callback' );

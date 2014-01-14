@@ -55,7 +55,11 @@
 	text-align:center;
 	width:100%;	
 }
-.mp-stack .mp-brick .mp-brick-text-line-1, .mp-stack .mp-brick .mp-brick-text-line-2{
+.mp-stack .mp-brick .mp-brick-text-line-1, 
+.mp-stack .mp-brick .mp-brick-text-line-2,
+.mp-stack .mp-brick .mp-brick-text-line-1 p,
+.mp-stack .mp-brick .mp-brick-text-line-2 p
+{
 	margin:0px;	
 	line-height:140%;
 	word-wrap: normal;
