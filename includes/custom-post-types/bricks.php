@@ -19,7 +19,7 @@ function mp_brick_post_type() {
 			'add_new_item' 		=> __('Add New Brick', 'mp_stacks'),
 			'edit_item' 		=> __('Edit Brick', 'mp_stacks'),
 			'new_item' 			=> __('New Brick', 'mp_stacks'),
-			'all_items' 		=> __('All Bricks', 'mp_stacks'),
+			'all_items' 		=> __('Manage Bricks', 'mp_stacks'),
 			'view_item' 		=> __('View Bricks', 'mp_stacks'),
 			'search_items' 		=> __('Search Bricks', 'mp_stacks'),
 			'not_found' 		=>  __('No Bricks found', 'mp_stacks'),
@@ -138,11 +138,23 @@ function mp_stacks_show_each_stack_in_menu(){
 		add_submenu_page( 'edit.php?post_type=mp_brick', $stack, $stack, 'manage_options', add_query_arg( array('mp_stacks' => $id), 'edit.php?post_type=mp_brick' ) );
 	}	
 }
-add_action('admin_menu', 'mp_stacks_show_each_stack_in_menu');
+//add_action('admin_menu', 'mp_stacks_show_each_stack_in_menu');
+
+/**
+ * Make the "Manage Stacks" page link to lists of bricks instead of an archive page
+ */
+function remove_quick_edit( $actions, $tag ) {
+		
+	unset($actions['inline hide-if-no-js']);
+	
+	$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("View Bricks in Stack", 'mp_stacks') . '</a>';
+	
+	return $actions;
+}
+add_filter('mp_stacks_row_actions','remove_quick_edit',10,2);
 
  /**
- * Fetch Repo Button
- * Add ?fetch=true to the permalink in the backend
+ * Hide Permalink output on single edit screen
  */
 function mp_stacks_perm($return, $id, $new_title, $new_slug){
 	global $post;
