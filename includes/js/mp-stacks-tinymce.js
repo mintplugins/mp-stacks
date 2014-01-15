@@ -27,7 +27,7 @@
 					
 					$.magnificPopup.open({
 						  items: {
-							src: 'http://localhost:8888/wordpress1/wp-admin/edit.php?post_type=mp_brick&mp_stacks=' + stack_id + '&mp-stacks-minimal-admin=true'
+							src: 'edit.php?post_type=mp_brick&mp_stacks=' + stack_id + '&mp-stacks-minimal-admin=true'
 						  },
 						  type: 'iframe'
 					});
