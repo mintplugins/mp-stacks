@@ -1,6 +1,6 @@
 jQuery(document).ready(function($){
 	
-	function reset_media_types(){
+	function mp_stacks_reset_media_types(){
 		//Hide media type metaboxes by looping through each item in the drodown
 		var values = $("#mp_stacks_media_metabox .brick_first_media_type>option").map(function() { 
 			
@@ -33,15 +33,15 @@ jQuery(document).ready(function($){
 	
 	}
 	
-	reset_media_types();
+	mp_stacks_reset_media_types();
 	
 	$('#mp_stacks_media_metabox .brick_first_media_type').change(function() {
-		reset_media_types();
+		mp_stacks_reset_media_types();
 	});
 	
 	
 	$('#mp_stacks_media_metabox .brick_second_media_type').change(function() {
-		reset_media_types();
+		mp_stacks_reset_media_types();
 	});
 	
 	$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
