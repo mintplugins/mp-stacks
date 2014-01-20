@@ -1,5 +1,121 @@
 <?php
 /**
+ * Function which echoes the CSS output for the bricks in a stack into the <head>
+ * Parameter: None
+ */
+function mp_stack_enqueue_stack_shortcode_css(){
+	
+	//Get the global post var
+	global $post;
+		
+	//Our the mp_stack shortcode exists in the current post var
+	if( has_shortcode( $post->post_content, 'mp_stack') ) {
+						
+		//Get the stack id from the shortcode
+		$stack_id = explode( '[mp_stack stack="', $post->post_content );		
+		$stack_id = explode( '"]', $stack_id[1] );
+		$stack_id = $stack_id[0];
+		
+		//Echo the stack css
+		echo mp_stack_css( $stack_id );
+	}
+		
+}
+add_action( 'wp_enqueue_scripts', 'mp_stack_enqueue_stack_shortcode_css');
+		
+/**
+ * Function which returns the CSS output for the bricks in a stack
+ * Parameter: Stack ID
+ */
+function mp_stack_css( $stack_id ) {		
+		
+	//Set the args for the new query
+	$mp_stacks_args = array(
+		'post_type' => "mp_brick",
+		'posts_per_page' => 0,
+		'orderby' => 'menu_order',
+		'order' => 'ASC',
+		'tax_query' => array(
+			'relation' => 'AND',
+			array(
+				'taxonomy' => 'mp_stacks',
+				'field'    => 'id',
+				'terms'    => array( $stack_id ),
+				'operator' => 'IN'
+			)
+		)
+	);	
+		
+	//Create new query for stacks
+	$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
+	
+	$css_output = NULL;
+	
+	//Loop through the stack group		
+	if ( $mp_stack_query->have_posts() ) { 
+		
+		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
+		
+			//Build Brick CSS Output
+			$css_output .= mp_brick_css( get_the_ID() );
+			
+		endwhile;
+		
+		return $css_output;
+		
+	}
+}
+
+/**
+ * Function which returns the CSS output for a brick
+ * Parameter: Brick ID
+ */
+function mp_brick_css( $post_id ){
+	
+		//CSS
+		$css_output = '<style type="text/css">';
+		
+		//Brick CSS
+		$css_output .= '#mp-brick-' . $post_id .'{';
+		$css_output = apply_filters( 'mp_brick_css', $css_output, $post_id );
+		$css_output .= '}';
+		
+		//Brick Background CSS
+		$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg {';
+		$css_output = apply_filters( 'mp_brick_bg_css', $css_output, $post_id );
+		$css_output .= '}';
+		
+		//Brick Background:after CSS
+		$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg:after {';
+		$css_output = apply_filters( 'mp_brick_bg_after_css', $css_output, $post_id );
+		$css_output .= '}';
+		
+		//Brick Outer CSS
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{';
+		$css_output = apply_filters( 'mp_brick_outer_css', $css_output, $post_id );
+		$css_output .= '}';
+		
+		//Brick Inner CSS
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{';
+		$css_output = apply_filters( 'mp_brick_inner_css', $css_output, $post_id );
+		$css_output .= '}';
+		
+		//Brick Container CSS
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-media-container>div{';
+		$css_output = apply_filters( 'mp_brick_container_css', $css_output, $post_id );
+		$css_output .= '}';
+					
+		//Additional CSS
+		$css_output .= apply_filters( 'mp_brick_additional_css', $css_output, $post_id );
+		
+		//End CSS
+		$css_output .= '</style>';	
+		
+		return $css_output;	
+				
+}
+
+/**
  * Function which return the HTML output for a stack
  * Parameter: Stack ID
  */
@@ -160,46 +276,7 @@ function mp_brick( $post_id ){
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
-		    
-			//CSS
-			$css_output = '<style scoped>';
-			
-			//Brick CSS
-			$css_output .= '#mp-brick-' . $post_id .'{';
-			$css_output = apply_filters( 'mp_brick_css', $css_output, $post_id );
-			$css_output .= '}';
-			
-			//Brick Background CSS
-			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg {';
-			$css_output = apply_filters( 'mp_brick_bg_css', $css_output, $post_id );
-			$css_output .= '}';
-			
-			//Brick Background:after CSS
-			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg:after {';
-			$css_output = apply_filters( 'mp_brick_bg_after_css', $css_output, $post_id );
-			$css_output .= '}';
-			
-			//Brick Outer CSS
-			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-outer{';
-			$css_output = apply_filters( 'mp_brick_outer_css', $css_output, $post_id );
-			$css_output .= '}';
-			
-			//Brick Inner CSS
-			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-inner{';
-			$css_output = apply_filters( 'mp_brick_inner_css', $css_output, $post_id );
-			$css_output .= '}';
-			
-			//Brick Container CSS
-			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-media-container>div{';
-			$css_output = apply_filters( 'mp_brick_container_css', $css_output, $post_id );
-			$css_output .= '}';
-						
-			//Additional CSS
-			$css_output .= apply_filters( 'mp_brick_additional_css', $css_output, $post_id );
-			
-			//End CSS
-			$css_output .= '</style>';			
-									   
+		    									   
 			//Actual output
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
 				
@@ -209,8 +286,6 @@ function mp_brick( $post_id ){
 					if ( is_user_logged_in() ) {
 					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 					}
-					//Brick CSS
-					$html_output .= $css_output;
 				$html_output .= '</div>';
 				
 				//Brick BG Div
