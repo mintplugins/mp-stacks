@@ -29,6 +29,13 @@ function mp_stacks_bg_create_meta_box(){
 			'field_value' => '',
 		),
 		array(
+			'field_id'			=> 'brick_bg_color_opacity',
+			'field_title' 	=> __( 'Background Color Opacity: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Set how see-through you want your background color to be.',
+			'field_type' 	=> 'input_range',
+			'field_value' => '',
+		),
+		array(
 			'field_id'			=> 'brick_bg_image',
 			'field_title' 	=> __( 'Background Image: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Select an image to use as your background image for this brick.',
@@ -44,9 +51,9 @@ function mp_stacks_bg_create_meta_box(){
 			'field_select_values' => array( 'fill' => 'Fill Area', 'tiled' => 'Tiled' ),
 		),
 		array(
-			'field_id'			=> 'brick_bg_opacity',
+			'field_id'			=> 'brick_bg_image_opacity',
 			'field_title' 	=> __( 'Background Image Opacity: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Set the see-through you want your background image to be over your color.',
+			'field_description' 	=> 'Set how see-through you want your background image to be over your color.',
 			'field_type' 	=> 'input_range',
 			'field_value' 	=> '100',
 		),

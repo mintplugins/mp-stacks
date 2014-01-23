@@ -9,15 +9,24 @@ function mp_stack_enqueue_stack_shortcode_css(){
 	global $post;
 		
 	//Our the mp_stack shortcode exists in the current post var
-	if( has_shortcode( $post->post_content, 'mp_stack') ) {
-						
-		//Get the stack id from the shortcode
-		$stack_id = explode( '[mp_stack stack="', $post->post_content );		
-		$stack_id = explode( '"]', $stack_id[1] );
-		$stack_id = $stack_id[0];
-		
-		//Echo the stack css
-		echo mp_stack_css( $stack_id );
+	if ( isset($post->post_content) ){
+		if( has_shortcode( $post->post_content, 'mp_stack') ) {
+							
+			//Get the stack id from the shortcode
+			$stacks = explode( '[mp_stack stack="', $post->post_content );	
+			
+			foreach( $stacks as $stack ){
+				$stack_id = explode( '"]', $stack );
+				$stack_id = $stack_id[0];
+				
+				if ($stack_id){
+					//Echo the stack css
+					echo mp_stack_css( $stack_id );
+				}
+			}
+			
+			
+		}
 	}
 		
 }
@@ -324,11 +333,18 @@ function mp_stacks_default_brick_css( $css_output, $post_id ){
  */
 function mp_stacks_default_brick_bg_css( $css_output, $post_id ){
 	
+	//Get background color opacity
+	$brick_bg_color_opacity = get_post_meta($post_id, 'brick_bg_color_opacity', true);
+	$brick_bg_color_opacity = !empty($brick_bg_color_opacity) ? $brick_bg_color_opacity/100 : 1;
+	
 	//Get background color
 	$brick_bg_color = get_post_meta($post_id, 'brick_bg_color', true);
 	
+	//Convert to rgb from hex
+	$brick_bg_color_rgb_array = mp_core_hex2rgb($brick_bg_color);
+	
 	//Add style lines to css output
-	$css_output .= 'background-color:' . $brick_bg_color . ';';
+	$css_output .= 'background-color:rgba(' . $brick_bg_color_rgb_array[0] . ', ' . $brick_bg_color_rgb_array[1] . ' , ' . $brick_bg_color_rgb_array[2] . ', ' . $brick_bg_color_opacity . ')';
 			
 	//Return CSS Output
 	return $css_output;
@@ -348,8 +364,8 @@ function mp_stacks_default_brick_bg_after_css( $css_output, $post_id ){
 	$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
 	
 	//Get background image opacity
-	$brick_bg_opacity = get_post_meta( $post_id, 'brick_bg_opacity', true );
-	$brick_bg_opacity = empty($brick_bg_opacity) ? 1 : $brick_bg_opacity/100;
+	$brick_bg_image_opacity = get_post_meta( $post_id, 'brick_bg_image_opacity', true );
+	$brick_bg_image_opacity = empty($brick_bg_image_opacity) ? 1 : $brick_bg_image_opacity/100;
 	
 	//Get background display type
 	$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
@@ -357,7 +373,7 @@ function mp_stacks_default_brick_bg_after_css( $css_output, $post_id ){
 	//Add style lines to css output
 	$css_output .= 'background-image: url(\'' . $brick_bg_image . '\');';
 	$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? 'background-size: cover;' : NULL;
-	$css_output .= 'opacity:' . $brick_bg_opacity . ';';
+	$css_output .= 'opacity:' . $brick_bg_image_opacity . ';';
 			
 	//Return CSS Output
 	return $css_output;
