@@ -33,7 +33,7 @@ function mp_stacks_bg_create_meta_box(){
 			'field_title' 	=> __( 'Background Color Opacity: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Set how see-through you want your background color to be.',
 			'field_type' 	=> 'input_range',
-			'field_value' => '',
+			'field_value' 	=> '100',
 		),
 		array(
 			'field_id'			=> 'brick_bg_image',
