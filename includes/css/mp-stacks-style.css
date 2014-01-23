@@ -60,7 +60,8 @@
 .mp-stack .mp-brick .mp-brick-text-line-1 p,
 .mp-stack .mp-brick .mp-brick-text-line-2 p
 {
-	margin:0px;	
+	margin-bottom: 15px;
+	margin-bottom: 1.5rem;	
 	line-height:140%;
 	word-wrap: normal;
 	word-break: break-word;
