@@ -39,6 +39,7 @@
 	z-index:1;	
 }
 .mp-stack .mp-brick .mp-brick-inner{
+	position:relative;
 	width: 100%; 
 	display:table;
 	padding:0px;

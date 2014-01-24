@@ -343,8 +343,12 @@ function mp_stacks_default_brick_bg_css( $css_output, $post_id ){
 	//Convert to rgb from hex
 	$brick_bg_color_rgb_array = mp_core_hex2rgb($brick_bg_color);
 	
-	//Add style lines to css output
-	$css_output .= 'background-color:rgba(' . $brick_bg_color_rgb_array[0] . ', ' . $brick_bg_color_rgb_array[1] . ' , ' . $brick_bg_color_rgb_array[2] . ', ' . $brick_bg_color_opacity . ')';
+	//If a color has truly been set
+	if ( !empty( $brick_bg_color_rgb_array ) ){
+	
+		//Add style lines to css output
+		$css_output .= 'background-color:rgba(' . $brick_bg_color_rgb_array[0] . ', ' . $brick_bg_color_rgb_array[1] . ' , ' . $brick_bg_color_rgb_array[2] . ', ' . $brick_bg_color_opacity . ')';
+	}
 			
 	//Return CSS Output
 	return $css_output;
