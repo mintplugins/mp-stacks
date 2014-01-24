@@ -31,7 +31,7 @@ function mp_brick_post_type() {
 			
 		$slide_args = array(
 			'labels' 			=> $slide_labels,
-			'public' 			=> true,
+			'public' 			=> false,
 			'publicly_queryable'=> false,
 			'show_ui' 			=> true, 
 			'show_in_menu' 		=> true, 
