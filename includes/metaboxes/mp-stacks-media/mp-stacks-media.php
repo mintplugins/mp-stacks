@@ -10,7 +10,7 @@ function mp_stacks_media_create_meta_box(){
 	 */
 	$mp_stacks_media_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_media_metabox', 
-		'metabox_title' => __( 'Media Settings', 'mp_stacks'), 
+		'metabox_title' => __( 'Media Type Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'advanced', 
 		'metabox_priority' => 'high' 

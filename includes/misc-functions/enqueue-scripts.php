@@ -23,7 +23,7 @@ function mp_stacks_admin_enqueue(){
 	
 	//enqueue js after tiny mce 
 	function custom_after_wp_tiny_mce() {
-		 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__)), array( 'jquery, mp_stacks_lightbox') );
+		 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ) );
 	}
 	add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );	
 	

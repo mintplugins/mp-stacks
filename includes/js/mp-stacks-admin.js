@@ -1,33 +1,71 @@
 jQuery(document).ready(function($){
 	
-	function mp_stacks_reset_media_types(){
+	function mp_stacks_reset_media_types(){		
+					
 		//Hide media type metaboxes by looping through each item in the drodown
 		var values = $("#mp_stacks_media_metabox .brick_first_media_type>option").map(function() { 
 			
 			//Hide metaboxes with the matching name to this select item
-			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'none');	
+			//$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'none');	
 				
 		});
 	
 		//Show correct media type metaboxes by looping through each item in the 1st drodown
 		var values = $("#mp_stacks_media_metabox .brick_first_media_type>option:selected").map(function() { 
+		
 			
-			//Hide metaboxes with the matching name to this select item
+			//Show metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+			
+			//Loop through all elements and if they are a tinyMCE, reset them
+			$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+				
+				//Re-initialize tinymce for each TInyMCE area	
+				tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+				
+			});	
 			
 			//Move metabox to the top of the metaboxes
 			$('#mp_stacks_media_metabox').after($('#mp_stacks_' + $(this).val() + '_metabox'));
+			
+			//Loop through all elements and if they are a tinyMCE, reset them
+			$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+				
+				//Re-initialize tinymce for each TInyMCE area
+				//tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+				$('#'+this.id+'_parent').remove();
+				$(this).css('display', 'block');
+				tinyMCE.execCommand( 'mceAddEditor', true, this.id );				
+			
+			});	
 			
 		});
 		
 		//Show correct media type metaboxes by looping through each item in the 2nd drodown
 		var values = $("#mp_stacks_media_metabox .brick_second_media_type>option:selected").map(function() { 
 			
+			
 			//Show metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+						
+			//Loop through all elements and if they are a tinyMCE, reset them
+			$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+								
+				//Re-initialize tinymce for each TInyMCE area
+				tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+				
+			});	
 			
 			//Move metabox to the second-from-the-top of the metaboxes
 			$('#mp_stacks_media_metabox').next().after($('#mp_stacks_' + $(this).val() + '_metabox'));
+			
+			//Loop through all elements and if they are a tinyMCE, reset them
+			$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+				//Re-initialize tinymce for each TInyMCE area
+				$('#'+this.id+'_parent').remove();
+				$(this).css('display', 'block');
+				tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+			});	
 			
 		});
 	
@@ -48,11 +86,11 @@ jQuery(document).ready(function($){
 		//Set TinyMCE default font size dynamically	
 				
 		//Text area 1	
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		//$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		//$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
 		//Text area 2
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		//$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		//$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 		
 	});
 	
@@ -60,12 +98,12 @@ jQuery(document).ready(function($){
 		//Set TinyMCE default font size dynamically		
 		
 		//Text area 1
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
+		//$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
+		//$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
 		
 		//Text area 2
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
+		//$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
+		//$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 		
 	});
 	

@@ -24,3 +24,28 @@
 	display: none;
 	z-index: 155000;	
 }
+.mp_field.mp_field_brick_line_1_color,
+.mp_field.mp_field_brick_line_1_font_size,
+.mp_field.mp_field_brick_line_2_color,
+.mp_field.mp_field_brick_line_2_font_size{
+	width:250px;
+	display: inline-block;
+	float:left;
+	margin-right:20px;
+	border:none;
+}
+.mp_field.mp_field_brick_text_line_1,
+.mp_field.mp_field_brick_text_line_2{
+	clear:both;	
+}
+.mp_field.mp_field_brick_text_line_1{
+	margin-bottom:30px;	
+}
+
+#mp_stack-media-button:before{
+	font: 400 18px/1 dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f214";	
+}
