@@ -24,8 +24,11 @@
  */
 function mp_stacks_migrate_media_to_content(){
  	
+	$checker = get_option('mp_stacks_migrate_media_to_content');
+	$checker = empty($checker) ? 0 : $checker;
+	
 	//If this hasn't been done before
-	if (!get_option('mp_stacks_migrate_media_to_content')){
+	if ( get_option('mp_stacks_migrate_media_to_content') < 5){
 		
 		//Set the args for the new query
 		$mp_brick_args = array(
@@ -68,11 +71,11 @@ function mp_stacks_migrate_media_to_content(){
 		}
 		
 		//Let this function know we don't have to do this again
-		update_option( 'mp_stacks_migrate_media_to_content', true );
+		update_option( 'mp_stacks_migrate_media_to_content',  $checker + 1);
 	}
 	
 }
-add_action('admin_init', 'mp_stacks_migrate_media_to_content');
+add_action('init', 'mp_stacks_migrate_media_to_content');
 
 /**
  * Notice about updates
