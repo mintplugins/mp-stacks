@@ -110,7 +110,7 @@ function mp_brick_css( $post_id ){
 		$css_output .= '}';
 		
 		//Brick Container CSS
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-media-container>div{';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-type-container>div{';
 		$css_output = apply_filters( 'mp_brick_container_css', $css_output, $post_id );
 		$css_output .= '}';
 					
@@ -194,20 +194,20 @@ function mp_brick( $post_id ){
 			$post_specific_alignment = get_post_meta($post_id, 'brick_alignment', true);
 			
 			//First Media Type
-			$mp_stacks_first_media_type = get_post_meta($post_id, 'brick_first_media_type', true);
+			$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
 			
 			//Second Media Type
-			$mp_stacks_second_media_type = get_post_meta($post_id, 'brick_second_media_type', true);
+			$mp_stacks_second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);
 			
 			//First Output
-			$first_output = has_filter('mp_stacks_brick_media_output') ? apply_filters( 'mp_stacks_brick_media_output', $first_output, $mp_stacks_first_media_type, $post_id) : NULL;
+			$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
 			
 			//Second Output	
-			$second_output = has_filter('mp_stacks_brick_media_output') ? apply_filters( 'mp_stacks_brick_media_output', $second_output, $mp_stacks_second_media_type, $post_id) : NULL;
+			$second_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $second_output, $mp_stacks_second_content_type, $post_id) : NULL;
 			
 			//Centered - dont use left and right
 			if ($post_specific_alignment == "centered"){
-				$content_output .= '<div class="mp-brick-media-container mp-brick-centered">';
+				$content_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
 				$content_output .= '<div class="mp-brick-centered-first">';
 				$content_output .= $first_output;
 				$content_output .= '</div>';
@@ -219,7 +219,7 @@ function mp_brick( $post_id ){
 			//All Left - all on left
 			else if ($post_specific_alignment == "allleft"){
 				//Left side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-left">';
 						$content_output .= $first_output;
 					$content_output .= '</div>';
@@ -229,7 +229,7 @@ function mp_brick( $post_id ){
 				$content_output .= '</div>';
 					
 				//Right side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-right">';
 					$content_output .= '</div>';
 				$content_output .= '</div>';
@@ -237,13 +237,13 @@ function mp_brick( $post_id ){
 			//All Right - all on right
 			else if ($post_specific_alignment == "allright"){
 				//Left side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-left">';
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 					
 				//Right side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $first_output;
 					$content_output .= '</div>';
@@ -255,14 +255,14 @@ function mp_brick( $post_id ){
 			//Set left and right outputs
 			else{
 				//Left side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-left">';
 						$content_output .= $first_output;
 					$content_output .= '</div>';
 				$content_output .= '</div>';
 					
 				//Right side HTML output
-				$content_output .= '<div class="mp-brick-media-container">';
+				$content_output .= '<div class="mp-brick-content-type-container">';
 					$content_output .= '<div class="mp-brick-right">';
 						$content_output .= $second_output;
 					$content_output .= '</div>';
@@ -409,18 +409,18 @@ function mp_stacks_default_brick_outer_css( $css_output, $post_id ){
 add_filter( 'mp_brick_outer_css', 'mp_stacks_default_brick_outer_css', 10, 2);
 
 /**
- * Filter Function which returns the css style lines for a brick's media container div
+ * Filter Function which returns the css style lines for a brick's content-type container div
  * Parameter: CSS output
  * Parameter: Post ID
  */
 function mp_stacks_default_brick_container_css( $css_output, $post_id ){
 	
-	//Min media margin
-	$brick_media_margin = get_post_meta($post_id, 'brick_min_above_below', true);
-	$brick_media_margin = is_numeric($brick_media_margin) ? $brick_media_margin : '10';
+	//Min content-type margin
+	$brick_content_type_margin = get_post_meta($post_id, 'brick_min_above_below', true);
+	$brick_content_type_margin = is_numeric($brick_content_type_margin) ? $brick_content_type_margin : '10';
 			
 	//Outer style lines
-	$css_output .= 'margin-top:' . $brick_media_margin . 'px; margin-bottom:' . $brick_media_margin . 'px;';
+	$css_output .= 'margin-top:' . $brick_content_type_margin . 'px; margin-bottom:' . $brick_content_type_margin . 'px;';
 			
 	//Return CSS Output
 	return $css_output;

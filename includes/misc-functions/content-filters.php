@@ -1,15 +1,15 @@
 <?php 
 
 /**
- * Filter Media Output for text
+ * Filter Content Output for text
  */
-function mp_stacks_brick_media_output_text($default_media_output, $mp_stacks_media_type, $post_id){
+function mp_stacks_brick_content_output_text($default_content_output, $mp_stacks_content_type, $post_id){
 	
-	//If this stack media type is set to be text	
-	if ($mp_stacks_media_type == 'text'){
+	//If this stack content type is set to be text	
+	if ($mp_stacks_content_type == 'text'){
 		
-		//Set default value for $media_output to NULL
-		$media_output = NULL;	
+		//Set default value for $content_output to NULL
+		$content_output = NULL;	
  
 		//First line of text
 		$brick_text_line_1 = do_shortcode( html_entity_decode( get_post_meta($post_id, 'brick_text_line_1', true) ) );
@@ -21,31 +21,31 @@ function mp_stacks_brick_media_output_text($default_media_output, $mp_stacks_med
 		has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
 		
 		//First Output
-		$media_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '<div class="text">' : NULL;
-		$media_output .= !empty($brick_text_line_1) ? '<div class="mp-brick-text-line-1">' . $brick_text_line_1 . '</div>' : '';
-		$media_output .= !empty($brick_text_line_2) ? '<div class="mp-brick-text-line-2">' . $brick_text_line_2 . '</div>': NULL;
-		$media_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '</div>' : NULL;
+		$content_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '<div class="text">' : NULL;
+		$content_output .= !empty($brick_text_line_1) ? '<div class="mp-brick-text-line-1">' . $brick_text_line_1 . '</div>' : '';
+		$content_output .= !empty($brick_text_line_2) ? '<div class="mp-brick-text-line-2">' . $brick_text_line_2 . '</div>': NULL;
+		$content_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '</div>' : NULL;
 		
 		//Return
-		return $media_output;
+		return $content_output;
 	}
 	else{
 		//Return
-		return $default_media_output;
+		return $default_content_output;
 	}
 }
-add_filter('mp_stacks_brick_media_output', 'mp_stacks_brick_media_output_text', 10, 3);
+add_filter('mp_stacks_brick_content_output', 'mp_stacks_brick_content_output_text', 10, 3);
 			
 /**
- * Filter Media Output for image
+ * Filter Content Output for image
  */
-function mp_stacks_brick_media_output_image($default_media_output, $mp_stacks_media_type, $post_id){
+function mp_stacks_brick_content_output_image($default_content_output, $mp_stacks_content_type, $post_id){
 	
-	//If this stack media type is set to be an image	
-	if ($mp_stacks_media_type == 'image'){
+	//If this stack content type is set to be an image	
+	if ($mp_stacks_content_type == 'image'){
 		
-		//Set default value for $media_output to NULL
-		$media_output = NULL;
+		//Set default value for $content_output to NULL
+		$content_output = NULL;
 		
 		//Get main image URL
 		$brick_main_image = get_post_meta($post_id, 'brick_main_image', true);			
@@ -59,35 +59,35 @@ function mp_stacks_brick_media_output_image($default_media_output, $mp_stacks_me
 		//Set Image URL
 		//$brick_main_image = !empty($brick_image_width) ? mp_aq_resize( $brick_main_image, $brick_image_width, $brick_image_height ) : $brick_main_image;
 		
-		//Media output
-		$media_output .= '<div class="mp-stacks-image">';
-		$media_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
-		$media_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
-		$media_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
-		$media_output .= ' />';
-		$media_output .= !empty($brick_url) ? '</a>' : '';
-		$media_output .= '</div>';
+		//Content output
+		$content_output .= '<div class="mp-stacks-image">';
+		$content_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
+		$content_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
+		$content_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
+		$content_output .= ' />';
+		$content_output .= !empty($brick_url) ? '</a>' : '';
+		$content_output .= '</div>';
 		
 		//Return
-		return $media_output;
+		return $content_output;
 	}
 	else{
 		//Return
-		return $default_media_output;
+		return $default_content_output;
 	}
 }
-add_filter('mp_stacks_brick_media_output', 'mp_stacks_brick_media_output_image', 10, 3);
+add_filter('mp_stacks_brick_content_output', 'mp_stacks_brick_content_output_image', 10, 3);
 
 /**
- * Filter Media Output for video
+ * Filter Content Output for video
  */
-function mp_stacks_brick_media_output_video($default_media_output, $mp_stacks_media_type, $post_id){
+function mp_stacks_brick_content_output_video($default_content_output, $mp_stacks_content_type, $post_id){
 	
-	//If this stack media type is set to be an image	
-	if ($mp_stacks_media_type == 'video'){
+	//If this stack content type is set to be an image	
+	if ($mp_stacks_content_type == 'video'){
 		
-		//Set default value for $media_output to NULL
-		$media_output = NULL;
+		//Set default value for $content_output to NULL
+		$content_output = NULL;
 		
 		//Get video URL
 		$brick_video = get_post_meta($post_id, 'brick_video_url', true);
@@ -100,21 +100,21 @@ function mp_stacks_brick_media_output_video($default_media_output, $mp_stacks_me
 		$brick_video_max_width = get_post_meta($post_id, 'brick_video_max_width', true);
 		$brick_video_max_width = !empty( $brick_video_max_width ) ? $brick_video_max_width : NULL;
 			
-		//Media output
+		//Content output
 		if (!empty($brick_video)){
 			
-			$media_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ) . '</div>'; 
+			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ) . '</div>'; 
 		}
 		
 		//Return
-		return $media_output;
+		return $content_output;
 	}
 	else{
 		//Return
-		return $default_media_output;	
+		return $default_content_output;	
 	}
 }
-add_filter('mp_stacks_brick_media_output', 'mp_stacks_brick_media_output_video', 10, 3);
+add_filter('mp_stacks_brick_content_output', 'mp_stacks_brick_content_output_video', 10, 3);
 
 /**
  * Filter CSS Output for Line 1

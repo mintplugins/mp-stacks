@@ -2,8 +2,8 @@
 /*
 Plugin Name: MP Stacks
 Plugin URI: http://moveplugins.com
-Description: Stack images and text up. Show it with a shortcode or function call.
-Version: beta1.0.4.2
+Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
+Version: beta1.0.4.3
 Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_stacks
@@ -146,7 +146,7 @@ function mp_stacks_include_files(){
 		/**
 		 * Media metabox for mp_stacks
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-media/mp-stacks-media.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-content/mp-stacks-content.php' );
 		
 		/**
 		 * Text metabox for mp_stacks
@@ -181,7 +181,7 @@ function mp_stacks_include_files(){
 		/**
 		 * Media Filters
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/media-filters.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters.php' );
 		
 		/**
 		 * Enqueue Scripts
@@ -189,9 +189,14 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/enqueue-scripts.php' );
 		
 		/**
-		 * Enqueue Scripts
+		 * Misc Functions
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/misc-functions.php' );
+		
+		/**
+		 * Backwards Compatibility Functions
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/backwards-compatibility.php' );
 	
 	}
 }

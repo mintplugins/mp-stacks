@@ -10,7 +10,7 @@ function mp_stacks_video_create_meta_box(){
 	 */
 	$mp_stacks_video_add_meta_box = array(
 		'metabox_id' => 'mp_stacks_video_metabox', 
-		'metabox_title' => __( '"Video" - Media Type', 'mp_stacks'), 
+		'metabox_title' => __( '"Video" Content-Type', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'advanced', 
 		'metabox_priority' => 'low' 

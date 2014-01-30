@@ -46,7 +46,7 @@
 	margin:0px;
 	vertical-align:middle;
 }
-.mp-stack .mp-brick-media-container{
+.mp-stack .mp-brick-content-type-container{
 	display:table-cell; 
 	vertical-align:middle;
 	z-index:2;
@@ -67,7 +67,7 @@
 	word-wrap: normal;
 	word-break: break-word;
 }
-.mp-stack .mp-brick .mp-brick-media-container iframe{
+.mp-stack .mp-brick .mp-brick-content-type-container iframe{
 	margin:0;
 }
 
