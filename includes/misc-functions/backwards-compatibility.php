@@ -24,16 +24,13 @@
  */
 function mp_stacks_migrate_media_to_content(){
  	
-	$checker = get_option('mp_stacks_migrate_media_to_content');
-	$checker = empty($checker) ? 0 : $checker;
-	
 	//If this hasn't been done before
-	if ( get_option('mp_stacks_migrate_media_to_content') < 5){
+	if (!get_option('mp_stacks_migrate_media_to_content')){
 		
 		//Set the args for the new query
 		$mp_brick_args = array(
 			'post_type' => "mp_brick",
-			'posts_per_page' => 0,
+			'posts_per_page' => -1,
 			'orderby' => 'menu_order',
 			'order' => 'ASC',
 		);	
@@ -71,11 +68,11 @@ function mp_stacks_migrate_media_to_content(){
 		}
 		
 		//Let this function know we don't have to do this again
-		update_option( 'mp_stacks_migrate_media_to_content',  $checker + 1);
+		update_option( 'mp_stacks_migrate_media_to_content', true );
 	}
 	
 }
-add_action('init', 'mp_stacks_migrate_media_to_content');
+add_action('admin_init', 'mp_stacks_migrate_media_to_content');
 
 /**
  * Notice about updates
