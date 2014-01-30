@@ -45,7 +45,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_value' => '',
 			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered', 'allleft' => 'All on left', 'allright' => 'All on right')
 		),
-		array(
+		/*array(
 			'field_id'	 => 'brick_content_type_help',
 			'field_title' => 'Content Types',
 			'field_description' => NULL,
@@ -66,6 +66,7 @@ function mp_stacks_content_create_meta_box(){
 				)
 			)
 		),
+		*/
 	);
 	
 	
