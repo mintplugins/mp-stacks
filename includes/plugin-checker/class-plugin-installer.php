@@ -94,10 +94,10 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 			global $_registered_pages;
 		
 			// Get the name of the hook for this plugin
-			// We use "plugins.php" as the parent as we want our page to appear under "plugins.php?page=mp_core_install_plugin_page" .  $this->plugin_name_slug
-			$hookname = get_plugin_page_hookname('mp_core_install_plugin_page_' .  $this->plugin_name_slug, 'plugins.php');
+			// We use "options-general.php" as the parent as we want our page to appear under "options-general.php?page=mp_core_install_plugin_page" .  $this->plugin_name_slug
+			$hookname = get_plugin_page_hookname('mp_core_install_plugin_page_' .  $this->plugin_name_slug, 'options-general.php');
 		
-			// Add the callback via the action on $hookname, so the callback function is called when the page "plugins.php?page=mp_core_install_plugin_page" .  $this->plugin_name_slug is loaded
+			// Add the callback via the action on $hookname, so the callback function is called when the page "options-general.php?page=mp_core_install_plugin_page" .  $this->plugin_name_slug is loaded
 			if (!empty($hookname)) {
 				add_action($hookname, array( $this, 'mp_core_install_check_callback') );
 			}
@@ -212,7 +212,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 			$method = ''; // Normally you leave this an empty string and it figures it out by itself, but you can override the filesystem method here
 			
 			//Get credentials for wp filesystem
-			$url = wp_nonce_url('plugins.php?page=mp_core_install_plugin_page_' .  $this->plugin_name_slug . '&action=install-plugin&plugin=' . $this->plugin_name_slug, 'install-plugin_' . $this->plugin_name_slug );
+			$url = wp_nonce_url('options-general.php?page=mp_core_install_plugin_page_' .  $this->plugin_name_slug . '&action=install-plugin&plugin=' . $this->plugin_name_slug, 'install-plugin_' . $this->plugin_name_slug );
 			if (false === ($creds = request_filesystem_credentials($url, $method, false, false) ) ) {
 			
 				// if we get here, then we don't have credentials yet,
@@ -276,13 +276,10 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 						
 			//Delete the temp zipped file
 			$wp_filesystem->rmdir($filename);
-			
-			//If this plugin isn't set to auto install	
-			//if ( !$this->_args['plugin_group_install'] ){		
-				//Display a successfully installed message
-				echo '<p>' . __( 'Successfully Installed ', 'mp_core' ) .  $this->_args['plugin_name']  . '</p>';
-			//}
-			
+				
+			//Display a successfully installed message
+			echo '<p>' . __( 'Successfully Installed ', 'mp_core' ) .  $this->_args['plugin_name']  . '</p>';
+		
 			//Set plugin cache to NULL so activate_plugin->validate_plugin->get_plugins will check again for new plugins
 			wp_cache_set( 'plugins', NULL, 'plugins' );
 									

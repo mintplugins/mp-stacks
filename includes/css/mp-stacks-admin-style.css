@@ -49,3 +49,20 @@
 	-moz-osx-font-smoothing: grayscale;
 	content: "\f214";	
 }
+.mp-stacks-new-stack-button:before{
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f214";	
+	margin-right:5px;
+}
+
+/*Hide slug, parent and description on Stacks manage page - may be a hook to do this better but for now:*/
+.taxonomy-mp_stacks #addtag .form-field,
+.taxonomy-mp_stacks #addtag .form-required p{
+	display:none;
+}
+.taxonomy-mp_stacks #addtag .form-required{
+	display:block;
+}

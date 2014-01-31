@@ -13,6 +13,30 @@
  */
 
 /**
+ * Admin Stacks Icon
+ *
+ * Echoes the CSS for the downloads post type icon.
+ *
+ * @since 1.0
+ * @global $post_type
+ * @global $wp_version
+ * @return void
+*/
+function mp_stacks_admin_stacks_and_bricks_icon() {
+	global $post_type, $wp_version;
+
+    $menu_icon   = '\f214';
+	?>
+    <style type="text/css" media="screen">
+            #adminmenu #menu-posts-mp_brick .wp-menu-image:before {
+                content: '<?php echo $menu_icon; ?>';
+            }
+	</style>
+	<?php
+}
+add_action( 'admin_head','mp_stacks_admin_stacks_and_bricks_icon' );
+
+/**
  * Make the mp_stacks shortcode display the stack editor for TinyMCE
  *
  * @since   1.0.0

@@ -75,8 +75,12 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 				
 			}
 			
-			//Set up install page/pages
-			$this->mp_core_create_pages();
+			//Make sure we are not on the "plugin-install.php" page because there is a conflict with the plugins_api on this page		
+			if ( stripos( basename( $_SERVER['PHP_SELF'] ), 'plugin-install.php' ) === false ){
+				//Set up install page/pages
+				$this->mp_core_create_pages();
+	
+			}
 																			
 			//Get the "page" URL variable
 			$page = isset($_GET['page']) ? $_GET['page'] : NULL;
@@ -84,12 +88,12 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			//Make sure we are not on the "mp_core_install_plugins_page" page - where this message isn't necessary			
 			if ( stripos( $page, 'mp_core_install_plugins_page' ) === false ){
 				
-				//Also ,ake sure we are not on the "mp_core_install_plugin_page" page (singular) - where this message also isn't necessary			
+				//Also, make sure we are not on the "mp_core_install_plugin_page" page (singular) - where this message also isn't necessary			
 				if ( stripos( $page, 'mp_core_install_plugin_page' ) === false ){
 					
-					//Check for plugins in question
+					//Check for plugins in questionno them first
 					add_action( 'admin_notices', array( $this, 'mp_core_plugin_check_notice') );
-					
+											
 				}
 			}
 						
@@ -132,7 +136,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 					$api = plugins_api( 'plugin_information', $args );					
 					
 					//If it does exist in the WP Repo
-					if (!isset($api->errors)){ 
+					if ( !empty( $api->download_link ) ){ 
 					
 						//Set the plugin's download link to be the one from the WP Repo
 						$this->_args[$plugin_key]['plugin_download_link'] = $api->download_link;
@@ -168,10 +172,10 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			global $_registered_pages;
 		
 			// Get the name of the hook for this plugin
-			// We use "plugins.php" as the parent as we want our page to appear under "plugins.php?page=mp_core_install_plugins_page"
-			$hookname = get_plugin_page_hookname('mp_core_install_plugins_page', 'plugins.php');
+			// We use "options-general.php" as the parent as we want our page to appear under "options-general.php?page=mp_core_install_plugins_page"
+			$hookname = get_plugin_page_hookname('mp_core_install_plugins_page', 'options-general.php');
 		
-			// Add the callback via the action on $hookname, so the callback function is called when the page "plugins.php?page=mp_core_install_plugins_page" is loaded
+			// Add the callback via the action on $hookname, so the callback function is called when the page "options-general.php?page=mp_core_install_plugins_page" is loaded
 			if (!empty($hookname)) {
 				add_action($hookname, array( $this, 'mp_core_install_check_callback') );
 			}
@@ -212,13 +216,14 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 				
 			}
 			
-			//Redirect when complete
-			$custom_page_extension = NULL; //'about.php?updated'; Evenutally this will redirect to a page of some kind. For now it goes to the dashboard
+			//Redirect to referring page when complete
+			$custom_page_extension = $_SERVER['HTTP_REFERER'];
 			
 			//Javascript for redirection
 			echo '<script type="text/javascript">';
-				echo "window.location = '" . self_admin_url( $custom_page_extension ) . "';";
+				echo "window.location = '" . $custom_page_extension . "';";
 			echo '</script>';
+			
 			
 			echo '</div>';
 									
@@ -372,7 +377,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 									echo $plugin['plugin_message'] . '</p>';
 								
 									//Display a custom download button."; 
-									printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $plugin['plugin_name'] . '"</a>', admin_url( sprintf( 'plugins.php?page=mp_core_install_plugin_page_' . $plugin_name_slug . '&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );	
+									printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Automatically Install', 'mp_core') . ' "' . $plugin['plugin_name'] . '"</a>', admin_url( sprintf( 'options-general.php?page=mp_core_install_plugin_page_' . $plugin_name_slug . '&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );	
 									
 									//Dismiss button
 									$this->mp_core_dismiss_button( $plugin );
@@ -408,7 +413,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 										
 					echo __( 'There are items that need to be installed.' , 'mp_core' ) . '</p>';
 				
-					printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Install All Items', 'mp_core')  . '</a>', admin_url( sprintf( 'plugins.php?page=mp_core_install_plugins_page&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );	
+					printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Install All Items', 'mp_core')  . '</a>', admin_url( sprintf( 'options-general.php?page=mp_core_install_plugins_page&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );	
 					
 					echo '| <a href="#TB_inline?width=600&height=550&inlineId=mp-core-installer-details" class="thickbox">' . __( 'Details', 'mp_core' ) . "</a>";
 					
@@ -432,7 +437,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 														 
 							echo '</ol>';							 
 														
-							printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Install All Items', 'mp_core')  . '</a>', admin_url( sprintf( 'plugins.php?page=mp_core_install_plugins_page&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );
+							printf( '<a class="button" href="%s" style="display:inline-block; margin-right:.7em;"> ' . __('Install All Items', 'mp_core')  . '</a>', admin_url( sprintf( 'options-general.php?page=mp_core_install_plugins_page&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );
 							
 							echo '</p>';	
 							
@@ -539,15 +544,15 @@ if ( !function_exists( 'mp_core_plugin_checker' ) ){
 		 * }
 		 */
 		$mp_core_plugins_to_check = apply_filters('mp_core_check_plugins', $mp_core_plugins_to_check );
-			
-		//Remove duplicate plugins
-		$mp_core_plugins_to_check = array_unique($mp_core_plugins_to_check, SORT_REGULAR);
-		
+					
 		//If nothing to install, quit
 		if ( empty( $mp_core_plugins_to_check ) ){
 			return;	
 		}
-
+		
+		//Remove duplicate plugins
+		$mp_core_plugins_to_check = array_unique($mp_core_plugins_to_check, SORT_REGULAR);
+		
 		//Start checking plugins
 		new MP_CORE_Plugin_Checker( $mp_core_plugins_to_check );
 	}

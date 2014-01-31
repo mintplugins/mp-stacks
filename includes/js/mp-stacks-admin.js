@@ -104,35 +104,39 @@ jQuery(document).ready(function($){
 		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
 	}
 	
-	$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
-		//Set TinyMCE default font size dynamically	
-		mp_stacks_size_text_previews();	
-	});
-	
-	$('#brick_line_2_font_size').on( 'keyup click blur focus change paste', function() {
-		//Set TinyMCE default font size dynamically	
-		mp_stacks_size_text_previews();	
-	});
-	
-	var mp_stacks_interval_counter = 0;
-	
-	//Because TinyMCE is absolute garbage, we have no event to hook into that works for 'loaded' with WordPress so have to check every few seconds which is total, necessary crap.	
-	function mp_stacks_intervalTrigger() {
-	  	  
-		return window.setInterval(function(){
+	if ( $('#brick_line_1_font_size').val() ){
+		$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
+			//Set TinyMCE default font size dynamically	
+			mp_stacks_size_text_previews();	
+		});
 		
-			mp_stacks_size_text_previews();
+		$('#brick_line_2_font_size').on( 'keyup click blur focus change paste', function() {
+			//Set TinyMCE default font size dynamically	
+			mp_stacks_size_text_previews();	
+		});
+	
+	
+		var mp_stacks_interval_counter = 0;
+		
+		//Because TinyMCE is absolute garbage, we have no event to hook into that works for 'loaded' with WordPress so have to check every few seconds which is total, necessary crap.	
+		function mp_stacks_intervalTrigger() {
+			  
+			return window.setInterval(function(){
 			
-			mp_stacks_interval_counter = mp_stacks_interval_counter + 100;
-	  
-			if (mp_stacks_interval_counter > 500){
-				window.clearInterval(mp_stacks_interval_trigger_id);
-			}
+				mp_stacks_size_text_previews();
+				
+				mp_stacks_interval_counter = mp_stacks_interval_counter + 100;
+		  
+				if (mp_stacks_interval_counter > 500){
+					window.clearInterval(mp_stacks_interval_trigger_id);
+				}
+			
+			}, 100);
+		};
 		
-		}, 100);
-	};
-	
-	var mp_stacks_interval_trigger_id = mp_stacks_intervalTrigger();
+		var mp_stacks_interval_trigger_id = mp_stacks_intervalTrigger();
+		
+	}
 				
 	$( '#post' ).on( 'submit', function(event) {
 	

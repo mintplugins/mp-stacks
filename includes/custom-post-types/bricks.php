@@ -48,12 +48,9 @@ function mp_brick_post_type() {
 }
 add_action( 'init', 'mp_brick_post_type', 0 );
 
-/**
- * Brick Taxonomy
- */
- 
+
  /**
- * Brick Cat taxonomy
+ * Stacks taxonomy
  */
 function mp_stacks_taxonomy() {  
 	if (mp_core_get_option( 'mp_stacks_settings_general',  'enable_disable' ) != 'disabled' ){
