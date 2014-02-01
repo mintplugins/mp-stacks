@@ -347,7 +347,7 @@ function mp_stacks_default_brick_bg_css( $css_output, $post_id ){
 	if ( !empty( $brick_bg_color_rgb_array ) ){
 	
 		//Add style lines to css output
-		$css_output .= 'background-color:rgba(' . $brick_bg_color_rgb_array[0] . ', ' . $brick_bg_color_rgb_array[1] . ' , ' . $brick_bg_color_rgb_array[2] . ', ' . $brick_bg_color_opacity . ')';
+		$css_output .= 'background-color:rgba(' . $brick_bg_color_rgb_array[0] . ', ' . $brick_bg_color_rgb_array[1] . ' , ' . $brick_bg_color_rgb_array[2] . ', ' . $brick_bg_color_opacity . ');';
 	}
 			
 	//Return CSS Output
