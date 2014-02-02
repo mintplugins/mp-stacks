@@ -66,3 +66,21 @@
 .taxonomy-mp_stacks #addtag .form-required{
 	display:block;
 }
+
+/* Alignment Icons for Content Types on Metabox Page */
+.mp-core-radio-element{
+	display:inline-block;
+	float:left;
+	margin-right:20px;
+}
+.mp-core-radio-description{
+	clear:both;	
+	display:inline-block;
+}
+#mp_stacks_content_metabox .mp_field_brick_alignment{
+	display:inline-block;
+}
+.mp_field_brick_alignment .mp-core-radio-description img{
+	margin-right:4px;	
+	float:left;
+}

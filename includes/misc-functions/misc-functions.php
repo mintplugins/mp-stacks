@@ -67,20 +67,53 @@ function mp_stacks_addTinyMCELinkClasses( $wp ) {
 add_action( 'mp_core_editor_styles', 'mp_stacks_addTinyMCELinkClasses' );
 
 /**
- * Ajax callback...
+ * If Menu Order URL variable is set, Make a new field for it on edit pages
  *
  * @since   1.0.0
  * @link    http://moveplugins.com/doc/
  * @return  array $plugin_array
  */
-function mp_stacks_tinyMCE_shortcode_callback() {
-
-	$whatever = $_POST['whatever'];
-
-	$whatever .=  "Hooligans!@";
-
-        echo $whatever;
-
-	die(); // this is required to return a proper result
+function mp_stacks_display_brick_menu_order_input_field() {
+	
+	if ( isset($_GET['post_type']) == 'mp_brick' ){
+		
+		if ( isset($_GET['menu_order'])){
+			
+			$menu_order = $_GET['menu_order'];
+			
+		}
+		else{
+			
+			//Get Menu Order Info for this Brick
+			$post = get_post(get_the_ID());						
+			$menu_order = $post->menu_order;
+			$menu_order = !empty($menu_order) ? $menu_order : 1000;
+		
+		}
+		
+		echo '<input type="hidden" name="menu_order" value="' . $menu_order . '">';
+		
+	}
+	
 }
-add_action( 'wp_ajax_mp_stacks_tinyMCE_shortcode', 'mp_stacks_tinyMCE_shortcode_callback' );
+add_action( 'edit_form_top', 'mp_stacks_display_brick_menu_order_input_field' );
+
+/**
+ * Set Menu Order of Bricks upon save
+ *
+ * @since   1.0.0
+ * @link    http://moveplugins.com/doc/
+ * @return  array $plugin_array
+ */
+function mp_stacks_save_brick_menu_order( $post_id ) {
+	
+	if (isset($_POST['menu_order'])){
+		
+		global $wpdb;
+		
+		//Save the menu order for this brick			
+		$wpdb->update( 'wp_posts', array( 'menu_order' => $_POST['menu_order'] ), array( 'ID' => $post_id ), $format = null, $where_format = null ); 
+	
+	}
+}
+add_action( 'save_post', 'mp_stacks_save_brick_menu_order', 100);

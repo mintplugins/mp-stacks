@@ -145,9 +145,14 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	var stack_id = mp_stacks_getQueryVariable('stack_id');
+
+	stack_id = '#in-mp_stacks-' + stack_id;
+	
+	$(stack_id).prop('checked', true);	
+
+	
 });
-
-
 
 //Close the lightbox when the update button is clicked
 function mp_stacks_close_lightbox(){
@@ -160,4 +165,16 @@ function mp_stacks_close_lightbox(){
 			$.magnificPopup.instance.close();
 		});
 	});
+}
+
+//This function allows us to grab URL variables
+function mp_stacks_getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
 }

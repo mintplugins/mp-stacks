@@ -57,7 +57,7 @@ function mp_stacks_taxonomy() {
 		
 		// Add new taxonomy, make it hierarchical (like categories)
 		$labels = array(
-			'name'                => __( 'Stacks', 'mp_core' ),
+			'name'                => __( 'Add Brick To Stacks', 'mp_core' ),
 			'singular_name'       => __( 'Stack', 'mp_core' ),
 			'search_items'        => __( 'Search Stacks', 'mp_core' ),
 			'all_items'           => __( 'All Stacks', 'mp_core' ),

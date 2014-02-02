@@ -36,7 +36,7 @@ add_action( 'wp_enqueue_scripts', 'mp_stack_enqueue_stack_shortcode_css');
  * Function which returns the CSS output for the bricks in a stack
  * Parameter: Stack ID
  */
-function mp_stack_css( $stack_id ) {		
+function mp_stack_css( $stack_id, $echo = false ) {		
 		
 	//Set the args for the new query
 	$mp_stacks_args = array(
@@ -70,7 +70,12 @@ function mp_stack_css( $stack_id ) {
 			
 		endwhile;
 		
-		return $css_output;
+		if ( $echo == true ){
+			echo $css_output;
+		}
+		else{
+			return $css_output;
+		}
 		
 	}
 }
@@ -162,7 +167,7 @@ function mp_stack( $stack_id ){
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
     		
 			//Build Brick Output
-			$html_output .= mp_brick( get_the_ID() );
+			$html_output .= mp_brick( get_the_ID(), $stack_id );
 			
 		endwhile;
 		$html_output .= '</div>';
@@ -181,8 +186,9 @@ function mp_stack( $stack_id ){
 /**
  * Function which return the HTML output for a brick
  * Parameter: Post ID
+ * Parameter: Stack ID - The Stack which is calling this brick
  */
-function mp_brick( $post_id ){
+function mp_brick( $post_id, $stack_id = NULL ){
 	
 			//Default outputs back to null
 			$first_output = NULL;
@@ -285,7 +291,8 @@ function mp_brick( $post_id ){
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
-		    									   
+		    
+											   
 			//Actual output
 			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
 				
@@ -293,7 +300,21 @@ function mp_brick( $post_id ){
 				$html_output .= '<div class="mp-brick-meta">';
 					//Edit Brick Link
 					if ( is_user_logged_in() ) {
-					$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+						$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+						
+						//Get Menu Order Info for this Brick
+						$post = get_post($post_id);						
+						$menu_order = $post->menu_order;
+						$menu_order = !empty($menu_order) ? $menu_order : 1000;
+						
+						//If this brick is being shown as part of a stack
+						if ( !empty( $stack_id ) ){
+							
+							//Show buttons to add new bricks above/below
+							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'stack_id' => $stack_id, 'menu_order' => $menu_order - 1 ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'stack_id' => $stack_id, 'menu_order' => $menu_order + 1  ), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
+						
+						}
 					}
 				$html_output .= '</div>';
 				

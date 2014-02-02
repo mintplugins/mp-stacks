@@ -41,7 +41,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_id'	 => 'brick_alignment',
 			'field_title' => __( 'Alignment', 'mp_stacks'),
 			'field_description' => 'How would you like these content types to be aligned?',
-			'field_type' => 'select',
+			'field_type' => 'radio',
 			'field_value' => '',
 			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered', 'allleft' => 'All on left', 'allright' => 'All on right')
 		),
@@ -88,3 +88,23 @@ function mp_stacks_content_create_meta_box(){
 	$mp_stacks_content_meta_box = new MP_CORE_Metabox($mp_stacks_content_add_meta_box, $mp_stacks_content_types_array);
 }
 add_action('plugins_loaded', 'mp_stacks_content_create_meta_box');
+
+function mp_stacks_alignment_radio_leftright_before(){
+	echo '<img width="50px" src="' . plugins_url('assets/images/left-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
+}
+add_action('mp_core_metabox_before_' . 'leftright' . '_radio_description', 'mp_stacks_alignment_radio_leftright_before'); 
+
+function mp_stacks_alignment_radio_centered_before(){
+	echo '<img width="50px" src="' . plugins_url('assets/images/centered.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
+}
+add_action('mp_core_metabox_before_' . 'centered' . '_radio_description', 'mp_stacks_alignment_radio_centered_before'); 
+
+function mp_stacks_alignment_radio_allonleft_before(){
+	echo '<img width="50px" src="' . plugins_url('assets/images/all-on-left.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
+}
+add_action('mp_core_metabox_before_' . 'allleft' . '_radio_description', 'mp_stacks_alignment_radio_allonleft_before'); 
+
+function mp_stacks_alignment_radio_allonright_before(){
+	echo '<img width="50px" src="' . plugins_url('assets/images/all-on-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
+}
+add_action('mp_core_metabox_before_' . 'allright' . '_radio_description', 'mp_stacks_alignment_radio_allonright_before'); 

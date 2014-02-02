@@ -97,12 +97,53 @@
 .mp-stack .mp-brick-main-link{
 	display:inline-block;	
 }
-.mp-stack-edit-link{
+.mp-brick .mp-brick-meta{
+	opacity:0;
+	
+	-webkit-transition: opacity .4s ease-in-out, width .4s ease-in-out;
+	-moz-transition: opacity .4s ease-in-out, width .4s ease-in-out;
+	-ms-transition: opacity .4s ease-in-out, width .4s ease-in-out;
+	-o-transition: opacity .4s ease-in-out, width .4s ease-in-out;
+	transition: opacity .4s ease-in-out, width .4s ease-in-out;
+}
+.mp-brick:hover .mp-brick-meta{
+	opacity:1;
+}
+.mp-stack-edit-link,
+.mp-brick-add-before-link,
+.mp-brick-add-after-link{
 	background-color:#333!important;
 	color:#FFFFFF!important;
 	padding:3px;
 	position:absolute;
 	z-index:100;
+	text-decoration:none;
+	border: 1px solid #fff;
+	
+	-webkit-transition: width .4s ease-in-out, width .4s ease-in-out;
+	-moz-transition: width .4s ease-in-out, width .4s ease-in-out;
+	-ms-transition: width .4s ease-in-out, width .4s ease-in-out;
+	-o-transition: width .4s ease-in-out, width .4s ease-in-out;
+	transition: width .4s ease-in-out, width .4s ease-in-out;
+}
+.mp-brick-add-before-link{
+	right:0px;
+	width:45px;	
+	overflow:hidden;
+	white-space:nowrap;
+}
+.mp-brick-add-before-link:hover{
+	width:140px;
+}
+.mp-brick-add-after-link{
+	right:0px;
+	bottom:0px;
+	width:45px;	
+	overflow:hidden;
+	white-space:nowrap;
+}
+.mp-brick-add-after-link:hover{
+	width:130px;	
 }
 .mp-stack-updating{
 	position: absolute;
