@@ -138,7 +138,7 @@ jQuery(document).ready(function($){
 		
 	}
 				
-	$( '#post' ).on( 'submit', function(event) {
+	$( '#post, #posts-filter' ).on( 'submit', function(event) {
 	
 		//Close lightbox on update if we are loaded in a lightbox	
 		parent.mp_stacks_close_lightbox();

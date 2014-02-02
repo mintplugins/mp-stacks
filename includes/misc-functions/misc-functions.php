@@ -93,6 +93,9 @@ function mp_stacks_display_brick_menu_order_input_field() {
 		
 		echo '<input type="hidden" name="menu_order" value="' . $menu_order . '">';
 		
+		// Set up nonce for verification
+		wp_nonce_field( plugin_basename( __FILE__ ), 'mp_stacks_menu_order_nonce' );	
+		
 	}
 	
 }
@@ -108,12 +111,20 @@ add_action( 'edit_form_top', 'mp_stacks_display_brick_menu_order_input_field' );
 function mp_stacks_save_brick_menu_order( $post_id ) {
 	
 	if (isset($_POST['menu_order'])){
+			
+		if ( ! wp_verify_nonce( 'mp_stacks_menu_order_nonce', plugin_basename( __FILE__ ) )  ) {
 		
-		global $wpdb;
+			 die( 'Security check' ); 
 		
-		//Save the menu order for this brick			
-		$wpdb->update( 'wp_posts', array( 'menu_order' => $_POST['menu_order'] ), array( 'ID' => $post_id ), $format = null, $where_format = null ); 
+		} else {
+		
+			 global $wpdb;
+		
+			//Save the menu order for this brick			
+			$wpdb->update( 'wp_posts', array( 'menu_order' => $_POST['menu_order'] ), array( 'ID' => $post_id ), $format = null, $where_format = null ); 
 	
+		}
+		
 	}
 }
 add_action( 'save_post', 'mp_stacks_save_brick_menu_order', 100);

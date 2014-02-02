@@ -111,7 +111,8 @@
 }
 .mp-stack-edit-link,
 .mp-brick-add-before-link,
-.mp-brick-add-after-link{
+.mp-brick-add-after-link,
+.mp-stack-reorder-bricks{
 	background-color:#333!important;
 	color:#FFFFFF!important;
 	padding:3px;
@@ -144,6 +145,10 @@
 }
 .mp-brick-add-after-link:hover{
 	width:130px;	
+}
+.mp-stack-reorder-bricks{
+	bottom:0px;
+	left:0px;	
 }
 .mp-stack-updating{
 	position: absolute;

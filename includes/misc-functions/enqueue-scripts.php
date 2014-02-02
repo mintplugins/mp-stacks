@@ -21,16 +21,26 @@ function mp_stacks_admin_enqueue(){
 	//lightbox css
 	wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ) );
 	
-	//enqueue js after tiny mce 
-	function custom_after_wp_tiny_mce() {
-		 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ) );
+	if(has_action('after_wp_tiny_mce')) {	
+	
+		//enqueue js after tiny mce 
+		function custom_after_wp_tiny_mce() {
+			 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ) );
+		}
+		add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );	
+		
+	}else{
+		//mp stacks admin js
+		wp_enqueue_script( 'mp_stacks_admin_js', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ), array( 'jquery' ) );
+	
 	}
-	add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );	
 	
 }
 add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
 
-
+/**
+ * Enqueue scripts used in front end
+ */
 function mp_stacks_frontend_enqueue(){
 	
 		//lightbox

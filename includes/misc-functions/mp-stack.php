@@ -315,6 +315,16 @@ function mp_brick( $post_id, $stack_id = NULL ){
 							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'stack_id' => $stack_id, 'menu_order' => $menu_order + 1  ), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 						
 						}
+						
+						$number_of_bricks = mp_core_number_postpercat( $stack_id );
+						
+						//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
+						if ( $number_of_bricks > 1 ){
+							
+							//Show buttons to add new bricks above/below
+							$html_output .= '<a class="mp-stack-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
+													
+						}
 					}
 				$html_output .= '</div>';
 				
