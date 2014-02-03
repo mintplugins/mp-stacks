@@ -114,7 +114,8 @@ function mp_stacks_save_brick_menu_order( $post_id ) {
 			
 		if ( ! wp_verify_nonce( 'mp_stacks_menu_order_nonce', plugin_basename( __FILE__ ) )  ) {
 		
-			 die( 'Security check' ); 
+			 //We won't kill the page, but we at least will only run the function if the nonce passes
+			 //die( 'Security check' ); 
 		
 		} else {
 		

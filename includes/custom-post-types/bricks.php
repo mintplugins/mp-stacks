@@ -35,7 +35,6 @@ function mp_brick_post_type() {
 			'publicly_queryable'=> false,
 			'show_ui' 			=> true, 
 			'show_in_menu' 		=> true, 
-			'menu_position'		=> 5,
 			'query_var' 		=> true,
 			'rewrite' 			=> array( 'slug' => 'stack' ),
 			'capability_type' 	=> 'post',
