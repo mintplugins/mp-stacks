@@ -145,11 +145,19 @@ jQuery(document).ready(function($){
 		
 	});
 	
-	var stack_id = mp_stacks_getQueryVariable('stack_id');
+	//Auto select the stack we want this brick to be in
+	var stack_id = mp_stacks_getQueryVariable('mp_stack_id_new');
 
-	stack_id = '#in-mp_stacks-' + stack_id;
+	stack_id_checkbox = '#in-mp_stacks-' + stack_id;
 	
-	$(stack_id).prop('checked', true);	
+	$(stack_id_checkbox).prop('checked', true);	
+	
+	$('#mp_stackschecklist li input').on('change', function(){
+		
+		if ( $('.mp_stack_order[name="mp_stack_order[' + $(this).val() + ']"]').length == 0 ){
+		$( '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' + $(this).val() + ']" value="1000">' ).prependTo( "#post" );
+		}
+	});
 
 	
 });

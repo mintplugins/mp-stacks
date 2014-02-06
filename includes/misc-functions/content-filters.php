@@ -64,7 +64,7 @@ function mp_stacks_brick_content_output_image($default_content_output, $mp_stack
 		$content_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
 		$content_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
 		$content_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
-		$content_output .= ' />';
+		$content_output .= !empty($brick_main_image) ? ' />' : NULL;
 		$content_output .= !empty($brick_url) ? '</a>' : '';
 		$content_output .= '</div>';
 		

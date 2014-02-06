@@ -12,7 +12,7 @@
 function mp_brick_post_type() {
 	
 	if (mp_core_get_option( 'mp_stacks_settings_general',  'enable_disable' ) != 'disabled' ){
-		$slide_labels =  apply_filters( 'mp_stacks_slide_labels', array(
+		$brick_labels =  apply_filters( 'mp_stacks_brick_labels', array(
 			'name' 				=> 'Bricks',
 			'singular_name' 	=> 'Brick Item',
 			'add_new' 			=> __('Add New Brick', 'mp_stacks'),
@@ -29,8 +29,8 @@ function mp_brick_post_type() {
 		) );
 		
 			
-		$slide_args = array(
-			'labels' 			=> $slide_labels,
+		$brick_args = array(
+			'labels' 			=> $brick_labels,
 			'public' 			=> false,
 			'publicly_queryable'=> false,
 			'show_ui' 			=> true, 
@@ -40,9 +40,9 @@ function mp_brick_post_type() {
 			'capability_type' 	=> 'post',
 			'has_archive' 		=> false, 
 			'hierarchical' 		=> true,
-			'supports' 			=> apply_filters('mp_stacks_slide_supports', array( 'title') ),
+			'supports' 			=> apply_filters('mp_stacks_brick_supports', array( 'title') ),
 		); 
-		register_post_type( 'mp_brick', apply_filters( 'mp_stacks_slide_post_type_args', $slide_args ) );
+		register_post_type( 'mp_brick', apply_filters( 'mp_stacks_brick_post_type_args', $brick_args ) );
 	}
 }
 add_action( 'init', 'mp_brick_post_type', 0 );
@@ -165,3 +165,27 @@ function mp_stacks_perm($return, $id, $new_title, $new_slug){
 	return $return;
 }
 add_filter('get_sample_permalink_html', 'mp_stacks_perm', '',4);
+
+ /**
+ * Sort bricks on admin pages by stack order
+ */
+function mp_stacks_order_admin_bricks( $query ){
+    
+	if( !is_admin() )
+        return;
+		
+	$stack_id = !empty($_GET['mp_stacks']) ? $_GET['mp_stacks'] : false;
+	
+	if ( !$stack_id )
+		return;
+		
+    $screen = get_current_screen();
+    if( 'edit' == $screen->base
+    && 'mp_brick' == $screen->post_type
+    && !isset( $_GET['orderby'] ) ){
+        $query->set( 'meta_key', 'mp_stack_order_' . $stack_id );
+		$query->set( 'orderby', 'meta_value_num' );
+        $query->set( 'order', 'ASC' );
+    }
+}
+add_action( 'pre_get_posts', 'mp_stacks_order_admin_bricks' );

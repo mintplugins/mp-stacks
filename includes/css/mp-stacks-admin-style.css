@@ -84,3 +84,24 @@
 	margin-right:4px;	
 	float:left;
 }
+
+/**
+ * Sortable Posts Style
+ * http://moveplugins.com
+ */
+.column-mp_stack_order{
+	width:0px;
+}
+.menu-order-drag-button {
+	padding:6px 0px 6px 0px;
+	position:absolute;
+	left:3px;
+	cursor:move!important;
+	opacity:0;
+}
+.hentry:hover .menu-order-drag-button {
+	opacity:1;
+}
+#posts-filter .check-column{
+	padding-left:4px;	
+}

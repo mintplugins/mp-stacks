@@ -42,7 +42,8 @@ function mp_stack_css( $stack_id, $echo = false ) {
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
 		'posts_per_page' => 0,
-		'orderby' => 'menu_order',
+		'meta_key' => 'mp_stack_order_' . $stack_id,
+		'orderby' => 'meta_value_num menu_order',
 		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',
@@ -141,7 +142,8 @@ function mp_stack( $stack_id ){
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
 		'posts_per_page' => 0,
-		'orderby' => 'menu_order',
+		'meta_key' => 'mp_stack_order_' . $stack_id,
+		'orderby' => 'meta_value_num menu_order',
 		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',
@@ -302,28 +304,27 @@ function mp_brick( $post_id, $stack_id = NULL ){
 					if ( is_user_logged_in() ) {
 						$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						
-						//Get Menu Order Info for this Brick
-						$post = get_post($post_id);						
-						$menu_order = $post->menu_order;
-						$menu_order = !empty($menu_order) ? $menu_order : 1000;
+						//Get Menu Order Info for this Brick						
+						$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
+						$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
 						
 						//If this brick is being shown as part of a stack
 						if ( !empty( $stack_id ) ){
 							
 							//Show buttons to add new bricks above/below
-							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'stack_id' => $stack_id, 'menu_order' => $menu_order - 1 ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
-							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'stack_id' => $stack_id, 'menu_order' => $menu_order + 1  ), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => $mp_stack_order - 1 ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => $mp_stack_order + 1  ), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 						
-						}
-						
-						$number_of_bricks = mp_core_number_postpercat( $stack_id );
-						
-						//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
-						if ( $number_of_bricks > 1 ){
+							//Get number of bricks in this stack
+							$number_of_bricks = mp_core_number_postpercat( $stack_id );
 							
-							//Show buttons to add new bricks above/below
-							$html_output .= '<a class="mp-stack-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
-													
+							//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
+							if ( $number_of_bricks > 1 ){
+								
+								//Show buttons to add new bricks above/below
+								$html_output .= '<a class="mp-stack-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
+								
+							}						
 						}
 					}
 				$html_output .= '</div>';
