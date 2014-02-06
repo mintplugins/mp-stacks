@@ -158,22 +158,39 @@ function mp_stack( $stack_id ){
 		
 	//Create new query for stacks
 	$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
-		
-	//Loop through the stack group		
-	if ( $mp_stack_query->have_posts() ) : 
+	
+	$html_output .= '<div id="mp_stack_' . $stack_id . '" class="mp-stack">';
+	
+	//If there are bricks in this stack
+	if ( $mp_stack_query->have_posts() ) {
 		
 		//Add_action hook 
 		do_action( 'mp_stacks_before_stack' );
-						
-		$html_output .= '<div id="mp_stack_' . $stack_id . '" class="mp-stack">';
+		
+		//Loop through the stack group		
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
     		
 			//Build Brick Output
 			$html_output .= mp_brick( get_the_ID(), $stack_id );
 			
 		endwhile;
+	
+	}
+	//If there aren't any bricks in this stack
+	else{
+		
+		$html_output .= '<div class="mp-brick no-brick" >';
+			$html_output .= '<div class="mp-brick-inner">';
+				$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
+			
+					$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" ><br />' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
+				$html_output .= '</div>';		
+			$html_output .= '</div>';
 		$html_output .= '</div>';
-	endif;
+		
+	};
+	
+	$html_output .= '</div>';
 	
 	//Filter for adding output to the html output 
 	$html_output = apply_filters( 'mp_stacks_html_output', $html_output );

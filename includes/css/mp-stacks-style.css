@@ -162,3 +162,11 @@
 	z-index: 99999999999999;	
 	color:#FFF;
 }
+.no-brick .mp-brick-inner{
+	min-height:250px;	
+	background-color:#FF9DA0;
+	color:#fff;
+}
+.no-brick .mp-brick-inner a{
+	color:#fff;	
+}

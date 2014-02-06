@@ -1,5 +1,5 @@
 jQuery(document).ready(function($){
-	$('.mp-stack-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-stack-reorder-bricks').magnificPopup({ 
+	$('.mp-stack-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-stack-reorder-bricks, .mp-brick-add-new-link').magnificPopup({ 
 		type: 'iframe', 	
 		
 		patterns: {

@@ -170,6 +170,8 @@ add_filter('get_sample_permalink_html', 'mp_stacks_perm', '',4);
  * Sort bricks on admin pages by stack order
  */
 function mp_stacks_order_admin_bricks( $query ){
+	
+	global $current_screen;
     
 	if( !is_admin() )
         return;
@@ -178,14 +180,20 @@ function mp_stacks_order_admin_bricks( $query ){
 	
 	if ( !$stack_id )
 		return;
-		
-    $screen = get_current_screen();
-    if( 'edit' == $screen->base
-    && 'mp_brick' == $screen->post_type
-    && !isset( $_GET['orderby'] ) ){
-        $query->set( 'meta_key', 'mp_stack_order_' . $stack_id );
-		$query->set( 'orderby', 'meta_value_num' );
-        $query->set( 'order', 'ASC' );
-    }
+	
+	if (function_exists('get_current_screen')){
+    	$screen = get_current_screen();
+	}
+	else{
+		$screen = $current_screen;
+	}
+	
+	if (isset($screen->base) && isset($screen->post_type) ){
+		if( 'edit' == $screen->base && 'mp_brick' == $screen->post_type && !isset( $_GET['orderby'] ) ){
+			$query->set( 'meta_key', 'mp_stack_order_' . $stack_id );
+			$query->set( 'orderby', 'meta_value_num' );
+			$query->set( 'order', 'ASC' );
+		}
+	}
 }
 add_action( 'pre_get_posts', 'mp_stacks_order_admin_bricks' );
