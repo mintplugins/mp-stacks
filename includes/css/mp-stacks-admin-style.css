@@ -43,19 +43,8 @@
 }
 
 #mp_stack-media-button:before{
-	font: 400 18px/1 dashicons;
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	content: "\f214";	
-}
-.mp-stacks-new-stack-button:before{
-	font-family: dashicons;
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	content: "\f214";	
-	margin-right:5px;
+	background-size: 20px;
+	background-position-y: 6px;
 }
 
 /*Hide slug, parent and description on Stacks manage page - may be a hook to do this better but for now:*/
@@ -83,6 +72,37 @@
 .mp_field_brick_alignment .mp-core-radio-description img{
 	margin-right:4px;	
 	float:left;
+}
+/*Shortcode insert designs*/
+.mp_stack_successful{
+	background-color:#9AFF99;
+	color:#000;
+	text-align:center;
+	display:table-cell;
+	vertical-align:middle;
+	padding:25px;	
+}
+.mp-stacks-successful-image,
+.mp-stacks-successful-text{
+	display:table-cell;
+	vertical-align:middle;	
+	font-weight: 600;
+}
+.mp_stack_successful .mp-stacks-icon-250{
+	width:30px;	
+	margin-right: 10px;
+}
+.mp-stacks-new-stack-input{
+	margin-right:10px;
+	width:200px;
+}
+.mp-stacks-new-stack-button:before{
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f107";
+	margin-right:5px;
 }
 
 /**

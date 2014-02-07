@@ -28,9 +28,18 @@ function mp_stacks_admin_stacks_and_bricks_icon() {
     $menu_icon   = '\f214';
 	?>
     <style type="text/css" media="screen">
-            #adminmenu #menu-posts-mp_brick .wp-menu-image:before {
-                content: '<?php echo $menu_icon; ?>';
-            }
+			#adminmenu #menu-posts-mp_brick .wp-menu-image:before {
+				background: url("<?php echo plugins_url('assets/images/mp_stack-icon-2x.png', dirname(dirname(__FILE__) ) ); ?>") no-repeat scroll;
+				content: '';
+				background-size: 20px;
+				background-position-y: 6px;
+			}
+			#mp_stack-media-button {
+				background: url("<?php echo plugins_url('assets/images/mp_stack-icon-2x.png', dirname(dirname(__FILE__) ) ); ?>") no-repeat scroll;
+				content: '';
+				background-size: 16px;
+				background-position-y: -1px;
+			}
 	</style>
 	<?php
 }
@@ -51,6 +60,19 @@ function mp_stacks_add_stacks_tinymce_plugin($plugin_array) {
     return $plugin_array;
 }
 add_filter("mce_external_plugins", "mp_stacks_add_stacks_tinymce_plugin");
+
+/**
+ * Set the Shortcode "representor" in TINYMCE upon insert
+ *
+ * @since   1.0.0
+ * @link    http://moveplugins.com/doc/
+ * @param   array $plugin_array See link for description.
+ * @return  array $plugin_array
+ */
+function mp_stacks_call_stacks_tiny_mce_plugin_on_insert($plugin_array) {
+	echo "tinyMCE.activeEditor.execCommand('MP_Stacks');";
+}
+add_action('mp_core_shortcode_' . 'mp_stack' . '_insert_event', 'mp_stacks_call_stacks_tiny_mce_plugin_on_insert' );
 
 /**
  * Add mp_stack stylesheet to the TinyMCE styles

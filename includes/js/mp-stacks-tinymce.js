@@ -11,33 +11,21 @@
 
 			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('...');
 			ed.addCommand('MP_Stacks', function() {
-				
-				//Our Edit Buttons has been clicked
-				
-				var el = ed.selection.getNode(),gallery = wp.media.gallery,frame;
-					
-				var stack_id = ed.dom.getAttrib( el, 'title' ).split('mp_stack stack="');
-				stack_id = stack_id[1].split('"');
-				stack_id = stack_id[0];
-					
-					
+									
 				jQuery(document).ready(function($){
 					
-					//Open the lightbox
-					
-					$.magnificPopup.open({
-						  items: {
-							src: 'edit.php?post_type=mp_brick&mp_stacks=' + stack_id + '&mp-stacks-minimal-admin=true'
-						  },
-						  type: 'iframe'
-					});
-					
-				 
+					//Set the content of the active editor
+					tinyMCE.activeEditor.setContent(
+						//To be the replaced content from the _do_stack function in this class
+						t._do_stack(tinyMCE.activeEditor.getContent())
+					);
+									 
 				});
 				
 			});
 
 			ed.onInit.add(function(ed) {
+				
 				//hide popup buttons on scroll or drag
 				tinymce.dom.Event.add(ed.getWin(), 'scroll', function() {
 					t._hideButtons();
@@ -60,7 +48,7 @@
 					});
 				}
 			});
-			
+						
 			ed.onBeforeExecCommand.add( function( ed ) {
 				t._hideButtons();
 			});
@@ -84,7 +72,11 @@
 			ed.onBeforeSetContent.add(function(ed, o) {
 				o.content = t._do_stack(o.content);
 			});
-
+			
+			ed.onChange.add(function(ed, o) {
+				o.content = t._do_stack(o.content);
+			});
+			
 			ed.onPostProcess.add(function(ed, o) {
 				if (o.get)
 					o.content = t._get_stack(o.content);
@@ -131,11 +123,11 @@
 			});
 
 			editButton = DOM.add('mp_stack_btns', 'img', {
-				src : isRetina ? mp_stacks_plugin_url+'/assets/images/edit-2x.png' : mp_stacks_plugin_url+'/assets/images/edit.png',
-				id : 'mp_stack_edit',
-				width : '24',
-				height : '24',
-				title : ed.getLang('wordpress.editstack')
+				//src : isRetina ? mp_stacks_plugin_url+'/assets/images/edit-2x.png' : mp_stacks_plugin_url+'/assets/images/edit.png',
+				//id : 'mp_stack_edit',
+				//width : '24',
+				//height : '24',
+				//title : ed.getLang('wordpress.editstack')
 			});
 
 			tinymce.dom.Event.add( editButton, 'mousedown', function() {

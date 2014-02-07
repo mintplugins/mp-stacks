@@ -107,12 +107,12 @@ jQuery(document).ready(function($){
 	if ( $('#brick_line_1_font_size').val() ){
 		$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
 			//Set TinyMCE default font size dynamically	
-			mp_stacks_size_text_previews();	
+			//mp_stacks_size_text_previews();	
 		});
 		
 		$('#brick_line_2_font_size').on( 'keyup click blur focus change paste', function() {
 			//Set TinyMCE default font size dynamically	
-			mp_stacks_size_text_previews();	
+			//mp_stacks_size_text_previews();	
 		});
 	
 	
@@ -123,7 +123,7 @@ jQuery(document).ready(function($){
 			  
 			return window.setInterval(function(){
 			
-				mp_stacks_size_text_previews();
+				//mp_stacks_size_text_previews();
 				
 				mp_stacks_interval_counter = mp_stacks_interval_counter + 100;
 		  
@@ -158,8 +158,59 @@ jQuery(document).ready(function($){
 		$( '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' + $(this).val() + ']" value="1000">' ).prependTo( "#post" );
 		}
 	});
-
 	
+	/**
+	 * Make New Stack Button Ajax
+	 *
+	 * @since    1.0.0
+	 * @link     http://moveplugins.com/doc/
+	 */
+	 $('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').on('click', function(event){
+		
+		event.preventDefault(); 
+		
+		// Get the title the user entered
+		var stack_title = $('.mp-stacks-new-stack-input').val();
+		
+		//Only send for ajax if there is a value
+		if ( stack_title != '' ){
+				
+			// If the country field has changed, we need to update the state/provice field
+			var postData = {
+				action: 'mp_stacks_make_new_stack',
+				mp_stacks_new_stack_name: stack_title
+			};
+			
+			//Ajax to make new stack
+			$.ajax({
+				type: "POST",
+				data: postData,
+				url: mp_stacks_vars.ajaxurl,
+				success: function (response) {
+					
+					//Add new stack to dropdown selected state
+					$('#mp_stack_stack').prepend(response);
+					
+					//Remove original form for new stack
+					$('.mp-stacks-new-stack-input').remove();
+					$('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').remove();
+					
+					//Show that stack was successfuly created
+					$('.mp-stacks-shortcode-new-stack-div').append('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message+'</div>');
+					
+				}
+			}).fail(function (data) {
+				console.log(data);
+			});
+			
+			return false;
+		 }
+		 //If no value is entered, show an alert that the field cannot be blank
+		 else{
+			alert(mp_stacks_vars.stack_needs_title_alert); 
+		 }
+	 });
+		
 });
 
 //Close the lightbox when the update button is clicked
