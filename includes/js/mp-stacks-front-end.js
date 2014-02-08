@@ -4,7 +4,7 @@ jQuery(document).ready(function($){
 		
 		patterns: {
 			youtube: {
-				index: 'youtube.com/', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+				index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
 				
 				id: 'v=', // String that splits URL in a two parts, second part should be %id%
 				// Or null - full URL will be returned
