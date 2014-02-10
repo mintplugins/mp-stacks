@@ -3,6 +3,7 @@ jQuery(document).ready(function($){
 		type: 'iframe', 	
 		
 		patterns: {
+			
 			youtube: {
 				index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
 				
@@ -26,6 +27,8 @@ jQuery(document).ready(function($){
 			// you may add here more sources
 		
 		},
+		
+		srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
 		
 	});	
 });

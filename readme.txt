@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: beta1.0.0.0
-Tested up to: beta1.0.4.3
-Stable tag: beta1.0.4.3
+Tested up to: 1.0.0.0
+Stable tag: 1.0.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,5 +35,5 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.0.0 =
+= 1.0.0.0 = February 10, 2014
 * Original release
