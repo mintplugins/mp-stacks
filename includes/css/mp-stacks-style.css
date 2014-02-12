@@ -55,7 +55,10 @@
 .mp-stack .mp-brick-centered{
 	text-align:center;
 	width:100%;	
-	margin:0 5% 0 5%;	
+}
+.mp-brick-centered-first,
+.mp-brick-centered-first{
+	margin:0 5% 0 5%;		
 }
 .mp-stack .mp-brick .mp-brick-text-line-1, 
 .mp-stack .mp-brick .mp-brick-text-line-2,
@@ -169,4 +172,10 @@
 }
 .no-brick .mp-brick-inner a{
 	color:#fff;	
+}
+
+/*magnific popup css*/
+.mfp-wrap .mfp-iframe-holder .mfp-video{
+	max-width: 640px;
+	max-height: 390px;
 }

@@ -40,7 +40,7 @@ jQuery(document).ready(function($){
 					tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 					
 					//Set font size in TinyMCEs
-					mp_stacks_size_text_previews();		
+					//mp_stacks_size_text_previews();		
 				
 				});	
 			}
@@ -71,7 +71,7 @@ jQuery(document).ready(function($){
 					tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 					
 					//Set font size in TinyMCEs
-					mp_stacks_size_text_previews();
+					//mp_stacks_size_text_previews();
 				});
 				
 			}

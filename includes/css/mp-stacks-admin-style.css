@@ -1,5 +1,9 @@
 /* Stylesheet for mp_stacks admin */
 
+/*Menu Button*/
+#toplevel_page_mp-stacks-about .wp-first-item{
+	display:none;
+}
 /* Hide Media Button  */
 #wp-mp_core_wp_editor_brick_text_line_1-media-buttons a,
 #wp-mp_core_wp_editor_brick_text_line_2-media-buttons a{

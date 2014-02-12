@@ -30,14 +30,14 @@ function mp_stacks_create_meta_box(){
 		),
 		array(
 			'field_id'			=> 'brick_max_width',
-			'field_title' 	=> __( 'Media Area - Max Width: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Enter the maximum width for the media area (in pixels) for this brick',
+			'field_title' 	=> __( 'Content-Types Area - Max Width: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Enter the maximum width for the Content-Types Area (in pixels) for this brick',
 			'field_type' 	=> 'number',
 			'field_value' => ''
 		),
 		array(
 			'field_id'			=> 'brick_min_above_below',
-			'field_title' 	=> __( 'Media Area - Min Height Above/Below: <br />', 'mp_stacks'),
+			'field_title' 	=> __( 'Content-Types Area - Min Height Above/Below: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Enter the minimum height above/below the media area (in pixels) for this brick. Default: 10',
 			'field_type' 	=> 'number',
 			'field_value' => '',

@@ -28,7 +28,7 @@ function mp_stacks_admin_stacks_and_bricks_icon() {
     $menu_icon   = '\f214';
 	?>
     <style type="text/css" media="screen">
-			#adminmenu #menu-posts-mp_brick .wp-menu-image:before {
+			#adminmenu #toplevel_page_mp-stacks-about .wp-menu-image:before {
 				background: url("<?php echo plugins_url('assets/images/mp_stack-icon-2x.png', dirname(dirname(__FILE__) ) ); ?>") no-repeat scroll;
 				content: '';
 				background-size: 20px;

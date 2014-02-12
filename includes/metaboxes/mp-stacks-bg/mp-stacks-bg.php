@@ -22,20 +22,6 @@ function mp_stacks_bg_create_meta_box(){
 	 */
 	$mp_stacks_bg_items_array = array(
 		array(
-			'field_id'			=> 'brick_bg_color',
-			'field_title' 	=> __( 'Background Color: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Select a color as your background color for this brick.',
-			'field_type' 	=> 'colorpicker',
-			'field_value' => '',
-		),
-		array(
-			'field_id'			=> 'brick_bg_color_opacity',
-			'field_title' 	=> __( 'Background Color Opacity: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Set how see-through you want your background color to be.',
-			'field_type' 	=> 'input_range',
-			'field_value' 	=> '100',
-		),
-		array(
 			'field_id'			=> 'brick_bg_image',
 			'field_title' 	=> __( 'Background Image: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Select an image to use as your background image for this brick.',
@@ -54,6 +40,20 @@ function mp_stacks_bg_create_meta_box(){
 			'field_id'			=> 'brick_bg_image_opacity',
 			'field_title' 	=> __( 'Background Image Opacity: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Set how see-through you want your background image to be over your color.',
+			'field_type' 	=> 'input_range',
+			'field_value' 	=> '100',
+		),
+		array(
+			'field_id'			=> 'brick_bg_color',
+			'field_title' 	=> __( 'Background Color: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Select a color as your background color for this brick.',
+			'field_type' 	=> 'colorpicker',
+			'field_value' => '',
+		),
+		array(
+			'field_id'			=> 'brick_bg_color_opacity',
+			'field_title' 	=> __( 'Background Color Opacity: <br />', 'mp_stacks'),
+			'field_description' 	=> 'Set how see-through you want your background color to be.',
 			'field_type' 	=> 'input_range',
 			'field_value' 	=> '100',
 		),

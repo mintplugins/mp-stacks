@@ -51,17 +51,18 @@ function mp_stacks_brick_content_output_image($default_content_output, $mp_stack
 		$brick_main_image = get_post_meta($post_id, 'brick_main_image', true);			
 	
 		//Get Link URL
-		$brick_url = get_post_meta($post_id, 'brick_url', true);
+		$brick_url = get_post_meta($post_id, 'brick_main_image_link_url', true);
 		
 		//Get image height settings
-		$brick_image_height = get_post_meta($post_id, 'brick_image_max_height', true);
+		$brick_image_height = get_post_meta($post_id, 'brick_main_image_max_height', true);
+				
+		$brick_main_image_link_class = apply_filters( 'brick_main_image_link_class', 'mp-brick-main-link', $post_id );
 		
-		//Set Image URL
-		//$brick_main_image = !empty($brick_image_width) ? mp_aq_resize( $brick_main_image, $brick_image_width, $brick_image_height ) : $brick_main_image;
-		
+		$brick_main_image_link_target = apply_filters( 'brick_main_image_link_target', '_self', $post_id );
+				
 		//Content output
 		$content_output .= '<div class="mp-stacks-image">';
-		$content_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="mp-brick-main-link">' : '';
+		$content_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="' . $brick_main_image_link_class . '" target="' . $brick_main_image_link_target . '" >' : '';
 		$content_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
 		$content_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
 		$content_output .= !empty($brick_main_image) ? ' />' : NULL;

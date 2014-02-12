@@ -29,19 +29,19 @@ function mp_stacks_image_create_meta_box(){
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'brick_url',
+			'field_id'			=> 'brick_main_image_max_height',
+			'field_title' 	=> __( 'Max Image Height (Optional)', 'mp_stacks'),
+			'field_description' 	=> 'Set the maximum height (in pixels) this image should show at. Image will shrink to fit smaller screens but never get bigger than this height on larger screens.',
+			'field_type' 	=> 'number',
+			'field_value' => ''
+		),
+		array(
+			'field_id'			=> 'brick_main_image_link_url',
 			'field_title' 	=> __( 'Link URL', 'mp_stacks'),
 			'field_description' 	=> 'Enter the URL the above image will go to when clicked. EG: http://mylink.com',
 			'field_type' 	=> 'url',
 			'field_value' => ''
 		),
-		array(
-			'field_id'			=> 'brick_image_max_height',
-			'field_title' 	=> __( 'Max Image Height (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Set the maximum height (in pixels) this image should show at. Image will shrink to fit smaller screens but never get bigger than this height on larger screens.',
-			'field_type' 	=> 'number',
-			'field_value' => ''
-		)
 	);
 	
 	

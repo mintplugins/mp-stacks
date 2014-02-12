@@ -6,7 +6,7 @@
 function mp_stacks_plugin_directory(){
 	
 	$args = array (
-		'parent_slug' => 'edit.php?post_type=mp_brick',
+		'parent_slug' => 'mp-stacks-about',
 		'page_title' => 'Add Ons',
 		'slug' => 'mp_stacks_plugin_directory',
 		'directory_list_url' => 'http://moveplugins.com/repo-group/mp-stacks/'

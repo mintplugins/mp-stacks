@@ -207,6 +207,11 @@ function mp_stacks_include_files(){
 		 * Allow re-ordering of bricks
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/re-order-bricks.php' );
+		
+		/**
+		 * Welcome Page
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );
 	
 	}
 }

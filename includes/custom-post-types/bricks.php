@@ -5,7 +5,7 @@
  * @package mp_stacks
  * @since mp_stacks 1.0
  */
-
+ 
 /**
  * Brick Custom Post Type
  */
@@ -34,7 +34,7 @@ function mp_brick_post_type() {
 			'public' 			=> false,
 			'publicly_queryable'=> false,
 			'show_ui' 			=> true, 
-			'show_in_menu' 		=> true, 
+			'show_in_menu' 		=> false, 
 			'query_var' 		=> true,
 			'rewrite' 			=> array( 'slug' => 'stack' ),
 			'capability_type' 	=> 'post',

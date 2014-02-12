@@ -1,9 +1,78 @@
 jQuery(document).ready(function($){
-	$('.mp-stack-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-stack-reorder-bricks, .mp-brick-add-new-link').magnificPopup({ 
-		type: 'iframe', 	
+	
+	// Override the appendContent function in magnificPopup
+	$.magnificPopup.instance.appendContent = function(newContent, type) {
+		
+		//Get the instance
+		var mfp = $.magnificPopup.instance;
+        var proto = $.magnificPopup.proto;
+	  	
+		//Original appendContent function begins here
+		mfp.content = newContent;
+		
+		//Here we add our custom check for youtube or vimeo
+		var iframe_src = mfp.content.find('.mfp-iframe').attr('src');	
+		if (iframe_src){
+			if ( iframe_src.indexOf("youtube.com/embed") > -1 || iframe_src.indexOf("vimeo.com") > -1 ){
+				
+				//If it matches, add class mfp-video to mfp-content div
+				mfp.contentContainer.addClass('mfp-video');
+			}
+		}
+		
+		//Continue with original appendContent function
+		if(newContent) {
+			if(mfp.st.showCloseBtn && mfp.st.closeBtnInside &&
+				mfp.currTemplate[type] === true) {
+				// if there is no markup, we just append close button element inside
+				if(!mfp.content.find('.mfp-close').length) {
+					mfp.content.append(_getCloseBtn());
+				}
+			} else {
+				mfp.content = newContent;
+			}
+		} else {
+			mfp.content = '';
+		}
+
+		//_mfpTrigger(BEFORE_APPEND_EVENT);
+		mfp.container.addClass('mfp-'+type+'-holder');
+
+		mfp.contentContainer.append(mfp.content);
+	
+	
+	
+	};
+	
+	//Set the class names of links which should open magnific popup
+	$('.mp-stack-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-stack-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link').magnificPopup({ 
+		
+		type: 'iframe', 
+		
+		callbacks: {
+			
+			//Change the type of popup this is based on what's in the src
+			elementParse: function(item) {
+			
+				var extension = item.src.split('.').pop();
+				
+				switch(extension) {
+					case 'jpg':
+					case 'png':
+					case 'gif':
+					item.type = 'image';
+					break;
+					case 'html':
+					item.type = 'ajax';
+					break;
+					default:
+					item.type = 'iframe';
+				}
+			}
+		},
 		
 		patterns: {
-			
+						
 			youtube: {
 				index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
 				
