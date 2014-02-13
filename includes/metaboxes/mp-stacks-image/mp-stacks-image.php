@@ -30,8 +30,8 @@ function mp_stacks_image_create_meta_box(){
 		),
 		array(
 			'field_id'			=> 'brick_main_image_max_height',
-			'field_title' 	=> __( 'Max Image Height (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Set the maximum height (in pixels) this image should show at. Image will shrink to fit smaller screens but never get bigger than this height on larger screens.',
+			'field_title' 	=> __( 'Max Image Height (Recommended)', 'mp_stacks'),
+			'field_description' 	=> 'Set the maximum height (in pixels) this image should show at. Image will shrink to fit smaller screens but never get bigger than this height.',
 			'field_type' 	=> 'number',
 			'field_value' => ''
 		),

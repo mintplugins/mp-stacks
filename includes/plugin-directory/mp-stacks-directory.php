@@ -9,7 +9,8 @@ function mp_stacks_plugin_directory(){
 		'parent_slug' => 'mp-stacks-about',
 		'page_title' => 'Add Ons',
 		'slug' => 'mp_stacks_plugin_directory',
-		'directory_list_url' => 'http://moveplugins.com/repo-group/mp-stacks/'
+		'directory_list_url' => 'http://moveplugins.com/repo-group/mp-stacks/',
+		'plugin_success_link' => add_query_arg( array('page' => 'mp_stacks_plugin_directory' ), admin_url('admin.php') )
 	);
 	
 	new MP_CORE_Plugin_Directory( $args );

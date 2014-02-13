@@ -63,8 +63,8 @@ function mp_stacks_brick_content_output_image($default_content_output, $mp_stack
 		//Content output
 		$content_output .= '<div class="mp-stacks-image">';
 		$content_output .= !empty($brick_url) ? '<a href="' . $brick_url . '" class="' . $brick_main_image_link_class . '" target="' . $brick_main_image_link_target . '" >' : '';
-		$content_output .= !empty($brick_main_image) ? '<img title="' . get_the_title($post_id) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
-		$content_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;" ' : NULL;
+		$content_output .= !empty($brick_main_image) ? '<img title="' . the_title_attribute( 'echo=0' ) . '" class="mp-brick-main-image" src="' . $brick_main_image . '"' : NULL;
+		$content_output .= !empty($brick_image_height) ? ' style="max-height:' . $brick_image_height . 'px;"' : NULL;
 		$content_output .= !empty($brick_main_image) ? ' />' : NULL;
 		$content_output .= !empty($brick_url) ? '</a>' : '';
 		$content_output .= '</div>';
