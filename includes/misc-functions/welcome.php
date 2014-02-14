@@ -194,10 +194,13 @@ class MP_Stacks_Welcome {
                     	<li><?php _e( 'View the page you made by clicking "View Page"', 'mp_stacks' );?></li>
                         <li><?php _e( 'When the page loads, there will be a red area that says "Add New Brick". Click on it and go!', 'mp_stacks' );?></li>
                     </ol>
+                 
+                 <h3><?php _e( '1 Minute Run-Through Video:', 'mp_stacks' );?></h3>  
+                 <iframe width="560" height="315" src="//www.youtube.com/embed/x1i0lmhu7fM?modestbranding=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
                     
                  <h3><?php _e( 'Video Tutoral: "Your First Stack"', 'mp_stacks' );?></h3>  
                  <p><?php _e( 'This video walks you through creating your first stack from start to finish:', 'mp_stacks' ); ?></p>
-                 <iframe width="560" height="315" src="//www.youtube.com/embed/_xK0qg6NuBs?modestbranding=1&showinfo=0" frameborder="0" allowfullscreen></iframe>
+                 <iframe width="560" height="315" src="//www.youtube.com/embed/_xK0qg6NuBs?modestbranding=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
                  
                  <p>
                  <a class="button" href="http://moveplugins.com/support/mp-stacks-support/" target="_blank"><?php _e( 'Open this video in a new window"', 'mp_stacks' );?></a>

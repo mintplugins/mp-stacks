@@ -232,67 +232,34 @@ function mp_brick( $post_id, $stack_id = NULL ){
 			
 			//Centered - dont use left and right
 			if ($post_specific_alignment == "centered"){
-				$content_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
-				$content_output .= '<div class="mp-brick-centered-first">';
-				$content_output .= $first_output;
-				$content_output .= '</div>';
-				$content_output .= '<div class="mp-brick-centered-second">';
-				$content_output .= $second_output;
-				$content_output .= '</div>';
-				$content_output .= '</div>';
+				$brick_container_classes = 'mp-brick-centered';
 			}
 			//All Left - all on left
 			else if ($post_specific_alignment == "allleft"){
-				//Left side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-left">';
-						$content_output .= $first_output;
-					$content_output .= '</div>';
-					$content_output .= '<div class="mp-brick-left">';
-						$content_output .= $second_output;
-					$content_output .= '</div>';
-				$content_output .= '</div>';
-					
-				//Right side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-right">';
-					$content_output .= '</div>';
-				$content_output .= '</div>';
+				$brick_container_classes = 'mp-brick-allleft';
 			}
 			//All Right - all on right
 			else if ($post_specific_alignment == "allright"){
-				//Left side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-left">';
-					$content_output .= '</div>';
-				$content_output .= '</div>';
-					
-				//Right side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-right">';
-						$content_output .= $first_output;
-					$content_output .= '</div>';
-					$content_output .= '<div class="mp-brick-right">';
-						$content_output .= $second_output;
-					$content_output .= '</div>';
-				$content_output .= '</div>';
+				$brick_container_classes = 'mp-brick-allright';
 			}
 			//Set left and right outputs
 			else{
-				//Left side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-left">';
-						$content_output .= $first_output;
-					$content_output .= '</div>';
-				$content_output .= '</div>';
-					
-				//Right side HTML output
-				$content_output .= '<div class="mp-brick-content-type-container">';
-					$content_output .= '<div class="mp-brick-right">';
-						$content_output .= $second_output;
-					$content_output .= '</div>';
-				$content_output .= '</div>';
+				$brick_container_classes = NULL;
 			}
+				
+			//First Content Type HTML output
+			$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+				$content_output .= '<div class="mp-brick-first-content-type">';
+					$content_output .= $first_output;
+				$content_output .= '</div>';
+			$content_output .= '</div>';
+			
+			//Second Content Type HTML output
+			$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+				$content_output .= '<div class="mp-brick-second-content-type">';
+					$content_output .= $second_output;
+				$content_output .= '</div>';
+			$content_output .= '</div>';
 			
 			//Post class for this brick
 			$post_class_string = apply_filters( 'mp_stacks_brick_class', 'mp-brick', $post_id );
@@ -319,7 +286,7 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				$html_output .= '<div class="mp-brick-meta">';
 					//Edit Brick Link
 					if ( is_user_logged_in() ) {
-						$html_output .= '<a class="mp-stack-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+						$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						
 						//Get Menu Order Info for this Brick						
 						$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
@@ -339,7 +306,7 @@ function mp_brick( $post_id, $stack_id = NULL ){
 							if ( $number_of_bricks > 1 ){
 								
 								//Show buttons to add new bricks above/below
-								$html_output .= '<a class="mp-stack-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
+								$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
 								
 							}						
 						}
@@ -352,7 +319,9 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				//Brick Content Divs
 				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
 					$html_output .= '<div class="mp-brick-inner">';
-						$html_output .= $content_output; 
+						$html_output .= '<div class="mp-brick-content-types">';
+							$html_output .= $content_output; 
+						$html_output .= '</div>';
 					$html_output .= '</div>';
 				$html_output .= '</div>';
 			$html_output .= '</div>';
@@ -475,7 +444,7 @@ function mp_stacks_default_brick_container_css( $css_output, $post_id ){
 	return $css_output;
 	
 }
-add_filter( 'mp_brick_container_css', 'mp_stacks_default_brick_container_css', 10, 2);
+//add_filter( 'mp_brick_container_css', 'mp_stacks_default_brick_container_css', 10, 2);
 
 /**
  * Filter Function which returns the css style lines for a brick's inner div
@@ -488,8 +457,13 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 	$brick_min_height = get_post_meta($post_id, 'brick_min_height', true);
 	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '50';
 	
+	//Min content-type margin
+	$brick_content_type_margin = get_post_meta($post_id, 'brick_min_above_below', true);
+	$brick_content_type_margin = is_numeric($brick_content_type_margin) ? $brick_content_type_margin : '10';
+	
 	//Inner styles
 	$css_output .= 'min-height:' . $brick_min_height . 'px; height:' . $brick_min_height . 'px;';
+	$css_output .= 'margin-top:' . $brick_content_type_margin . 'px; margin-bottom:' . $brick_content_type_margin . 'px;';
 			
 	//Return CSS Output
 	return $css_output;

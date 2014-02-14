@@ -50,7 +50,10 @@ add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
  * Enqueue scripts used in front end
  */
 function mp_stacks_frontend_enqueue(){
-	
+		
+		//element size detection - media queries for divs
+		wp_enqueue_script( 'mp_stacks_element_queries', plugins_url('js/elementQuery.min.js', dirname(__FILE__) ), array( 'jquery' ) );
+		
 		//lightbox
 		wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ) );
 		

@@ -45,7 +45,7 @@ jQuery(document).ready(function($){
 	};
 	
 	//Set the class names of links which should open magnific popup
-	$('.mp-stack-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-stack-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link').magnificPopup({ 
+	$('.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link').magnificPopup({ 
 		
 		type: 'iframe', 
 		
