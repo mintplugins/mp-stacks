@@ -235,42 +235,31 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 			//Get the plugins directory and name the temp plugin file
 			$upload_dir = $wp_filesystem->wp_plugins_dir();
 			$filename = trailingslashit($upload_dir).'temp.zip';
-						
-			//Download the plugin file defined in the passed in array
-			//$saved_file = $wp_filesystem->get_contents( $this->_args['plugin_download_link'] ); <-- This requires 'allow_url_fopen' to be on - so instead we'll use curl below
 			
-			// Initializing curl
-			$ch = curl_init();
-			 
-			//Return Transfer
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			//if 'allow_url_fopen' is available, do it the right way using the WP Filesystem api
+			if( ini_get('allow_url_fopen') ) {
+					
+				//Download the plugin file defined in the passed in array
+				$saved_file = $wp_filesystem->get_contents( $this->_args['plugin_download_link'] );
 			
-			//File to fetch
-			curl_setopt($ch, CURLOPT_URL, $this->_args['plugin_download_link']);
-			
-			
-			$file = fopen($upload_dir . "temp.zip", 'w');
-			curl_setopt($ch, CURLOPT_FILE, $file ); #output
-			
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);// allow redirects
-			
-			//Set User Agent
-			curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5'); //set user agent
-									 
-			// Getting results
-			$result =  curl_exec($ch); // Getting jSON result string
-			
-			curl_close($ch);
-			
-			fclose($file);
-								
-			//If we are unable to find the file, let the user know. This will also fail if a license is incorrect - but it should be caught further up the page
-			if ( ! $result ) {
-				
-				die('<p>' . __('Unable to download file! Your webhost may be blocking cross-server connections. You will have to manually download and install this plugin. <br /><br />It looks like this plugin may be available for download here: <a href="' . $this->_args['plugin_download_link'] . '" target="_blank" >' . $this->_args['plugin_download_link'] . '</a><br /><br /> Download it, and then go to "Plugins > Add New > Upload" to upload the plugin and activate it. <br /><br /> If the plugin link above does not download the plugin for you, contact the author of the plugin for a download link.', 'mp_core') . '</p>');
+				//Save the contents into a temp.zip file (string stored in $filename)
+				$wp_filesystem->put_contents( $filename, $saved_file, FS_CHMOD_FILE);
 				
 			}
-												
+			//For people with poor/bad server configurations which don't have access to allow_url_fopen, activate the "MP Curl Plugin Installer" Plugin to hook here
+			else{
+				
+				//Set args for CURL hook			
+				$curl_args = array(
+					'plugin_download_link' => $this->_args['plugin_download_link'],
+					'upload_dir' => $upload_dir
+				);
+				
+				//Hook to use CURL for people with poor/bad server configurations. Activate the "MP Curl Plugin Checker" Plugin to hook here
+				do_action( 'mp_core_curl_plugin_installer', $curl_args );					
+				
+			}
+			
 			//Unzip the temp zip file
 			unzip_file($filename, trailingslashit($upload_dir) . '/' );
 						
@@ -299,4 +288,3 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 			
 	}
 }
-

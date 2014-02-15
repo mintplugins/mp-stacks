@@ -23,7 +23,16 @@
 				});
 				
 			});
-
+			
+			// Register the command so that it can be invoked by using tinyMCE.activeEditor.execCommand('...');
+			ed.addCommand('MP_Stacks_View_Page', function() {
+				
+				jQuery(document).ready(function($){		
+					window.location.href = $( '#view-post-btn a' ).attr('href');
+				});
+				
+			});
+			
 			ed.onInit.add(function(ed) {
 				
 				//hide popup buttons on scroll or drag
@@ -119,29 +128,14 @@
 
 			DOM.add(document.body, 'div', {
 				id : 'mp_stack_btns',
-				style : 'display:block;'
-			});
-
-			editButton = DOM.add('mp_stack_btns', 'img', {
-				//src : isRetina ? mp_stacks_plugin_url+'/assets/images/edit-2x.png' : mp_stacks_plugin_url+'/assets/images/edit.png',
-				//id : 'mp_stack_edit',
-				//width : '24',
-				//height : '24',
-				//title : ed.getLang('wordpress.editstack')
-			});
-
-			tinymce.dom.Event.add( editButton, 'mousedown', function() {
-				var ed = tinymce.activeEditor;
-				ed.mpStacksBookmark = ed.selection.getBookmark('simple');
-				ed.execCommand('MP_Stacks');
-				t._hideButtons();
 			});
 
 			dellButton = DOM.add('mp_stack_btns', 'img', {
 				src : isRetina ? mp_stacks_plugin_url+'/assets/images/delete-2x.png' : mp_stacks_plugin_url+'/assets/images/delete.png',
 				id : 'wp_delstack',
-				width : '24',
-				height : '24',
+				width : '100',
+				height : '36.5',
+				style : 'margin-right:5px;',
 				title : ed.getLang('wordpress.delstack')
 			});
 
@@ -155,6 +149,21 @@
 					ed.dom.events.cancel(e);
 				}
 
+				t._hideButtons();
+			});
+			
+			editButton = DOM.add('mp_stack_btns', 'img', {
+				src : isRetina ? mp_stacks_plugin_url+'/assets/images/edit-2x.png' : mp_stacks_plugin_url+'/assets/images/edit-2x.png',
+				id : 'mp_stack_edit',
+				width : '100',
+				height : '36.5',
+				title : ed.getLang('wordpress.editstack')
+			});
+
+			tinymce.dom.Event.add( editButton, 'mousedown', function() {
+				var ed = tinymce.activeEditor;
+				ed.mpStacksBookmark = ed.selection.getBookmark('simple');
+				ed.execCommand('MP_Stacks_View_Page');
 				t._hideButtons();
 			});
 		},

@@ -47,7 +47,7 @@ function mp_stacks_admin_enqueue(){
 add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
 
 /**
- * Enqueue scripts used in front end
+ * Enqueue scripts used in front end. Note the hook name is mp_stacks_enqueue_scripts. This ensures we only enqueue stacks scripts on pages with stack shortcodes
  */
 function mp_stacks_frontend_enqueue(){
 		
@@ -63,4 +63,4 @@ function mp_stacks_frontend_enqueue(){
 		//lightbox css
 		wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ) );
 }
-add_action( 'wp_enqueue_scripts', 'mp_stacks_frontend_enqueue' );
+add_action( 'mp_stacks_enqueue_scripts', 'mp_stacks_frontend_enqueue' );

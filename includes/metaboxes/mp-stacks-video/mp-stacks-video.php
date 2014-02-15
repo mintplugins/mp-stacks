@@ -25,7 +25,7 @@ function mp_stacks_video_create_meta_box(){
 			'field_id'			=> 'brick_video_url',
 			'field_title' 	=> __( 'Video URL', 'mp_stacks'),
 			'field_description' 	=> 'Enter the URL to the video page.',
-			'field_type' 	=> 'url',
+			'field_type' 	=> 'textarea',
 			'field_value' => ''
 		),
 		array(
