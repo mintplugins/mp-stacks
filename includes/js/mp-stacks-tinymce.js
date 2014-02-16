@@ -131,7 +131,7 @@
 			});
 
 			dellButton = DOM.add('mp_stack_btns', 'img', {
-				src : isRetina ? mp_stacks_plugin_url+'/assets/images/delete-2x.png' : mp_stacks_plugin_url+'/assets/images/delete.png',
+				src : isRetina ? mp_stacks_plugin_url+'/assets/images/delete-2x.png' : mp_stacks_plugin_url+'/assets/images/delete-2x.png',
 				id : 'wp_delstack',
 				width : '100',
 				height : '36.5',

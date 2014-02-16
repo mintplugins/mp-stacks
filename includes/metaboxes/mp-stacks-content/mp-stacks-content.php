@@ -45,7 +45,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_value' => '',
 			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered', 'allleft' => 'All on left', 'allright' => 'All on right')
 		),
-		/*array(
+		array(
 			'field_id'	 => 'brick_content_type_help',
 			'field_title' => 'Content Types',
 			'field_description' => NULL,
@@ -54,19 +54,20 @@ function mp_stacks_content_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'http://www.youtube.com/watch?v=BuTJbBElU-A',
-					'link_text' => __( 'Watch Tutorial Video for Content Types', 'mp_stacks'),
+					'link' => 'http://moveplugins.com/embed/?post_id=3862',
+					'link_text' => __( 'What does this section do?', 'mp_stacks'),
 					'target' => NULL
 				),
+				/*
 				array( 
 					'type' => 'directory',
-					'link' => admin_url( 'edit.php?post_type=mp_brick&page=mp_stacks_plugin_directory'),
+					'link' => admin_url( 'admin.php?page=mp_stacks_plugin_directory'),
 					'link_text' => __( 'Get more Content Types', 'mp_stacks'),
 					'target' => '_blank'
 				)
+				*/
 			)
 		),
-		*/
 	);
 	
 	

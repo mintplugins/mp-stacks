@@ -1,19 +1,13 @@
 /* Stylesheet for mp_stacks admin */
 
-/*Menu Button*/
+/*Top Level duplicate subpage Menu Button*/
 #toplevel_page_mp-stacks-about .wp-first-item{
 	display:none;
 }
-/* Hide Media Button  */
-#wp-mp_core_wp_editor_brick_text_line_1-media-buttons a,
-#wp-mp_core_wp_editor_brick_text_line_2-media-buttons a{
-	/*display:none;	*/
-}
 
-/*Show Add Media Button though */
-#mp-brick_text_line_1-media-buttons #insert-media-button,
-#mp-brick_text_line_2-media-buttons #insert-media-button{
-	display:inline-block;	
+/*Hide Add Stack button for text content type tinymce */
+.postbox[id^="mp_stacks"] .mp_stack-thickbox{
+	display:none;	
 }
 /*hide slug div*/
 .post-type-mp_brick #normal-sortables,

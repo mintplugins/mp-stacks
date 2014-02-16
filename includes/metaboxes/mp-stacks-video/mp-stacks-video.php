@@ -23,8 +23,8 @@ function mp_stacks_video_create_meta_box(){
 	$mp_stacks_video_items_array = array(
 		array(
 			'field_id'			=> 'brick_video_url',
-			'field_title' 	=> __( 'Video URL', 'mp_stacks'),
-			'field_description' 	=> 'Enter the URL to the video page.',
+			'field_title' 	=> __( 'Video URL or Embed Code', 'mp_stacks'),
+			'field_description' 	=> 'Enter the URL to the video page or the Embed code.',
 			'field_type' 	=> 'textarea',
 			'field_value' => ''
 		),
