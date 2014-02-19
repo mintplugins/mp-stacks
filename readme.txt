@@ -2,9 +2,9 @@
 Contributors: johnstonphilip
 Donate link: http://moveplugins.com/
 Tags: message bar, header
-Requires at least: beta1.0.0.0
-Tested up to: 1.0.0.0
-Stable tag: 1.0.0.0
+Requires at least: 3.5
+Tested up to: 3.8.1
+Stable tag: 1.0.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,11 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.1 = February 19, 2014
+* Added Video Tutorials for all default Metaboxes
+* Added MP Stacks Dashboard/Welcome Page
+* Improved Default Responsive Styling
 
 = 1.0.0.0 = February 10, 2014
 * Original release
