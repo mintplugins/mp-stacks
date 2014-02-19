@@ -29,18 +29,26 @@ function mp_stacks_video_create_meta_box(){
 			'field_value' => ''
 		),
 		array(
-			'field_id'			=> 'brick_video_min_width',
-			'field_title' 	=> __( 'Minimum Video Width (Optional)', 'mp_stacks'),
-			'field_description' 	=> 'Enter the min width of the video (in pixels). EG \'300\'',
-			'field_type' 	=> 'number',
-			'field_value' => ''
-		),
-		array(
 			'field_id'			=> 'brick_video_max_width',
 			'field_title' 	=> __( 'Maximum Video Width (Optional)', 'mp_stacks'),
 			'field_description' 	=> 'Enter the max width of the video (in pixels). EG \'300\'',
 			'field_type' 	=> 'number',
 			'field_value' => ''
+		),
+		array(
+			'field_id'	 => 'brick_content_type_help',
+			'field_title' => 'Content Types',
+			'field_description' => NULL,
+			'field_type' => 'help',
+			'field_value' => '',
+			'field_select_values' => array(
+				array( 
+					'type' => 'oembed',
+					'link' => 'https://moveplugins.com/embed/?post_id=3903',
+					'link_text' => __( '"Video" Content-Type Tutorial', 'mp_stacks'),
+					'target' => NULL
+				),
+			)
 		),
 	);
 	

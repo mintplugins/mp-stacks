@@ -42,6 +42,21 @@ function mp_stacks_create_meta_box(){
 			'field_type' 	=> 'number',
 			'field_value' => '',
 		),
+		array(
+			'field_id'	 => 'brick_content_type_help',
+			'field_title' => 'Content Types',
+			'field_description' => NULL,
+			'field_type' => 'help',
+			'field_value' => '',
+			'field_select_values' => array(
+				array( 
+					'type' => 'oembed',
+					'link' => 'https://moveplugins.com/embed/?post_id=3880',
+					'link_text' => __( 'Brick Size Settings Tutorial', 'mp_stacks'),
+					'target' => NULL
+				),
+			)
+		),
 	);
 	
 	
@@ -62,4 +77,4 @@ function mp_stacks_create_meta_box(){
 	global $mp_stacks_meta_box;
 	$mp_stacks_meta_box = new MP_CORE_Metabox($mp_stacks_add_meta_box, $mp_stacks_items_array);
 }
-add_action('plugins_loaded', 'mp_stacks_create_meta_box');
+add_action('plugins_loaded', 'mp_stacks_create_meta_box', 1);

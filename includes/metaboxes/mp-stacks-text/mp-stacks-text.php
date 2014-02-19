@@ -69,7 +69,22 @@ function mp_stacks_text_create_meta_box(){
 			'field_description' => 'Enter the text to display on text area 2',
 			'field_type' => 'wp_editor',
 			'field_value' => ''
-		)
+		),
+		array(
+			'field_id'	 => 'brick_content_type_help',
+			'field_title' => 'Content Types',
+			'field_description' => NULL,
+			'field_type' => 'help',
+			'field_value' => '',
+			'field_select_values' => array(
+				array( 
+					'type' => 'oembed',
+					'link' => 'https://moveplugins.com/embed/?post_id=3872',
+					'link_text' => __( '"Text" Content-Type Tutorial', 'mp_stacks'),
+					'target' => NULL
+				),
+			)
+		),
 	);
 	
 	

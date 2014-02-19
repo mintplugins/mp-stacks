@@ -19,3 +19,15 @@ html.wp-toolbar {
 #wpcontent{
 	margin-left:18px;
 }
+/*Dont need to show the MP Stacks selector box on the minimal page*/
+#mp_stacksdiv{
+	display:none;	
+}
+#screen-options-link-wrap,
+.row-actions .inline,
+#posts-filter .search-box,
+#posts-filter .tablenav,
+.subsubsub,
+.add-new-h2{
+	display:none;
+}

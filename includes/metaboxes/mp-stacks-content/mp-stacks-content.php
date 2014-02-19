@@ -54,8 +54,8 @@ function mp_stacks_content_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'http://moveplugins.com/embed/?post_id=3862',
-					'link_text' => __( 'What does this section do?', 'mp_stacks'),
+					'link' => 'https://moveplugins.com/embed/?post_id=3862',
+					'link_text' => __( 'Content-Types Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),
 				/*

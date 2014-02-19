@@ -42,8 +42,22 @@ function mp_stacks_image_create_meta_box(){
 			'field_type' 	=> 'url',
 			'field_value' => ''
 		),
+		array(
+			'field_id'	 => 'brick_content_type_help',
+			'field_title' => 'Content Types',
+			'field_description' => NULL,
+			'field_type' => 'help',
+			'field_value' => '',
+			'field_select_values' => array(
+				array( 
+					'type' => 'oembed',
+					'link' => 'https://moveplugins.com/embed/?post_id=3898',
+					'link_text' => __( '"Image" Content-Type Tutorial', 'mp_stacks'),
+					'target' => NULL
+				),
+			)
+		),
 	);
-	
 	
 	/**
 	 * Custom filter to allow for add-on plugins to hook in their own data for add_meta_box array

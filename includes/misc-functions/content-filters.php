@@ -92,11 +92,7 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 		
 		//Get video URL
 		$brick_video = get_post_meta($post_id, 'brick_video_url', true);
-				
-		//Get video min width
-		$brick_video_min_width = get_post_meta($post_id, 'brick_video_min_width', true);
-		$brick_video_min_width = !empty( $brick_video_min_width ) ? $brick_video_min_width : NULL;
-		
+						
 		//Get video max width
 		$brick_video_max_width = get_post_meta($post_id, 'brick_video_max_width', true);
 		$brick_video_max_width = !empty( $brick_video_max_width ) ? $brick_video_max_width : NULL;
@@ -104,7 +100,7 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 		//Content output
 		if (!empty($brick_video)){
 			
-			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $brick_video_min_width, $brick_video_max_width ) . '</div>'; 
+			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, NULL, $brick_video_max_width ) . '</div>'; 
 		}
 		
 		//Return

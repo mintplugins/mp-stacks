@@ -538,22 +538,37 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 add_filter( 'mp_brick_inner_css', 'mp_stacks_default_brick_inner_css', 10, 2);
 
 /**
- * Filter Function which returns the tablet css for a brick
+ * Filter Function which returns conditional responsive css for a brick
  * Parameter: CSS output
  * Parameter: Post ID
  */
-function mp_stacks_default_brick_tablet_css( $css_output, $post_id ){
+function mp_stacks_default_brick_responsive_css( $css_output, $post_id ){
 	
-	//Min brick height
-	$brick_min_height = get_post_meta($post_id, 'brick_min_height', true);
-	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '50';
+	$second_type_set = get_post_meta( $post_id, 'brick_second_content_type', true );
+	$brick_alignment = get_post_meta( $post_id, 'brick_alignment', true );
 	
-	//Tablet sized CSS
-	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' {min-height:' . ($brick_min_height*.70) . 'px; }}';
-	$css_output .= '@media screen and (max-width: 980px){#mp-brick-' . $post_id . ' .mp-brick-inner {min-height:' . ($brick_min_height*.70) . 'px; }}';
-				
+	//If the second type has been set
+	if ( !empty($second_type_set) && $second_type_set != 'none' ){
+		
+		//If the alignment is centered
+		if ( $brick_alignment == 'centered' ){
+			
+			//Add a margin to the bottom of the 1st content type when less than 600px wide
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container.mp-brick-centered {
+				margin-bottom:10px;	
+			}';
+			
+		}
+		
+		//Add a margin to the bottom of the 1st content type
+		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > div:first-child {
+			margin-bottom:10px;	
+		}';
+			
+	}
+					
 	//Return CSS Output
 	return $css_output;
 	
 }
-//add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_tablet_css', 10, 2);
+add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_responsive_css', 10, 2);
