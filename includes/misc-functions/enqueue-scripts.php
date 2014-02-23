@@ -37,7 +37,8 @@ function mp_stacks_admin_enqueue(){
 	
 	wp_localize_script( 'mp_stacks_admin_js', 'mp_stacks_vars', 
 		array(
-			'ajaxurl' => admin_url( 'admin-ajax.php' ), 
+			'ajaxurl' => admin_url( 'admin-ajax.php' ),
+			'ajax_nonce_value' => wp_create_nonce( 'mp-stacks-nonce-action-name' ), 
 			'stack_successful_message' => '<div class="mp-stacks-successful-image"><img class="mp-stacks-icon-250" src="' . plugins_url('assets/images/mp-stacks-icon-250.png', dirname(dirname(__FILE__) ) ) . '" /></div><div class="mp-stacks-successful-text">' . __('Stack successfully created! Insert it below:', 'mp_stacks')  . '</div>',
 			'stack_needs_title_alert' => __( 'Please enter a name to identify the new Stack', 'mp_stack' )
 		) 

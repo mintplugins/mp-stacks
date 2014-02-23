@@ -4,7 +4,7 @@
  *
  * @since 1.0.0
  *
- * @package    MP Core
+ * @package    MP Stacks
  * @subpackage Functions
  *
  * @copyright  Copyright (c) 2013, Move Plugins
@@ -23,9 +23,15 @@
  */
 function mp_stacks_add_new_stack_ajax() {	
 
+	//Check nonce
+	if ( !check_ajax_referer( 'mp-stacks-nonce-action-name', 'mp_stacks_nonce', false ) ){
+		echo __('Ajax Security Check', 'mp_stacks');
+		die();
+	}
+
 	$new_stack_name = $_POST['mp_stacks_new_stack_name'];
 
-	if( !empty( $new_stack_name ) ) {
+	if( !empty( $new_stack_name ) && current_user_can('edit_theme_options') ) {
 				
 		//Make new stack
 		$new_stack_array = wp_insert_term(

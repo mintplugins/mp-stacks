@@ -89,22 +89,26 @@
 }
 
 /*Text*/
+.mp-brick .mp-brick-text-line-1 a, 
+.mp-brick .mp-brick-text-line-2 a{
+	margin-bottom:15px;
+	margin-bottom: 1.5rem
+}
+.mp-brick .mp-brick-text-line-1 a:last-child, 
+.mp-brick .mp-brick-text-line-2 a:last-child{
+	margin-bottom:0px;
+}
 .mp-brick .mp-brick-text-line-1, 
 .mp-brick .mp-brick-text-line-2,
 .mp-brick .mp-brick-text-line-1:last-child p:last-child,
-.mp-brick .mp-brick-text-line-2 p:last-child
-{	
+.mp-brick .mp-brick-text-line-2 p:last-child{	
 	line-height:140%;
 	word-wrap: normal;
 	word-break: break-word;
 	text-align:left;
-}
-.mp-brick .mp-brick-text-line-1, 
-.mp-brick .mp-brick-text-line-2,
-.mp-brick .mp-brick-text-line-1:last-child p:last-child,
-.mp-brick .mp-brick-text-line-2 p:last-child{
 	margin-bottom: 0rem;
 }
+
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-1, 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-2,
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-1 p,

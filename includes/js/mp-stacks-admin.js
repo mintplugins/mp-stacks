@@ -178,6 +178,7 @@ jQuery(document).ready(function($){
 			// If the country field has changed, we need to update the state/provice field
 			var postData = {
 				action: 'mp_stacks_make_new_stack',
+				mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
 				mp_stacks_new_stack_name: stack_title
 			};
 			

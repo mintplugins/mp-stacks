@@ -8,37 +8,41 @@ function mp_stack_enqueue_stack_shortcode_css(){
 	//Get the global wp_query var
 	global $wp_query;
 	
-	//Loop through each post in the query	
-	foreach( $wp_query->posts as $post){
+	if ( isset( $wp_query->posts ) ){
 		
-		//Our the mp_stack shortcode exists in the current post var
-		if ( isset($post->post_content) ){
-			if( has_shortcode( $post->post_content, 'mp_stack') ) {
-								
-				//Get the stack id from the shortcode
-				$stacks = explode( '[mp_stack stack="', $post->post_content );	
-				
-				//Loop through each stack shortcode in this post
-				foreach( $stacks as $stack ){
-					$stack_id = explode( '"]', $stack );
-					$stack_id = $stack_id[0];
-				
-					if ( isset( $stack_id ) ){
-						//Echo the stack css
-						echo mp_stack_css( $stack_id );
+		//Loop through each post in the query	
+		foreach( $wp_query->posts as $post){
+			
+			//Our the mp_stack shortcode exists in the current post var
+			if ( isset($post->post_content) ){
+				if( has_shortcode( $post->post_content, 'mp_stack') ) {
+									
+					//Get the stack id from the shortcode
+					$stacks = explode( '[mp_stack stack="', $post->post_content );	
+					
+					//Loop through each stack shortcode in this post
+					foreach( $stacks as $stack ){
+						$stack_id = explode( '"]', $stack );
+						$stack_id = $stack_id[0];
+					
+						if ( isset( $stack_id ) ){
+							//Echo the stack css
+							echo mp_stack_css( $stack_id );
+						}
+						
 					}
 					
 				}
+			}
+			
+			//If there is at least 1 stack on this page, enqueue the stuff we need
+			if ( isset( $stack_id ) ){
+							
+				//Enqueue hook for add-on scripts 
+				do_action ( 'mp_stacks_enqueue_scripts' );
 				
 			}
-		}
 		
-		//If there is at least 1 stack on this page, enqueue the stuff we need
-		if ( isset( $stack_id ) ){
-						
-			//Enqueue hook for add-on scripts 
-			do_action ( 'mp_stacks_enqueue_scripts' );
-			
 		}
 	
 	}
@@ -183,7 +187,7 @@ function mp_stack( $stack_id ){
 	//Set the args for the new query
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
-		'posts_per_page' => 0,
+		'posts_per_page' => -1,
 		'meta_key' => 'mp_stack_order_' . $stack_id,
 		'orderby' => 'meta_value_num menu_order',
 		'order' => 'ASC',
@@ -349,7 +353,7 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				//Brick Meta Div
 				$html_output .= '<div class="mp-brick-meta">';
 					//Edit Brick Link
-					if ( is_user_logged_in() ) {
+					if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
 						$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						
 						//Get Menu Order Info for this Brick						

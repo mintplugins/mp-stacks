@@ -4,7 +4,7 @@ Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 1.0.0.1
+Stable tag: 1.0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,13 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.2 = February 23, 2014
+* Upgraded Security using Nonces for Ajax
+* Fix wp_query to show all bricks in stack rather than posts_per_page
+* Improved code documentation on Custom Post Type file
+* Added 15px margins below links in Text Areas - except if last-child
+
 
 = 1.0.0.1 = February 19, 2014
 * Added Video Tutorials for all default Metaboxes

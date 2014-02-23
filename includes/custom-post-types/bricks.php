@@ -1,13 +1,27 @@
 <?php
 /**
- * Custom Post Types
+ * This page contains functions that create the mp-brick custom post type and the mp_stacks custom taxonomy
  *
- * @package mp_stacks
- * @since mp_stacks 1.0
+ * @link http://moveplugins.com/doc/
+ * @since 1.0.0.0
+ *
+ * @package    MP Stacks
+ * @subpackage Functions
+ *
+ * @copyright   Copyright (c) 2014, Move Plugins
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @author      Philip Johnston
  */
  
 /**
  * Brick Custom Post Type
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @see      mp_core_get_option()
+ * @see      register_post_type()
+ * @param  	 void
+ * @return   void
  */
 function mp_brick_post_type() {
 	
@@ -47,9 +61,15 @@ function mp_brick_post_type() {
 }
 add_action( 'init', 'mp_brick_post_type', 0 );
 
-
- /**
- * Stacks taxonomy
+/**
+ * MP Stacks Custom Taxonomy
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @see      mp_core_get_option()
+ * @see      register_taxonomy()
+ * @param  	 void
+ * @return   void
  */
 function mp_stacks_taxonomy() {  
 	if (mp_core_get_option( 'mp_stacks_settings_general',  'enable_disable' ) != 'disabled' ){
@@ -85,8 +105,16 @@ function mp_stacks_taxonomy() {
 }  
 add_action( 'init', 'mp_stacks_taxonomy' );  
 
- /**
+/**
  * Add ability to filter bricks by stack on "list all bricks" page
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @see      mp_core_get_option()
+ * @see      get_taxonomy()
+ * @see      wp_dropdown_categories
+ * @param  	 void
+ * @return   void
  */
 function mp_stacks_restrict_bricks_by_stack() {
 	global $typenow;
@@ -106,9 +134,17 @@ function mp_stacks_restrict_bricks_by_stack() {
 		));
 	};
 }
-
 add_action('restrict_manage_posts', 'mp_stacks_restrict_bricks_by_stack');
 
+/**
+ * If the taxonomy in an MP Stacks query is using the ID, change it to use the term
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @see      get_term_by()
+ * @param  	 $query 
+ * @return   void
+ */
 function mp_stacks_convert_id_to_term_in_query($query) {
 	global $pagenow;
 	$post_type = 'mp_brick'; // change HERE
@@ -119,25 +155,17 @@ function mp_stacks_convert_id_to_term_in_query($query) {
 		$q_vars[$taxonomy] = $term->slug;
 	}
 }
-
 add_filter('parse_query', 'mp_stacks_convert_id_to_term_in_query');
 
 /**
- * Add each stack to the bricks button in the WP menu
- */
-function mp_stacks_show_each_stack_in_menu(){
-	
-	$stacks = mp_core_get_all_terms_by_tax('mp_stacks');
- 	
-	foreach( $stacks as $id => $stack){
-	
-		add_submenu_page( 'edit.php?post_type=mp_brick', $stack, $stack, 'manage_options', add_query_arg( array('mp_stacks' => $id), 'edit.php?post_type=mp_brick' ) );
-	}	
-}
-//add_action('admin_menu', 'mp_stacks_show_each_stack_in_menu');
-
-/**
- * Make the "Manage Stacks" page link to lists of bricks instead of an archive page
+ * Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @see      add_query_arg()
+ * @param  	 $actions 
+ * @param  	 $tag 
+ * @return   $actions
  */
 function remove_quick_edit( $actions, $tag ) {
 		
@@ -149,8 +177,16 @@ function remove_quick_edit( $actions, $tag ) {
 }
 add_filter('mp_stacks_row_actions','remove_quick_edit',10,2);
 
- /**
+/**
  * Hide Permalink output on single edit screen
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @param  	 $return 
+ * @param  	 $id 
+ * @param  	 $new_title 
+ * @param  	 $new_slug 
+ * @return   $actions
  */
 function mp_stacks_perm($return, $id, $new_title, $new_slug){
 	global $post;
@@ -166,8 +202,14 @@ function mp_stacks_perm($return, $id, $new_title, $new_slug){
 }
 add_filter('get_sample_permalink_html', 'mp_stacks_perm', '',4);
 
- /**
+/**
  * Sort bricks on admin pages by stack order
+ *
+ * @since    1.0.0
+ * @link     http://moveplugins.com/doc/
+ * @param  	 $return 
+ * @param  	 $query 
+ * @return   $actions
  */
 function mp_stacks_order_admin_bricks( $query ){
 	
