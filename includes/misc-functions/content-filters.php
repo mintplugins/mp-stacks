@@ -100,7 +100,14 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 		//Content output
 		if (!empty($brick_video)){
 			
-			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, NULL, $brick_video_max_width ) . '</div>'; 
+			$args = array(
+				'min_width' => NULL,
+				'max_width' => $brick_video_max_width,
+				'iframe_css_id' => NULL,
+				'iframe_css_class' => NULL,
+			);
+			
+			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $args ) . '</div>'; 
 		}
 		
 		//Return

@@ -61,6 +61,14 @@ function mp_stacks_frontend_enqueue(){
 		//front end js
 		wp_enqueue_script( 'mp_stacks_front_end_js', plugins_url('js/mp-stacks-front-end.js', dirname(__FILE__) ), array( 'jquery', 'mp_stacks_lightbox' ) );
 		
+		wp_localize_script( 'mp_stacks_front_end_js', 'mp_stacks_frontend_vars', 
+			array(
+				'ajaxurl' => admin_url( 'admin-ajax.php' ),
+				'ajax_nonce_value' => wp_create_nonce( 'mp-stacks-nonce-action-name' ), 
+				'stacks_plugin_url' => MP_STACKS_PLUGIN_URL
+			) 
+		);	
+		
 		//lightbox css
 		wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ) );
 }

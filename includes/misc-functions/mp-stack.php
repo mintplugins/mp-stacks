@@ -1,55 +1,4 @@
-<?php
-/**
- * Function which echoes the CSS output for the bricks in a stack into the <head>
- * Parameter: None
- */
-function mp_stack_enqueue_stack_shortcode_css(){
-	
-	//Get the global wp_query var
-	global $wp_query;
-	
-	if ( isset( $wp_query->posts ) ){
-		
-		//Loop through each post in the query	
-		foreach( $wp_query->posts as $post){
-			
-			//Our the mp_stack shortcode exists in the current post var
-			if ( isset($post->post_content) ){
-				if( has_shortcode( $post->post_content, 'mp_stack') ) {
-									
-					//Get the stack id from the shortcode
-					$stacks = explode( '[mp_stack stack="', $post->post_content );	
-					
-					//Loop through each stack shortcode in this post
-					foreach( $stacks as $stack ){
-						$stack_id = explode( '"]', $stack );
-						$stack_id = $stack_id[0];
-					
-						if ( isset( $stack_id ) ){
-							//Echo the stack css
-							echo mp_stack_css( $stack_id );
-						}
-						
-					}
-					
-				}
-			}
-			
-			//If there is at least 1 stack on this page, enqueue the stuff we need
-			if ( isset( $stack_id ) ){
-							
-				//Enqueue hook for add-on scripts 
-				do_action ( 'mp_stacks_enqueue_scripts' );
-				
-			}
-		
-		}
-	
-	}
-		
-}
-add_action( 'wp_enqueue_scripts', 'mp_stack_enqueue_stack_shortcode_css');
-		
+<?php		
 /**
  * Function which returns the CSS output for the bricks in a stack
  * Parameter: Stack ID
@@ -180,7 +129,7 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
  * Function which return the HTML output for a stack
  * Parameter: Stack ID
  */
-function mp_stack( $stack_id ){
+function mp_stack( $stack_id ){		
 	
 	$html_output = NULL;
 		
@@ -276,6 +225,10 @@ function mp_stack( $stack_id ){
  * Parameter: Stack ID - The Stack which is calling this brick
  */
 function mp_brick( $post_id, $stack_id = NULL ){
+			
+			//Handle CSS for this brick
+			global $mp_bricks_on_page;
+			$mp_bricks_on_page[$post_id] = $post_id;
 	
 			//Default outputs back to null
 			$first_output = NULL;
@@ -576,3 +529,36 @@ function mp_stacks_default_brick_responsive_css( $css_output, $post_id ){
 	
 }
 add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_responsive_css', 10, 2);
+
+/**
+ * Output css for all bricks on this page into the footer of the theme
+ * Parameter: none
+ * Global Variable: array $mp_bricks_on_page This array contains all the ids of every brick previously called on this page
+ */
+function mp_stacks_footer_css(){
+	
+	//Get all the stack ids used on this page			
+	global $mp_bricks_on_page;
+	
+	if ( !empty( $mp_bricks_on_page ) ){
+		
+		echo '<style type="text/css">';
+		
+		//Show css for each
+		foreach ( $mp_bricks_on_page as $brick_id ){
+			echo mp_brick_css( $brick_id ); 
+		}
+		
+		echo '</style>';
+		
+		//If there is at least 1 brick on this page, enqueue the stuff we need
+		if ( isset( $brick_id ) ){
+						
+			//Enqueue hook for add-on scripts 
+			do_action ( 'mp_stacks_enqueue_scripts', $mp_bricks_on_page );
+			
+		}
+	}
+		
+}
+add_action( 'wp_footer', 'mp_stacks_footer_css'); 

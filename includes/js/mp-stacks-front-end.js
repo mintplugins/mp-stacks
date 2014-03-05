@@ -108,8 +108,15 @@ function mp_stacks_close_lightbox(){
 	//Close the iframe and reload the window
 	jQuery(document).ready(function($){
 		
-		//Put bg over the iframe
-		$('.mfp-bg').css('z-index', '9999999999999');
+				
+		$('.mfp-iframe, .mfp-close').css('visibility', 'hidden');
+		
+		$('.mfp-content').css( 'width', 'initial' );
+		$('.mfp-content').css( 'height', 'initial' );
+		
+		$('.mfp-content').prepend('<div class="mp-stacks-brick-updating" style="color:#fff; visibility:hidden; text-align: center;"><img width="100px" src="' + mp_stacks_frontend_vars.stacks_plugin_url + 'assets/images/Stacks-Icon-Gif.gif" /></div>');
+		
+		$('.mfp-content .mp-stacks-brick-updating').css('visibility', 'visible');
 		
 		//Close iframe and refresh
 		$('.mfp-iframe').load(function(){
