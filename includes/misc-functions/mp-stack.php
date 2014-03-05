@@ -546,7 +546,7 @@ function mp_stacks_footer_css(){
 		
 		//Show css for each
 		foreach ( $mp_bricks_on_page as $brick_id ){
-			echo mp_brick_css( $brick_id ); 
+			echo mp_brick_css( $brick_id, 'footer_css' ); 
 		}
 		
 		echo '</style>';

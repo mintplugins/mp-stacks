@@ -34,6 +34,9 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+= 1.0.0.4 = March 5, 2014
+* Added context to footer css to prevent double style tags in footer
+
 = 1.0.0.3 = March 5, 2014
 * Attached Brick CSS to footer instead of scanning posts for shortcodes
 
