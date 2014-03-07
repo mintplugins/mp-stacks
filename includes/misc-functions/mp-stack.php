@@ -450,26 +450,6 @@ function mp_stacks_default_brick_outer_css( $css_output, $post_id ){
 add_filter( 'mp_brick_outer_css', 'mp_stacks_default_brick_outer_css', 10, 2);
 
 /**
- * Filter Function which returns the css style lines for a brick's content-type container div
- * Parameter: CSS output
- * Parameter: Post ID
- */
-function mp_stacks_default_brick_container_css( $css_output, $post_id ){
-	
-	//Min content-type margin
-	$brick_content_type_margin = get_post_meta($post_id, 'brick_min_above_below', true);
-	$brick_content_type_margin = is_numeric($brick_content_type_margin) ? $brick_content_type_margin : '10';
-			
-	//Outer style lines
-	$css_output .= 'margin-top:' . $brick_content_type_margin . 'px; margin-bottom:' . $brick_content_type_margin . 'px;';
-			
-	//Return CSS Output
-	return $css_output;
-	
-}
-//add_filter( 'mp_brick_container_css', 'mp_stacks_default_brick_container_css', 10, 2);
-
-/**
  * Filter Function which returns the css style lines for a brick's inner div
  * Parameter: CSS output
  * Parameter: Post ID
@@ -495,40 +475,113 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 add_filter( 'mp_brick_inner_css', 'mp_stacks_default_brick_inner_css', 10, 2);
 
 /**
- * Filter Function which returns conditional responsive css for a brick
+ * Filter Function which returns conditional responsive css margins for a brick
  * Parameter: CSS output
  * Parameter: Post ID
  */
-function mp_stacks_default_brick_responsive_css( $css_output, $post_id ){
+function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	
+	//Check which content types have been set
 	$second_type_set = get_post_meta( $post_id, 'brick_second_content_type', true );
+	$second_type_set = get_post_meta( $post_id, 'brick_second_content_type', true );
+	
+	//Check alignment
 	$brick_alignment = get_post_meta( $post_id, 'brick_alignment', true );
 	
+	//Check c1's above margins
+	$brick_min_above_c1 = get_post_meta( $post_id, 'brick_min_above_c1', true );
+	$brick_min_above_c1 = is_numeric($brick_min_above_c1) ? $brick_min_above_c1 : '0';
+	//Check c1's below margins
+	$brick_min_below_c1 = get_post_meta( $post_id, 'brick_min_below_c1', true );
+	$brick_min_below_c1 = is_numeric($brick_min_below_c1) ? $brick_min_below_c1 : '0';
+	
+	//Check c2's above margins
+	$brick_min_above_c2 = get_post_meta( $post_id, 'brick_min_above_c2', true );
+	$brick_min_above_c2 = is_numeric($brick_min_above_c2) ? $brick_min_above_c2 : '0';
+	//Check c2's below margins
+	$brick_min_below_c2 = get_post_meta( $post_id, 'brick_min_below_c2', true );
+	$brick_min_below_c2 = is_numeric($brick_min_below_c2) ? $brick_min_below_c2 : '0';
+	
 	//If the second type has been set
-	if ( !empty($second_type_set) && $second_type_set != 'none' ){
+	//if ( !empty($second_type_set) && $second_type_set != 'none' ){
 		
 		//If the alignment is centered
 		if ( $brick_alignment == 'centered' ){
 			
-			//Add a margin to the bottom of the 1st content type when less than 600px wide
-			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container.mp-brick-centered {
-				margin-bottom:10px;	
+			//Add custom margin to the 1st content type when centered
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-centered:first-child
+			{
+				margin-top:' . $brick_min_above_c1 . 'px;	
+				margin-bottom:' . $brick_min_below_c1 . 'px;	
 			}';
 			
-		}
-		
-		//Add a margin to the bottom of the 1st content type
-		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > div:first-child {
-			margin-bottom:10px;	
-		}';
+			//Add custom margin to the 2nd content type when centered
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner  > .mp-brick-centered:nth-child(2)	
+			{
+				margin-top:' . $brick_min_above_c2 . 'px;	
+				margin-bottom:' . $brick_min_below_c2 . 'px;	
+			}';
 			
-	}
+		}		
+		/**
+		 * Left Right Alignment.
+		 * We have to do some extra stuff to left-right because of the table layout and how it changes when we go to centered on mobile
+		 */
+		else{
+			//Add custom margin to the 1st content type when leftright
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type
+			{
+				margin-top:' . $brick_min_above_c1 . 'px;	
+				margin-bottom:' . $brick_min_below_c1 . 'px;	
+			}';
+			
+			//Add custom margin to the 2nd content type when centered
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner  > .mp-brick-content-type-container .mp-brick-second-content-type
+			{
+				margin-top:' . $brick_min_above_c2 . 'px;	
+				margin-bottom:' . $brick_min_below_c2 . 'px;	
+			}';
+			
+			/**
+			 * Left Right Alignment goes centered upon mobile below. Change margins from content type divs to their containers so the margins overlap nicely
+			 */
+			 
+			//Remove Margin from content type 1
+			$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type
+			{
+				margin-top:0px;	
+				margin-bottom:0px;	
+			}';
+			
+			//Remove Margin from content type 2
+			$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner  > .mp-brick-content-type-container .mp-brick-second-content-type
+			{
+				margin-top:0px;	
+				margin-bottom:0px;	
+			}';
+			
+			//Add custom margin to the 1st content type when centered
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container:first-child
+			{
+				margin-top:' . $brick_min_above_c1 . 'px;	
+				margin-bottom:' . $brick_min_below_c1 . 'px;	
+			}';
+			
+			//Add custom margin to the 2nd content type when centered
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner  > .mp-brick-content-type-container:nth-child(2)	
+			{
+				margin-top:' . $brick_min_above_c2 . 'px;	
+				margin-bottom:' . $brick_min_below_c2 . 'px;	
+			}';
+		}
+	
+	//}
 					
 	//Return CSS Output
 	return $css_output;
 	
 }
-add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_responsive_css', 10, 2);
+add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2);
 
 /**
  * Output css for all bricks on this page into the footer of the theme

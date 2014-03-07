@@ -65,7 +65,8 @@ function mp_stacks_frontend_enqueue(){
 			array(
 				'ajaxurl' => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce_value' => wp_create_nonce( 'mp-stacks-nonce-action-name' ), 
-				'stacks_plugin_url' => MP_STACKS_PLUGIN_URL
+				'stacks_plugin_url' => MP_STACKS_PLUGIN_URL,
+				'updating_message' => 'Updating brick and refreshing...'
 			) 
 		);	
 		

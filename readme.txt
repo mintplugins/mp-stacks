@@ -34,6 +34,13 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.5 = March 5, 2014
+* Better responsive Handling
+* Double click on bricks to edit them 
+* mp_stacks_metabox becomes mp_stacks_size_metabox
+* Content Type Margins added to size metabox
+
 = 1.0.0.4 = March 5, 2014
 * Added context to footer css to prevent double style tags in footer
 
