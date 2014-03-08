@@ -108,7 +108,7 @@ jQuery(document).ready(function($){
 	}
 
 	//Set the class names of links which should open magnific popup
-	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(){ 
+	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(event){ 
 		event.preventDefault();
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor( $(this).attr('href') );
