@@ -35,6 +35,9 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.0.7 = March 8, 2014
+* Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue
+
 = 1.0.0.6 = March 8, 2014
 * Prevent default event for brick edit links - wasn’t working in Firefox
 
