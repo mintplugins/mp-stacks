@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://moveplugins.com
 Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
-Version: 1.0.0.7
+Version: 1.0.0.8
 Author: Move Plugins
 Author URI: http://moveplugins.com
 Text Domain: mp_stacks
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_VERSION' ) )
-	define( 'MP_STACKS_VERSION', '1.0.0.7' );
+	define( 'MP_STACKS_VERSION', '1.0.0.8' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_PLUGIN_URL' ) )

@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
-Tested up to: 3.8.1
-Stable tag: 1.0.0.6
+Tested up to: 3.8.2
+Stable tag: 1.0.0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.8 = March 22, 2014
+* Removed priority of 1 from Brick size settings metabox action
+* Add-on directory now links to https://moveplugins 
 
 = 1.0.0.7 = March 8, 2014
 * Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue

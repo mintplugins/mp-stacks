@@ -116,4 +116,4 @@ function mp_stacks_create_meta_box(){
 	global $mp_stacks_meta_box;
 	$mp_stacks_meta_box = new MP_CORE_Metabox($mp_stacks_add_meta_box, $mp_stacks_items_array);
 }
-add_action('plugins_loaded', 'mp_stacks_create_meta_box', 1);
+add_action('plugins_loaded', 'mp_stacks_create_meta_box');
