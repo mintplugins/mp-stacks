@@ -12,7 +12,6 @@
  * @author     Philip Johnston
  */
 
-
 /**
  * Load scripts needed for re-ordering hierarchical posts in WP Admin
  *

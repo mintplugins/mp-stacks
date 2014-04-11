@@ -72,6 +72,78 @@
 	float:left;
 }
 /*Shortcode insert designs*/
+.mp-stacks-shortcode-choose-action{
+	width:100%;
+	height: 250px;
+	display:table;	
+}
+/*Make new stack button area*/
+.mp-stacks-shortcode-choose-action .mp-stacks-shortcode-action-choice{
+	display:table-cell;
+	width:50%;
+	vertical-align:middle;	
+	text-align:center;
+	cursor:pointer;
+}
+.mp-stacks-shortcode-action-choice.new-stack{
+	background-color:#2ecc71;
+}
+.mp-stacks-shortcode-action-choice.new-stack:hover{
+	background-color:#36e27f;
+}
+.mp-stacks-new-stack-action-icon{
+	display: inline-block;
+	vertical-align: top;
+}
+.mp-stacks-new-stack-action-icon:before{
+	display:inline-block;
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f339";
+	font-size:100px;
+	line-height:100px;
+}
+/*Use Existing Stack button area*/
+.mp-stacks-shortcode-choose-action .mp-stacks-shortcode-action-choice{
+	display:table-cell;
+	width:50%;
+	vertical-align:middle;	
+	text-align:center;
+	color:#fff;
+}
+.mp-stacks-shortcode-action-choice.existing-stack{
+	background-color:#3498db;
+}
+.mp-stacks-shortcode-action-choice.existing-stack:hover{
+	background-color:#3bacf7;
+}
+.mp-stacks-existing-stack-action-icon{
+	display: inline-block;
+	vertical-align: top;
+}
+.mp-stacks-existing-stack-action-icon:before{
+	display:inline-block;
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f322";
+	font-size:100px;
+	line-height:100px;
+}
+/*hide the options which will be shown by javascript after user selection*/
+.mp-stacks-shortcode-new-stack-div,
+.mp-stacks-shortcode-existing-stack-div,
+.duplicate-stack-option,
+.template-stack-option{
+	display:none;	
+}
+.mp-stacks-shortcode-option{
+	margin-bottom:20px;	
+}
+
 .mp_stack_successful{
 	background-color:#9AFF99;
 	color:#000;

@@ -209,6 +209,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/re-order-bricks.php' );
 		
 		/**
+		 * Stack Templater
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/stack-templater.php' );
+		
+		/**
 		 * Welcome Page
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );

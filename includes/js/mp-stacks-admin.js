@@ -160,6 +160,49 @@ jQuery(document).ready(function($){
 	});
 	
 	/**
+	 * Hide 1st options for "Add Stack" and show Buttons to Make new Stack
+	 *
+	 * @since    1.0.0
+	 * @link     http://moveplugins.com/doc/
+	 */
+	 $( '.mp-stacks-shortcode-action-choice.new-stack' ).on( 'click', function(event){
+		 
+		 $( '.mp-stacks-shortcode-choose-action' ).hide(); 
+		 
+		 //Show options to create new stack
+		 $('.mp-stacks-shortcode-new-stack-div').css('display', 'block');
+	 });
+	
+	/**
+	 * Hide 1st options for "Add Stack" and show Buttons to use existing stack
+	 *
+	 * @since    1.0.0
+	 * @link     http://moveplugins.com/doc/
+	 */
+	 $( '.mp-stacks-shortcode-action-choice.existing-stack' ).on( 'click', function(event){
+		 
+		 $( '.mp-stacks-shortcode-choose-action' ).hide(); 
+		 
+		 //Show options to use existing stack
+		 $('.mp-stacks-shortcode-existing-stack-div').show();
+	 });
+	  
+	/**
+	 * When the user changes the dropdown for Stack Options, show corresponding Options for "Duplicate", or "Template"
+	 *
+	 * @since    1.0.0
+	 * @link     http://moveplugins.com/doc/
+	 */
+	 $( '.mp-stacks-new-stack-source-type' ).on( 'change', function(event){
+				 
+		 //Hide any options that may have already been selected
+		 $( '.duplicate-stack-option, .template-stack-option' ).hide(); 
+		 
+		 //Show options to create new stack
+		 $('.' + $(this).val() ).show();
+	 });
+	 
+	/**
 	 * Make New Stack Button Ajax
 	 *
 	 * @since    1.0.0
@@ -169,17 +212,36 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault(); 
 		
+		//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
+		 $('.mp-stacks-shortcode-existing-stack-div').hide();
+		 $('.mp-stacks-shortcode-new-stack-div').hide();
+		 
+		 //Show that stack is being created
+		$('.mp-stacks-shortcode-container').append('<div class="mp_stack_creating">'+mp_stacks_vars.stack_creating_message+'</div>');
+		
 		// Get the title the user entered
 		var stack_title = $('.mp-stacks-new-stack-input').val();
+		
+		// Get the stack source type
+		var stack_source_type = $('.mp-stacks-new-stack-source-type').val();
+		
+		// Get the stack to duplicate
+		var stack_duplicate_id = $('.mp-stacks-new-stack-duplicate-stack').val();
+		
+		//Get the stack template the user has chosen
+		var stack_template_slug = $('.mp-stacks-new-stack-template').val();
 		
 		//Only send for ajax if there is a value
 		if ( stack_title != '' ){
 				
-			// If the country field has changed, we need to update the state/provice field
+			// Form the array to pass to the wp_ajax_mp_stacks_make_new_stacks php function
 			var postData = {
 				action: 'mp_stacks_make_new_stack',
 				mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
-				mp_stacks_new_stack_name: stack_title
+				mp_stacks_new_stack_name: stack_title,
+				mp_stacks_new_stack_source_type: stack_source_type,
+				mp_stacks_new_stack_duplicate_id: stack_duplicate_id,
+				mp_stacks_new_stack_template_slug: stack_template_slug
 			};
 			
 			//Ajax to make new stack
@@ -189,15 +251,34 @@ jQuery(document).ready(function($){
 				url: mp_stacks_vars.ajaxurl,
 				success: function (response) {
 					
-					//Add new stack to dropdown selected state
-					$('#mp_stack_stack').prepend(response);
+					//Add new stack TinyMCE/ActiveEditor
+					window.send_to_editor('[mp_stack stack="' + response + '"]');
 					
 					//Remove original form for new stack
-					$('.mp-stacks-new-stack-input').remove();
-					$('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').remove();
+					//$('.mp-stacks-shortcode-new-stack-div').empty();
+					//$('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').remove();
 					
 					//Show that stack was successfuly created
-					$('.mp-stacks-shortcode-new-stack-div').append('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message+'</div>');
+					$('.mp-stacks-shortcode-container').append('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message+'</div>');
+					$('.mp_stack_creating').hide();
+					
+					tb_remove();
+					
+					//Make tinyMce run the function in the tinyMCE plugin for MP Stacks which swaps the shortcode for an image
+					tinyMCE.activeEditor.execCommand('MP_Stacks');
+					
+					//Once the user inserts a new/existing stack into the active text area, reset the options so they can insert another stack if needed
+					setTimeout(function(){
+						
+						//Show Step 1 Stack Options
+						$( '.mp-stacks-shortcode-choose-action' ).show(); 
+						 
+						//Hide Step 2 Stack Options and ajax messages
+						$('.mp-stacks-shortcode-existing-stack-div').hide();
+						$('.mp-stacks-shortcode-new-stack-div').hide();
+						$('.mp_stack_successful').hide();
+					
+					}, 2000);
 					
 				}
 			}).fail(function (data) {
@@ -210,6 +291,18 @@ jQuery(document).ready(function($){
 		 else{
 			alert(mp_stacks_vars.stack_needs_title_alert); 
 		 }
+	 });
+	 
+	 //Once the user inserts a new/existing stack into the active text area, reset the options so they can insert another stack if needed
+	 $( '#mp_stack, #mp_stack-cancel-download-insert' ).on( 'click', function( event ){
+		 
+		 //Show Step 1 Stack Options
+		 $( '.mp-stacks-shortcode-choose-action' ).show(); 
+		 
+		 //Hide Step 2 Stack Options
+		 $('.mp-stacks-shortcode-existing-stack-div').hide();
+		 $('.mp-stacks-shortcode-new-stack-div').hide();
+		 
 	 });
 		
 });

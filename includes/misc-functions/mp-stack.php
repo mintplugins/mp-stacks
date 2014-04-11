@@ -335,7 +335,7 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				$html_output .= '</div>';
 				
 				//Brick BG Div
-				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '></div>';
+				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '>' . apply_filters( 'mp_brick_background_content', '', $post_id ) . '</div>';
 				
 				//Brick Content Divs
 				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
