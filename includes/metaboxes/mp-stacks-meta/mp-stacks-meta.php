@@ -96,6 +96,13 @@ function mp_stacks_create_meta_box(){
 				),
 			)
 		),
+		array(
+			'field_id'			=> 'brick_class_name',
+			'field_title' 	=> __( 'Brick Class Name: <br />', 'mp_stacks'),
+			'field_description' 	=> 'This field will allow you to attach a unique classname to this brick which travels with it in templates',
+			'field_type' 	=> 'hidden',
+			'field_value' => '',
+		),
 	);
 	
 	

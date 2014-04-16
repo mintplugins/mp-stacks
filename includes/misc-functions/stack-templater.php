@@ -22,9 +22,7 @@
 function mp_stack_template_array( $stack_id, $args = array() ){		
 	
 	//Set defaults for args		
-	$args_defaults = array(
-		
-	);
+	$args_defaults = array();
 	
 	//Get and parse args
 	$args = wp_parse_args( $args, $args_defaults );
@@ -62,13 +60,17 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 				'brick_title' => "Brick's Title",
 				'mp_stack_order_' . $stack_id => '1000',
 				
-				'other_meta_data' => NULL
+				'other_normal_meta_data' => array( value => 'Whatever String', 'file_attachment' => false )
+				
+				'attachment_meta_data' => array( value => 'http://url.com/attachmentyadda', 'file_attachment' => true )
 			),
 			'brick_2' => array(
 				'brick_title' => "Brick's Title",
 				'mp_stack_order_' . $stack_id => '1010',
 				
-				'other_meta_data' => NULL
+				'other_normal_meta_data' => array( value => 'Whatever String', 'file_attachment' => false )
+				
+				'attachment_meta_data' => array( value => 'http://url.com/attachmentyadda', 'file_attachment' => true )
 			)
 		)	
 	);
@@ -112,8 +114,16 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 			//Loop through all meta fields attached to this brick
 			foreach ( $brick_meta_keys as $meta_key ){
 				
+				//Get the value of this meta key
+				$meta_value = get_post_meta( $post_id, $meta_key, true );
+							
+				//Set up the standard meta_value_array
+				$meta_value_array = array( 
+					'value' => $meta_value
+				);	
+				
 				//Add post meta fields to the array for this brick
-				$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter][$meta_key] = get_post_meta( $post_id, $meta_key, true );
+				$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter][$meta_key] = $meta_value_array;
 				
 			}
 			
@@ -140,6 +150,7 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 	return $mp_stack_template_array;	
 }
 
+
 /**
  * Function which return an array containting all the content types used in a stack
  * Parameter: Stack ID
@@ -159,16 +170,16 @@ function mp_stack_template_required_content_types( $stack_id ){
 	foreach ( $mp_stack_template_array['stack_bricks'] as $brick ){
 		
 		//If this is not already in this array
-		if(!in_array($brick['brick_first_content_type'], $required_content_types, true) && !empty($brick['brick_first_content_type']) ){
+		if(!in_array($brick['brick_first_content_type']['value'], $required_content_types, true) && !empty($brick['brick_first_content_type']['value']) ){
 			
 			//Add each content type for this brick to the required content types array
-			array_push( $required_content_types, $brick['brick_first_content_type'] );
+			array_push( $required_content_types, $brick['brick_first_content_type']['value'] );
 			
 		}
 		//If this is not already in this array
-		if(!in_array($brick['brick_second_content_type'], $required_content_types, true) && !empty($brick['brick_second_content_type']) ){
+		if(!in_array($brick['brick_second_content_type']['value'], $required_content_types, true) && !empty($brick['brick_second_content_type']['value']) ){
 		
-			array_push( $required_content_types, $brick['brick_second_content_type'] );
+			array_push( $required_content_types, $brick['brick_second_content_type']['value'] );
 		}
 		
 	}
@@ -243,14 +254,33 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 				if ( $brick_meta_id == 'mp_stack_order' ){
 					
 					//Set the Stack Order
-					update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value );
+					update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value['value'] );
 					
 				}
 				//If this meta field is not the stack order one
 				else{
 					
+					//If this meta value should be an attachment
+					if ( $brick_meta_value['attachment'] == true ){
+						
+						//$attachment_already_created = mp_core_get_attachment_id_from_url()
+						
+						//If this attachment has NOT already been created {
+							
+							//Create this to be an attachment by taking it from the template folder
+							
+							//$brick_meta_value['value'] = new attachment URL
+							
+						//}
+						//else if this attachment HAS already been created{
+							
+							//$brick_meta_value['value'] = existing attachment URL
+							
+						//}
+					}
+					
 					//Save the metadata to the new brick
-					update_post_meta( $new_brick_id, $brick_meta_id, $brick_meta_value );
+					update_post_meta( $new_brick_id, $brick_meta_id, $brick_meta_value['value'] );
 						
 				}
 			}

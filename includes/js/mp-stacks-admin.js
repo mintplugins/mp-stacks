@@ -146,7 +146,7 @@ jQuery(document).ready(function($){
 	});
 	
 	//Auto select the stack we want this brick to be in
-	var stack_id = mp_stacks_getQueryVariable('mp_stack_id_new');
+	var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 
 	stack_id_checkbox = '#in-mp_stacks-' + stack_id;
 	

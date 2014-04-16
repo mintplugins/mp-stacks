@@ -33,14 +33,16 @@ function mp_stacks_text_create_meta_box(){
 			'field_title' => __( 'Text Color 1 (Optional)', 'mp_stacks'),
 			'field_description' => '<br />Select the color of text area 1.',
 			'field_type' => 'colorpicker',
-			'field_value' => ''
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option'
 		),
 		array(
 			'field_id'	 => 'brick_line_1_font_size',
 			'field_title' => __( 'Text Size 1 (Optional)', 'mp_stacks'),
 			'field_description' => '<br />Enter the size (in pixels).',
 			'field_type' => 'number',
-			'field_value' => ''
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option'
 		),
 		array(
 			'field_id'	 => 'brick_text_line_1',
@@ -54,14 +56,16 @@ function mp_stacks_text_create_meta_box(){
 			'field_title' => __( 'Text Color 2 (Optional)', 'mp_stacks'),
 			'field_description' => '<br />Select the color of text area 2',
 			'field_type' => 'colorpicker',
-			'field_value' => ''
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option'
 		),
 		array(
 			'field_id'	 => 'brick_line_2_font_size',
 			'field_title' => __( 'Text Size 2 (Optional)', 'mp_stacks'),
 			'field_description' => '<br />Enter the size (in pixels).',
 			'field_type' => 'number',
-			'field_value' => ''
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option'
 		),
 		array(
 			'field_id'	 => 'brick_text_line_2',

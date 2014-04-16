@@ -58,14 +58,12 @@ function mp_stacks_content_create_meta_box(){
 					'link_text' => __( 'Content-Types Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),
-				/*
 				array( 
 					'type' => 'directory',
 					'link' => admin_url( 'admin.php?page=mp_stacks_plugin_directory'),
-					'link_text' => __( 'Get more Content Types', 'mp_stacks'),
+					'link_text' => __( 'Add more Content-Types', 'mp_stacks'),
 					'target' => '_blank'
 				)
-				*/
 			)
 		),
 	);

@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://moveplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
-Tested up to: 3.8.2
-Stable tag: 1.0.0.8
+Tested up to: 3.9
+Stable tag: 1.0.0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,14 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.0.9 = April 16, 2014
+* Updated TinyMCE Plugin for TinyMCE 4.0
+* CSS is now output in the header instead of the footer
+* Added “Stack Only” pages and rewrite parameter
+* Changed variable for mp_brick_additional_css filter from $css_output to null
+* JS Scripts are now enqueued to show in the footer instead of header
+* Smooth Scrolling and anchor points added for bricks
 
 = 1.0.0.8 = March 22, 2014
 * Removed priority of 1 from Brick size settings metabox action

@@ -12,11 +12,11 @@ function mp_stacks_admin_enqueue(){
 		wp_enqueue_style( 'mp_stacks_minimal-admin-css', plugins_url('css/mp-stacks-minimal-admin.css', dirname(__FILE__)) );
 		
 		//Append minimal admin variable to all urls if set
-		wp_enqueue_script( 'mp_stacks_minimal-admin-js', plugins_url('js/mp-stacks-minimal-admin.js', dirname(__FILE__)), array('jquery') );	
+		wp_enqueue_script( 'mp_stacks_minimal-admin-js', plugins_url('js/mp-stacks-minimal-admin.js', dirname(__FILE__)), array('jquery'), false, true );	
 	}
 	
 	//lightbox
-	wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ) );
+	wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ), false, true );
 	
 	//lightbox css
 	wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ) );
@@ -49,18 +49,18 @@ function mp_stacks_admin_enqueue(){
 add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
 
 /**
- * Enqueue scripts used in front end. Note the hook name is mp_stacks_enqueue_scripts. This ensures we only enqueue stacks scripts on pages with stack shortcodes
+ * Enqueue scripts used in front end. 
  */
 function mp_stacks_frontend_enqueue(){
 		
 		//element size detection - media queries for divs
-		wp_enqueue_script( 'mp_stacks_element_queries', plugins_url('js/elementQuery.min.js', dirname(__FILE__) ), array( 'jquery' ) );
+		wp_enqueue_script( 'mp_stacks_element_queries', plugins_url('js/elementQuery.min.js', dirname(__FILE__) ), array( 'jquery' ), false, true );
 		
 		//lightbox
-		wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ) );
+		wp_enqueue_script( 'mp_stacks_lightbox', plugins_url('js/lightbox.js', dirname(__FILE__) ), array( 'jquery' ), false, true );
 		
 		//front end js
-		wp_enqueue_script( 'mp_stacks_front_end_js', plugins_url('js/mp-stacks-front-end.js', dirname(__FILE__) ), array( 'jquery', 'mp_stacks_lightbox' ) );
+		wp_enqueue_script( 'mp_stacks_front_end_js', plugins_url('js/mp-stacks-front-end.js', dirname(__FILE__) ), array( 'jquery', 'mp_stacks_lightbox' ), false, true );
 		
 		wp_localize_script( 'mp_stacks_front_end_js', 'mp_stacks_frontend_vars', 
 			array(

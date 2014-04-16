@@ -48,6 +48,7 @@ function mp_stack_css( $stack_id, $echo = false ) {
 		}
 		
 	}
+	
 }
 
 /**
@@ -114,7 +115,7 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		}
 					
 		//Additional CSS
-		$css_output .= apply_filters( 'mp_brick_additional_css', $css_output, $post_id );
+		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id );
 		
 		//If this is a single brick
 		if ( empty( $stack_id ) ){
@@ -198,7 +199,7 @@ function mp_stack( $stack_id ){
 						$html_output .= '<div class="mp-brick-content-types-inner">';
 							$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
 			
-								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
+								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
 							$html_output .= '</div>';		
 					$html_output .= '</div>';		
 				$html_output .= '</div>';		
@@ -226,7 +227,7 @@ function mp_stack( $stack_id ){
  */
 function mp_brick( $post_id, $stack_id = NULL ){
 			
-			//Handle CSS for this brick
+			//Add this brick to the global array caoniting all brick ids on this page
 			global $mp_bricks_on_page;
 			$mp_bricks_on_page[$post_id] = $post_id;
 	
@@ -282,10 +283,6 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				$content_output .= '</div>';
 			$content_output .= '</div>';
 			
-			//Post class for this brick
-			$post_class_string = apply_filters( 'mp_stacks_brick_class', 'mp-brick', $post_id );
-			$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
-			
 			//Extra Brick Attributes
 			$extra_brick_attributes = apply_filters( 'mp_stacks_extra_brick_attributes', NULL, $post_id );
 			
@@ -294,20 +291,42 @@ function mp_brick( $post_id, $stack_id = NULL ){
 			
 			//Extra Brick Outer Attributes
 			$extra_brick_outer_attributes = apply_filters( 'mp_stacks_extra_brick_outer_attributes', NULL, $post_id );
-						
+			
+			//Post class for this brick
+			$post_class_string = get_post_meta($post_id, 'brick_class_name', true);
+			$post_class_string = apply_filters( 'mp_stacks_brick_class', $post_class_string, $post_id );
+			
+			//Get WordPress Classes for this Brick
+			$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
+				
+			//Loop through each WordPress class and add it to the class string	
 			foreach ( $post_class_array as $class ){
 				$post_class_string .=  ' ' . $class;
 			}
-		    
 											   
 			//Actual output
-			$html_output .= '<div id="mp-brick-' . $post_id . '" class=" ' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+			$html_output .= '<div id="mp-brick-' . $post_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+				
+				//HTML Anchor for this brick
+				$html_output .= '<a class="brick-anchor" name="' . sanitize_title( get_the_title() ) . '"></a>';
 				
 				//Brick Meta Div
 				$html_output .= '<div class="mp-brick-meta">';
+					
+					//Action hook to run actions in the meta area for a brick
+					do_action( 'mp_stacks_brick_meta_action', $post_id );
+					
+					//Hook custom output to the meta div for this brick
+					$html_output .= apply_filters( 'mp_stacks_brick_meta_output', NULL, $post_id );
+						
 					//Edit Brick Link
 					if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
-						$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 'mp-stacks-minimal-admin' => 'true' ), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+						
+						$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 
+							'mp-stacks-minimal-admin' => 'true',
+							'mp_stack_id' => $stack_id, 
+							'containing_page_url' => mp_core_get_current_url()
+						), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 						
 						//Get Menu Order Info for this Brick						
 						$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
@@ -317,8 +336,21 @@ function mp_brick( $post_id, $stack_id = NULL ){
 						if ( !empty( $stack_id ) ){
 							
 							//Show buttons to add new bricks above/below
-							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => $mp_stack_order - 1 ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
-							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id_new' => $stack_id, 'mp_stack_order_new' => $mp_stack_order + 1  ), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
+							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 
+								'post_type' => 'mp_brick', 
+								'mp-stacks-minimal-admin' => 'true', 
+								'mp_stack_id' => $stack_id, 
+								'mp_stack_order_new' => $mp_stack_order - 1 ,
+								'containing_page_url' => mp_core_get_current_url()
+							), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
+							
+							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 
+								'post_type' => 'mp_brick',
+								'mp-stacks-minimal-admin' => 'true', 
+								'mp_stack_id' => $stack_id, 
+								'mp_stack_order_new' => $mp_stack_order + 1,
+								'containing_page_url' => mp_core_get_current_url()
+							), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 						
 							//Get number of bricks in this stack
 							$number_of_bricks = mp_core_number_postpercat( $stack_id );
@@ -327,7 +359,11 @@ function mp_brick( $post_id, $stack_id = NULL ){
 							if ( $number_of_bricks > 1 ){
 								
 								//Show buttons to add new bricks above/below
-								$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stacks' => $stack_id ), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
+								$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 
+									'post_type' => 'mp_brick', 
+									'mp-stacks-minimal-admin' => 'true', 
+									'mp_stacks' => $stack_id 
+								), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
 								
 							}						
 						}
@@ -353,19 +389,6 @@ function mp_brick( $post_id, $stack_id = NULL ){
 			return $html_output;
 				
 }
-
-/**
- * Filter Function which returns the css style lines for a brick
- * Parameter: CSS output
- * Parameter: Post ID
- */
-function mp_stacks_default_brick_css( $css_output, $post_id ){
-	
-	//No styles currently
-	return $css_output;
-	
-}
-//add_filter( 'mp_brick_css', 'mp_stacks_default_brick_css', 10, 2);
 
 /**
  * Filter Function which returns the css style lines for a brick background
@@ -406,20 +429,23 @@ function mp_stacks_default_brick_bg_after_css( $css_output, $post_id ){
 	
 	//Get background image URL
 	$brick_bg_image = get_post_meta($post_id, 'brick_bg_image', true);
-	$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
 	
-	//Get background image opacity
-	$brick_bg_image_opacity = get_post_meta( $post_id, 'brick_bg_image_opacity', true );
-	$brick_bg_image_opacity = empty($brick_bg_image_opacity) ? 1 : $brick_bg_image_opacity/100;
+	if ( !empty( $brick_bg_image ) ){
+		$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
+		
+		//Get background image opacity
+		$brick_bg_image_opacity = get_post_meta( $post_id, 'brick_bg_image_opacity', true );
+		$brick_bg_image_opacity = empty($brick_bg_image_opacity) ? 1 : $brick_bg_image_opacity/100;
+		
+		//Get background display type
+		$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
+		
+		//Add style lines to css output
+		$css_output .= 'background-image: url(\'' . $brick_bg_image . '\');';
+		$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? 'background-size: cover;' : NULL;
+		$css_output .= 'opacity:' . $brick_bg_image_opacity . ';';
+	}
 	
-	//Get background display type
-	$brick_display_type = get_post_meta($post_id, 'brick_display_type', true);
-	
-	//Add style lines to css output
-	$css_output .= 'background-image: url(\'' . $brick_bg_image . '\');';
-	$css_output .= $brick_display_type == 'fill' || empty( $brick_display_type ) ? 'background-size: cover;' : NULL;
-	$css_output .= 'opacity:' . $brick_bg_image_opacity . ';';
-			
 	//Return CSS Output
 	return $css_output;
 	
@@ -584,34 +610,37 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2);
 
 /**
- * Output css for all bricks on this page into the footer of the theme
+ * Output css for all bricks on this page into the header of the theme
  * Parameter: none
  * Global Variable: array $mp_bricks_on_page This array contains all the ids of every brick previously called on this page
  */
-function mp_stacks_footer_css(){
+function mp_stacks_header_css(){
 	
-	//Get all the stack ids used on this page			
 	global $mp_bricks_on_page;
 	
-	if ( !empty( $mp_bricks_on_page ) ){
-		
-		echo '<style type="text/css">';
-		
-		//Show css for each
-		foreach ( $mp_bricks_on_page as $brick_id ){
-			echo mp_brick_css( $brick_id, 'footer_css' ); 
-		}
-		
-		echo '</style>';
-		
-		//If there is at least 1 brick on this page, enqueue the stuff we need
-		if ( isset( $brick_id ) ){
-						
-			//Enqueue hook for add-on scripts 
-			do_action ( 'mp_stacks_enqueue_scripts', $mp_bricks_on_page );
+	//Loop through the query
+	if (have_posts()) : 
+    	while (have_posts()) : the_post(); 
 			
-		}
-	}
+			$content = get_the_content();
+			
+			//Execute all MP Stack shortcodes
+			if ( has_shortcode( $content, 'mp_stack' ) ){
+				
+				//Find all mp_stack short codes
+				preg_match_all("/(\[mp_stack stack=\")(.*?)(\"\])/", get_the_content(), $matches, PREG_SET_ORDER);
+				
+				//Loop through each stack shortcode
+				foreach ($matches as $val) {
+					
+					//Output CSS for this stack
+					mp_stack_css( $val[2], true ); 
+				}
+			}
+			
+		endwhile; // end of the loop.
+	
+    endif;
 		
 }
-add_action( 'wp_footer', 'mp_stacks_footer_css'); 
+add_action( 'wp_enqueue_scripts', 'mp_stacks_header_css'); 

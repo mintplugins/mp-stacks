@@ -172,3 +172,37 @@ function mp_stacks_migrate_menu_order_to_stack_id_order_notification(){
 	echo "Migrating Stack Orders...Double check your Stack Orders";	
 	echo '</div>';
 }
+
+
+/**
+ * Deprecated. Output css for all bricks on this page into the footer of the theme
+ * Parameter: none
+ * Global Variable: array $mp_bricks_on_page This array contains all the ids of every brick previously called on this page
+ */
+function mp_stacks_footer_css(){
+	
+	//Get all the stack ids used on this page			
+	global $mp_bricks_on_page;
+	
+	if ( !empty( $mp_bricks_on_page ) ){
+		
+		echo '<style type="text/css">';
+		
+		//Show css for each
+		foreach ( $mp_bricks_on_page as $brick_id ){
+			echo mp_brick_css( $brick_id, 'footer_css' ); 
+		}
+		
+		echo '</style>';
+		
+		//If there is at least 1 brick on this page, enqueue the stuff we need
+		if ( isset( $brick_id ) ){
+						
+			//Enqueue hook for add-on scripts 
+			do_action ( 'mp_stacks_enqueue_scripts', $mp_bricks_on_page );
+			
+		}
+	}
+		
+}
+//add_action( 'wp_footer', 'mp_stacks_footer_css'); 

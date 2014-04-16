@@ -120,6 +120,22 @@ jQuery(document).ready(function($){
 		mp_stacks_magnific_editor($(this).find('.mp-brick-edit-link').attr('href'));
 	});	
 	
+	//Perform smooth scroll when brick's achored are linked to
+	$(function() {
+	  $('a[href*=#]:not([href=#])').click(function() {
+		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+		  var target = $(this.hash);
+		  target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+		  if (target.length) {
+			$('html,body').animate({
+			  scrollTop: target.offset().top
+			}, 1000);
+			return false;
+		  }
+		}
+	  });
+	});
+	
 
 });
 
@@ -130,7 +146,7 @@ function mp_stacks_close_lightbox(){
 	jQuery(document).ready(function($){
 		
 				
-		$('.mfp-iframe, .mfp-close').css('visibility', 'hidden');
+		$('.mfp-iframe, .mfp-close').hide();
 		
 		$('.mfp-content').css( 'width', 'initial' );
 		$('.mfp-content').css( 'height', 'initial' );

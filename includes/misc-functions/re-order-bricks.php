@@ -56,10 +56,10 @@ function mp_stacks_display_brick_mp_stack_order_input_field() {
 		// Set up nonce for verification
 		wp_nonce_field( plugin_basename( __FILE__ ), 'mp_stacks_mp_stack_order_nonce' );	
 				
-		if ( isset($_GET['mp_stack_order_new']) && isset($_GET['mp_stack_id_new']) ){
+		if ( isset($_GET['mp_stack_order_new']) && isset($_GET['mp_stack_id']) ){
 							
 			//Create a field for the new brick's stack and its order position within that stack
-			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $_GET['mp_stack_id_new'] . ']" value="' . $_GET['mp_stack_order_new'] . '">';
+			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $_GET['mp_stack_id'] . ']" value="' . $_GET['mp_stack_order_new'] . '">';
 										
 		}
 		else{

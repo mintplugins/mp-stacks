@@ -22,10 +22,7 @@
 	display: none;
 	z-index: 155000;	
 }
-.mp_field.mp_field_brick_line_1_color,
-.mp_field.mp_field_brick_line_1_font_size,
-.mp_field.mp_field_brick_line_2_color,
-.mp_field.mp_field_brick_line_2_font_size{
+.mp_field.mp_brick_text_option{
 	width:250px;
 	display: inline-block;
 	float:left;
