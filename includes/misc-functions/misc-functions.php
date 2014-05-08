@@ -22,6 +22,36 @@
  * @global $wp_version
  * @return void
 */
+function mp_stacks_brick_edit_page_no_js_message() {
+	
+	global $post;
+	
+	if ( isset( $post->post_type) && $post->post_type == 'mp_brick' ){
+	
+		
+		echo '<noscript>
+			<style type="text/css">
+				.wrap {display:none;}
+			</style>
+			<div class="noscriptmsg error">
+			You don\'t have javascript enabled. Life\'s too short for that! Turn it on and then let\'s get cookin\'!
+			</div>
+		</noscript>';
+		
+	}
+}
+add_action( 'all_admin_notices', 'mp_stacks_brick_edit_page_no_js_message');
+
+/**
+ * Admin Stacks Icon
+ *
+ * Echoes the CSS for the downloads post type icon.
+ *
+ * @since 1.0
+ * @global $post_type
+ * @global $wp_version
+ * @return void
+*/
 function mp_stacks_admin_stacks_and_bricks_icon() {
 	global $post_type, $wp_version;
 
@@ -87,3 +117,54 @@ function mp_stacks_addTinyMCELinkClasses( $wp ) {
 	add_editor_style( plugins_url( '/css/', dirname(__FILE__) ) . 'mp-stacks-tinyMCE-style.css' ); 
 }
 add_action( 'mp_core_editor_styles', 'mp_stacks_addTinyMCELinkClasses' );
+
+/**
+ * Get all the brick titles in this stack
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    array $wp See link for description.
+ * @return   void
+ */
+function mp_stacks_get_brick_titles_in_stack( $stack_id ) {	
+	
+	//Set default for the brick titles in this stack
+	$brick_titles_in_stack = array(); 
+	
+	//Get all Bricks in the current Stack - if a stack id has been passed to the URL
+	if ( isset( $stack_id ) ){
+		
+		//Set the args for the new query
+		$mp_stacks_args = array(
+			'post_type' => "mp_brick",
+			'posts_per_page' => -1,
+			'meta_key' => 'mp_stack_order_' . $stack_id,
+			'orderby' => 'meta_value_num menu_order',
+			'order' => 'ASC',
+			'tax_query' => array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'mp_stacks',
+					'field'    => 'id',
+					'terms'    => array( $stack_id ),
+					'operator' => 'IN'
+				)
+			)
+		);	
+			
+		//Create new query for stacks
+		$mp_stack_query = new WP_Query( $mp_stacks_args );
+		
+		//Loop through the stack group		
+		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
+			
+			//Add the title of each brick in this stack to the array. This way, we can easily create links to each brick
+			array_push( $brick_titles_in_stack, '#' . sanitize_title( get_the_title() ) );
+			
+		endwhile;
+			
+	}
+	
+	return $brick_titles_in_stack;	
+}

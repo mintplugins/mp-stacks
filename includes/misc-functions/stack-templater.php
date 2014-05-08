@@ -59,18 +59,22 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 			'brick_1' => array(
 				'brick_title' => "Brick's Title",
 				'mp_stack_order_' . $stack_id => '1000',
-				
-				'other_normal_meta_data' => array( value => 'Whatever String', 'file_attachment' => false )
-				
-				'attachment_meta_data' => array( value => 'http://url.com/attachmentyadda', 'file_attachment' => true )
+								
+				'other_normal_meta_data' => array( 
+					'value' => $meta_value,
+					'attachment' => false,
+					'required_add_on' => 'mp_stacks_features' 
+				)
 			),
 			'brick_2' => array(
 				'brick_title' => "Brick's Title",
 				'mp_stack_order_' . $stack_id => '1010',
-				
-				'other_normal_meta_data' => array( value => 'Whatever String', 'file_attachment' => false )
-				
-				'attachment_meta_data' => array( value => 'http://url.com/attachmentyadda', 'file_attachment' => true )
+								
+				'other_normal_meta_data' => array( 
+					'value' => $meta_value,
+					'attachment' => false,
+					'required_add_on' => 'mp_stacks_features' 
+				)
 			)
 		)	
 	);
@@ -110,20 +114,28 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 			
 			//Get all meta field keys for this brick
 			$brick_meta_keys = get_post_custom_keys( $post_id ); 
+			
+			//reset required add-on
+			$required_add_on = NULL;
 						
 			//Loop through all meta fields attached to this brick
 			foreach ( $brick_meta_keys as $meta_key ){
 				
-				//Get the value of this meta key
-				$meta_value = get_post_meta( $post_id, $meta_key, true );
-							
-				//Set up the standard meta_value_array
-				$meta_value_array = array( 
-					'value' => $meta_value
-				);	
+				//If this is the stack order, we don't need to save it because we already have above
+				if ( stripos( $meta_key, 'mp_stack_order' ) === false ){ 
 				
-				//Add post meta fields to the array for this brick
-				$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter][$meta_key] = $meta_value_array;
+					//Get the value of this meta key
+					$meta_value = get_post_meta( $post_id, $meta_key, true );
+								
+					//Set up the standard meta_value_array
+					$meta_value_array = array( 
+						'value' => $meta_value,
+						'attachment' => false
+					);	
+					
+					//Add post meta fields to the array for this brick
+					$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter][$meta_key] = $meta_value_array;
+				}
 				
 			}
 			
@@ -228,6 +240,9 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 	//The new stack's id
 	$new_stack_id = $new_stack_array['term_id'];
 	
+	//Get the wp upload dir
+	$wp_upload_dir = wp_upload_dir();
+	
 	//Loop through each brick in the original stack
 	foreach ( $mp_stack_template_array['stack_bricks'] as $original_brick ){
 		
@@ -254,29 +269,81 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 				if ( $brick_meta_id == 'mp_stack_order' ){
 					
 					//Set the Stack Order
-					update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value['value'] );
+					update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value );
 					
 				}
 				//If this meta field is not the stack order one
 				else{
 					
 					//If this meta value should be an attachment
-					if ( $brick_meta_value['attachment'] == true ){
+					if ( isset( $brick_meta_value['attachment'] ) && $brick_meta_value['attachment'] == true ){
 						
-						//$attachment_already_created = mp_core_get_attachment_id_from_url()
+						$attachment_already_created = mp_core_get_attachment_id_from_url( $wp_upload_dir['url'] . '/' . basename( $brick_meta_value['value'] ) );
 						
-						//If this attachment has NOT already been created {
+						//If this attachment has NOT already been created
+						if ( !$attachment_already_created ){
 							
 							//Create this to be an attachment by taking it from the template folder
 							
-							//$brick_meta_value['value'] = new attachment URL
+							if (false === ($creds = request_filesystem_credentials('', '', false, false) ) ) {
+	
+								// if we get here, then we don't have credentials yet,
+								// but have just produced a form for the user to fill in, 
+								// so stop processing for now
+								
+								return true; // stop the normal page form from displaying
+							}
 							
-						//}
-						//else if this attachment HAS already been created{
+							//Now we have some credentials, try to get the wp_filesystem running
+							if ( ! WP_Filesystem($creds) ) {
+								// our credentials were no good, ask the user for them again
+								request_filesystem_credentials('', '', true, false);
+								return true;
+							}
 							
-							//$brick_meta_value['value'] = existing attachment URL
+							//By this point, the $wp_filesystem global should be working, so let's use it get our plugin
+							global $wp_filesystem;
+																	
+							//Get the image
+							$saved_file = $wp_filesystem->get_contents( $brick_meta_value['value'] );
 							
-						//}
+							$wp_upload_dir = wp_upload_dir();
+								
+							//Get the filename only of this attachment
+							$attachment_path = parse_url( $brick_meta_value['value'], PHP_URL_PATH);
+							$attachment_parts = pathinfo($attachment_path);
+							
+							//Move the image to the uploads directory
+							$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+								
+							//Check filetype	
+							$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
+							
+							//Create attachment array
+							$attachment = array(
+								'guid' => $wp_upload_dir['url'] . '/' . $attachment_parts['basename'], 
+								'post_mime_type' => $wp_filetype['type'],
+								'post_title' => preg_replace( '/\.[^.]+$/', '', $attachment_parts['basename'] ),
+								'post_content' => '',
+								'post_status' => 'inherit'
+							);
+							
+							$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+								
+							// we must first include the image.php file
+							// for the function wp_generate_attachment_metadata() to work
+							
+							require_once( ABSPATH . 'wp-admin/includes/image.php' );
+							
+							$attach_data = wp_generate_attachment_metadata( $attach_id, $wp_upload_dir['path'] . '/' . $attachment_parts['basename']  );
+							
+							wp_update_attachment_metadata( $attach_id, $attach_data );
+																			
+						}
+						
+						//Tell the meta key where the new attachment is located. 
+						//This works whether this is a new or old attachment - as the attachments are not overwritten so the URL should always be this:
+						$brick_meta_value['value'] = $wp_upload_dir['url'] . '/' . basename( $brick_meta_value['value'] );
 					}
 					
 					//Save the metadata to the new brick

@@ -35,6 +35,10 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.0 = May 8, 2014
+* Stack template functions added
+* Added functions for getting brick titles in a stack
+
 = 1.0.0.9 = April 16, 2014
 * Updated TinyMCE Plugin for TinyMCE 4.0
 * CSS is now output in the header instead of the footer

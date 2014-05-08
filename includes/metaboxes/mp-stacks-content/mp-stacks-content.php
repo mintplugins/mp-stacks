@@ -79,7 +79,6 @@ function mp_stacks_content_create_meta_box(){
 	 */
 	$mp_stacks_content_types_array = has_filter('mp_stacks_content_types_array') ? apply_filters( 'mp_stacks_content_types_array', $mp_stacks_content_types_array) : $mp_stacks_content_types_array;
 	
-	
 	/**
 	 * Create Metabox class
 	 */
