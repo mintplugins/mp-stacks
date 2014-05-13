@@ -163,7 +163,7 @@ jQuery(document).ready(function($){
 	 * Hide 1st options for "Add Stack" and show Buttons to Make new Stack
 	 *
 	 * @since    1.0.0
-	 * @link     http://moveplugins.com/doc/
+	 * @link     http://mintplugins.com/doc/
 	 */
 	 $( '.mp-stacks-shortcode-action-choice.new-stack' ).on( 'click', function(event){
 		 
@@ -177,7 +177,7 @@ jQuery(document).ready(function($){
 	 * Hide 1st options for "Add Stack" and show Buttons to use existing stack
 	 *
 	 * @since    1.0.0
-	 * @link     http://moveplugins.com/doc/
+	 * @link     http://mintplugins.com/doc/
 	 */
 	 $( '.mp-stacks-shortcode-action-choice.existing-stack' ).on( 'click', function(event){
 		 
@@ -191,7 +191,7 @@ jQuery(document).ready(function($){
 	 * When the user changes the dropdown for Stack Options, show corresponding Options for "Duplicate", or "Template"
 	 *
 	 * @since    1.0.0
-	 * @link     http://moveplugins.com/doc/
+	 * @link     http://mintplugins.com/doc/
 	 */
 	 $( '.mp-stacks-new-stack-source-type' ).on( 'change', function(event){
 				 
@@ -206,7 +206,7 @@ jQuery(document).ready(function($){
 	 * Make New Stack Button Ajax
 	 *
 	 * @since    1.0.0
-	 * @link     http://moveplugins.com/doc/
+	 * @link     http://mintplugins.com/doc/
 	 */
 	 $('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').on('click', function(event){
 		

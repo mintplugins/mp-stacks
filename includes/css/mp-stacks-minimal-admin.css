@@ -21,7 +21,7 @@ html.wp-toolbar {
 }
 /*Dont need to show the MP Stacks selector box on the minimal page*/
 #mp_stacksdiv{
-	display:none;	
+	//display:none;	
 }
 #screen-options-link-wrap,
 .row-actions .inline,

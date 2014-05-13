@@ -51,7 +51,7 @@ function mp_stacks_image_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'https://moveplugins.com/embed/?post_id=3898',
+					'link' => 'https://mintplugins.com/embed/?post_id=3898',
 					'link_text' => __( '"Image" Content-Type Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),

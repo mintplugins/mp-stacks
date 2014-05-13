@@ -83,7 +83,7 @@ function mp_stacks_text_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'https://moveplugins.com/embed/?post_id=3872',
+					'link' => 'https://mintplugins.com/embed/?post_id=3872',
 					'link_text' => __( '"Text" Content-Type Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),

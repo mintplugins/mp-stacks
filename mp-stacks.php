@@ -1,21 +1,21 @@
 <?php
 /*
 Plugin Name: MP Stacks
-Plugin URI: http://moveplugins.com
+Plugin URI: http://mintplugins.com
 Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
-Version: 1.0.0.9
-Author: Move Plugins
-Author URI: http://moveplugins.com
+Version: 1.0.1.0
+Author: Mint Plugins
+Author URI: http://mintplugins.com
 Text Domain: mp_stacks
 Domain Path: languages
 License: GPL2
 */
 
-/*  Copyright 2014  Phil Johnston  (email : phil@moveplugins.com)
+/*  Copyright 2014  Phil Johnston  (email : phil@mintplugins.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Move Plugins Core.
+    published by the Free Software Mint Plugins Core.
 
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -24,7 +24,7 @@ License: GPL2
 
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
-    Move Plugins Core, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+    Mint Plugins Core, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /*
@@ -222,6 +222,11 @@ function mp_stacks_include_files(){
 		 * Welcome Page
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );
+		
+		/**
+		 * Edit Stack Settings
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/edit-stack-settings.php' );
 	
 	}
 }

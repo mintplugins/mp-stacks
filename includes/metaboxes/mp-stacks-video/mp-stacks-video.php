@@ -44,7 +44,7 @@ function mp_stacks_video_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'https://moveplugins.com/embed/?post_id=3903',
+					'link' => 'https://mintplugins.com/embed/?post_id=3903',
 					'link_text' => __( '"Video" Content-Type Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),

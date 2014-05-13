@@ -90,7 +90,7 @@ function mp_stacks_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'https://moveplugins.com/embed/?post_id=3880',
+					'link' => 'https://mintplugins.com/embed/?post_id=3880',
 					'link_text' => __( 'Brick Size Settings Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),

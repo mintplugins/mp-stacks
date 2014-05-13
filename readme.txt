@@ -1,10 +1,10 @@
 === MP Stacks ===
 Contributors: johnstonphilip
-Donate link: http://moveplugins.com/
+Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 3.9
-Stable tag: 1.0.0.9
+Stable tag: 1.0.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -28,7 +28,7 @@ This section describes how to install the plugin and get it working.
 
 == Frequently Asked Questions ==
 
-See full instructions at http://moveplugins.com/doc/mp-stacks
+See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Screenshots ==
 
@@ -38,6 +38,7 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 = 1.0.1.0 = May 8, 2014
 * Stack template functions added
 * Added functions for getting brick titles in a stack
+* Move to Mint
 
 = 1.0.0.9 = April 16, 2014
 * Updated TinyMCE Plugin for TinyMCE 4.0
@@ -49,7 +50,7 @@ See full instructions at http://moveplugins.com/doc/mp-stacks
 
 = 1.0.0.8 = March 22, 2014
 * Removed priority of 1 from Brick size settings metabox action
-* Add-on directory now links to https://moveplugins 
+* Add-on directory now links to https://mintplugins 
 
 = 1.0.0.7 = March 8, 2014
 * Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue

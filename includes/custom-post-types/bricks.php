@@ -2,13 +2,13 @@
 /**
  * This page contains functions that create the mp-brick custom post type and the mp_stacks custom taxonomy
  *
- * @link http://moveplugins.com/doc/
+ * @link http://mintplugins.com/doc/
  * @since 1.0.0.0
  *
  * @package    MP Stacks
  * @subpackage Functions
  *
- * @copyright   Copyright (c) 2014, Move Plugins
+ * @copyright   Copyright (c) 2014, Mint Plugins
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author      Philip Johnston
  */
@@ -17,7 +17,7 @@
  * Brick Custom Post Type
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @see      mp_core_get_option()
  * @see      register_post_type()
  * @param  	 void
@@ -65,7 +65,7 @@ add_action( 'init', 'mp_brick_post_type', 0 );
  * MP Stacks Custom Taxonomy
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @see      mp_core_get_option()
  * @see      register_taxonomy()
  * @param  	 void
@@ -76,7 +76,7 @@ function mp_stacks_taxonomy() {
 		
 		// Add new taxonomy, make it hierarchical (like categories)
 		$labels = array(
-			'name'                => __( 'Add Brick To Stacks', 'mp_core' ),
+			'name'                => __( 'Bricks', 'mp_core' ),
 			'singular_name'       => __( 'Stack', 'mp_core' ),
 			'search_items'        => __( 'Search Stacks', 'mp_core' ),
 			'all_items'           => __( 'All Stacks', 'mp_core' ),
@@ -109,7 +109,7 @@ add_action( 'init', 'mp_stacks_taxonomy' );
  * Add ability to filter bricks by stack on "list all bricks" page
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @see      mp_core_get_option()
  * @see      get_taxonomy()
  * @see      wp_dropdown_categories
@@ -140,7 +140,7 @@ add_action('restrict_manage_posts', 'mp_stacks_restrict_bricks_by_stack');
  * If the taxonomy in an MP Stacks query is using the ID, change it to use the term
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @see      get_term_by()
  * @param  	 $query 
  * @return   void
@@ -161,27 +161,27 @@ add_filter('parse_query', 'mp_stacks_convert_id_to_term_in_query');
  * Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @see      add_query_arg()
  * @param  	 $actions 
  * @param  	 $tag 
  * @return   $actions
  */
-function remove_quick_edit( $actions, $tag ) {
+function mp_stacks_remove_quick_edit( $actions, $tag ) {
 		
 	unset($actions['inline hide-if-no-js']);
 	
-	$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("View Bricks in Stack", 'mp_stacks') . '</a>';
+	$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
 	
 	return $actions;
 }
-add_filter('mp_stacks_row_actions','remove_quick_edit',10,2);
+add_filter('mp_stacks_row_actions','mp_stacks_remove_quick_edit',10,2);
 
 /**
  * Hide Permalink output on single edit screen
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @param  	 $return 
  * @param  	 $id 
  * @param  	 $new_title 
@@ -206,7 +206,7 @@ add_filter('get_sample_permalink_html', 'mp_stacks_perm', '',4);
  * Sort bricks on admin pages by stack order
  *
  * @since    1.0.0
- * @link     http://moveplugins.com/doc/
+ * @link     http://mintplugins.com/doc/
  * @param  	 $return 
  * @param  	 $query 
  * @return   $actions

@@ -7,7 +7,7 @@
  * @package    MP Core
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2013, Move Plugins
+ * @copyright  Copyright (c) 2014, Mint Plugins
  * @license    http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author     Philip Johnston
  */
@@ -79,7 +79,7 @@ add_action( 'admin_head','mp_stacks_admin_stacks_and_bricks_icon' );
  * Make the mp_stacks shortcode display the stack editor for TinyMCE
  *
  * @since   1.0.0
- * @link    http://moveplugins.com/doc/
+ * @link    http://mintplugins.com/doc/
  * @param   array $plugin_array See link for description.
  * @return  array $plugin_array
  */
@@ -95,7 +95,7 @@ add_filter("mce_external_plugins", "mp_stacks_add_stacks_tinymce_plugin");
  * Set the Shortcode "representor" in TINYMCE upon insert
  *
  * @since   1.0.0
- * @link    http://moveplugins.com/doc/
+ * @link    http://mintplugins.com/doc/
  * @param   array $plugin_array See link for description.
  * @return  array $plugin_array
  */

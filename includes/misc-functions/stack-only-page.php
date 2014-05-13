@@ -2,13 +2,13 @@
 /**
  * Functions Stack Only Page
  *
- * @link http://moveplugins.com/doc/
+ * @link http://mintplugins.com/doc/
  * @since 1.0.0
  *
  * @package    MP Stacks
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2013, Move Plugins
+ * @copyright  Copyright (c) 2014, Mint Plugins
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author      Philip Johnston
  */
@@ -47,7 +47,7 @@ add_action('init', 'mp_stacks_rewrite_tags');
  * Show the link on the "Manage Stacks" page to view this stack
  *
  * @since    1.0.0
- * @link       http://moveplugins.com/doc/
+ * @link       http://mintplugins.com/doc/
  * @see      function_name()
  * @param  array $args See link for description.
  * @return   void

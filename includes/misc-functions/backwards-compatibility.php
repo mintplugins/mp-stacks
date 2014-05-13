@@ -2,13 +2,13 @@
 /**
  * Functions for backwards compatibility
  *
- * @link http://moveplugins.com/doc/
+ * @link http://mintplugins.com/doc/
  * @since 1.0.0
  *
  * @package    MP Stacks
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2013, Move Plugins
+ * @copyright  Copyright (c) 2014, Mint Plugins
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author      Philip Johnston
  */
@@ -18,7 +18,7 @@
  *
  * @access   public
  * @since     1.0.0
- * @link      http://moveplugins.com/doc/
+ * @link      http://mintplugins.com/doc/
  * @see      function_name()
  * @return    void
  */
@@ -79,7 +79,7 @@ add_action('admin_init', 'mp_stacks_migrate_media_to_content');
  *
  * @access   public
  * @since     1.0.0
- * @link      http://moveplugins.com/doc/
+ * @link      http://mintplugins.com/doc/
  * @see      function_name()
  * @return    void
  */
@@ -94,7 +94,7 @@ function mp_stacks_migrate_media_to_content_notification(){
  *
  * @access   public
  * @since     1.0.0
- * @link      http://moveplugins.com/doc/
+ * @link      http://mintplugins.com/doc/
  * @see      function_name()
  * @return    void
  */
@@ -163,7 +163,7 @@ add_action('admin_init', 'mp_stacks_migrate_menu_order_to_stack_id_order');
  *
  * @access   public
  * @since     1.0.0
- * @link      http://moveplugins.com/doc/
+ * @link      http://mintplugins.com/doc/
  * @see      function_name()
  * @return    void
  */

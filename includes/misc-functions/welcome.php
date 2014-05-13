@@ -2,13 +2,13 @@
 /**
  * Wecome Page for Mp Stacks
  *
- * @link http://moveplugins.com/doc/
+ * @link http://mintplugins.com/doc/
  * @since 1.0.0
  *
  * @package     MP Stacks
  * @subpackage  Functions
  *
- * @copyright   Copyright (c) 2013, Move Plugins
+ * @copyright   Copyright (c) 2014, Mint Plugins
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author      Philip Johnston
  */
@@ -206,7 +206,7 @@ class MP_Stacks_Welcome {
                  <iframe width="560" height="315" src="//www.youtube.com/embed/SGG6QCqC6AA?modestbranding=1&showinfo=0&rel=0" frameborder="0" allowfullscreen></iframe>
                  
                  <p>
-                 <a class="button" href="http://moveplugins.com/support/mp-stacks-support/" target="_blank"><?php _e( 'Open this video in a new window', 'mp_stacks' );?></a>
+                 <a class="button" href="http://mintplugins.com/support/mp-stacks-support/" target="_blank"><?php _e( 'Open this video in a new window', 'mp_stacks' );?></a>
                  </p> 
 			
 				</div>

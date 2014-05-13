@@ -66,7 +66,7 @@ function mp_stacks_bg_create_meta_box(){
 			'field_select_values' => array(
 				array( 
 					'type' => 'oembed',
-					'link' => 'https://moveplugins.com/embed/?post_id=3895',
+					'link' => 'https://mintplugins.com/embed/?post_id=3895',
 					'link_text' => __( 'Brick Background Tutorial', 'mp_stacks'),
 					'target' => NULL
 				),
