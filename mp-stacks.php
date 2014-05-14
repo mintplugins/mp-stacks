@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_VERSION' ) )
-	define( 'MP_STACKS_VERSION', '1.0.0.9' );
+	define( 'MP_STACKS_VERSION', '1.0.1.0' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_PLUGIN_URL' ) )
