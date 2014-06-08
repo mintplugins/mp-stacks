@@ -35,6 +35,21 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.1 = June 8, 2014
+* Left/Right Brick widths go from, 37% to 50%
+* Content-Type areas get “position:relative;”, Width 100%, no left/right margins by default, border box sizing.
+* Added a jQuery trigger called “mp_stacks_content_type_change” when a content type is changed
+* Added magnific popup to admin for use in managing back-end options
+* Added Content-Type width and float controls
+* Added “Full-Width” option for content-types (to remove default 10px padding)
+* Changed edit stack settings save callback to admin_init instead of edited_mp_stacks hook
+* Added Filter hook for “mp_brick_first_content_type_css_filter”
+* Added Filter hook for “mp_brick_first_content_type_mobile_css_filter”
+* Added Filter hook for “mp_brick_second_content_type_css_filter”
+* Added Filter hook for “mp_brick_second_content_type_mobile_css_filter”
+* Added arguments for content-types to the mp_brick_additional_css filter
+* Added body class to the stack-only pages
+
 = 1.0.1.0 = May 8, 2014
 * Stack template functions added
 * Added functions for getting brick titles in a stack

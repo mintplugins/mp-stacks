@@ -17,10 +17,12 @@ jQuery(document).ready(function($){
 	
 		//Show correct content type metaboxes by looping through each item in the 1st drodown
 		var values = $("#mp_stacks_content_metabox .brick_first_content_type>option:selected").map(function() { 
-		
 			
 			//Show metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+			
+			//Jquery trigger which allows add-ons to make things happen upon change
+			$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
 						
 			//Move metabox to the top of the metaboxes
 			$('#mp_stacks_content_metabox').after($('#mp_stacks_' + $(this).val() + '_metabox'));
@@ -49,9 +51,11 @@ jQuery(document).ready(function($){
 		//Show correct content type metaboxes by looping through each item in the 2nd drodown
 		var values = $("#mp_stacks_content_metabox .brick_second_content_type>option:selected").map(function() { 
 			
-			
 			//Show metaboxes with the matching name to this select item
 			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+				
+			//Jquery trigger which allows add-ons to make things happen upon change
+			$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
 									
 			//Move metabox to the second-from-the-top of the metaboxes
 			$('#mp_stacks_content_metabox').next().after($('#mp_stacks_' + $(this).val() + '_metabox'));
@@ -304,8 +308,127 @@ jQuery(document).ready(function($){
 		 $('.mp-stacks-shortcode-new-stack-div').hide();
 		 
 	 });
+	 
+	 // Override the appendContent function in magnificPopup
+	 $.magnificPopup.instance.appendContent = function(newContent, type) {
+		
+		//Get the instance
+		var mfp = $.magnificPopup.instance;
+        var proto = $.magnificPopup.proto;
+	  	
+		//Original appendContent function begins here
+		mfp.content = newContent;
+		
+		//Here we add our custom check for youtube or vimeo
+		var iframe_src = mfp.content.find('.mfp-iframe').attr('src');	
+		if (iframe_src){
+			if ( iframe_src.indexOf("youtube.com/embed") > -1 || iframe_src.indexOf("vimeo.com") > -1 ){
+				
+				//If it matches, add class mfp-video to mfp-content div
+				mfp.contentContainer.addClass('mfp-video');
+			}
+		}
+		
+		//Continue with original appendContent function
+		if(newContent) {
+			if(mfp.st.showCloseBtn && mfp.st.closeBtnInside &&
+				mfp.currTemplate[type] === true) {
+				// if there is no markup, we just append close button element inside
+				if(!mfp.content.find('.mfp-close').length) {
+					mfp.content.append(_getCloseBtn());
+				}
+			} else {
+				mfp.content = newContent;
+			}
+		} else {
+			mfp.content = '';
+		}
+
+		//_mfpTrigger(BEFORE_APPEND_EVENT);
+		mfp.container.addClass('mfp-'+type+'-holder');
+
+		mfp.contentContainer.append(mfp.content);
+	
+	
+	
+	};
+	
+	function mp_stacks_magnific_editor( popup_source ){
+		$.magnificPopup.open({
+			
+			items: {
+				src: popup_source
+			},
+  
+			type: 'iframe', 
+			
+			callbacks: {
+				
+				//Change the type of popup this is based on what's in the src
+				elementParse: function(item) {
+				
+					var extension = item.src.split('.').pop();
+					
+					switch(extension) {
+						case 'jpg':
+						case 'png':
+						case 'gif':
+						item.type = 'image';
+						break;
+						case 'html':
+						item.type = 'ajax';
+						break;
+						default:
+						item.type = 'iframe';
+					}
+				}
+			},
+			
+			patterns: {
+							
+				youtube: {
+					index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+					
+					id: 'v=', // String that splits URL in a two parts, second part should be %id%
+					// Or null - full URL will be returned
+					// Or a function that should return %id%, for example:
+					// id: function(url) { return 'parsed id'; } 
+					
+					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe. 
+				},
+				vimeo: {
+					index: 'vimeo.com/',
+					id: '/',
+					src: '//player.vimeo.com/video/%id%?autoplay=1'
+				},
+				gmaps: {
+					index: '//maps.google.',
+					src: '%id%&output=embed'
+				}
+				
+				// you may add here more sources
+			
+			},
+			
+			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
+			
+		}, 0);
+	
+	}
+
+	//Set the class names of links which should open magnific popup
+	$(document).on('click', '.mp-stacks-lightbox-link', function(event){ 
+		event.preventDefault();
+		//Call the function which opens our customized magnific popup for mp stacks
+		mp_stacks_magnific_editor( $(this).attr('href') );
+	});	
 		
 });
+
+//resize an iframe to be as big as its contents
+function mp_stacks_resizeIframe(obj) {
+	obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
+}
 
 //Close the lightbox when the update button is clicked
 function mp_stacks_close_lightbox(){

@@ -53,7 +53,7 @@
 	display:table-cell; 
 	vertical-align:middle;
 	z-index:2;
-	width: 37%; 
+	width: 50%; 
 	text-align:center;
 }
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container{
@@ -84,8 +84,14 @@
 }
 .mp-brick .mp-brick-first-content-type, 
 .mp-brick .mp-brick-second-content-type {
+	position:relative;
+	float:left;
+	display:inline-block;
+	width:100%;
 	z-index:2;
-	margin:0 10px 0 10px;	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 
 /*Text*/

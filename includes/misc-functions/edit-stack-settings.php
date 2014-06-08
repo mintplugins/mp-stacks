@@ -68,8 +68,6 @@ function mp_stacks_change_stack_id(){
 	//Create new query for stacks
 	$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
 	
-	$css_output = '<style type="text/css">';
-	
 	//Loop through the stack group		
 	if ( $mp_stack_query->have_posts() ) { 
 		
@@ -92,4 +90,4 @@ function mp_stacks_change_stack_id(){
 	}
 	
 }
-add_action( 'edited_mp_stacks', 'mp_stacks_change_stack_id', 10, 2);
+add_action( 'admin_init', 'mp_stacks_change_stack_id', 10, 2);

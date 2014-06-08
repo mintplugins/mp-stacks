@@ -4,7 +4,7 @@
  * Parameter: Stack ID
  */
 function mp_stack_css( $stack_id, $echo = false ) {		
-		
+	
 	//Set the args for the new query
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
@@ -32,7 +32,7 @@ function mp_stack_css( $stack_id, $echo = false ) {
 	if ( $mp_stack_query->have_posts() ) { 
 		
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
-		
+			
 			//Build Brick CSS Output
 			$css_output .= mp_brick_css( get_the_ID(), $stack_id );
 			
@@ -113,9 +113,41 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 			$css_output .= $mp_brick_container_css_filter;
 			$css_output .= '}';
 		}
+		
+		//Brick First Content Type CSS
+		$mp_brick_first_content_type_css_filter = apply_filters( 'mp_brick_first_content_type_css_filter', '', $post_id );
+		if ( !empty($mp_brick_first_content_type_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-first-content-type{';
+			$css_output .= $mp_brick_first_content_type_css_filter;
+			$css_output .= '}';
+		}
+		
+		//Brick First Content Type Mobile CSS
+		$mp_brick_first_content_type_mobile_css_filter = apply_filters( 'mp_brick_first_content_type_mobile_css_filter', '', $post_id );
+		if ( !empty($mp_brick_first_content_type_mobile_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-first-content-type{';
+			$css_output .= $mp_brick_first_content_type_mobile_css_filter;
+			$css_output .= '}';
+		}
+		
+		//Brick Second Content Type CSS
+		$mp_brick_second_content_type_css_filter = apply_filters( 'mp_brick_second_content_type_css_filter', '', $post_id );
+		if ( !empty($mp_brick_second_content_type_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-second-content-type{';
+			$css_output .= $mp_brick_second_content_type_css_filter;
+			$css_output .= '}';
+		}
+		
+		//Brick Second Content Type Mobile CSS
+		$mp_brick_second_content_type_mobile_css_filter = apply_filters( 'mp_brick_second_content_type_mobile_css_filter', '', $post_id );
+		if ( !empty($mp_brick_second_content_type_mobile_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-second-content-type{';
+			$css_output .= $mp_brick_second_content_type_mobile_css_filter;
+			$css_output .= '}';
+		}
 					
 		//Additional CSS
-		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id );
+		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id, get_post_meta($post_id, 'brick_first_content_type', true), get_post_meta($post_id, 'brick_second_content_type', true) );
 		
 		//If this is a single brick
 		if ( empty( $stack_id ) ){
@@ -226,167 +258,174 @@ function mp_stack( $stack_id ){
  * Parameter: Stack ID - The Stack which is calling this brick
  */
 function mp_brick( $post_id, $stack_id = NULL ){
-			
-			//Add this brick to the global array caoniting all brick ids on this page
-			global $mp_bricks_on_page;
-			$mp_bricks_on_page[$post_id] = $post_id;
 	
-			//Default outputs back to null
-			$first_output = NULL;
-			$second_output = NULL;
-			$content_output = NULL;
-			$html_output = NULL;			
-			
-			//Alignment
-			$post_specific_alignment = get_post_meta($post_id, 'brick_alignment', true);
-			
-			//First Media Type
-			$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
-			
-			//Second Media Type
-			$mp_stacks_second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);
-			
-			//First Output
-			$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
-			
-			//Second Output	
-			$second_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $second_output, $mp_stacks_second_content_type, $post_id) : NULL;
-			
-			//Centered - dont use left and right
-			if ($post_specific_alignment == "centered"){
-				$brick_container_classes = 'mp-brick-centered';
-			}
-			//All Left - all on left
-			else if ($post_specific_alignment == "allleft"){
-				$brick_container_classes = 'mp-brick-allleft';
-			}
-			//All Right - all on right
-			else if ($post_specific_alignment == "allright"){
-				$brick_container_classes = 'mp-brick-allright';
-			}
-			//Set left and right outputs
-			else{
-				$brick_container_classes = NULL;
-			}
-				
-			//First Content Type HTML output
-			$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
-				$content_output .= '<div class="mp-brick-first-content-type">';
-					$content_output .= $first_output;
-				$content_output .= '</div>';
-			$content_output .= '</div>';
-			
-			//Second Content Type HTML output
-			$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
-				$content_output .= '<div class="mp-brick-second-content-type">';
-					$content_output .= $second_output;
-				$content_output .= '</div>';
-			$content_output .= '</div>';
-			
-			//Extra Brick Attributes
-			$extra_brick_attributes = apply_filters( 'mp_stacks_extra_brick_attributes', NULL, $post_id );
-			
-			//Extra Brick Background Attributes
-			$extra_brick_bg_attributes = apply_filters( 'mp_stacks_extra_brick_bg_attributes', NULL, $post_id );
-			
-			//Extra Brick Outer Attributes
-			$extra_brick_outer_attributes = apply_filters( 'mp_stacks_extra_brick_outer_attributes', NULL, $post_id );
-			
-			//Post class for this brick
-			$post_class_string = get_post_meta($post_id, 'brick_class_name', true);
-			$post_class_string = apply_filters( 'mp_stacks_brick_class', $post_class_string, $post_id );
-			
-			//Get WordPress Classes for this Brick
-			$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
-				
-			//Loop through each WordPress class and add it to the class string	
-			foreach ( $post_class_array as $class ){
-				$post_class_string .=  ' ' . $class;
-			}
-											   
-			//Actual output
-			$html_output .= '<div id="mp-brick-' . $post_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
-				
-				//HTML Anchor for this brick
-				$html_output .= '<a class="brick-anchor" name="' . sanitize_title( get_the_title() ) . '"></a>';
-				
-				//Brick Meta Div
-				$html_output .= '<div class="mp-brick-meta">';
+	global $mp_stacks_active_bricks;
 					
-					//Action hook to run actions in the meta area for a brick
-					do_action( 'mp_stacks_brick_meta_action', $post_id );
+	//Default outputs back to null
+	$first_output = NULL;
+	$second_output = NULL;
+	$content_output = NULL;
+	$html_output = NULL;			
+	
+	//Alignment
+	$post_specific_alignment = get_post_meta($post_id, 'brick_alignment', true);
+	
+	//First Media Type
+	$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
+	
+	//Second Media Type
+	$mp_stacks_second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);
+	
+	//Add this brick id and content types to the global list of active bricks
+	$mp_stacks_active_bricks[$post_id] = array( $mp_stacks_first_content_type, $mp_stacks_second_content_type );
+	
+	//First Output
+	$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
+	
+	//Second Output	
+	$second_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $second_output, $mp_stacks_second_content_type, $post_id) : NULL;
+	
+	//Centered - dont use left and right
+	if ($post_specific_alignment == "centered"){
+		$brick_container_classes = 'mp-brick-centered';
+	}
+	//All Left - all on left
+	else if ($post_specific_alignment == "allleft"){
+		$brick_container_classes = 'mp-brick-allleft';
+	}
+	//All Right - all on right
+	else if ($post_specific_alignment == "allright"){
+		$brick_container_classes = 'mp-brick-allright';
+	}
+	//Set left and right outputs
+	else{
+		$brick_container_classes = NULL;
+	}
+	
+	//If there is a first output
+	$first_content_type_display = empty( $first_output ) ? 'style="display:block;"' : NULL;	
+	
+	//If there is a second output
+	$second_content_type_display = empty( $second_output ) ? 'style="display:block;"' : NULL;				
+	
+	//First Content Type HTML output
+	$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+		$content_output .= '<div class="mp-brick-first-content-type" ' . $first_content_type_display . '>';
+			$content_output .= $first_output;
+		$content_output .= '</div>';
+	$content_output .= '</div>';
+	
+	//Second Content Type HTML output
+	$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+		$content_output .= '<div class="mp-brick-second-content-type" ' . $second_content_type_display . '>';
+			$content_output .= $second_output;
+		$content_output .= '</div>';
+	$content_output .= '</div>';
+	
+	//Extra Brick Attributes
+	$extra_brick_attributes = apply_filters( 'mp_stacks_extra_brick_attributes', NULL, $post_id );
+	
+	//Extra Brick Background Attributes
+	$extra_brick_bg_attributes = apply_filters( 'mp_stacks_extra_brick_bg_attributes', NULL, $post_id );
+	
+	//Extra Brick Outer Attributes
+	$extra_brick_outer_attributes = apply_filters( 'mp_stacks_extra_brick_outer_attributes', NULL, $post_id );
+	
+	//Post class for this brick
+	$post_class_string = get_post_meta($post_id, 'brick_class_name', true);
+	$post_class_string = apply_filters( 'mp_stacks_brick_class', $post_class_string, $post_id );
+	
+	//Get WordPress Classes for this Brick
+	$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
+		
+	//Loop through each WordPress class and add it to the class string	
+	foreach ( $post_class_array as $class ){
+		$post_class_string .=  ' ' . $class;
+	}
+									   
+	//Actual output
+	$html_output .= '<div id="mp-brick-' . $post_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+		
+		//HTML Anchor for this brick
+		$html_output .= '<a class="brick-anchor" name="' . sanitize_title( get_the_title($post_id) ) . '"></a>';
+		
+		//Brick Meta Div
+		$html_output .= '<div class="mp-brick-meta">';
+			
+			//Action hook to run actions in the meta area for a brick
+			do_action( 'mp_stacks_brick_meta_action', $post_id );
+			
+			//Hook custom output to the meta div for this brick
+			$html_output .= apply_filters( 'mp_stacks_brick_meta_output', NULL, $post_id );
+				
+			//Edit Brick Link
+			if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
+				
+				$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 
+					'mp-stacks-minimal-admin' => 'true',
+					'mp_stack_id' => $stack_id, 
+					'containing_page_url' => mp_core_get_current_url()
+				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+				
+				//Get Menu Order Info for this Brick						
+				$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
+				$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
+				
+				//If this brick is being shown as part of a stack
+				if ( !empty( $stack_id ) ){
 					
-					//Hook custom output to the meta div for this brick
-					$html_output .= apply_filters( 'mp_stacks_brick_meta_output', NULL, $post_id );
-						
-					//Edit Brick Link
-					if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
-						
-						$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 
-							'mp-stacks-minimal-admin' => 'true',
-							'mp_stack_id' => $stack_id, 
-							'containing_page_url' => mp_core_get_current_url()
-						), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
-						
-						//Get Menu Order Info for this Brick						
-						$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
-						$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
-						
-						//If this brick is being shown as part of a stack
-						if ( !empty( $stack_id ) ){
-							
-							//Show buttons to add new bricks above/below
-							$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 
-								'post_type' => 'mp_brick', 
-								'mp-stacks-minimal-admin' => 'true', 
-								'mp_stack_id' => $stack_id, 
-								'mp_stack_order_new' => $mp_stack_order - 1 ,
-								'containing_page_url' => mp_core_get_current_url()
-							), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
-							
-							$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 
-								'post_type' => 'mp_brick',
-								'mp-stacks-minimal-admin' => 'true', 
-								'mp_stack_id' => $stack_id, 
-								'mp_stack_order_new' => $mp_stack_order + 1,
-								'containing_page_url' => mp_core_get_current_url()
-							), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
-						
-							//Get number of bricks in this stack
-							$number_of_bricks = mp_core_number_postpercat( $stack_id );
-							
-							//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
-							if ( $number_of_bricks > 1 ){
-								
-								//Show buttons to add new bricks above/below
-								$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 
-									'post_type' => 'mp_brick', 
-									'mp-stacks-minimal-admin' => 'true', 
-									'mp_stacks' => $stack_id 
-								), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
-								
-							}						
-						}
-					}
-				$html_output .= '</div>';
+					//Show buttons to add new bricks above/below
+					$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 
+						'post_type' => 'mp_brick', 
+						'mp-stacks-minimal-admin' => 'true', 
+						'mp_stack_id' => $stack_id, 
+						'mp_stack_order_new' => $mp_stack_order - 1 ,
+						'containing_page_url' => mp_core_get_current_url()
+					), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
+					
+					$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 
+						'post_type' => 'mp_brick',
+						'mp-stacks-minimal-admin' => 'true', 
+						'mp_stack_id' => $stack_id, 
+						'mp_stack_order_new' => $mp_stack_order + 1,
+						'containing_page_url' => mp_core_get_current_url()
+					), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 				
-				//Brick BG Div
-				$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '>' . apply_filters( 'mp_brick_background_content', '', $post_id ) . '</div>';
-				
-				//Brick Content Divs
-				$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
-					$html_output .= '<div class="mp-brick-inner">';
-						$html_output .= '<div class="mp-brick-content-types">';
-								$html_output .= '<div class="mp-brick-content-types-inner">';
-									$html_output .= $content_output; 
-								$html_output .= '</div>';
+					//Get number of bricks in this stack
+					$number_of_bricks = mp_core_number_postpercat( $stack_id );
+					
+					//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
+					if ( $number_of_bricks > 1 ){
+						
+						//Show buttons to add new bricks above/below
+						$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 
+							'post_type' => 'mp_brick', 
+							'mp-stacks-minimal-admin' => 'true', 
+							'mp_stacks' => $stack_id 
+						), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
+						
+					}						
+				}
+			}
+		$html_output .= '</div>';
+		
+		//Brick BG Div
+		$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '>' . apply_filters( 'mp_brick_background_content', '', $post_id ) . '</div>';
+		
+		//Brick Content Divs
+		$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';
+			$html_output .= '<div class="mp-brick-inner">';
+				$html_output .= '<div class="mp-brick-content-types">';
+						$html_output .= '<div class="mp-brick-content-types-inner">';
+							$html_output .= $content_output; 
 						$html_output .= '</div>';
-					$html_output .= '</div>';
 				$html_output .= '</div>';
 			$html_output .= '</div>';
-			
-			//Return the brick
-			return $html_output;
+		$html_output .= '</div>';
+	$html_output .= '</div>';
+	
+	//Return the brick
+	return $html_output;
 				
 }
 
@@ -501,6 +540,111 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 add_filter( 'mp_brick_inner_css', 'mp_stacks_default_brick_inner_css', 10, 2);
 
 /**
+ * Filter Function which returns the css style lines for the First Content Type div
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_first_content_type_css( $css_output, $post_id ){
+	
+	//1st Content Type max width
+	$first_content_type_max_width = get_post_meta($post_id, 'brick_max_width_c1', true);
+	
+	//If there is a max width value
+	if ( !empty( $first_content_type_max_width ) ){
+		$css_output .= 'max-width:' . $first_content_type_max_width . 'px; ';
+	}
+	
+	//1st Content Type Float
+	$first_content_type_float = get_post_meta($post_id, 'brick_float_c1', true);
+	$first_content_type_float = $first_content_type_float == 'center' ? NULL : $first_content_type_float;
+	
+	//If there is a float value
+	if ( !empty( $first_content_type_float ) ){
+		$css_output .= 'float:' . $first_content_type_float . '; ';
+	}
+	
+	//Content Type Left Right Padding
+	$first_content_type_padding = get_post_meta($post_id, 'brick_no_borders', true);
+	if ( empty( $first_content_type_padding ) ){
+		$css_output .= 'padding:0 10px 0 10px;';
+	}
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_first_content_type_css_filter', 'mp_stacks_first_content_type_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for the First Content Type div
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_first_content_type_mobile_css( $css_output, $post_id ){
+	
+	$css_output .= 'max-width:inherit; ';
+	$css_output .= 'float:inherit; ';
+	
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_first_content_type_mobile_css_filter', 'mp_stacks_first_content_type_mobile_css', 10, 2);
+
+
+/**
+ * Filter Function which returns the css style lines for the Second Content Type div
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_second_content_type_mobile_css( $css_output, $post_id ){
+	
+	$css_output .= 'max-width:inherit; ';
+	$css_output .= 'float:inherit; ';
+	
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_second_content_type_mobile_css_filter', 'mp_stacks_second_content_type_mobile_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for the Second Content Type div
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_second_content_type_css( $css_output, $post_id ){
+	
+	//2nd Content Type max width
+	$second_content_type_max_width = get_post_meta($post_id, 'brick_max_width_c2', true);
+	
+	//If there is a max width value
+	if ( !empty( $second_content_type_max_width ) ){
+		$css_output .= 'max-width:' . $second_content_type_max_width . 'px; ';
+	}
+	
+	//1st Content Type Float
+	$second_content_type_float = get_post_meta($post_id, 'brick_float_c2', true);
+	$second_content_type_float = $second_content_type_float == 'center' ? NULL : $second_content_type_float;
+	
+	//If there is a float value
+	if ( !empty( $second_content_type_float ) ){
+		$css_output .= 'float:' . $second_content_type_float . '; ';
+	}
+	
+	//Content Type Left Right Padding
+	$second_content_type_padding = get_post_meta($post_id, 'brick_no_borders', true);
+	if ( empty( $second_content_type_padding ) ){
+		$css_output .= 'padding:0 10px 0 10px;';
+	}
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_second_content_type_css_filter', 'mp_stacks_second_content_type_css', 10, 2);
+
+/**
  * Filter Function which returns conditional responsive css margins for a brick
  * Parameter: CSS output
  * Parameter: Post ID
@@ -610,13 +754,11 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2);
 
 /**
- * Output css for all bricks on this page into the header of the theme
+ * Output css for all bricks on this page in shortcodes into the header of the theme
  * Parameter: none
  * Global Variable: array $mp_bricks_on_page This array contains all the ids of every brick previously called on this page
  */
 function mp_stacks_header_css(){
-	
-	global $mp_bricks_on_page;
 	
 	//Loop through the query
 	if (have_posts()) : 

@@ -95,7 +95,7 @@ function mp_stack_only_page(){
             
         </head>
         
-        <body>
+        <body class="body-mp-stack-only-<?php echo $stack->term_id; ?>">
                 
 			<?php 
             
