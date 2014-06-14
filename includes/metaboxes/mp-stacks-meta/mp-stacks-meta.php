@@ -130,15 +130,6 @@ function mp_stacks_create_meta_box(){
 				'field_select_values' => array('center' => __('Center', 'mp_stacks'), 'left' => __('Left', 'mp_stacks'), 'right' => __('Right', 'mp_stacks') ),
 				'field_showhider'  => 'brick_content_type_widths_and_floats',
 			),
-			array(
-				'field_id'			=> 'brick_float_c2',
-				'field_title' 	=> __( '2nd Content-Type - Float: <br />', 'mp_stacks'),
-				'field_description' 	=> 'Should this sit all the way to the left, right, or center?',
-				'field_type' 	=> 'select',
-				'field_value' => '',
-				'field_select_values' => array('center' => __('Center', 'mp_stacks'), 'left' => __('Left', 'mp_stacks'), 'right' => __('Right', 'mp_stacks') ),
-				'field_showhider'  => 'brick_content_type_widths_and_floats',
-			),
 		array(
 			'field_id'	 => 'brick_content_type_help',
 			'field_title' => 'Content Types',

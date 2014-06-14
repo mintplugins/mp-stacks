@@ -12,8 +12,8 @@ add_action('wp_enqueue_scripts', 'mp_stacks_stylesheet');
  * Shortcode which is used to display the HTML content on a post
  */
 function mp_stacks_display_mp_stack( $atts ) {
-	global $mp_stacks_meta_box;
-	$vars =  shortcode_atts( array('stack' => NULL), $atts );
+	
+	$vars = shortcode_atts( array('stack' => NULL), $atts );
 		
 	//Return the stack HTML output - pass the function the stack id
 	return mp_stack( $vars['stack'] );

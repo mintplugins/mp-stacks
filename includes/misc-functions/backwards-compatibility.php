@@ -13,6 +13,107 @@
  * @author      Philip Johnston
  */
  
+/**
+ * Update any "media_types" to "content_types" - Deprecated
+ *
+ * @access   public
+ * @since     1.0.0
+ * @link      http://mintplugins.com/doc/
+ * @see      function_name()
+ * @return    void
+ */
+function mp_stacks_migrate_text_to_repeaters(){
+ 	
+	//If this hasn't been done before
+	if (!get_option('mp_stacks_migrate_text_to_repeaters')){
+		
+		//Set the args for the new query
+		$mp_brick_args = array(
+			'post_type' => "mp_brick",
+			'posts_per_page' => -1,
+			'orderby' => 'menu_order',
+			'order' => 'ASC',
+		);	
+			
+		//Create new query for stacks
+		$mp_brick_query = new WP_Query( apply_filters( 'mp_brick_args', $mp_brick_args ) );
+		
+		$css_output = NULL;
+		
+		//Loop through all bricks
+		if ( $mp_brick_query->have_posts() ) { 
+			
+			add_action('admin_notices', 'mp_stacks_migrate_text_to_repeaters_notification');
+			
+			while( $mp_brick_query->have_posts() ) : $mp_brick_query->the_post(); 
+						
+				//Build Brick CSS Output
+				$post_id = get_the_ID();
+								
+				//Get Text Area 1's Variables
+				$brick_line_1_color = get_post_meta( $post_id, 'brick_line_1_color', true);
+				$brick_line_1_font_size = get_post_meta( $post_id, 'brick_line_1_font_size', true);
+				$brick_text_line_1 = get_post_meta( $post_id, 'brick_text_line_1', true);
+				
+				//We'll handle the migration for the google fonts addon here too
+				$brick_line_1_google_font = get_post_meta( $post_id, 'brick_line_1_google_font', true);
+				
+				//Get Text Area 2's Variables
+				$brick_line_2_color = get_post_meta( $post_id, 'brick_line_2_color', true);
+				$brick_line_2_font_size = get_post_meta( $post_id, 'brick_line_2_font_size', true);
+				$brick_text_line_2 = get_post_meta( $post_id, 'brick_text_line_2', true);
+				
+				//We'll handle the migration for the google fonts addon here too
+				$brick_line_2_google_font = get_post_meta( $post_id, 'brick_line_2_google_font', true);
+				
+				//Complile all the text area variables into a repeater-style array
+				$new_brick_repeater_array = array(
+					array( 
+						'brick_line_1_color' => $brick_line_1_color,
+						'brick_line_1_font_size' => $brick_line_1_font_size,
+						'brick_line_1_google_font' => $brick_line_1_google_font,
+						'brick_text_line_1' => $brick_text_line_1,
+						
+						'brick_line_2_color' => $brick_line_2_color,
+						'brick_line_2_font_size' => $brick_line_2_font_size,
+						'brick_line_2_google_font' => $brick_line_2_google_font,
+						'brick_text_line_2' => $brick_text_line_2,
+					)
+				);
+						
+				//Do the actual post meta update for this brick's text
+				if (!empty($new_brick_repeater_array)){
+					update_post_meta( $post_id, 'mp_stacks_text_content_type_repeater', $new_brick_repeater_array);
+				}
+								
+							
+			endwhile;
+									
+		}
+		
+		//Let this function know we don't have to do this again
+		update_option( 'mp_stacks_migrate_text_to_repeaters', true );
+		
+	}
+	
+}
+add_action('admin_init', 'mp_stacks_migrate_text_to_repeaters');
+
+/**
+ * Notice about text updates
+ *
+ * @access   public
+ * @since     1.0.0
+ * @link      http://mintplugins.com/doc/
+ * @see      function_name()
+ * @return    void
+ */
+function mp_stacks_migrate_text_to_repeaters_notification(){
+	echo ' <div class="updated">';
+	echo "<p>Migrating text types to repeaters...</p>";	
+	echo '</div>';
+}
+
  /**
  * Update any "media_types" to "content_types" - Deprecated
  *

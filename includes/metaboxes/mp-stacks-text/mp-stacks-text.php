@@ -24,9 +24,17 @@ function mp_stacks_text_create_meta_box(){
 		array(
 			'field_id'	 => 'brick_text_media_type_description',
 			'field_title' => __( 'Description:', 'mp_stacks'),
-			'field_description' => '<br />The "Text" Media-Type has 2 customizable text areas which sit on top of each other.',
+			'field_description' => '<br />The "Text" Media-Type has repeatable Text-Pairs which sit on top of each other.',
 			'field_type' => 'basictext',
-			'field_value' => ''
+			'field_value' => '',
+		),
+		array(
+			'field_id'	 => 'brick_text_pair_title',
+			'field_title' => __( 'Text Pair', 'mp_stacks'),
+			'field_description' => __( 'Two text areas.', 'mp_stacks' ),
+			'field_type' => 'repeatertitle',
+			'field_value' => '',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_line_1_color',
@@ -34,7 +42,8 @@ function mp_stacks_text_create_meta_box(){
 			'field_description' => '<br />Select the color of text area 1.',
 			'field_type' => 'colorpicker',
 			'field_value' => '',
-			'field_container_class' => 'mp_brick_text_option'
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_line_1_font_size',
@@ -42,14 +51,25 @@ function mp_stacks_text_create_meta_box(){
 			'field_description' => '<br />Enter the size (in pixels).',
 			'field_type' => 'number',
 			'field_value' => '',
-			'field_container_class' => 'mp_brick_text_option'
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
+		),
+		array(
+			'field_id'	 => 'brick_line_1_line_height',
+			'field_title' => __( 'Line-Height 1 (Optional)', 'mp_stacks'),
+			'field_description' => '<br />Enter the line-height in pixels.',
+			'field_type' => 'number',
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_text_line_1',
 			'field_title' => __( 'Text Area 1', 'mp_stacks'),
 			'field_description' => 'Enter the text to display on text area 1',
 			'field_type' => 'wp_editor',
-			'field_value' => ''
+			'field_value' => '',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_line_2_color',
@@ -57,7 +77,8 @@ function mp_stacks_text_create_meta_box(){
 			'field_description' => '<br />Select the color of text area 2',
 			'field_type' => 'colorpicker',
 			'field_value' => '',
-			'field_container_class' => 'mp_brick_text_option'
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_line_2_font_size',
@@ -65,14 +86,25 @@ function mp_stacks_text_create_meta_box(){
 			'field_description' => '<br />Enter the size (in pixels).',
 			'field_type' => 'number',
 			'field_value' => '',
-			'field_container_class' => 'mp_brick_text_option'
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
+		),
+		array(
+			'field_id'	 => 'brick_line_2_line_height',
+			'field_title' => __( 'Line-Height 2 (Optional)', 'mp_stacks'),
+			'field_description' => '<br />Enter the line-height in pixels.',
+			'field_type' => 'number',
+			'field_value' => '',
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_text_line_2',
 			'field_title' => __( 'Text Area 2', 'mp_stacks'),
 			'field_description' => 'Enter the text to display on text area 2',
 			'field_type' => 'wp_editor',
-			'field_value' => ''
+			'field_value' => '',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
 			'field_id'	 => 'brick_content_type_help',

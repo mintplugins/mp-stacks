@@ -5,7 +5,7 @@ global tinymce - P.S. TinyMCE is by far the WORST part of WordPress. Possibly th
 tinymce.PluginManager.add('mpstacks', function( editor ) {
 	
 	function replaceMPStackShortcodes( content ) {
-		return content.replace( /\[mp_stack([^\]]*)\]/g, function( match ) {
+		return content.replace( /\[mp_stack ([^\]]*)\]/g, function( match ) {
 			return html( 'mp-stack', match );
 		});
 	}

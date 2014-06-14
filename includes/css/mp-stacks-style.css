@@ -85,8 +85,6 @@
 .mp-brick .mp-brick-first-content-type, 
 .mp-brick .mp-brick-second-content-type {
 	position:relative;
-	float:left;
-	display:inline-block;
 	width:100%;
 	z-index:2;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -96,13 +94,12 @@
 
 /*Text*/
 .mp-brick .mp-brick-text-line-1 a, 
-.mp-brick .mp-brick-text-line-2 a{
-	margin-bottom:15px;
-	margin-bottom: 1.5rem
-}
-.mp-brick .mp-brick-text-line-1 a:last-child, 
-.mp-brick .mp-brick-text-line-2 a:last-child{
+.mp-brick .mp-brick-text-line-2 a,
+.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-1 p:last-child, 
+.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-2 p:last-child{
 	margin-bottom:0px;
+	margin-bottom:0rem;
+	text-decoration:none;
 }
 .mp-brick .mp-brick-text-line-1, 
 .mp-brick .mp-brick-text-line-2,
@@ -112,7 +109,6 @@
 	word-wrap: normal;
 	word-break: break-word;
 	text-align:left;
-	margin-bottom: 0rem;
 }
 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-1, 
@@ -237,6 +233,6 @@
 }
 
 /*Easy Digital Downloads Shortcode buy buttons in bricks */
-.mp_brick .edd_download_purchase_form{
-	margin-right:10px;
+.mp_brick .edd_price_options ul{
+	list-style:none;	
 }
