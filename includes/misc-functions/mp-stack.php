@@ -106,11 +106,19 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 			$css_output .= '}';
 		}
 		
-		//Brick Container CSS
-		$mp_brick_container_css_filter = apply_filters( 'mp_brick_container_css', '', $post_id );
-		if ( !empty($mp_brick_container_css_filter) ) {
-			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-type-container>div{';
-			$css_output .= $mp_brick_container_css_filter;
+		//Brick First Container CSS
+		$mp_brick_first_container_css_filter = apply_filters( 'mp_brick_first_container_css', '', $post_id );
+		if ( !empty($mp_brick_first_container_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types-inner .mp-brick-content-type-container:first-child{';
+			$css_output .= $mp_brick_first_container_css_filter;
+			$css_output .= '}';
+		}
+		
+		//Brick Second Container CSS
+		$mp_brick_second_container_css_filter = apply_filters( 'mp_brick_second_container_css', '', $post_id );
+		if ( !empty($mp_brick_second_container_css_filter) ) {
+			$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types-inner .mp-brick-content-type-container:nth-child(2){';
+			$css_output .= $mp_brick_second_container_css_filter;
 			$css_output .= '}';
 		}
 		
@@ -336,7 +344,7 @@ function mp_brick( $post_id, $stack_id = NULL ){
 	$post_class_string = apply_filters( 'mp_stacks_brick_class', $post_class_string, $post_id );
 	
 	//Get WordPress Classes for this Brick
-	$post_class_array = get_post_class( array( 'mp-brick', $post_id ) );
+	$post_class_array = get_post_class( 'mp-brick', $post_id );
 		
 	//Loop through each WordPress class and add it to the class string	
 	foreach ( $post_class_array as $class ){
@@ -643,6 +651,67 @@ function mp_stacks_second_content_type_css( $css_output, $post_id ){
 	
 }
 add_filter( 'mp_brick_second_content_type_css_filter', 'mp_stacks_second_content_type_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for the First Container's CSS
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_first_container_css( $css_output, $post_id ){
+	
+	//Get the alignment
+	$alignment = get_post_meta($post_id, 'brick_alignment', true);
+	
+	//If alignment in centered, we don't apply the split percentage
+	if ( $alignment != 'leftright' ){
+		return $css_output;	
+	}
+	
+	//Split Percentage
+	$brick_split_percentage = get_post_meta($post_id, 'brick_split_percentage', true);
+	
+	//If there split percentage value
+	if ( !empty( $brick_split_percentage ) ){
+		$css_output .= 'width:' . $brick_split_percentage . '%; ';
+	}
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_first_container_css', 'mp_stacks_first_container_css', 10, 2);
+
+/**
+ * Filter Function which returns the css style lines for the Second Container's CSS
+ * Parameter: CSS output
+ * Parameter: Post ID
+ */
+function mp_stacks_second_container_css( $css_output, $post_id ){
+	
+	//Get the alignment
+	$alignment = get_post_meta($post_id, 'brick_alignment', true);
+	
+	//If alignment in centered, we don't apply the split percentage
+	if ( $alignment != 'leftright' ){
+		return $css_output;	
+	}
+	
+	//Split Percentage
+	$brick_split_percentage = get_post_meta($post_id, 'brick_split_percentage', true);
+	
+	//Find what's left for our right brick by subtracting the percentage of the first brick
+	$brick_split_percentage = 100 - $brick_split_percentage;
+	
+	//If there split percentage value
+	if ( !empty( $brick_split_percentage ) ){
+		$css_output .= 'width:' . $brick_split_percentage . '%; ';
+	}
+			
+	//Return CSS Output
+	return $css_output;
+	
+}
+add_filter( 'mp_brick_second_container_css', 'mp_stacks_second_container_css', 10, 2);
 
 /**
  * Filter Function which returns conditional responsive css margins for a brick

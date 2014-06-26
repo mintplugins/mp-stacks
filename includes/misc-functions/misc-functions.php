@@ -13,13 +13,29 @@
  */
 
 /**
- * Admin Stacks Icon
- *
- * Echoes the CSS for the downloads post type icon.
+ * Remove "hentry" from bricks post_class
  *
  * @since 1.0
- * @global $post_type
- * @global $wp_version
+ * @return void
+*/
+function mp_stacks_remove_hentry( $classes, $class = '', $post_id = '' ) {
+	
+	if ( !$post_id || get_post_type( $post_id ) !== 'mp_brick' ){
+		return $classes;
+	}
+
+	if ( ( $key = array_search( 'hentry', $classes ) ) !== false ) {
+		unset( $classes[ $key ] );
+	}
+
+	return $classes;
+}
+add_filter( 'post_class', 'mp_stacks_remove_hentry', 100, 3 );
+
+/**
+ * If there's no js in admin, let them know that life is too short for that.
+ *
+ * @since 1.0
  * @return void
 */
 function mp_stacks_brick_edit_page_no_js_message() {

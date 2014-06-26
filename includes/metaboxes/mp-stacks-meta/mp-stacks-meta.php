@@ -130,6 +130,14 @@ function mp_stacks_create_meta_box(){
 				'field_select_values' => array('center' => __('Center', 'mp_stacks'), 'left' => __('Left', 'mp_stacks'), 'right' => __('Right', 'mp_stacks') ),
 				'field_showhider'  => 'brick_content_type_widths_and_floats',
 			),
+			array(
+				'field_id'			=> 'brick_split_percentage',
+				'field_title' 	=> __( 'Split Percentage: <br />', 'mp_stacks'),
+				'field_description' 	=> __( 'What should the split percentage be? By default, it splits down the middle by using 50%. <br /> (NOTE: Does not apply if this brick is Centered)', 'mp_stacks' ) . '<br /><img width="129px" style="margin-top:10px;" src="' . plugins_url('assets/images/left-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />',
+				'field_type' 	=> 'input_range',
+				'field_value' => '50',
+				'field_showhider'  => 'brick_content_type_widths_and_floats',
+			),
 		array(
 			'field_id'	 => 'brick_content_type_help',
 			'field_title' => 'Content Types',

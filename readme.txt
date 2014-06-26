@@ -35,6 +35,17 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.2 = July X, 2014
+* Fixed create_stack_from_template function not properly checking repeaters for attachments
+* Changed name of Add-Ons page from “Add Ons” to “Add on Shop”
+* Added Split Percentage Control - to control Left/Right Content-Type width percentage
+* Made brick’s post_class no longer show the .hentry class
+* Removed mp_brick_container_css Filter Hook
+* Added mp_brick_first_container_css Filter Hook
+* Added mp_brick_second_container_css Filter Hook
+* Changed Text Content Type to be repeatable 
+* Added backwards compatibility function for text content types to auto update their formatting to be repeaters
+
 = 1.0.1.1 = June 8, 2014
 * Left/Right Brick widths go from, 37% to 50%
 * Content-Type areas get “position:relative;”, Width 100%, no left/right margins by default, border box sizing.
