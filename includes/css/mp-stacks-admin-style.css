@@ -11,8 +11,16 @@
 }
 /*hide slug div*/
 .post-type-mp_brick #normal-sortables,
-.post-type-mp_brick #edit-slug-box{
+.post-type-mp_brick #edit-slug-box,
+.post-type-mp_brick #misc-publishing-actions,
+.post-type-mp_brick #minor-publishing-actions,
+.post-type-mp_brick #submitdiv .handlediv,
+.post-type-mp_brick #submitdiv .hndle{
 	display:none;	
+}
+
+.post-type-mp_brick #major-publishing-actions{
+	border-top:none;
 }
 
 /*Shortcode edit buttons*/
