@@ -51,7 +51,7 @@ function mp_brick_post_type() {
 			'show_in_menu' 		=> false, 
 			'query_var' 		=> true,
 			'rewrite' 			=> array( 'slug' => 'stack' ),
-			'capability_type' 	=> 'post',
+			'capability_type' 	=> 'page',
 			'has_archive' 		=> false, 
 			'hierarchical' 		=> true,
 			'supports' 			=> apply_filters('mp_stacks_brick_supports', array( 'title') ),
