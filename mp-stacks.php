@@ -231,3 +231,8 @@ function mp_stacks_include_files(){
 	}
 }
 add_action('plugins_loaded', 'mp_stacks_include_files', 9);
+
+/**
+ * Activation Hook Function - Sets up Sample Stack Page, User Roles and more
+ */
+require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/install.php' );
