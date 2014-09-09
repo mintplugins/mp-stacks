@@ -106,6 +106,11 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	//Close the lightbox if we have deleted a brick post
+	$( '#delete-action .submitdelete' ).on( 'click', function(event) {
+		parent.mp_stacks_close_lightbox();
+	});
+	
 	//Auto select the stack we want this brick to be in
 	var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 
