@@ -1,5 +1,6 @@
 jQuery(document).ready(function($){
 	
+	//Show only the content types the user has selected for this brick
 	function mp_stacks_reset_content_types( args ){		
 		
 		default_args = new Array();
@@ -98,53 +99,9 @@ jQuery(document).ready(function($){
 		mp_stacks_reset_content_types();
 	});
 	
-	//Set TinyMCE default font size dynamically		
-	function mp_stacks_size_text_previews(){				
-		//Text area 1	
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'font-size', $('#brick_line_1_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_1_ifr').contents().find('body').css( 'line-height', $('#brick_line_1_font_size').val() + 'px' );	
-		//Text area 2
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'font-size', $('#brick_line_2_font_size').val() + 'px' );
-		$('#mp_core_wp_editor_brick_text_line_2_ifr').contents().find('body').css( 'line-height', $('#brick_line_2_font_size').val() + 'px' );	
-	}
-	
-	if ( $('#brick_line_1_font_size').val() ){
-		$('#brick_line_1_font_size').on( 'keyup click blur focus change paste', function() {
-			//Set TinyMCE default font size dynamically	
-			//mp_stacks_size_text_previews();	
-		});
-		
-		$('#brick_line_2_font_size').on( 'keyup click blur focus change paste', function() {
-			//Set TinyMCE default font size dynamically	
-			//mp_stacks_size_text_previews();	
-		});
-	
-	
-		var mp_stacks_interval_counter = 0;
-		
-		//Because TinyMCE is absolute garbage, we have no event to hook into that works for 'loaded' with WordPress so have to check every few seconds which is total, necessary crap.	
-		function mp_stacks_intervalTrigger() {
-			  
-			return window.setInterval(function(){
-			
-				//mp_stacks_size_text_previews();
-				
-				mp_stacks_interval_counter = mp_stacks_interval_counter + 100;
-		  
-				if (mp_stacks_interval_counter > 500){
-					window.clearInterval(mp_stacks_interval_trigger_id);
-				}
-			
-			}, 100);
-		};
-		
-		var mp_stacks_interval_trigger_id = mp_stacks_intervalTrigger();
-		
-	}
-				
+	//Close lightbox on update if we are loaded in a lightbox				
 	$( '#post, #posts-filter' ).on( 'submit', function(event) {
 	
-		//Close lightbox on update if we are loaded in a lightbox	
 		parent.mp_stacks_close_lightbox();
 		
 	});
