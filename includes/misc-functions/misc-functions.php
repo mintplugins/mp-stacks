@@ -184,6 +184,40 @@ function mp_stacks_get_brick_titles_in_stack( $stack_id ) {
 	
 	return $brick_titles_in_stack;	
 }
+
+/**
+ * Function which create the admin notice for the mp_brick editor
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_support_admin_notice(){
+	 
+	 global $pagenow;
+
+	  //Only load message if mp_stack_id is set
+	 if ( isset( $_GET['mp_stack_id'] ) && $pagenow == 'post.php'){
+		
+	 }
+	 else{
+		 return; 
+	 }
+	 
+	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
+	 
+	 ?>
+	 <div class="mp-stacks-editor-title-notice updated">
+        <p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
+		<?php echo __(' Having trouble? Feel free to email us: support@mintplugins.com and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
+     </div>
+     <?php
+	
+	
+	
+}
+add_action('admin_notices', 'mp_stacks_support_admin_notice');
+
 /**
  * Function which creates the TIP letting the user know they can double click on a brick
  *
