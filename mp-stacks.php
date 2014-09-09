@@ -96,6 +96,15 @@ add_action( 'init', 'mp_stacks_textdomain', 1 );
 | INCLUDES
 |--------------------------------------------------------------------------
 */
+
+/**
+ * Activation Hook Function - Sets up Rewrite Rules, Sample Stack Page, User Roles and more
+ */
+require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/install.php' );
+
+/**
+ * Load files dependant on MP Core - if no MP Core, output a button to install it first
+ */
 function mp_stacks_include_files(){
 	/**
 	 * If mp_core isn't active, stop and install it now
@@ -236,8 +245,3 @@ function mp_stacks_include_files(){
 	}
 }
 add_action('plugins_loaded', 'mp_stacks_include_files', 9);
-
-/**
- * Activation Hook Function - Sets up Sample Stack Page, User Roles and more
- */
-require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/install.php' );
