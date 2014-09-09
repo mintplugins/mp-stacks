@@ -225,3 +225,20 @@
 	width:10px;
 	margin-right:5px;
 }
+
+.mp-stacks-directory-header{
+	padding:30px;
+	border: 1px solid #dedede;
+	margin-bottom:20px;
+	background-color:#fff;
+}
+.mp-stacks-directory-title{
+	color: #222;
+	font-size: 1.3em;
+	font-weight: 700;
+	margin-bottom:10px;
+}
+.mp-stacks-directory-subtitle{
+	width:50%;	
+	margin-bottom:10px;
+}
