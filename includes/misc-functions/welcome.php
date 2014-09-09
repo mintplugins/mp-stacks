@@ -28,7 +28,7 @@ class MP_Stacks_Welcome {
 	/**
 	 * @var string The capability users should have to view the page
 	 */
-	public $minimum_capability = 'manage_options';
+	public $minimum_capability = 'edit_pages';
 
 	/**
 	 * Get things started
