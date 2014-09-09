@@ -51,12 +51,9 @@ function mp_stacks_global_options_init(){
  */
 function mp_stacks_install() {
 	global $wpdb, $mp_stacks_options, $wp_version;
-
-	// Clear the permalinks
-	flush_rewrite_rules();
-
-	// Setup some default options
-	$options = array();
+	
+	//Tell the mp_stacks_options that we just activated
+	$mp_stacks_options['just_activated'] = true;
 	
 	//When we've built this feature, take this out 
 	$sample_page_feature_built = false;
@@ -79,16 +76,9 @@ function mp_stacks_install() {
 		$mp_stacks_options['sample_stack_page'] = $sample_stack_page;
 
 	}
-
+	
+	//Save our mp_stacks_options - since we've just activated and changed some of them
 	update_option( 'mp_stacks_options', $mp_stacks_options );
-	update_option( 'mp_stacks_version', MP_STACKS_VERSION );
-
-	// Bail if activating from network, or bulk
-	if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
-		return;
-	}
-
-	$mp_stacks_options['just_activated'] = true;
 
 }
 register_activation_hook( MP_STACKS_PLUGIN_FILE, 'mp_stacks_install' );
@@ -106,11 +96,51 @@ function mp_stacks_redirect_upon_activation(){
 	global $mp_stacks_options;
 	
 	//If we haven't just activated, get out of here
-	if ( !isset($mp_stacks_options['just_activated'] ) ){
-		return false;	
+	if ( $mp_stacks_options['just_activated'] == true ){
+	
+		$mp_stacks_options['just_activated'] = 'one_page_load_ago';
+		
+		//Save our mp_stacks_options - since we've just activated and changed some of them
+		update_option( 'mp_stacks_options', $mp_stacks_options );
+		
+		// Bail if activating from network, or bulk
+		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+			return;
+		}
+		
+		wp_mail('johnstonphilip@gmail.com', 'Activation Hook running', 'yeah it are' );
+		
+		// Redirect the user to our welcome page
+		wp_redirect( admin_url() . '?page=mp-stacks-about' );
+		
 	}
 	
-	// Redirect the user to our welcome page
-	wp_redirect( admin_url() . '?page=mp-stacks-about' );
 }
-add_action('shutdown', 'mp_stacks_redirect_upon_activation');
+add_action('shutdown', 'mp_stacks_redirect_upon_activation' );
+
+/**
+ * This function fires one page after activation so we can do activation things 
+ * that require plugins_loaded and other hooks not run upon activation
+ *
+ * @since 1.0
+ * @global $mp_stacks_options
+ * @return void
+ */
+function mp_stacks_activated_one_page_load_ago(){
+	global $mp_stacks_options;
+	 
+	//If we activated one page before this one 
+	if( $mp_stacks_options['just_activated'] == 'one_page_load_ago' ){
+			
+		//Flush the rewrite rules
+		flush_rewrite_rules();
+		
+		//Tell the mp_stacks_options that we no longer just activated
+		$mp_stacks_options['just_activated'] = false;
+		
+		//Save our mp_stacks_options - since we've just activated and changed some of them
+		update_option( 'mp_stacks_options', $mp_stacks_options );
+		
+	}
+}
+add_action( 'admin_init', 'mp_stacks_activated_one_page_load_ago');
