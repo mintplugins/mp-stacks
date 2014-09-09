@@ -204,3 +204,21 @@
 #posts-filter .check-column{
 	padding-left:4px;	
 }
+
+/* Confirmation field width - where the user types "This is NOT a new Stack"*/
+.mp-stacks-insert-stack-confirmation{
+	width:350px;	
+}
+
+/* The admin notice */
+#wpbody .mp-stacks-editor-title-notice{
+	border-left: none;
+	padding: 0px; 
+	background-color:transparent;
+	-webkit-box-shadow:none;
+	box-shadow:none;	
+}
+.mp-stacks-editor-notice-icon{
+	width:10px;
+	margin-right:5px;
+}

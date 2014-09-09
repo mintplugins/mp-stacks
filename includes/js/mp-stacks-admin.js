@@ -175,6 +175,9 @@ jQuery(document).ready(function($){
 		 
 		 //Show options to create new stack
 		 $('.mp-stacks-shortcode-new-stack-div').css('display', 'block');
+		 
+		 //Add the default JS action to insert the stack when the user click on #mp_stack
+		 $('#mp_stack').attr('onclick', 'insert_mp_stack_Shortcode();');
 	 });
 	
 	/**
@@ -189,6 +192,10 @@ jQuery(document).ready(function($){
 		 
 		 //Show options to use existing stack
 		 $('.mp-stacks-shortcode-existing-stack-div').show();
+		 
+		 //Remove the default JS action to insert the stack when the user click on #mp_stack
+		 $('#mp_stack').attr('onclick', '');
+	
 	 });
 	  
 	/**
@@ -297,16 +304,45 @@ jQuery(document).ready(function($){
 		 }
 	 });
 	 
+	
+	//When the user is done typing in the confirmation of inserting new stack,
+	$(".mp-stacks-insert-stack-confirmation").on('change', function(event){
+	 
+	 	event.preventDefault;
+		
+		//Remove any notices that might have already appeared
+		$( '.mp-stacks-confirmation-notice' ).remove();
+		
+		//Remove the default javascript function to force the user to confirm they understand
+		$('#mp_stack').attr('onclick', '');	
+		
+		//If the user hasn't entered the right confirmation message
+		if ( $('.mp-stacks-insert-stack-confirmation').val() != mp_stacks_vars.stack_insert_confirmation_phrase ){
+			 
+			 //Turn the text area RED!!
+			 $('.mp-stacks-insert-stack-confirmation').css('background-color', '#ff7979');
+			 $('.mp-stacks-insert-stack-confirmation').after( '<div class="mp-stacks-confirmation-notice">' + mp_stacks_vars.stack_confirmation_incorrect + '</div>' );
+			 
+		}
+		else{
+			
+			//Turn the text area GREEN!!
+			 $('.mp-stacks-insert-stack-confirmation').css('background-color', '#acff7a');
+			 
+			//Put the onclick function back into the insert button so it works
+			$('#mp_stack').attr('onclick', 'insert_mp_stack_Shortcode();');	
+		}
+	
+	});
+	 
 	 //Once the user inserts a new/existing stack into the active text area, reset the options so they can insert another stack if needed
-	 $( '#mp_stack, #mp_stack-cancel-download-insert' ).on( 'click', function( event ){
-		 
-		 //Show Step 1 Stack Options
-		 $( '.mp-stacks-shortcode-choose-action' ).show(); 
-		 
-		 //Hide Step 2 Stack Options
-		 $('.mp-stacks-shortcode-existing-stack-div').hide();
-		 $('.mp-stacks-shortcode-new-stack-div').hide();
-		 
+	 $( window ).on( 'mp_core_shortcode_mp_stack_insert_event', function( event ){
+			mp_stacks_reset_shortcode_choose_options(); 
+	 });
+	 
+	 //When the user clicks cancel, reset the options so they can insert another stack if needed
+	 $( '#mp_stack_cancel_download_insert' ).on( 'click', function( event ){
+			mp_stacks_reset_shortcode_choose_options(); 
 	 });
 	 
 	 // Override the appendContent function in magnificPopup
@@ -442,6 +478,20 @@ function mp_stacks_close_lightbox(){
 		});
 	});
 }
+
+//Reset the options for the stack insertshortcode popup
+function mp_stacks_reset_shortcode_choose_options(){
+		
+	jQuery(document).ready(function($){ 
+		//Show Step 1 Stack Options
+		$( '.mp-stacks-shortcode-choose-action' ).show(); 
+		
+		//Hide Step 2 Stack Options
+		$('.mp-stacks-shortcode-existing-stack-div').hide();
+		$('.mp-stacks-shortcode-new-stack-div').hide();
+	});
+	 
+ };
 
 //This function allows us to grab URL variables
 function mp_stacks_getQueryVariable(variable)
