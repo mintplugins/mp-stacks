@@ -108,19 +108,6 @@ function mp_stacks_add_stacks_tinymce_plugin($plugin_array) {
 add_filter("mce_external_plugins", "mp_stacks_add_stacks_tinymce_plugin");
 
 /**
- * Set the Shortcode "representor" in TINYMCE upon insert
- *
- * @since   1.0.0
- * @link    http://mintplugins.com/doc/
- * @param   array $plugin_array See link for description.
- * @return  array $plugin_array
- */
-function mp_stacks_call_stacks_tiny_mce_plugin_on_insert($plugin_array) {
-	echo "tinyMCE.activeEditor.execCommand('MP_Stacks');";
-}
-add_action('mp_core_shortcode_' . 'mp_stack' . '_insert_event', 'mp_stacks_call_stacks_tiny_mce_plugin_on_insert' );
-
-/**
  * Add mp_stack stylesheet to the TinyMCE styles
  *
  * @since    1.0.0
