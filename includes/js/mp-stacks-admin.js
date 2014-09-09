@@ -304,6 +304,38 @@ jQuery(document).ready(function($){
 		 }
 	 });
 	 
+	 /**
+	 * Dismiss the double click tip using ajax
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	 $('.mp-stacks-dismiss-double-click').on('click', function(event){
+		
+		event.preventDefault(); 
+				
+		// Form the array to pass to the wp_ajax_mp_stacks_make_new_stacks php function
+		var postData = {
+			action: 'mp_stacks_dismiss_double_click_tip',
+			mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
+		};
+		
+		var this_tip = $(this).parent().parent();
+		
+		//Ajax to make new stack
+		$.ajax({
+			type: "POST",
+			data: postData,
+			url: mp_stacks_vars.ajaxurl,
+			success: function (response) {
+				this_tip.remove();	
+			}
+		}).fail(function (data) {
+			console.log(data);
+		});
+		
+		return false;
+	 });
 	
 	//When the user is done typing in the confirmation of inserting new stack,
 	$(".mp-stacks-insert-stack-confirmation").on('change', function(event){

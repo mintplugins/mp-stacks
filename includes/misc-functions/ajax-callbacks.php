@@ -65,3 +65,26 @@ function mp_stacks_add_new_stack_ajax() {
 	
 }
 add_action( 'wp_ajax_mp_stacks_make_new_stack', 'mp_stacks_add_new_stack_ajax' );
+
+/**
+ * Ajax callback for Dismissing the double click tip
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_dismiss_double_click_tip() {	
+
+	//Check nonce
+	if ( !check_ajax_referer( 'mp-stacks-nonce-action-name', 'mp_stacks_nonce', false ) ){
+		echo __('Ajax Security Check', 'mp_stacks');
+		die();
+	}
+
+	 //Set the value of the user meta for this tip to be true - that it is dismissed
+	 update_user_meta( get_current_user_id(), 'mp_stacks_dis_doubleclick_tip', true);
+	 
+	 die();
+	
+}
+add_action( 'wp_ajax_mp_stacks_dismiss_double_click_tip', 'mp_stacks_dismiss_double_click_tip' );
