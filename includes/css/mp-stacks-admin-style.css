@@ -31,11 +31,14 @@
 	z-index: 155000;	
 }
 .mp_field.mp_brick_text_option{
-	width:170px;
+	width: 20%;
 	display: inline-block;
 	float:left;
-	margin-right:20px;
+	margin-right:0px;
 	border:none;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_1_font_sizeBBBBB"],
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_2_font_sizeBBBBB"]{
