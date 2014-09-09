@@ -194,6 +194,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/misc-functions.php' );
 		
 		/**
+		 * Grid Functions
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/grid-functions.php' );
+		
+		/**
 		 * Ajax Callback Functions
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/ajax-callbacks.php' );
