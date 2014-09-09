@@ -162,3 +162,8 @@ function mp_stacks_close_lightbox(){
 		});
 	});
 }
+
+//Check for old versions of Browsers that suck
+if(  !document.addEventListener  ){
+	alert("Your Internet Browser is out of date and is at risk for being hacked and your personal information stolen. Please upgrade to a secure browser like Google Chrome or Firefox.");
+}
