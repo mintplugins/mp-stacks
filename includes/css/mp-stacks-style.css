@@ -2,7 +2,8 @@
 .mp-stack{
 	padding:0px!important;
 	margin:0px!important;
-	}
+	position:relative;
+}
 .mp-brick {
 	position:relative;
 	width: 100%; 
@@ -58,7 +59,7 @@
 }
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container{
 	display:table;
-	width:100%;	
+	width:100%!important;	
 }
 .mp-brick .mp-brick-content-type-container.mp-brick-centered{
 	display:table;
@@ -95,10 +96,10 @@
 /*Text*/
 .mp-brick .mp-brick-text-line-1 a, 
 .mp-brick .mp-brick-text-line-2 a,
-.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-1 p:last-child, 
+.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-1:last-child p:last-child, 
 .mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-2 p:last-child{
-	margin-bottom:0px;
-	margin-bottom:0rem;
+	margin-bottom:0px!important;
+	margin-bottom:0rem!important;
 	text-decoration:none;
 }
 .mp-brick .mp-brick-text-line-1, 
@@ -150,6 +151,7 @@
 /*Brick Meta*/
 .mp-brick .mp-brick-meta{
 	opacity:0;
+	background:none;
 	
 	-webkit-transition: opacity .4s ease-in-out, width .4s ease-in-out;
 	-moz-transition: opacity .4s ease-in-out, width .4s ease-in-out;
@@ -160,6 +162,19 @@
 .mp-brick:hover .mp-brick-meta{
 	opacity:1;
 }
+.mp-brick .mp-brick-title-container{
+	position:absolute;
+	top:0px;
+	text-align:center;
+	width:100%;
+	z-index:9999999;
+}
+.mp-brick .mp-brick-title-container .mp-brick-title{
+	position:relative!important;
+	display:inline-block;
+	font-size:10px;
+}
+.mp-brick .mp-brick-title,
 .mp-brick .mp-brick-edit-link,
 .mp-brick .mp-brick-add-before-link,
 .mp-brick .mp-brick-add-after-link,
@@ -168,7 +183,7 @@
 	color:#FFFFFF!important;
 	padding:3px;
 	position:absolute;
-	z-index:100;
+	z-index:99999999;
 	text-decoration:none;
 	border: 1px solid #fff;
 	

@@ -195,6 +195,8 @@ function mp_stack( $stack_id ){
 	//Create new query for stacks
 	$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
 	
+	$total_bricks = $mp_stack_query->found_posts;
+	
 	$html_output .= '<div id="mp_stack_' . $stack_id . '" class="mp-stack">';
 	
 	$term_exists = get_term_by('id', $stack_id, 'mp_stacks');
@@ -220,12 +222,17 @@ function mp_stack( $stack_id ){
 		
 		//Add_action hook 
 		do_action( 'mp_stacks_before_stack' );
-		
+					
+		//Set the default for the brick counter
+		$brick_number = 1;
+					
 		//Loop through the stack group		
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
-    		
+			
 			//Build Brick Output
-			$html_output .= mp_brick( get_the_ID(), $stack_id );
+			$html_output .= mp_brick( get_the_ID(), $stack_id, $brick_number );
+			
+			$brick_number = $brick_number + 1;
 			
 		endwhile;
 	
@@ -264,8 +271,9 @@ function mp_stack( $stack_id ){
  * Function which return the HTML output for a brick
  * Parameter: Post ID
  * Parameter: Stack ID - The Stack which is calling this brick
+ * Parameter: Brick Number - This is brick number X in this Stack
  */
-function mp_brick( $post_id, $stack_id = NULL ){
+function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 	
 	global $mp_stacks_active_bricks;
 					
@@ -382,6 +390,10 @@ function mp_brick( $post_id, $stack_id = NULL ){
 				//If this brick is being shown as part of a stack
 				if ( !empty( $stack_id ) ){
 					
+					//Tell the user which stack and brick they are editing
+					$stack_info = get_term( $stack_id, 'mp_stacks' );
+					$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+		
 					//Show buttons to add new bricks above/below
 					$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 
 						'post_type' => 'mp_brick', 
