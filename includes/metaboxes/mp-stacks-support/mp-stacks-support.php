@@ -1,6 +1,6 @@
 <?php
 /**
- * Function which create the admin notice for the mp_brick editor
+ * Function which creates the admin notice for the mp_brick editor
  *
  */
 function mp_stacks_support_admin_notice(){
