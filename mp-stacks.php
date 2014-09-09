@@ -129,7 +129,7 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/updater/mp-stacks-update.php' );
 		
 		/**
-		 * Update script - keeps this plugin up to date
+		 * Shows AddOn Directory
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-directory/mp-stacks-directory.php' );
 				
