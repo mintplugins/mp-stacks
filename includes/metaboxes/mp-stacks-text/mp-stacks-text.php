@@ -30,7 +30,7 @@ function mp_stacks_text_create_meta_box(){
 		),
 		array(
 			'field_id'	 => 'brick_text_pair_title',
-			'field_title' => __( 'Text Pair', 'mp_stacks'),
+			'field_title' => __( '2 Text Areas', 'mp_stacks'),
 			'field_description' => __( 'Two text areas.', 'mp_stacks' ),
 			'field_type' => 'repeatertitle',
 			'field_value' => '',
@@ -38,7 +38,7 @@ function mp_stacks_text_create_meta_box(){
 		),
 		array(
 			'field_id'	 => 'brick_line_1_color',
-			'field_title' => __( 'Text Color 1 (Optional)', 'mp_stacks'),
+			'field_title' => __( 'Text Color 1', 'mp_stacks'),
 			'field_description' => '<br />Select the color of text area 1.',
 			'field_type' => 'colorpicker',
 			'field_value' => '',
@@ -47,19 +47,28 @@ function mp_stacks_text_create_meta_box(){
 		),
 		array(
 			'field_id'	 => 'brick_line_1_font_size',
-			'field_title' => __( 'Text Size 1 (Optional)', 'mp_stacks'),
+			'field_title' => __( 'Text Size 1', 'mp_stacks'),
 			'field_description' => '<br />Enter the size (in pixels).',
+			'field_type' => 'number',
+			'field_value' => '35',
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
+		),
+		array(
+			'field_id'	 => 'brick_line_1_line_height',
+			'field_title' => __( 'Line-Height 1', 'mp_stacks'),
+			'field_description' => '<br />Enter the line-height in pixels.',
 			'field_type' => 'number',
 			'field_value' => '',
 			'field_container_class' => 'mp_brick_text_option',
 			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
-			'field_id'	 => 'brick_line_1_line_height',
-			'field_title' => __( 'Line-Height 1 (Optional)', 'mp_stacks'),
-			'field_description' => '<br />Enter the line-height in pixels.',
+			'field_id'	 => 'brick_line_1_paragraph_margin_bottom',
+			'field_title' => __( 'Paragraph Spacing 1', 'mp_stacks'),
+			'field_description' => '<br />Enter the number of pixels separating each paragraph. Default: 15px',
 			'field_type' => 'number',
-			'field_value' => '',
+			'field_value' => '15',
 			'field_container_class' => 'mp_brick_text_option',
 			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
@@ -73,7 +82,7 @@ function mp_stacks_text_create_meta_box(){
 		),
 		array(
 			'field_id'	 => 'brick_line_2_color',
-			'field_title' => __( 'Text Color 2 (Optional)', 'mp_stacks'),
+			'field_title' => __( 'Text Color 2', 'mp_stacks'),
 			'field_description' => '<br />Select the color of text area 2',
 			'field_type' => 'colorpicker',
 			'field_value' => '',
@@ -82,19 +91,28 @@ function mp_stacks_text_create_meta_box(){
 		),
 		array(
 			'field_id'	 => 'brick_line_2_font_size',
-			'field_title' => __( 'Text Size 2 (Optional)', 'mp_stacks'),
+			'field_title' => __( 'Text Size 2', 'mp_stacks'),
 			'field_description' => '<br />Enter the size (in pixels).',
+			'field_type' => 'number',
+			'field_value' => '20',
+			'field_container_class' => 'mp_brick_text_option',
+			'field_repeater' => 'mp_stacks_text_content_type_repeater'
+		),
+		array(
+			'field_id'	 => 'brick_line_2_line_height',
+			'field_title' => __( 'Line-Height 2', 'mp_stacks'),
+			'field_description' => '<br />Enter the line-height in pixels.',
 			'field_type' => 'number',
 			'field_value' => '',
 			'field_container_class' => 'mp_brick_text_option',
 			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
 		array(
-			'field_id'	 => 'brick_line_2_line_height',
-			'field_title' => __( 'Line-Height 2 (Optional)', 'mp_stacks'),
-			'field_description' => '<br />Enter the line-height in pixels.',
+			'field_id'	 => 'brick_line_2_paragraph_margin_bottom',
+			'field_title' => __( 'Paragraph Spacing 2', 'mp_stacks'),
+			'field_description' => '<br />Enter the number of pixels separating each paragraph. Default: 15px',
 			'field_type' => 'number',
-			'field_value' => '',
+			'field_value' => '15',
 			'field_container_class' => 'mp_brick_text_option',
 			'field_repeater' => 'mp_stacks_text_content_type_repeater'
 		),
