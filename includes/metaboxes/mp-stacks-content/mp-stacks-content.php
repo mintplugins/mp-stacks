@@ -85,7 +85,7 @@ function mp_stacks_content_create_meta_box(){
 	global $mp_stacks_content_meta_box;
 	$mp_stacks_content_meta_box = new MP_CORE_Metabox($mp_stacks_content_add_meta_box, $mp_stacks_content_types_array);
 }
-add_action('plugins_loaded', 'mp_stacks_content_create_meta_box');
+add_action('mp_brick_metabox', 'mp_stacks_content_create_meta_box');
 
 function mp_stacks_alignment_radio_leftright_before(){
 	echo '<img width="50px" src="' . plugins_url('assets/images/left-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
