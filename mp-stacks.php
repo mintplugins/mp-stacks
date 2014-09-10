@@ -143,9 +143,9 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/plugin-directory/mp-stacks-directory.php' );
 				
 		/**
-		 * Settings Metabox for mp_stacks
+		 * Size Settings Metabox for mp_stacks
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-meta/mp-stacks-meta.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-size/mp-stacks-size.php' );
 		
 		/**
 		 * Background Settings Metabox for mp_stacks
