@@ -4,7 +4,7 @@
  *
  * @since 1.0.0
  *
- * @package    MP Core
+ * @package    MP Stacks
  * @subpackage Functions
  *
  * @copyright  Copyright (c) 2014, Mint Plugins
@@ -12,6 +12,28 @@
  * @author     Philip Johnston
  */
 
+/**
+ * Action hook which brick metaboxes can use so they only load on brick and brick related admin apges
+ *
+ * @since 1.0
+ * @return void
+*/
+function mp_brick_metabox() {
+	
+	//Get current page
+	$current_page = get_current_screen();
+	
+	//Only load if we are on an mp_brick page
+	if ( $current_page->id == 'mp_brick' || $current_page->id == 'settings_page_mp_stacks_create_template_page' ){
+		
+		//Use this action hook to run the metabox creation MP Core class for brick related metaboxes
+		do_action( 'mp_brick_metabox' );
+		
+	}
+	
+}
+add_action('current_screen', 'mp_brick_metabox');
+	
 /**
  * Remove "hentry" from bricks post_class
  *
