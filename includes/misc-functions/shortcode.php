@@ -88,9 +88,9 @@ function mp_stacks_shortcode_make_new_stack(){
                 </div>
                 
                 <select class="mp-stacks-new-stack-source-type" name="new_stack_source_type" />
-                    <option value="">Default</option>
-                    <option value="duplicate-stack-option">Duplicate Existing Stack</option>
-                    <option value="template-stack-option">Create Stack from Template</option>
+                    <option value="">New - Fresh, Blank Stack</option>
+                    <option value="duplicate-stack-option">New - Exact Duplicate of Existing Stack</option>
+                    <option value="template-stack-option">New - Create Stack from Template</option>
                 </select>
                 
             </div>
@@ -141,10 +141,19 @@ function mp_stacks_shortcode_make_new_stack(){
             </div>
             
             <a class="button mp-stacks-new-stack-button button-primary"><?php echo __('Make A New Stack', 'mp_stacks'); ?></a>
-            <a id="mp_stack-cancel-download-insert" class="button-secondary" onclick="tb_remove();" title="<?php _e( 'Cancel', 'mp_stacks' ); ?>"><?php _e( 'Cancel', 'mp_stacks' ); ?></a>
+            <a id="mp_stack_cancel_download_insert" class="button-secondary" onclick="tb_remove();" title="<?php _e( 'Cancel', 'mp_stacks' ); ?>"><?php _e( 'Cancel', 'mp_stacks' ); ?></a>
         </div>
         <div class="mp-stacks-shortcode-existing-stack-div">
             <h1><?php echo __('Already have the stack you wish to use?', 'mp_stacks'); ?></h1>
+                
+                <div class="mp_title">
+                    <label for="mp_stack_stack">
+                        <strong><?php echo __('Confirm Insert', 'mp_stacks'); ?></strong> <em><?php echo __('Please note: You are not creating a new stack. Rather, you are inserting an existing one. This is really only useful if you have removed a stack from a page and need to re-add it. To confirm you understand, please type exactly "This is NOT a new Stack" (case sensitive) into the box below.', 'mp_stacks'); ?></em>
+                    </label>
+                </div>
+              
+                <input class="mp-stacks-insert-stack-confirmation" name="insert_stack_confirmation" placeholder="<?php echo __('Type confirmation message listed above...', 'mp_stacks'); ?>"/>
+        
             <?php
 }
 add_action('mp_core_before_' . 'mp_stack' . '_shortcode_output' , 'mp_stacks_shortcode_make_new_stack');
