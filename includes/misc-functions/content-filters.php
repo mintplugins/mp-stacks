@@ -236,31 +236,3 @@ function mp_stacks_text_styles($css_output, $post_id){
 
 }
 add_filter('mp_brick_additional_css', 'mp_stacks_text_styles', 10, 2);
-
-
-/**
- * Filter CSS Output for Line 2
- */
-function mp_stacks_text_line_2_style($css_output, $post_id){
-	
-	//Text Color
-	$brick_line_2_color = get_post_meta($post_id, 'brick_line_2_color', true);
-	
-	//Text Font Size
-	$brick_line_2_font_size = get_post_meta($post_id, 'brick_line_2_font_size', true);
-	
-	//Text Style
-	$brick_line_2_style = !empty($brick_line_2_color) ? 'color: ' . $brick_line_2_color . '; '  : NULL;
-	$brick_line_2_style .= !empty($brick_line_2_font_size) ? 'font-size:' . $brick_line_2_font_size . 'px; ' : NULL;
-	
-	//Full sized css
-	$brick_line_2_style = !empty($brick_line_2_style) ? '#mp-brick-' . $post_id . ' .mp-brick-text-line-2, #mp-brick-' . $post_id . ' .mp-brick-text-line-2 a{' . $brick_line_2_style .'}' : NULL;
-			
-	//Add new CSS to existing CSS passed-in
-	$css_output .= $brick_line_2_style;
-	
-	//Return new CSS
-	return $css_output;
-		
-}
-//add_filter('mp_brick_additional_css', 'mp_stacks_text_line_2_style', 10, 2);
