@@ -163,16 +163,19 @@ function mp_stacks_text_styles($css_output, $post_id){
 		 * Filter CSS Output for Line 1
 		 */
 		 
-		//Title Color
+		//Line 1 Color
 		$brick_line_1_color = $text_area_vars['brick_line_1_color'];
 		
-		//Title Font Size
+		//Line 1 Font Size
 		$brick_line_1_font_size = $text_area_vars['brick_line_1_font_size'];
 		
-		//Title Line Height
+		//Line 1 Line Height
 		$brick_line_1_line_height = isset( $text_area_vars['brick_line_1_line_height'] ) ? $text_area_vars['brick_line_1_line_height'] : NULL;
 		
-		//Title Full Style
+		//Line 1 Paragraph Spacing
+		$brick_line_1_paragraph_margin_bottom = isset( $text_area_vars['brick_line_1_paragraph_margin_bottom'] ) ? $text_area_vars['brick_line_1_paragraph_margin_bottom'] : NULL;
+		
+		//Line 1 Full Style
 		$brick_line_1_style = !empty($brick_line_1_color) ? 'color: ' . $brick_line_1_color . '; '  : NULL;
 		$brick_line_1_style .= !empty($brick_line_1_font_size) ? 'font-size:' . $brick_line_1_font_size . 'px; ' : NULL;
 		$brick_line_1_style .= !empty($brick_line_1_line_height) ? 'line-height:' . $brick_line_1_line_height . 'px; ' : NULL;
@@ -183,20 +186,28 @@ function mp_stacks_text_styles($css_output, $post_id){
 			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-1 a {' . $brick_line_1_style .'}';
 		}
 		
+		//If there is a paragraph spacing variable
+		if ( !empty( $brick_line_1_paragraph_margin_bottom ) ){
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-1 p { margin-bottom:' . $brick_line_1_paragraph_margin_bottom .'px; }';
+		}
+		
 		/**
 		 * Filter CSS Output for Line 2
 		 */
 		 
-		//Title Color
+		//Line 2 Color
 		$brick_line_2_color = $text_area_vars['brick_line_2_color'];
 		
-		//Title Font Size
+		//Line 2 Font Size
 		$brick_line_2_font_size = $text_area_vars['brick_line_2_font_size'];
 		
-		//Title Line Height
+		//Line 2 Line Height
 		$brick_line_2_line_height = isset( $text_area_vars['brick_line_2_line_height'] ) ? $text_area_vars['brick_line_2_line_height'] : NULL;
 		
-		//Title Full Style
+		//Line 2 Paragraph Spacing
+		$brick_line_2_paragraph_margin_bottom = isset( $text_area_vars['brick_line_2_paragraph_margin_bottom'] ) ? $text_area_vars['brick_line_2_paragraph_margin_bottom'] : NULL;
+		
+		//Line 2 Full Style
 		$brick_line_2_style = !empty($brick_line_2_color) ? 'color: ' . $brick_line_2_color . '; '  : NULL;
 		$brick_line_2_style .= !empty($brick_line_2_font_size) ? 'font-size:' . $brick_line_2_font_size . 'px; ' : NULL;
 		$brick_line_2_style .= !empty($brick_line_2_line_height) ? 'line-height:' . $brick_line_2_line_height . 'px; ' : NULL;
@@ -205,6 +216,11 @@ function mp_stacks_text_styles($css_output, $post_id){
 		if ( !empty($brick_line_2_style) ) {
 			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 *, ';
 			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 a {' . $brick_line_2_style .'}';
+		}
+		
+		//If there is a paragraph spacing variable
+		if ( !empty( $brick_line_2_paragraph_margin_bottom ) ){
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 p { margin-bottom:' . $brick_line_2_paragraph_margin_bottom .'px; }';
 		}
 		
 		//Increment counter
