@@ -35,16 +35,29 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.2 = July X, 2014
+= 1.0.1.2 = September X, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
 * Changed name of Add-Ons page from “Add Ons” to “Add on Shop”
 * Added Split Percentage Control - to control Left/Right Content-Type width percentage
-* Made brick’s post_class no longer show the .hentry class
+* Changed brick’s post_class to no longer show the .hentry class
 * Removed mp_brick_container_css Filter Hook
 * Added mp_brick_first_container_css Filter Hook
 * Added mp_brick_second_container_css Filter Hook
 * Changed Text Content Type to be repeatable 
 * Added backwards compatibility function for text content types to auto update their formatting to be repeaters
+* Added Grid Functions for Add-ons to share and use
+* Added Brick/Stack Titles on each Brick
+* Removed previously deprecated JS which set the font size in TinyMCE for text areas.
+* Added user-required confirmation for inserting existing stack - users were getting confused
+* Removed misc options for Drafts, Dates etc for Bricks as they aren’t needed.
+* Added dismissable “Tip” to let people know they can double click a brick to edit it.
+* Added support description in Brick editor.
+* Made Lightbox close upon the deletion of a brick.
+* Added action hook “mp_brick_metabox” so brick metaboxes only load on brick admin screens
+* Added activation hook and redirection to Welcome Page upon activation
+* Changed Capability Type for MP Stacks to Page instead of Post. This way authors don’t have access.
+* Added Directory page for Stack Templates
+* Added notice at the top of Directory pages about the master license
 
 = 1.0.1.1 = June 8, 2014
 * Left/Right Brick widths go from, 37% to 50%
