@@ -30,3 +30,15 @@ There are various ways you can contribute:
 2. Send us a Pull Request with your bug fixes and/or new features
 3. Translate MP Stacks into different languages
 4. Provide feedback and suggestions on [enhancements](https://github.com/mintplugins/mp-stacks/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open)
+
+## Project Standards - carries over to Add-Ons ##
+
+To help keep things clear and simple for developers, desired standards are listed here:
+
+CSS Standards: 
+- CSS selectors use hyphens instead of underscores between words
+- Content-Type Container div CSS selector names start with "mp-stacks-" and then the name of the Content-Type
+
+PHP Standards:
+- Function prefixes are "mp_stacks_" and then the name of the function
+- More to be listed here soon
