@@ -94,13 +94,14 @@
 }
 
 /*Text*/
-.mp-brick .mp-brick-text-line-1 a, 
-.mp-brick .mp-brick-text-line-2 a,
-.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-1:last-child p:last-child, 
-.mp-brick .mp_stacks_text_area:last-child .mp-brick-text-line-2 p:last-child{
+
+/*Make sure there are no margins after the last elements in a text area */	
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-1:last-child a:last-child, 
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-2 a:last-child,
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-1:last-child p:last-child, 
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-2 p:last-child{
 	margin-bottom:0px!important;
 	margin-bottom:0rem!important;
-	text-decoration:none;
 }
 .mp-brick .mp-brick-text-line-1, 
 .mp-brick .mp-brick-text-line-2,
@@ -108,7 +109,6 @@
 .mp-brick .mp-brick-text-line-2 p:last-child{	
 	line-height:140%;
 	word-wrap: normal;
-	word-break: break-word;
 	text-align:left;
 }
 
@@ -133,6 +133,12 @@
 .mp-brick .mp-brick-right .text{
 	text-align: -webkit-auto;
 	display: inline-block;
+}
+
+/* Links */
+.mp_brick a{
+	display:inline-block;
+	text-decoration:none;	
 }
 
 /*Image*/
@@ -173,6 +179,7 @@
 	position:relative!important;
 	display:inline-block;
 	font-size:10px;
+	vertical-align:top
 }
 .mp-brick .mp-brick-title,
 .mp-brick .mp-brick-edit-link,
@@ -193,7 +200,12 @@
 	-o-transition: width .4s ease-in-out, width .4s ease-in-out;
 	transition: width .4s ease-in-out, width .4s ease-in-out;
 }
+.mp-brick .mp-brick-title,
+.mp-brick .mp-brick-edit-link{
+	top:0px;	
+}
 .mp-brick .mp-brick-add-before-link{
+	top:0px;
 	right:0px;
 	width:45px;	
 	overflow:hidden;
