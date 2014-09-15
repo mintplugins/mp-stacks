@@ -58,6 +58,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Changed Capability Type for MP Stacks to Page instead of Post. This way authors don’t have access.
 * Added Directory page for Stack Templates
 * Added notice at the top of Directory pages about the master license
+* Added auto text-resize system for mobile
 
 = 1.0.1.1 = June 8, 2014
 * Left/Right Brick widths go from, 37% to 50%

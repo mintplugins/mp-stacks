@@ -27,16 +27,22 @@ function mp_stacks_brick_content_output_text($default_content_output, $mp_stacks
 			//First line of text
 			$brick_text_line_1 = do_shortcode( html_entity_decode( $text_area['brick_text_line_1'] ) );
 			
+			//Desired Font Size for Line 1
+			$brick_line_1_font_size = $text_area['brick_line_1_font_size'];
+			
 			//Second line of text
 			$brick_text_line_2 = do_shortcode( html_entity_decode( $text_area['brick_text_line_2'] ) );
+			
+			//Desired Font Size for Line 2
+			$brick_line_2_font_size = $text_area['brick_line_2_font_size'];
 					
 			//Action hook to add changes to the text
 			has_action('mp_stacks_text_action') ? do_action( 'mp_stacks_text_action', $post_id) : NULL;
 			
 			//First Output
-			$content_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '<div class="mp_stacks_text_area mp_stacks_text_area_' . $counter . '">' : NULL;
-			$content_output .= !empty($brick_text_line_1) ? '<div class="mp-brick-text-line-1">' . $brick_text_line_1 . '</div>' : '';
-			$content_output .= !empty($brick_text_line_2) ? '<div class="mp-brick-text-line-2">' . $brick_text_line_2 . '</div>': NULL;
+			$content_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '<div class="mp-stacks-text-area mp-stacks-text-area-' . $counter . '">' : NULL;
+			$content_output .= !empty($brick_text_line_1) ? '<div class="mp-brick-text-line-1" mp_desired_size="' . $brick_line_1_font_size . '">' . $brick_text_line_1 . '</div>' : '';
+			$content_output .= !empty($brick_text_line_2) ? '<div class="mp-brick-text-line-2" mp_desired_size="' . $brick_line_2_font_size . '">' . $brick_text_line_2 . '</div>': NULL;
 			$content_output .= !empty($brick_text_line_1) || !empty($brick_text_line_2) ? '</div>' : NULL;
 			
 			//Increment Counter
@@ -125,7 +131,7 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 				'iframe_css_class' => NULL,
 			);
 			
-			$content_output .= '<div class="mp-brick-video">' . mp_core_oembed_get( $brick_video, $args ) . '</div>'; 
+			$content_output .= '<div class="mp-stacks-video">' . mp_core_oembed_get( $brick_video, $args ) . '</div>'; 
 		}
 		
 		//Return
@@ -182,13 +188,13 @@ function mp_stacks_text_styles($css_output, $post_id){
 		
 		//Assemble css
 		if ( !empty($brick_line_1_style) ) {
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-1 *, ';
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-1 a {' . $brick_line_1_style .'}';
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-1 *, ';
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-1 a {' . $brick_line_1_style .'}';
 		}
 		
 		//If there is a paragraph spacing variable
-		if ( !empty( $brick_line_1_paragraph_margin_bottom ) ){
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-1 p { margin-bottom:' . $brick_line_1_paragraph_margin_bottom .'px; }';
+		if ( is_numeric( $brick_line_1_paragraph_margin_bottom ) ){
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-1 p { margin-bottom:' . $brick_line_1_paragraph_margin_bottom .'px; }';
 		}
 		
 		/**
@@ -214,13 +220,13 @@ function mp_stacks_text_styles($css_output, $post_id){
 		
 		//Assemble css
 		if ( !empty($brick_line_2_style) ) {
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 *, ';
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 a {' . $brick_line_2_style .'}';
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-2 *, ';
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-2 a {' . $brick_line_2_style .'}';
 		}
 		
 		//If there is a paragraph spacing variable
-		if ( !empty( $brick_line_2_paragraph_margin_bottom ) ){
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp_stacks_text_area_' . $counter . ' .mp-brick-text-line-2 p { margin-bottom:' . $brick_line_2_paragraph_margin_bottom .'px; }';
+		if ( is_numeric( $brick_line_2_paragraph_margin_bottom ) ){
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text-line-2 p { margin-bottom:' . $brick_line_2_paragraph_margin_bottom .'px; }';
 		}
 		
 		//Increment counter

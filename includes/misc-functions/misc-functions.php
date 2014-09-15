@@ -263,3 +263,18 @@ function mp_stacks_double_click_tip(){
 	
 }
 add_action('admin_notices', 'mp_stacks_double_click_tip');
+
+/**
+ * Function which adds extra "safe" styles to wp_kses
+ *
+ * @since    1.0.0
+ * @param    array $safe_styles This is an array of the css style names that are 'safe'
+ * @return   void
+ */
+function mp_stacks_wpkses_safe_styles( $safe_styles ){
+
+	array_push( $safe_styles, 'white-space' );
+	return $safe_styles;
+		
+}
+add_filter( 'safe_style_css', 'mp_stacks_wpkses_safe_styles' );
