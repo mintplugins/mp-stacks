@@ -214,7 +214,6 @@ jQuery(document).ready(function($){
 				}
 				//If this element has a smaller font size than we've seen yet
 				else if ( this_font_size < largest_font_size ){
-					largest_font_size = this_font_size;
 					
 					//If this element wider than the largest we've found, make this the main one (this only happens if a word is really long with a smaller font size)
 					if ( $(this).width() > largest_width_px ){
