@@ -6,6 +6,9 @@ An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in
 
 More information can be found at [mintplugins.com/mp-stacks](http://mintplugins.com/mp-stacks/).
 
+Download the latest stable version here:
+http://bit.ly/1qIXqwy
+
 ## Installation ##
 
 For detailed setup instructions, visit the official [Documentation](http://mintplugins.com/support/mp-stacks-support/) page.
