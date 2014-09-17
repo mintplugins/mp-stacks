@@ -527,6 +527,11 @@ function mp_stacks_default_brick_outer_css( $css_output, $post_id ){
 		$css_output .= 'max-width:' . $brick_max_width . 'px;';
 			
 	}
+	else{
+		
+		//Outer style lines
+		$css_output .= 'max-width:1000px;';
+	}
 	
 	//Return CSS Output
 	return $css_output;	

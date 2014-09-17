@@ -33,7 +33,7 @@ function mp_stacks_size_create_meta_box(){
 			'field_title' 	=> __( 'Content-Types Area - Max Width: <br />', 'mp_stacks'),
 			'field_description' 	=> 'Enter the maximum width for the Content-Types Area (in pixels) for this brick',
 			'field_type' 	=> 'number',
-			'field_value' => ''
+			'field_value' => '1000'
 		),
 		array(
 			'field_id'			=> 'brick_min_above_below',
