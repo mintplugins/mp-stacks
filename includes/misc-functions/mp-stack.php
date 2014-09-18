@@ -847,6 +847,9 @@ function mp_stacks_header_css(){
 		endwhile; // end of the loop.
 	
     endif;
+	
+	//Reset the main loop
+	wp_reset_postdata();
 		
 }
 add_action( 'wp_enqueue_scripts', 'mp_stacks_header_css'); 
