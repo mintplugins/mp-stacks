@@ -75,8 +75,6 @@ jQuery(document).ready(function($){
 					$(this).css('display', 'block');
 					tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 					
-					//Set font size in TinyMCEs
-					//mp_stacks_size_text_previews();
 				});
 				
 			}
@@ -173,7 +171,38 @@ jQuery(document).ready(function($){
 		 
 		 //Show options to create new stack
 		 $('.' + $(this).val() ).show();
+		 
+		 //If this is the template option, hide the "create stack" button until the user selects a template to use
+		 if ( $(this).val() == "template-stack-option" ){
+				$('.mp-stacks-new-stack-button').hide(); 
+				$('#mp_stack_cancel_download_insert').hide();
+		 }
 	 });
+	 
+	 /**
+	 * When the user clicks on a Stack template they want to use
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	 $('.mp-stacks-installed-templates > li').on('click', function(event){
+		 
+		event.preventDefault();
+		
+		//Remove the "blue" styling class from all templates if one was previously clicked
+		$('.mp-stacks-installed-templates > li').removeClass('mp-stacks-selected-template');	
+		 
+		//Apply the "blue" styling class to this chosen template
+		$(this).addClass('mp-stacks-selected-template');
+		
+		//Re-show the "create new stack" button
+		$('.mp-stacks-new-stack-button').show(); 
+		$('#mp_stack_cancel_download_insert').show();		
+		
+		mp_stacks_make_new_stack();
+		 
+	 });
+	 
 	 
 	/**
 	 * Make New Stack Button Ajax
@@ -185,7 +214,19 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault(); 
 		
-		//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
+		//Run the "Make New Stack" ajax
+		mp_stacks_make_new_stack();
+		
+	 });
+	 
+	 /**
+	 * Function which takes available data on screen, runs ajax, and makes new stack
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	 function mp_stacks_make_new_stack(){
+	 	//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
 		 $('.mp-stacks-shortcode-existing-stack-div').hide();
 		 $('.mp-stacks-shortcode-new-stack-div').hide();
 		 
@@ -202,7 +243,7 @@ jQuery(document).ready(function($){
 		var stack_duplicate_id = $('.mp-stacks-new-stack-duplicate-stack').val();
 		
 		//Get the stack template the user has chosen
-		var stack_template_slug = $('.mp-stacks-new-stack-template').val();
+		var stack_template_slug = $('.mp-stacks-selected-template .mp-stacks-installed-template-function-name').html();
 		
 		//Only send for ajax if there is a value
 		if ( stack_title != '' ){
@@ -263,8 +304,14 @@ jQuery(document).ready(function($){
 		 //If no value is entered, show an alert that the field cannot be blank
 		 else{
 			alert(mp_stacks_vars.stack_needs_title_alert); 
+			
+			//Re-Show Step 2 Stack Options once the user has clicked "Create New Stack"
+			$('.mp-stacks-shortcode-new-stack-div').show();
+			
+			//Remove "Creating Stack" Message
+			$('.mp_stack_creating').remove();
 		 }
-	 });
+	 }
 	 
 	 /**
 	 * Dismiss the double click tip using ajax
