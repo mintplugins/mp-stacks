@@ -14,6 +14,13 @@
 	overflow:hidden;
 	text-align:left;
 }
+.mp-brick .brick-anchor{
+	position:absolute;
+	display:block;
+	top:0px;
+	height:0px;
+	width:0px;
+}
 .mp-brick .mp-brick-bg{
 	position: absolute;
 	top: 0px;
