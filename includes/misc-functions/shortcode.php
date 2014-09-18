@@ -121,22 +121,39 @@ function mp_stacks_shortcode_make_new_stack(){
             
                 <div class="mp_title">
                     <label for="mp_stack_stack">
-                        <strong><?php echo __('Choose A Stack Template', 'mp_stacks'); ?></strong> <em><?php echo __('Select the Stack Template', 'mp_stacks'); ?></em>
+                        <strong><?php echo __('Choose A Stack Template', 'mp_stacks'); ?></strong> <em><?php echo __('Your installed templates:', 'mp_stacks'); ?></em>
                     </label>
                 </div>
                 
-                <select class="mp-stacks-new-stack-template" name="new_stack_stack_template_select" />
+                <?php //When the user selects one of the following options, we add "mp-stacks-new-stack-template" as a class to that li through js ?>
+                <ul class="mp-stacks-installed-templates" name="new_stack_stack_template_select" />
                     <?php 
                     
                     //Get all Stack Template
                     $stack_templates = apply_filters( 'mp_stacks_installed_templates', array() );
                     
                     //Populate the dropdown with a list of all stacks
-                    foreach( $stack_templates as $stack_template_slug => $stack_template_title ){
-                        ?><option value="<?php echo $stack_template_slug ; ?>"><?php echo $stack_template_title; ?></option><?php
+                    foreach( $stack_templates as $stack_template_function_name => $stack_template ){
+                        ?><li stack-template-slug="<?php echo $stack_template_slug['mp-stacks-new-stack-template'] ; ?>" template_preview_img="<?php echo $stack_template['template_preview_img']; ?>">						
+                        	<div class="mp-stacks-installed-template-function-name"><?php echo $stack_template_function_name; ?></div>	
+                        	<div class="mp-stacks-installed-template-preview-img"><img src="<?php echo $stack_template['template_preview_img']; ?>"/></div>
+							<div class="mp-stacks-installed-template-title"><?php echo $stack_template['template_title']; ?></div>
+                            
+                            <div class="mp-stacks-installed-template-tag">
+								<?php $template_tags = explode( ',', $stack_template['template_tags'] ); 
+                                
+                                foreach( $template_tags as $template_tag ){?>
+                                    <div class="template-tag-container">
+                                        <div class="template-tag-title"><?php echo $template_tag ?></div>
+                                    </div>
+                                <?php } ?>
+                           </div>
+                            
+                          </li>
+						<?php
                     }
                     ?>
-                </select>
+                </ul>
             
             </div>
             
