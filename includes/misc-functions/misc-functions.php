@@ -257,7 +257,7 @@ function mp_stacks_double_click_tip(){
 	 
 	 ?>
 	 <div class="updated">
-        <p><?php echo '<img style="width:10px;" class="mp-stacks-editor-notice-icon" src="' . plugins_url( 'assets/images/mp-stacks-icon-250.png', dirname(dirname(__FILE__) ) ) . '" />' . __( 'MP Stacks TIP: You can open this Brick editor at any time by double clicking <em>anywhere</em> on a brick. ', 'mp_stacks' ) . '<a class="mp-stacks-dismiss-double-click button">' . __( 'Hide Tip', 'mp_stacks') . '</a>'; ?>
+        <p><?php echo '<img style="width:10px;" class="mp-stacks-editor-notice-icon" src="' . plugins_url( 'assets/icon-256x256.png', dirname(dirname(__FILE__) ) ) . '" />' . __( 'MP Stacks TIP: You can open this Brick editor at any time by double clicking <em>anywhere</em> on a brick. ', 'mp_stacks' ) . '<a class="mp-stacks-dismiss-double-click button">' . __( 'Hide Tip', 'mp_stacks') . '</a>'; ?>
      </div>
      <?php
 	

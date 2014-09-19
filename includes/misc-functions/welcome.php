@@ -103,7 +103,7 @@ class MP_Stacks_Welcome {
 		remove_submenu_page( 'index.php', 'mp-stacks-credits' );
 
 		// Badge for welcome page
-		$badge_url = MP_STACKS_PLUGIN_URL . 'assets/images/mp-stacks-icon-250.png';
+		$badge_url = MP_STACKS_PLUGIN_URL . 'assets/icon-256x256.png';
 		?>
 		<style type="text/css" media="screen">
 		/*<![CDATA[*/
