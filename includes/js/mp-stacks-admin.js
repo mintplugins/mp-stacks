@@ -193,12 +193,9 @@ jQuery(document).ready(function($){
 		$('.mp-stacks-installed-templates > li').removeClass('mp-stacks-selected-template');	
 		 
 		//Apply the "blue" styling class to this chosen template
-		$(this).addClass('mp-stacks-selected-template');
+		$(this).addClass('mp-stacks-selected-template');	
 		
-		//Re-show the "create new stack" button
-		$('.mp-stacks-new-stack-button').show(); 
-		$('#mp_stack_cancel_download_insert').show();		
-		
+		//Create the new stack
 		mp_stacks_make_new_stack();
 		 
 	 });
