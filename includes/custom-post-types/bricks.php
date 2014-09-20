@@ -76,7 +76,7 @@ function mp_stacks_taxonomy() {
 		
 		// Add new taxonomy, make it hierarchical (like categories)
 		$labels = array(
-			'name'                => __( 'Bricks', 'mp_core' ),
+			'name'                => __( 'Manage Stacks', 'mp_core' ),
 			'singular_name'       => __( 'Stack', 'mp_core' ),
 			'search_items'        => __( 'Search Stacks', 'mp_core' ),
 			'all_items'           => __( 'All Stacks', 'mp_core' ),
@@ -103,7 +103,37 @@ function mp_stacks_taxonomy() {
 		);  
 	}
 }  
-add_action( 'init', 'mp_stacks_taxonomy' );  
+add_action( 'init', 'mp_stacks_taxonomy' ); 
+
+/**
+ * Change the titles of the columns on the "Manage Stacks" page
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @param  	 $columns array The titles of each column
+ * @return   $columns array The titles of each column
+ */
+function mp_stacks_custom_taxonomy_columns( $columns ){
+	$columns['name'] = 'Stack Name';
+	$columns['posts'] = 'Bricks';
+	unset($columns['slug']);
+	return $columns;
+}
+add_filter( 'manage_edit-mp_stacks_columns', 'mp_stacks_custom_taxonomy_columns' );
+
+/**
+ * Change which rows exist on the Manage Stacks page
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @param  	 $columns array Which sortable columns exist
+ * @return   $columns array Which sortable columns exist
+ */
+function mp_stacks_custom_taxonomy_sortable_columns( $columns ){
+	unset($columns['slug']);
+	return $columns;
+}
+add_filter( 'manage_edit-mp_stacks_sortable_columns', 'mp_stacks_custom_taxonomy_sortable_columns' );
 
 /**
  * Add ability to filter bricks by stack on "list all bricks" page
