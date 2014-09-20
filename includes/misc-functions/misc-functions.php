@@ -278,3 +278,44 @@ function mp_stacks_wpkses_safe_styles( $safe_styles ){
 		
 }
 add_filter( 'safe_style_css', 'mp_stacks_wpkses_safe_styles' );
+
+/**
+ * When we delete a Stack, we need to delete all bricks posts attached to that Stack as well
+ *
+ * @since    1.0.0
+ * @param    int $deleted_stack_term_taxonomy_id The term_taxonomy_id (NOTE: not the term id) of the stack we are deleting
+ * @return   void
+ */
+function mp_stacks_delete_stack( $deleted_stack_term_taxonomy_id ){
+	
+	$deleted_stack_id = get_term_by( 'term_taxonomy_id', $deleted_stack_term_taxonomy_id, 'mp_stacks' );
+	$deleted_stack_id = $deleted_stack_id->term_id;
+	
+	//Loop through each brick that was in this stack using the meta_key mp_stack_order_' . $deleted_stack_id
+	
+	//Set the args for the new query
+	$mp_stacks_args = array(
+		'post_type' => "mp_brick",
+		'posts_per_page' => -1,
+		'meta_key' => 'mp_stack_order_' . $deleted_stack_id,
+		'orderby' => 'meta_value_num menu_order',
+		'order' => 'ASC',
+	);	
+		
+	//Create new query for stacks
+	$mp_stack_query = new WP_Query( $mp_stacks_args );
+	
+	//Loop through the stack group		
+	if ( $mp_stack_query->have_posts() ) { 
+		
+		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post();
+			
+			//Delete this brick
+			wp_delete_post( get_the_ID(), true );
+		
+		endwhile;
+		
+	}
+	
+}
+add_action( 'delete_term_taxonomy', 'mp_stacks_delete_stack' );
