@@ -134,7 +134,7 @@ function mp_stacks_shortcode_make_new_stack(){
                     
                     //Populate the dropdown with a list of all stacks
                     foreach( $stack_templates as $stack_template_function_name => $stack_template ){
-                        ?><li stack-template-slug="<?php echo $stack_template_slug['mp-stacks-new-stack-template'] ; ?>" template_preview_img="<?php echo $stack_template['template_preview_img']; ?>">						
+                        ?><li stack-template-slug="<?php echo $stack_template['template_slug'] ; ?>" template_preview_img="<?php echo $stack_template['template_preview_img']; ?>">						
                         	<div class="mp-stacks-installed-template-function-name"><?php echo $stack_template_function_name; ?></div>	
                         	<div class="mp-stacks-installed-template-preview-img"><img src="<?php echo $stack_template['template_preview_img']; ?>"/></div>
 							<div class="mp-stacks-installed-template-title"><?php echo $stack_template['template_title']; ?></div>

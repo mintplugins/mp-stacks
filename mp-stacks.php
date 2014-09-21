@@ -241,6 +241,11 @@ function mp_stacks_include_files(){
 		 * Edit Stack Settings
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/edit-stack-settings.php' );
+		
+		/**
+		 * Default Stack Template
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/stack-templates/default-template/default-template.php' );
 	
 	}
 }

@@ -254,8 +254,7 @@
 	width:100%;
 	max-width:400px;
 }
-.mp-stacks-installed-templates > li:hover,
-.mp-stacks-installed-templates > li.mp-stacks-selected-template{
+.mp-stacks-installed-templates > li:hover{
 	background-color:#0074a2;
 	color:#fff;
 }
@@ -298,4 +297,14 @@
 	background: linear-gradient(to bottom,  #eeeeee 0%,#cccccc 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#cccccc',GradientType=0 ); /* IE6-9 */
 }
-
+.mp_stacks_template_popup_preview{
+	position:absolute;
+	z-index:999999999999999999;
+}
+.mp_stacks_template_popup_preview_img{
+	max-width:200px;
+	border:7px solid #333;	
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}

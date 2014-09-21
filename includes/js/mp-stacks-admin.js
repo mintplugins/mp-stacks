@@ -158,7 +158,7 @@ jQuery(document).ready(function($){
 	
 	 });
 	  
-	/**
+	 /**
 	 * When the user changes the dropdown for Stack Options, show corresponding Options for "Duplicate", or "Template"
 	 *
 	 * @since    1.0.0
@@ -200,6 +200,30 @@ jQuery(document).ready(function($){
 		 
 	 });
 	 
+	 /**
+	 * When the user rolls over a stack template, show a popup image preview of the template
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	 $( '.mp-stacks-installed-templates li' ).on( 'mouseenter', function( event ){
+			$('body').append( '<div class="mp_stacks_template_popup_preview"><img class="mp_stacks_template_popup_preview_img" src="' + $(this).attr( 'template_preview_img' ) + '" /></div>' );
+	 }).on( 'mouseleave', function( event ){
+		 	$('body').find( '.mp_stacks_template_popup_preview' ).remove();
+	 });
+	 
+	 /**
+	 * Make the template preview image follow the cursor
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	 $(document).on('mousemove', function(e){
+		$('.mp_stacks_template_popup_preview').css({
+		   left:  e.pageX + 20,
+		   top:   e.pageY
+		});
+	 });
 	 
 	/**
 	 * Make New Stack Button Ajax
@@ -298,8 +322,12 @@ jQuery(document).ready(function($){
 			
 			return false;
 		 }
-		 //If no value is entered, show an alert that the field cannot be blank
+		 //If no value is entered, show an alert that the Title field cannot be blank
 		 else{
+			
+			//Hide the Stack template preview if it is showing 
+			$('body').find( '.mp_stacks_template_popup_preview' ).remove();
+			
 			alert(mp_stacks_vars.stack_needs_title_alert); 
 			
 			//Re-Show Step 2 Stack Options once the user has clicked "Create New Stack"
@@ -499,7 +527,7 @@ jQuery(document).ready(function($){
 		
 });
 
-//resize an iframe to be as big as its contents
+//Resize an iframe to be as big as its contents
 function mp_stacks_resizeIframe(obj) {
 	obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
 }
