@@ -22,36 +22,36 @@ function mp_stacks_size_create_meta_box(){
 	 */
 	$mp_stacks_size_items_array = array(
 		array(
-			'field_id'			=> 'brick_min_height',
-			'field_title' 	=> __( 'Min Height: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Enter the minimum height (in pixels) for this brick. Default: 50',
-			'field_type' 	=> 'number',
-			'field_value' => '',
-		),
-		array(
 			'field_id'			=> 'brick_max_width',
-			'field_title' 	=> __( 'Content-Types Area - Max Width: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Enter the maximum width for the Content-Types Area (in pixels) for this brick',
+			'field_title' 	=> __( 'Maximum Width:', 'mp_stacks'),
+			'field_description' 	=> 'Enter the maximum width for the Content-Types Area inside this brick (in pixels) ',
 			'field_type' 	=> 'number',
 			'field_value' => '1000'
 		),
 		array(
 			'field_id'			=> 'brick_min_above_below',
-			'field_title' 	=> __( 'Content-Types Area - Min Height Above/Below: <br />', 'mp_stacks'),
-			'field_description' 	=> 'Enter the minimum height above/below the media area (in pixels) for this brick. Default: 10',
+			'field_title' 	=> __( 'Minimum Space Above/Below:', 'mp_stacks'),
+			'field_description' 	=> 'Enter the minimum space above/below the Content_types Area inside this brick. (in pixels)',
 			'field_type' 	=> 'number',
-			'field_value' => '',
+			'field_value' => '10',
+		),
+		array(
+			'field_id'			=> 'brick_min_height',
+			'field_title' 	=> __( 'Minimum Height:', 'mp_stacks'),
+			'field_description' 	=> 'Enter the smallest height this brick will ever be. (in pixels)',
+			'field_type' 	=> 'number',
+			'field_value' => '50',
 		),
 		array(
 			'field_id'  => 'brick_centered_inner_margins_showhider',
 			'field_title'  =>  __('Content-Type Margins','mp_stacks_parallax' ),
-			'field_description'  => __( '<br />Click to open the controls for inner margins. These controls only affect Content Types when "centered" (which automatically happens on mobile devices)','mp_stacks_parallax' ),
+			'field_description'  => __( 'Click to open the controls for inner margins. These controls only affect Content Types when "centered" (which automatically happens on mobile devices)','mp_stacks_parallax' ),
 			'field_value'  => '',
 			'field_type'  => 'showhider',
 		),
 			array(
 				'field_id'			=> 'brick_min_above_c1',
-				'field_title' 	=> __( '1st Content-Type - Min Height Above: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '1st Content-Type - Min Space Above:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the minimum height above/below the 1st Content-Type (in pixels) for this brick. Default: 10',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -59,7 +59,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_min_below_c1',
-				'field_title' 	=> __( '1st Content-Type - Min Height Below: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '1st Content-Type - Min Space Below:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the minimum height below the 1st Content-Type (in pixels) for this brick. Default: 10',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -67,7 +67,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_min_above_c2',
-				'field_title' 	=> __( '2nd Content-Type - Min Height Above: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '2nd Content-Type - Min Space Above:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the minimum height above/below the 2nd Content-Type (in pixels) for this brick. Default: 10',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -75,7 +75,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_min_below_c2',
-				'field_title' 	=> __( '2nd Content-Type - Min Height Below: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '2nd Content-Type - Min Space Below:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the minimum height below the 2nd Content-Type (in pixels) for this brick. Default: 10',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -83,7 +83,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_no_borders',
-				'field_title' 	=> __( 'Full Width Content-Types <br />', 'mp_stacks'),
+				'field_title' 	=> __( 'Full Width Content-Types', 'mp_stacks'),
 				'field_description' 	=> 'If you want the content types to be able to touch the left and right sides, check this option.',
 				'field_type' 	=> 'checkbox',
 				'field_value' => '',
@@ -92,13 +92,13 @@ function mp_stacks_size_create_meta_box(){
 		array(
 			'field_id'  => 'brick_content_type_widths_and_floats',
 			'field_title'  =>  __('Content-Type Widths','mp_stacks_parallax' ),
-			'field_description'  => __( '<br />Click to open the controls content-type widths.','mp_stacks' ),
+			'field_description'  => __( 'Click to open the controls content-type widths.','mp_stacks' ),
 			'field_value'  => '',
 			'field_type'  => 'showhider',
 		),
 			array(
 				'field_id'			=> 'brick_max_width_c1',
-				'field_title' 	=> __( '1st Content-Type\'s Max-Width: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '1st Content-Type\'s Max-Width:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the maximum width the 1st Content-Type can be:',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -106,7 +106,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_float_c1',
-				'field_title' 	=> __( '1st Content-Type - Float: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '1st Content-Type - Float:', 'mp_stacks'),
 				'field_description' 	=> 'Should this sit all the way to the left, right, or center?',
 				'field_type' 	=> 'select',
 				'field_value' => '',
@@ -115,7 +115,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_max_width_c2',
-				'field_title' 	=> __( '2nd Content-Type\'s Max-Width: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '2nd Content-Type\'s Max-Width:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the maximum width the 2nd Content-Type can be:',
 				'field_type' 	=> 'number',
 				'field_value' => '',
@@ -123,7 +123,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_float_c2',
-				'field_title' 	=> __( '2nd Content-Type - Float: <br />', 'mp_stacks'),
+				'field_title' 	=> __( '2nd Content-Type - Float:', 'mp_stacks'),
 				'field_description' 	=> 'Should this sit all the way to the left, right, or center?',
 				'field_type' 	=> 'select',
 				'field_value' => '',
@@ -132,7 +132,7 @@ function mp_stacks_size_create_meta_box(){
 			),
 			array(
 				'field_id'			=> 'brick_split_percentage',
-				'field_title' 	=> __( 'Split Percentage: <br />', 'mp_stacks'),
+				'field_title' 	=> __( 'Split Percentage:', 'mp_stacks'),
 				'field_description' 	=> __( 'What should the split percentage be? By default, it splits down the middle by using 50%. <br /> (NOTE: Does not apply if this brick is Centered)', 'mp_stacks' ) . '<br /><img width="129px" style="margin-top:10px;" src="' . plugins_url('assets/images/left-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />',
 				'field_type' 	=> 'input_range',
 				'field_value' => '50',
@@ -155,7 +155,7 @@ function mp_stacks_size_create_meta_box(){
 		),
 		array(
 			'field_id'			=> 'brick_class_name',
-			'field_title' 	=> __( 'Brick Class Name: <br />', 'mp_stacks'),
+			'field_title' 	=> __( 'Brick Class Name:', 'mp_stacks'),
 			'field_description' 	=> 'This field will allow you to attach a unique classname to this brick which travels with it in templates',
 			'field_type' 	=> 'hidden',
 			'field_value' => '',
