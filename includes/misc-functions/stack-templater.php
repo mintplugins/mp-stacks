@@ -34,6 +34,7 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
 		'posts_per_page' => -1,
+		'post_status' => 'publish',
 		'meta_key' => 'mp_stack_order_' . $stack_id,
 		'orderby' => 'meta_value_num menu_order',
 		'order' => 'ASC',
