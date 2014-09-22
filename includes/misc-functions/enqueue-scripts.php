@@ -55,6 +55,9 @@ add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
  */
 function mp_stacks_frontend_enqueue(){
 		
+		//Main MP Stacks CSS
+		wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp-stacks-style.css', dirname(__FILE__)) );
+	
 		//element size detection - media queries for divs
 		wp_enqueue_script( 'mp_stacks_element_queries', plugins_url('js/elementQuery.min.js', dirname(__FILE__) ), array( 'jquery' ), false, true );
 		
