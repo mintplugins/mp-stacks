@@ -270,3 +270,12 @@
 .mp-brick .edd_price_options ul{
 	list-style:none;
 }
+
+/* MP Stacks Default Page Template */
+.mp-stacks-default-page-template,
+.mp-stacks-default-page-template .entry-content{
+	width:100%!important;	
+	max-width:100%!important;
+	z-index: 3;
+	position: relative;
+}

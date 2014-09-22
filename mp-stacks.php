@@ -238,6 +238,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );
 		
 		/**
+		 * MP Stacks Page Template
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/page-template/page-template.php' );
+		
+		/**
 		 * Edit Stack Settings
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/edit-stack-settings.php' );
