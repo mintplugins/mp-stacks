@@ -164,18 +164,27 @@ jQuery(document).ready(function($){
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */
-	 $( '.mp-stacks-new-stack-source-type' ).on( 'change', function(event){
-				 
+	 $( document ).on( 'change', '.mp-stacks-new-stack-source-type > input', function(event){
+			
+		 var source_type = $(this).val();
+		  	 
 		 //Hide any options that may have already been selected
 		 $( '.duplicate-stack-option, .template-stack-option' ).hide(); 
 		 
 		 //Show options to create new stack
-		 $('.' + $(this).val() ).show();
+		 if ( source_type ){
+		 	$('.' + source_type ).show();
+		 }
 		 
-		 //If this is the template option, hide the "create stack" button until the user selects a template to use
-		 if ( $(this).val() == "template-stack-option" ){
-				$('.mp-stacks-new-stack-button').hide(); 
-				$('#mp_stack_cancel_download_insert').hide();
+		 //If this is the template option, we don't need the "Create Stack" button because it fires when they select a template
+		 if ( source_type == "template-stack-option" ){
+			$('.mp-stacks-new-stack-button').hide(); 
+			$('#mp_stack_cancel_download_insert').hide();
+		 }
+		 //Otherwise if its one of the other options, keep the "Create Stack" button
+		 else{
+			$('.mp-stacks-new-stack-button').show(); 
+			$('#mp_stack_cancel_download_insert').show();
 		 }
 	 });
 	 
@@ -258,13 +267,14 @@ jQuery(document).ready(function($){
 		var stack_title = $('.mp-stacks-new-stack-input').val();
 		
 		// Get the stack source type
-		var stack_source_type = $('.mp-stacks-new-stack-source-type').val();
+		var stack_source_type = $('.mp-stacks-new-stack-source-type > input:checked').val();
 		
 		// Get the stack to duplicate
 		var stack_duplicate_id = $('.mp-stacks-new-stack-duplicate-stack').val();
 		
 		//Get the stack template the user has chosen
 		var stack_template_slug = $('.mp-stacks-selected-template .mp-stacks-installed-template-function-name').html();
+		stack_template_slug = stack_template_slug ? stack_template_slug : '';
 		
 		//Only send for ajax if there is a value
 		if ( stack_title != '' ){
