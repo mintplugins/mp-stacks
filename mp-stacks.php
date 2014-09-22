@@ -183,9 +183,9 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/mp-stack.php' );
 		
 		/**
-		 * Stacks shortcode
+		 * Create Stack Forms
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcode.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/create-stack-forms.php' );
 		
 		/**
 		 * Media Filters
