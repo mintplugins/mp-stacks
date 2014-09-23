@@ -39,11 +39,14 @@ function mp_stacks_admin_enqueue(){
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 			'ajax_nonce_value' => wp_create_nonce( 'mp-stacks-nonce-action-name' ), 
-			'stack_successful_message' => '<div class="mp-stacks-successful-image"><img class="mp-stacks-icon-250" src="' . plugins_url('assets/icon-256x256.png', dirname(dirname(__FILE__) ) ) . '" /></div><div class="mp-stacks-successful-text">' . __('Stack successfully created! Insert it below:', 'mp_stacks')  . '</div>',
+			'stack_successful_message_from_shortcode' => '<div class="mp-stacks-successful-image"><img class="mp-stacks-icon-250" src="' . plugins_url('assets/icon-256x256.png', dirname(dirname(__FILE__) ) ) . '" /></div><div class="mp-stacks-successful-text">' . __('Stack successfully created! Inserting...', 'mp_stacks')  . '</div>',
+			'stack_successful_message_from_manage_page' => '<div class="mp-stacks-successful-image"><img class="mp-stacks-icon-250" src="' . plugins_url('assets/icon-256x256.png', dirname(dirname(__FILE__) ) ) . '" /></div><div class="mp-stacks-successful-text">' . __('Stack successfully created! See it listed on the right:', 'mp_stacks')  . '</div>',
 			'stack_needs_title_alert' => __( 'Please enter a name to identify the new Stack', 'mp_stack' ),
 			'stack_creating_message' => __( 'Please wait while your new Stack is created...', 'mp_stacks' ),
 			'stack_insert_confirmation_phrase' => __( 'This is NOT a new Stack', 'mp_stacks' ),
-			'stack_confirmation_incorrect' => __( 'Make sure to type exactly "This is NOT a new Stack"', 'mp_stacks' )
+			'stack_confirmation_incorrect' => __( 'Make sure to type exactly "This is NOT a new Stack"', 'mp_stacks' ),
+			'add_new_brick_title' => __( 'Add New Brick', 'mp_stacks' ),
+			'edit_brick_title' => __( 'Edit Brick', 'mp_stacks' ),
 		) 
 	);	
 	

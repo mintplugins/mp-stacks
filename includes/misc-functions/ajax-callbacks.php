@@ -58,7 +58,20 @@ function mp_stacks_add_new_stack_ajax() {
 			$new_stack_id = $new_stack_array['term_id'];
 		}
 		
-		echo $new_stack_id;
+		//Get the updated Stacks Table
+		$wp_list_table = _get_list_table('WP_Terms_List_Table', array( 'screen' => 'edit-mp_stacks' ) );
+		
+		ob_start();
+		
+		$wp_list_table->display_rows_or_placeholder();
+		
+		$updated_stacks_table = ob_get_clean();
+		
+		echo json_encode( array(
+			'new_stack_id' => $new_stack_id,
+			'updated_stacks_table' => $updated_stacks_table
+		) );
+			
 	}
 
 	die(); // this is required to return a proper result

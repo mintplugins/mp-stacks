@@ -1,5 +1,10 @@
 /* Stylesheet for mp_stacks admin */
 
+/* Hide Everything on an Edit Brick page until it is loaded */
+.post-type-mp_brick #poststuff{
+	opacity:0;
+}
+
 /*Top Level duplicate subpage Menu Button*/
 #toplevel_page_mp-stacks-about .wp-first-item{
 	display:none;
@@ -58,12 +63,8 @@
 }
 
 /*Hide slug, parent and description on Stacks manage page - may be a hook to do this better but for now:*/
-.taxonomy-mp_stacks #addtag .form-field,
-.taxonomy-mp_stacks #addtag .form-required p{
-	display:none;
-}
-.taxonomy-mp_stacks #addtag .form-required{
-	display:block;
+.taxonomy-mp_stacks .form-wrap{
+	display:none;	
 }
 
 /* Alignment Icons for Content Types on Metabox Page */
@@ -152,8 +153,24 @@
 .template-stack-option{
 	display:none;	
 }
-.mp-stacks-shortcode-option{
+.mp-stacks-shortcode-new-stack-div{
+	line-height:1;	
+}
+.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-heading{
+	margin-bottom:20px;
+}
+.mp-stacks-new-stack-option{
 	margin-bottom:20px;	
+}
+.mp-stacks-new-stack-option em{
+	display:block;
+	float:none;	
+}
+.mp-stacks-new-stack-option-title{
+	margin-bottom:10px;	
+}
+.mp-stacks-new-stack-option-title em{
+	margin-top:5px;	
 }
 
 .mp_stack_successful{
@@ -185,6 +202,10 @@
 	-moz-osx-font-smoothing: grayscale;
 	content: "\f107";
 	margin-right:5px;
+}
+#TB_ajaxContent{
+	overflow:scroll;
+	height:100%!important;	
 }
 
 /**
@@ -307,4 +328,7 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
+}
+.mp-stacks-new-stack-source-type{
+	margin: 7px 0px;	
 }

@@ -83,7 +83,12 @@ jQuery(document).ready(function($){
 	
 	}
 	
-	//We dont want to reset all tinymces on page load so set it to false
+	/**
+	 * We dont want to reset all tinymces on page load so set it to false
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */	
 	var args = new Array();
 	args['reset_tinymce'] = false;
 	mp_stacks_reset_content_types(args);
@@ -97,19 +102,44 @@ jQuery(document).ready(function($){
 		mp_stacks_reset_content_types();
 	});
 	
-	//Close lightbox on update if we are loaded in a lightbox				
+	//Show the notice about which brick we are editing (if we don't show it this way, it does a weird "jump in" thing. Probably should create a better fix than this but it appears to be an issue with admin_notices in WordPress
+	$('.mp-stacks-editor-title-notice').css('display', '');
+	
+	//Now that the page is loaded and our content types are reset properly, lets show the body div (hidden by css)
+	$('.post-type-mp_brick #poststuff').css('opacity', '1');
+	
+	//Change the title from "Loading..." to "Add New Brick" or "Edit Brick"
+	$('.post-new-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.add_new_brick_title );
+	$('.post-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.edit_brick_title );
+	
+	/**
+	 * Close lightbox on update if we are loaded in a lightbox
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */				
 	$( '#post, #posts-filter' ).on( 'submit', function(event) {
 	
 		parent.mp_stacks_close_lightbox();
 		
 	});
 	
-	//Close the lightbox if we have deleted a brick post
+	/**
+	 * Close the lightbox if we have deleted a brick post
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
 	$( '#delete-action .submitdelete' ).on( 'click', function(event) {
 		parent.mp_stacks_close_lightbox();
 	});
 	
-	//Auto select the stack we want this brick to be in
+	/**
+	 * Auto select the stack we want this brick to be in
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
 	var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 
 	stack_id_checkbox = '#in-mp_stacks-' + stack_id;
@@ -124,7 +154,7 @@ jQuery(document).ready(function($){
 	});
 	
 	/**
-	 * Hide 1st options for "Add Stack" and show Buttons to Make new Stack
+	 * Shortcode Insertor: Hide 1st options for "Add Stack" and show Buttons to Make new Stack
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -141,7 +171,7 @@ jQuery(document).ready(function($){
 	 });
 	
 	/**
-	 * Hide 1st options for "Add Stack" and show Buttons to use existing stack
+	 * Shortcode Insertor: Hide 1st options for "Add Stack" and show Buttons to use existing stack
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -159,7 +189,7 @@ jQuery(document).ready(function($){
 	 });
 	  
 	 /**
-	 * When the user changes the dropdown for Stack Options, show corresponding Options for "Duplicate", or "Template"
+	 * Stack Creation: When the user changes the dropdown for Stack Options, show corresponding Options for "Duplicate", or "Template".
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -186,10 +216,11 @@ jQuery(document).ready(function($){
 			$('.mp-stacks-new-stack-button').show(); 
 			$('#mp_stack_cancel_download_insert').show();
 		 }
+		 
 	 });
 	 
 	 /**
-	 * When the user clicks on a Stack template they want to use
+	 * Stack Creation: When the user clicks on a Stack template they want to use
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -210,7 +241,7 @@ jQuery(document).ready(function($){
 	 });
 	 
 	 /**
-	 * When the user rolls over a stack template, show a popup image preview of the template
+	 * Stack Creation: When the user rolls over a stack template, show a popup image preview of the template
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -222,7 +253,7 @@ jQuery(document).ready(function($){
 	 });
 	 
 	 /**
-	 * Make the template preview image follow the cursor
+	 * Stack Creation: Make the template preview image follow the cursor
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
@@ -240,7 +271,7 @@ jQuery(document).ready(function($){
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */
-	 $('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').on('click', function(event){
+	 $('.mp-stacks-new-stack-button').on('click', function(event){
 		
 		event.preventDefault(); 
 		
@@ -256,12 +287,16 @@ jQuery(document).ready(function($){
 	 * @link     http://mintplugins.com/doc/
 	 */
 	 function mp_stacks_make_new_stack(){
-	 	//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
-		 $('.mp-stacks-shortcode-existing-stack-div').hide();
-		 $('.mp-stacks-shortcode-new-stack-div').hide();
-		 
-		 //Show that stack is being created
-		$('.mp-stacks-shortcode-container').append('<div class="mp_stack_creating">'+mp_stacks_vars.stack_creating_message+'</div>');
+	 	 
+		//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
+		$('.mp-stacks-shortcode-existing-stack-div').hide();
+		$('.mp-stacks-shortcode-new-stack-div').hide();
+		
+		//Hide everything in the mp-stacks-manage-page-new-stack-div
+		$('.mp-stacks-manage-page-new-stack-div').hide();
+		
+		//If the shortcode container div exists this will be 'true' otherwise 'false' ( or 0 )
+		var using_shortcode = $('.mp-stacks-shortcode-container').length;
 		
 		// Get the title the user entered
 		var stack_title = $('.mp-stacks-new-stack-input').val();
@@ -278,6 +313,16 @@ jQuery(document).ready(function($){
 		
 		//Only send for ajax if there is a value
 		if ( stack_title != '' ){
+			
+			//If we are doing this using the shortcode popup, insert into TinyMCE
+			 if ( using_shortcode ){
+				 //Show that stack is being created
+				 $('.mp-stacks-shortcode-container').append('<div class="mp_stack_creating">'+mp_stacks_vars.stack_creating_message+'</div>');
+			 }
+			 else{
+				//Show that stack is being created
+				$('.mp-stacks-manage-page-new-stack-div').before('<div class="mp_stack_creating">'+mp_stacks_vars.stack_creating_message+'</div>'); 
+			 }
 				
 			// Form the array to pass to the wp_ajax_mp_stacks_make_new_stacks php function
 			var postData = {
@@ -293,35 +338,76 @@ jQuery(document).ready(function($){
 			$.ajax({
 				type: "POST",
 				data: postData,
+				dataType:"json",
 				url: mp_stacks_vars.ajaxurl,
 				success: function (response) {
 					
-					//Add new stack TinyMCE/ActiveEditor
-					window.send_to_editor('[mp_stack stack="' + response + '"]');
+					//If we are doing this using the shortcode popup, insert into TinyMCE
+					if ( using_shortcode ){
+						
+						//Add new stack TinyMCE/ActiveEditor
+						window.send_to_editor('[mp_stack stack="' + response.new_stack_id + '"]');
 					
-					//Remove original form for new stack
-					//$('.mp-stacks-shortcode-new-stack-div').empty();
-					//$('.mp-stacks-shortcode-new-stack-div .mp-stacks-new-stack-button').remove();
+						//Show that stack was successfuly created
+						$('.mp-stacks-shortcode-container').append('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message_from_shortcode+'</div>');
+						$('.mp_stack_creating').remove();
+						
+						tb_remove();
+						
+						//Make tinyMce run the function in the tinyMCE plugin for MP Stacks which swaps the shortcode for an image
+						//tinyMCE.activeEditor.execCommand('MP_Stacks');
 					
-					//Show that stack was successfuly created
-					$('.mp-stacks-shortcode-container').append('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message+'</div>');
-					$('.mp_stack_creating').hide();
-					
-					tb_remove();
-					
-					//Make tinyMce run the function in the tinyMCE plugin for MP Stacks which swaps the shortcode for an image
-					tinyMCE.activeEditor.execCommand('MP_Stacks');
+					}
+					else{
+							
+						//Show that stack was successfuly created
+						$('.mp-stacks-manage-page-new-stack-div	').before('<div class="mp_stack_successful">'+mp_stacks_vars.stack_successful_message_from_manage_page+'</div>');
+						
+						//Remove the "Creating..." message.
+						$('.mp_stack_creating').remove();
+						
+						//Refresh the list of Stacks on the right of the Manage Stacks Page
+						$('.taxonomy-mp_stacks #col-right .wp-list-table #the-list').html(response.updated_stacks_table);
+				
+					}
 					
 					//Once the user inserts a new/existing stack into the active text area, reset the options so they can insert another stack if needed
 					setTimeout(function(){
 						
-						//Show Step 1 Stack Options
-						$( '.mp-stacks-shortcode-choose-action' ).show(); 
-						 
-						//Hide Step 2 Stack Options and ajax messages
-						$('.mp-stacks-shortcode-existing-stack-div').hide();
-						$('.mp-stacks-shortcode-new-stack-div').hide();
-						$('.mp_stack_successful').hide();
+						//If we are doing this using the shortcode popup, insert into TinyMCE
+						if ( using_shortcode ){
+							//Show Step 1 Stack Options
+							$( '.mp-stacks-shortcode-choose-action' ).show(); 
+							 
+							//Hide Step 2 Stack Options and ajax messages
+							$('.mp-stacks-shortcode-existing-stack-div').hide();
+							$('.mp-stacks-shortcode-new-stack-div').hide();
+							$('.mp_stack_successful').hide();
+							
+							//Remove the "Successfully Created" message
+							$('.mp_stack_successful').remove();
+						}
+						else{
+						
+							//Reset Creation Options by hiding all items in the "Create New Stack" div on the manage page
+							$('.mp-stacks-manage-page-new-stack-div > *').hide();
+						
+							//Re-Show the "Create New Stack" div
+							$('.mp-stacks-manage-page-new-stack-div').css('display', '');
+						
+							//Re-Show the just things the user will want to create another Stack
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-heading').css('display', '');
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-option-name').css('display', '');
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-creation-options').css('display', '');
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-button').css('display', '');
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-input').val('');
+							$('.mp-stacks-manage-page-new-stack-div .mp-stacks-new-stack-source-type-container .mp-stacks-new-stack-source-type:first-child input').prop('checked',true);
+							
+							//Remove the "Successfully Created" message
+							$('.mp_stack_successful').remove();
+							
+						}
+						
 					
 					}, 2000);
 					
@@ -343,6 +429,9 @@ jQuery(document).ready(function($){
 			//Re-Show Step 2 Stack Options once the user has clicked "Create New Stack"
 			$('.mp-stacks-shortcode-new-stack-div').show();
 			
+			//Reshow Creation Options for Manage Page
+			$('.mp-stacks-manage-page-new-stack-div').css('display', '');
+			
 			//Remove "Creating Stack" Message
 			$('.mp_stack_creating').remove();
 		 }
@@ -358,7 +447,7 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault(); 
 				
-		// Form the array to pass to the wp_ajax_mp_stacks_make_new_stacks php function
+		// Form the array to pass to the wp_ajax_mp_stacks_dismiss_double_click_tip php function
 		var postData = {
 			action: 'mp_stacks_dismiss_double_click_tip',
 			mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
@@ -366,7 +455,7 @@ jQuery(document).ready(function($){
 		
 		var this_tip = $(this).parent().parent();
 		
-		//Ajax to make new stack
+		//Ajax dismiss double click tip
 		$.ajax({
 			type: "POST",
 			data: postData,
