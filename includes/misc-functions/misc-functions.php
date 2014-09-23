@@ -215,14 +215,16 @@ function mp_stacks_support_admin_notice(){
 	 
 	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
 	 
-	 ?>
-	 <div class="mp-stacks-editor-title-notice updated" style="display:none;">
-        <p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
-		<?php echo __(' Having trouble? Feel free to email us: support@mintplugins.com and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
-     </div>
-     <?php
+	 if ( isset( $stack_info->name ) ){
+	 
+		 ?>
+		 <div class="mp-stacks-editor-title-notice updated" style="display:none;">
+			<p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
+			<?php echo __(' Having trouble? Feel free to email us: support@mintplugins.com and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
+		 </div>
+		 <?php
 	
-	
+	 }
 	
 }
 add_action('admin_notices', 'mp_stacks_support_admin_notice');
