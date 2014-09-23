@@ -206,7 +206,7 @@ function mp_stacks_support_admin_notice(){
 	 global $pagenow;
 
 	  //Only load message if mp_stack_id is set
-	 if ( isset( $_GET['mp_stack_id'] ) && $pagenow == 'post.php'){
+	 if ( (isset( $_GET['mp_stack_id'] ) ) && ( $pagenow == 'post.php' || $pagenow == 'post-new.php' ) ){
 		
 	 }
 	 else{
@@ -216,7 +216,7 @@ function mp_stacks_support_admin_notice(){
 	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
 	 
 	 ?>
-	 <div class="mp-stacks-editor-title-notice updated">
+	 <div class="mp-stacks-editor-title-notice updated" style="display:none;">
         <p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
 		<?php echo __(' Having trouble? Feel free to email us: support@mintplugins.com and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
      </div>
@@ -319,3 +319,21 @@ function mp_stacks_delete_stack( $deleted_stack_term_taxonomy_id ){
 	
 }
 add_action( 'delete_term_taxonomy', 'mp_stacks_delete_stack' );
+
+/**
+ * If we are on an "Add New Brick" or "Edit Brick" page, temporarily set the title to be "Loading Brick..." - we update it later using JS
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_edit_brick_loading_title(){
+	
+	global $title;
+	
+	if ( $title == __( 'Add New Brick', 'mp_stacks' ) || $title == __( 'Edit Brick', 'mp_stacks' ) ){
+		$title = __( 'Loading Brick Editor...', 'mp_stacks' );
+	}
+	
+}
+add_action( 'admin_head', 'mp_stacks_edit_brick_loading_title' );
