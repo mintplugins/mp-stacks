@@ -17,7 +17,7 @@ html.wp-toolbar {
 
 /*Reset margin for main content area */
 #wpcontent{
-	margin-left:18px;
+	margin-left:0px;
 }
 /*Dont need to show the MP Stacks selector box on the minimal page*/
 #mp_stacksdiv{
