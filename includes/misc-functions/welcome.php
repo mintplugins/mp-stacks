@@ -236,52 +236,14 @@ class MP_Stacks_Welcome {
 			<p class="about-description"><?php _e( 'Use the tips below to get started using MP Stacks. You will be up and running in no time!', 'mp_stacks' ); ?></p>
 
 			<div class="changelog">
-				<h3><?php _e( 'Creating Your First Download Product', 'mp_stacks' );?></h3>
-
-				<div class="feature-section">
-
-					<img src="<?php echo EDD_PLUGIN_URL . 'assets/images/screenshots/edit-download.png'; ?>" class="mp_stacks-welcome-screenshots"/>
-
-					<h4><?php printf( __( '<a href="%s">%s &rarr; Add New</a>', 'mp_stacks' ), admin_url( 'post-new.php?post_type=download' ), mp_stacks_get_label_plural() ); ?></h4>
-					<p><?php printf( __( 'The %s menu is your access point for all aspects of your MP Stacks product creation and setup. To create your first product, simply click Add New and then fill out the product details.', 'mp_stacks' ), mp_stacks_get_label_plural() ); ?></p>
-
-					<h4><?php _e( 'Product Price', 'mp_stacks' );?></h4>
-					<p><?php _e( 'Products can have simple prices or variable prices if you wish to have more than one price point for a product. For a single price, simply enter the price. For multiple price points, click <em>Enable variable pricing</em> and enter the options.', 'mp_stacks' );?></p>
-
-					<h4><?php _e( 'Download Files', 'mp_stacks' );?></h4>
-					<p><?php _e( 'Uploading the downloadable files is simple. Click <em>Upload File</em> in the Download Files section and choose your download file. To add more than one file, simply click the <em>Add New</em> button.', 'mp_stacks' );?></p>
-
-				</div>
-			</div>
-
-			<div class="changelog">
-				<h3><?php _e( 'Display a Product Grid', 'mp_stacks' );?></h3>
-
-				<div class="feature-section">
-
-					<img src="<?php echo EDD_PLUGIN_URL . 'assets/images/screenshots/grid.png'; ?>" class="mp_stacks-welcome-screenshots"/>
-
-					<h4><?php _e( 'Flexible Product Grids','mp_stacks' );?></h4>
-					<p><?php _e( 'The [downloads] short code will display a product grid that works with any theme, no matter the size. It is even responsive!', 'mp_stacks' );?></p>
-
-					<h4><?php _e( 'Change the Number of Columns', 'mp_stacks' );?></h4>
-					<p><?php _e( 'You can easily change the number of columns by adding the columns="x" parameter:', 'mp_stacks' );?></p>
-					<p><pre>[downloads columns="4"]</pre></p>
-
-					<h4><?php _e( 'Additional Display Options', 'mp_stacks' ); ?></h4>
-					<p><?php printf( __( 'The product grids can be customized in any way you wish and there is <a href="%s">extensive documentation</a> to assist you.', 'mp_stacks' ), 'http://easydigitaldownloads.com/documentation' ); ?></p>
-				</div>
-			</div>
-
-			<div class="changelog">
-				<h3><?php _e( 'Purchase Buttons Anywhere', 'mp_stacks' );?></h3>
+				<h3><?php _e( 'Stacks Anywhere', 'mp_stacks' );?></h3>
 
 				<div class="feature-section">
 
 					<img src="<?php echo EDD_PLUGIN_URL . 'assets/images/screenshots/purchase-link.png'; ?>" class="mp_stacks-welcome-screenshots"/>
 
-					<h4><?php _e( 'The <em>[purchase_link]</em> Short Code','mp_stacks' );?></h4>
-					<p><?php _e( 'With easily accessible short codes to display purchase buttons, you can add a Buy Now or Add to Cart button for any product anywhere on your site in seconds.', 'mp_stacks' );?></p>
+					<h4><?php _e( 'The <em>[mp_stack]</em> Short Code','mp_stacks' );?></h4>
+					<p><?php _e( 'With easily accessible short codes to display Stacks, you can make any page/post amazing by just placing the shortcode on it.', 'mp_stacks' );?></p>
 
 					<h4><?php _e( 'Buy Now Buttons', 'mp_stacks' );?></h4>
 					<p><?php _e( 'Purchase buttons can behave as either Add to Cart or Buy Now buttons. With Buy Now buttons customers are taken straight to PayPal, giving them the most frictionless purchasing experience possible.', 'mp_stacks' );?></p>
@@ -295,10 +257,10 @@ class MP_Stacks_Welcome {
 				<div class="feature-section">
 
 					<h4><?php _e( 'Phenomenal Support','mp_stacks' );?></h4>
-					<p><?php _e( 'We do our best to provide the best support we can. If you encounter a problem or have a question, post a question in the <a href="https://easydigitaldownloads.com/support">support forums</a>.', 'mp_stacks' );?></p>
+					<p><?php _e( 'We do our best to provide the best support we can. If you encounter a problem or have a question, post a question at the <a href="https://mintplugins.com/support">support page</a>.', 'mp_stacks' );?></p>
 
 					<h4><?php _e( 'Need Even Faster Support?', 'mp_stacks' );?></h4>
-					<p><?php _e( 'Our <a href="https://easydigitaldownloads.com/support/pricing/">Priority Support forums</a> are there for customers that need faster and/or more in-depth assistance.', 'mp_stacks' );?></p>
+					<p><?php _e( 'Our <a href="https://mintplugins.com/support/pricing/">Priority Support</a> is for customers that need faster and/or more in-depth assistance.', 'mp_stacks' );?></p>
 
 				</div>
 			</div>
@@ -323,10 +285,10 @@ class MP_Stacks_Welcome {
 				<div class="feature-section">
 
 					<h4><?php _e( 'Over 190 Extensions','mp_stacks' );?></h4>
-					<p><?php _e( 'Add-on plugins are available that greatly extend the default functionality of MP Stacks. There are extensions for payment processors, such as Stripe and PayPal, extensions for newsletter integrations, and many, many more.', 'mp_stacks' );?></p>
+					<p><?php _e( 'Add-on plugins are available that greatly extend the default functionality of MP Stacks. There are extensions for contact forms, Post Grids, Newsletter integrations, and many, many more.', 'mp_stacks' );?></p>
 
 					<h4><?php _e( 'Visit the Extension Store', 'mp_stacks' );?></h4>
-					<p><?php _e( '<a href="https://easydigitaldownloads.com/extensions" target="_blank">The Extensions store</a> has a list of all available extensions, including convenient category filters so you can find exactly what you are looking for.', 'mp_stacks' );?></p>
+					<p><?php _e( '<a href="https://mintplugins.com/mp-stacks-addons" target="_blank">The Add-On Shop</a> has a list of all available extensions, including convenient category filters so you can find exactly what you are looking for.', 'mp_stacks' );?></p>
 
 				</div>
 			</div>
@@ -352,7 +314,7 @@ class MP_Stacks_Welcome {
 
 			<?php $this->tabs(); ?>
 
-			<p class="about-description"><?php _e( 'MP Stacks is created by a worldwide team of developers who aim to provide the #1 eCommerce platform for selling digital goods through WordPress.', 'mp_stacks' ); ?></p>
+			<p class="about-description"><?php _e( 'MP Stacks is created by a worldwide team of developers who aim to provide the best and most fun Website-Designing experience', 'mp_stacks' ); ?></p>
 
 			<?php echo $this->contributors(); ?>
 		</div>
@@ -406,7 +368,7 @@ class MP_Stacks_Welcome {
 		if ( false !== $contributors )
 			return $contributors;
 
-		$response = wp_remote_get( 'https://api.github.com/repos/easydigitaldownloads/Easy-Digital-Downloads/contributors', array( 'sslverify' => false ) );
+		$response = wp_remote_get( 'https://api.github.com/repos/mintplugins/mp-stacks/contributors', array( 'sslverify' => false ) );
 
 		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) )
 			return array();
