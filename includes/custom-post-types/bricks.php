@@ -188,7 +188,7 @@ function mp_stacks_convert_id_to_term_in_query($query) {
 add_filter('parse_query', 'mp_stacks_convert_id_to_term_in_query');
 
 /**
- * Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
+ * Modify the links that appear on the Manage Stacks page beneath the Stack Titles on the right.
  *
  * @since    1.0.0
  * @link     http://mintplugins.com/doc/
@@ -203,6 +203,9 @@ function mp_stacks_remove_quick_edit( $actions, $tag ) {
 	
 	$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
 	
+	//Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
+	$actions['edit'] = '<a href="' . add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $tag->term_id ), admin_url('admin.php') ) . '">' . __("Edit", 'mp_stacks') . '</a>';
+
 	return $actions;
 }
 add_filter('mp_stacks_row_actions','mp_stacks_remove_quick_edit',10,2);

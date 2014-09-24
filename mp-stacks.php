@@ -245,7 +245,7 @@ function mp_stacks_include_files(){
 		/**
 		 * Edit Stack Settings
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/edit-stack-settings.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/single-stack-edit-page.php' );
 		
 		/**
 		 * Default Stack Template
