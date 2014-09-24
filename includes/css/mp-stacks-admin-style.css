@@ -332,3 +332,16 @@
 .mp-stacks-new-stack-source-type{
 	margin: 7px 0px;	
 }
+
+/*Single Stack Edit Page*/
+.mp-stacks-permalink{
+	display:table;	
+}
+.mp-stacks-permalink-prefix{
+	display:table-cell;
+	margin-right:4px;	
+}
+.mp-stacks-permalink-slug{
+	display:table-cell;
+	width:100%;
+}
