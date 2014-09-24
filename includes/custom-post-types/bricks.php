@@ -188,6 +188,27 @@ function mp_stacks_convert_id_to_term_in_query($query) {
 add_filter('parse_query', 'mp_stacks_convert_id_to_term_in_query');
 
 /**
+ * Modify the Stack Titles' links on the Manage Stacks Page
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @param 	 string $location    The edit link.
+ * @param    int    $term_id     Term ID.
+ * @param    string $taxonomy    Taxonomy name.
+ * @param    string $object_type The object type (eg. the post type).
+ * @return   string $location    The edit link.
+ */
+function mp_stacks_edit_taxonomy_url_for_stacks( $location, $term_id, $taxonomy, $object_type ){
+	
+	//If this is an mp_stacks taxonomy term
+	if ( $taxonomy == 'mp_stacks' ){
+		return add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $term_id ), admin_url('admin.php') );	
+	}
+	
+}
+add_filter( 'get_edit_term_link', 'mp_stacks_edit_taxonomy_url_for_stacks', 10, 4 );
+
+/**
  * Modify the links that appear on the Manage Stacks page beneath the Stack Titles on the right.
  *
  * @since    1.0.0
