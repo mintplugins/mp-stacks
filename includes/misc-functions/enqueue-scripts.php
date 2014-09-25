@@ -47,6 +47,7 @@ function mp_stacks_admin_enqueue(){
 			'stack_confirmation_incorrect' => __( 'Make sure to type exactly "This is NOT a new Stack"', 'mp_stacks' ),
 			'add_new_brick_title' => __( 'Add New Brick', 'mp_stacks' ),
 			'edit_brick_title' => __( 'Edit Brick', 'mp_stacks' ),
+			'more_content_types' => admin_url( 'admin.php?page=mp_stacks_plugin_directory')
 		) 
 	);	
 	

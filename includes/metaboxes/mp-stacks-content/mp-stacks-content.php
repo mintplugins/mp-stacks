@@ -27,7 +27,12 @@ function mp_stacks_content_create_meta_box(){
 			'field_description' => 'Select the first content type to use for this brick.',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
+			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video'),
+			'field_popup_help' => esc_html(
+				'<img class="mp-core-popup-help-float-right" src="https://mp-help-images.s3.amazonaws.com/mp-stacks/content-types/Content-Type-1.png" \/>
+				<strong class="mp-ajax-popup-title">First Content-Type:</strong>
+				If this brick is aligned "Left/Right", this is the content that will appear on the left side of the brick. If "Centered", it will sit at the top.'
+			)
 		),
 		array(
 			'field_id'	 => 'brick_second_content_type',
@@ -44,27 +49,6 @@ function mp_stacks_content_create_meta_box(){
 			'field_type' => 'radio',
 			'field_value' => '',
 			'field_select_values' => array('leftright' => 'Left/Right', 'centered' => 'Centered', 'allleft' => 'All on left', 'allright' => 'All on right')
-		),
-		array(
-			'field_id'	 => 'brick_content_type_help',
-			'field_title' => 'Content Types',
-			'field_description' => NULL,
-			'field_type' => 'help',
-			'field_value' => '',
-			'field_select_values' => array(
-				array( 
-					'type' => 'oembed',
-					'link' => 'https://mintplugins.com/embed/?post_id=3862',
-					'link_text' => __( 'Content-Types Tutorial', 'mp_stacks'),
-					'target' => NULL
-				),
-				array( 
-					'type' => 'directory',
-					'link' => admin_url( 'admin.php?page=mp_stacks_plugin_directory'),
-					'link_text' => __( 'Add more Content-Types', 'mp_stacks'),
-					'target' => '_blank'
-				)
-			)
 		),
 	);
 	
@@ -106,3 +90,25 @@ function mp_stacks_alignment_radio_allonright_before(){
 	echo '<img width="50px" src="' . plugins_url('assets/images/all-on-right.png', dirname( dirname( dirname(__FILE__) ) ) ) . '" />';	
 }
 add_action('mp_core_metabox_before_' . 'allright' . '_radio_description', 'mp_stacks_alignment_radio_allonright_before'); 
+
+/**
+ * Add "More Content Types..." as a content Type to the dropdown
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @param    array $args See link for description.
+ * @return   void
+ */
+function mp_stacks_more_content_types_add_content_type( $mp_stacks_content_types_array ){	
+	
+	/**
+	 * Array which stores all info about the options within the metabox
+	 *
+	 */
+	$mp_stacks_content_types_array[0]['field_select_values']['more_content_types'] = __( 'More Content-Types...', 'mp_stacks' );
+	$mp_stacks_content_types_array[1]['field_select_values']['more_content_types'] = __( 'More Content-Types...', 'mp_stacks' );
+	
+	return $mp_stacks_content_types_array;
+
+}
+add_filter('mp_stacks_content_types_array', 'mp_stacks_more_content_types_add_content_type', 999);
