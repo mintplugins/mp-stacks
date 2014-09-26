@@ -29,9 +29,9 @@ function mp_stacks_content_create_meta_box(){
 			'field_value' => '',
 			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video'),
 			'field_popup_help' => esc_html(
-				'<img class="mp-core-popup-help-float-right" src="https://mp-help-images.s3.amazonaws.com/mp-stacks/content-types/Content-Type-1.png" \/>
-				<strong class="mp-ajax-popup-title">First Content-Type:</strong>
-				If this brick is aligned "Left/Right", this is the content that will appear on the left side of the brick. If "Centered", it will sit at the top.'
+				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-1.png" \/>
+				<strong class="mp-ajax-popup-title">' . __( '1st Content-Type:', 'mp_stacks' ) . '</strong>
+				' . __( 'If this brick is aligned "Left/Right", this is the content that will appear on the left side of the brick. If "Centered", it will sit at the top.', 'mp_stacks' )
 			)
 		),
 		array(
@@ -40,7 +40,12 @@ function mp_stacks_content_create_meta_box(){
 			'field_description' => 'Select the second content type to use for this brick.',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video')
+			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video'),
+			'field_popup_help' => esc_html(
+				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-2.png" \/>
+				<strong class="mp-ajax-popup-title">' . __( '2nd Content-Type:', 'mp_stacks' ) . '</strong>
+				' . __( 'If this brick is aligned "Left/Right", this is the content that will appear on the right side of the brick. If "Centered", it will sit below the 1st Content-Type.', 'mp_stacks' )
+			)
 		),
 		array(
 			'field_id'	 => 'brick_alignment',
