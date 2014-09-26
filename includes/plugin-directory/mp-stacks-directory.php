@@ -14,13 +14,13 @@ add_filter( 'mp_core_directory_' . 'mp_stacks_plugin_directory' . '_title', 'mp_
  * http://mintplugins.com/doc/plugin-directory-class/
  */
 function mp_stacks_addon_directory_header(){
-	return '
+	?>
 	<div class="mp-stacks-directory-header" width="100%" height="300px">
 		<div class="mp-stacks-directory-title">
 			One License To Install Them All.
 		</div>
 		<div class="mp-stacks-directory-subtitle">
-			Save hundreds of dollars and time by getting the Master License. It works for every single product from Mint Plugins – now and in the future – and saves you time fumbling around trying to find the right license for the right product.
+			Save hundreds of dollars and time by getting the Master License. It works for every single product from MintPlugins.com – now and in the future – and saves you time fumbling around trying to find the right license for the right product.
 
 This license is good for 1 year from its purchase date. After 1 year, it can be renewed at 50% of the original cost.
 		</div>
@@ -28,8 +28,9 @@ This license is good for 1 year from its purchase date. After 1 year, it can be 
 			<a href="http://mintplugins.com/plugins/master-license/" class="button" target="_blank">Get the Master License - $110</a>
 		</div>
 	</div>';
+    <?php
 }
-add_filter( 'mp_core_directory_header_' . 'mp_stacks_plugin_directory', 'mp_stacks_addon_directory_header' );
+add_action( 'mp_core_directory_header_' . 'mp_stacks_plugin_directory', 'mp_stacks_addon_directory_header' );
 
 /**
  * MP Stacks Template Shop Page Title
@@ -74,4 +75,4 @@ function mp_stacks_template_packs_plugin_directory(){
 	
 	new MP_CORE_Plugin_Directory( $args );
 }
-add_action( '_admin_menu', 'mp_stacks_template_packs_plugin_directory' );
+//add_action( '_admin_menu', 'mp_stacks_template_packs_plugin_directory' );
