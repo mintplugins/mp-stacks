@@ -17,17 +17,15 @@ function mp_stacks_addon_directory_header(){
 	?>
 	<div class="mp-stacks-directory-header" width="100%" height="300px">
 		<div class="mp-stacks-directory-title">
-			One License To Install Them All.
+			<?php echo __( 'One License To Install Them All.', 'mp_stacks' ); ?>
 		</div>
 		<div class="mp-stacks-directory-subtitle">
-			Save hundreds of dollars and time by getting the Master License. It works for every single product from MintPlugins.com – now and in the future – and saves you time fumbling around trying to find the right license for the right product.
-
-This license is good for 1 year from its purchase date. After 1 year, it can be renewed at 50% of the original cost.
+			<?php echo __( 'Save hundreds of dollars and time by getting the Master License. It works to install every single product from MintPlugins.com for 1 year.', 'mp_stacks' ); ?>
 		</div>
 		<div class="mp-stacks-directory-master-license-button">
-			<a href="http://mintplugins.com/plugins/master-license/" class="button" target="_blank">Get the Master License - $110</a>
+			<a href="http://mintplugins.com/plugins/master-license/" class="button" target="_blank"><?php echo __( 'Get the Master License', 'mp_stacks' ); ?> - $110</a>
 		</div>
-	</div>';
+	</div>
     <?php
 }
 add_action( 'mp_core_directory_header_' . 'mp_stacks_plugin_directory', 'mp_stacks_addon_directory_header' );
