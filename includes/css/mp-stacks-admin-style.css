@@ -246,7 +246,10 @@
 	width:10px;
 	margin-right:5px;
 }
-
+/* Directory */
+body.mp-stacks_page_mp_stacks_plugin_directory .wrap h2{
+	margin-bottom:12px;	
+}
 .mp-stacks-directory-header{
 	padding:30px;
 	border: 1px solid #dedede;
