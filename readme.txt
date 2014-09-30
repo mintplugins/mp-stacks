@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.0.1.2
+Stable tag: 1.0.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,7 +36,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 == Changelog ==
 
 = 1.0.1.3 = September 30, 2014
-* Fixed other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
+* Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
 
 = 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
