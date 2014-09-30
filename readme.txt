@@ -12,19 +12,19 @@ An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in
 
 == Description ==
 
-Build pages using the MP Stacks plugin by making “Bricks”. Each Brick can have its own background image, colour, size, and 2 “Content-Types”. 
+Build pages using the MP Stacks plugin by making "Bricks". Each Brick can have its own background image, colour, size, and 2 "Content-Types". 
 
-There are 3 Content-Types” built into the MP Stacks Plugin: Video, Image, and Text.
+There are 3 Content-Types" built into the MP Stacks Plugin: Video, Image, and Text.
 
 == Installation ==
 
 This section describes how to install the plugin and get it working.
 
-1. Upload the 'mp-stacks' folder to the `/wp-content/plugins/` directory
+1. Upload the 'mp-stacks' folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Build Bricks under the “Stacks and Bricks” menu. 
-4. Publish your bricks into a “Stack”.
-5. Put Stacks on pages using the shortcode or the “Add Stack” button.
+3. Build Bricks under the "Stacks and Bricks" menu. 
+4. Publish your bricks into a "Stack".
+5. Put Stacks on pages using the shortcode or the "Add Stack" button.
 
 == Frequently Asked Questions ==
 
@@ -35,11 +35,14 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.3 = September 30, 2014
+* Fixed other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
+
 = 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
-* Changed name of Add-Ons page from “Add Ons” to “Add on Shop”
+* Changed name of Add-Ons page from "Add Ons" to "Add on Shop"
 * Added Split Percentage Control - to control Left/Right Content-Type width percentage
-* Changed brick’s post_class to no longer show the .hentry class
+* Changed brick's post_class to no longer show the .hentry class
 * Removed mp_brick_container_css Filter Hook
 * Added mp_brick_first_container_css Filter Hook
 * Added mp_brick_second_container_css Filter Hook
@@ -49,13 +52,13 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Added Brick/Stack Titles on each Brick
 * Removed previously deprecated JS which set the font size in TinyMCE for text areas.
 * Added user-required confirmation for inserting existing stack - users were getting confused
-* Removed misc options for Drafts, Dates etc for Bricks as they aren’t needed.
-* Added dismissable “Tip” to let people know they can double click a brick to edit it.
+* Removed misc options for Drafts, Dates etc for Bricks as they aren't needed.
+* Added dismissable "Tip" to let people know they can double click a brick to edit it.
 * Added support description in Brick editor.
 * Made Lightbox close upon the deletion of a brick.
-* Added action hook “mp_brick_metabox” so brick metaboxes only load on brick admin screens
+* Added action hook "mp_brick_metabox" so brick metaboxes only load on brick admin screens
 * Added activation hook and redirection to Welcome Page upon activation
-* Changed Capability Type for MP Stacks to Page instead of Post. This way authors don’t have access.
+* Changed Capability Type for MP Stacks to Page instead of Post. This way authors don't have access.
 * Added Directory page for Stack Templates
 * Added notice at the top of Directory pages about the master license
 * Added auto text-resize system for mobile
@@ -63,19 +66,19 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 = 1.0.1.1 = June 8, 2014
 * Left/Right Brick widths go from, 37% to 50%
-* Content-Type areas get “position:relative;”, Width 100%, no left/right margins by default, border box sizing.
-* Added a jQuery trigger called “mp_stacks_content_type_change” when a content type is changed
+* Content-Type areas get "position:relative;", Width 100%, no left/right margins by default, border box sizing.
+* Added a jQuery trigger called "mp_stacks_content_type_change" when a content type is changed
 * Added magnific popup to admin for use in managing back-end options
 * Added Content-Type width and float controls
-* Added “Full-Width” option for content-types (to remove default 10px padding)
+* Added "Full-Width" option for content-types (to remove default 10px padding)
 * Changed edit stack settings save callback to admin_init instead of edited_mp_stacks hook
-* Added Filter hook for “mp_brick_first_content_type_css_filter”
-* Added Filter hook for “mp_brick_first_content_type_mobile_css_filter”
-* Added Filter hook for “mp_brick_second_content_type_css_filter”
-* Added Filter hook for “mp_brick_second_content_type_mobile_css_filter”
+* Added Filter hook for "mp_brick_first_content_type_css_filter"
+* Added Filter hook for "mp_brick_first_content_type_mobile_css_filter"
+* Added Filter hook for "mp_brick_second_content_type_css_filter"
+* Added Filter hook for "mp_brick_second_content_type_mobile_css_filter"
 * Added arguments for content-types to the mp_brick_additional_css filter
 * Added body class to the stack-only pages
-* Added “Optimize for MP Stacks” Page Template if no Stack Page Template exists
+* Added "Optimize for MP Stacks" Page Template if no Stack Page Template exists
 
 = 1.0.1.0 = May 8, 2014
 * Stack template functions added
@@ -85,7 +88,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 = 1.0.0.9 = April 16, 2014
 * Updated TinyMCE Plugin for TinyMCE 4.0
 * CSS is now output in the header instead of the footer
-* Added “Stack Only” pages and rewrite parameter
+* Added "Stack Only" pages and rewrite parameter
 * Changed variable for mp_brick_additional_css filter from $css_output to null
 * JS Scripts are now enqueued to show in the footer instead of header
 * Smooth Scrolling and anchor points added for bricks
@@ -98,7 +101,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue
 
 = 1.0.0.6 = March 8, 2014
-* Prevent default event for brick edit links - wasn’t working in Firefox
+* Prevent default event for brick edit links - wasn't working in Firefox
 
 = 1.0.0.5 = March 5, 2014
 * Better responsive Handling
