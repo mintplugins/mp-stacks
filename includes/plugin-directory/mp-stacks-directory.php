@@ -1,15 +1,6 @@
 <?php
 
 /**
- * MP Stacks Add On Shop Page Title
- * http://mintplugins.com/doc/plugin-directory-class/
- */
-function mp_stacks_add_on_directory_title(){
-	return __( 'MP Stacks Add-On Shop', 'mp_stacks' );
-}
-add_filter( 'mp_core_directory_' . 'mp_stacks_plugin_directory' . '_title', 'mp_stacks_add_on_directory_title' );
-
-/**
  * MP Stacks Template Shop Header Stuff
  * http://mintplugins.com/doc/plugin-directory-class/
  */
@@ -47,9 +38,10 @@ function mp_stacks_add_on_plugin_directory(){
 	
 	$args = array (
 		'parent_slug' => 'mp-stacks-about',
-		'page_title' => 'Add-Ons',
+		'menu_title' => __( 'Add-Ons', 'mp_stacks' ),
+		'page_title' => __( 'MP Stacks Add-On Shop', 'mp_stacks' ),
 		'slug' => 'mp_stacks_plugin_directory',
-		'directory_list_url' => array(
+		'directory_list_urls' => array(
 			'content_types' => array(
 				'title' => __( '"Content-Type" Add-Ons', 'mp_stacks' ),
 				'description' => __( 'A "Content-Type" is the main content a Brick displays in MP Stacks.', 'mp_stacks' ),
@@ -61,7 +53,8 @@ function mp_stacks_add_on_plugin_directory(){
 				'directory_list_url' => 'http://mintplugins.com/repo-group/mp-stacks-utility-add-ons/',
 			),
 		),
-		'search_list_url' => 'https://mintplugins.com/repo-group/mp-stacks/',
+		'search_api_url' => 'https://mintplugins.com/',
+		'limit_search_to_repo_group_slug' => 'mp-stacks',
 		'plugin_success_link' => add_query_arg( array('page' => 'mp_stacks_plugin_directory' ), admin_url('admin.php') )
 	);
 	
