@@ -108,7 +108,8 @@ function mp_stacks_redirect_upon_activation(){
 			return;
 		}
 		
-		wp_mail('johnstonphilip@gmail.com', 'Activation Hook running', 'yeah it are' );
+		//Debug:
+		//wp_mail('support@mintplugins.com', 'Activation Hook running', 'Testing Activation' );
 		
 		// Redirect the user to our welcome page
 		wp_redirect( admin_url() . '?page=mp-stacks-about' );
