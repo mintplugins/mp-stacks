@@ -59,6 +59,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Added Directory page for Stack Templates
 * Added notice at the top of Directory pages about the master license
 * Added auto text-resize system for mobile
+* If Content Types max width is blank, default to 1000
 
 = 1.0.1.1 = June 8, 2014
 * Left/Right Brick widths go from, 37% to 50%
@@ -74,6 +75,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Added Filter hook for “mp_brick_second_content_type_mobile_css_filter”
 * Added arguments for content-types to the mp_brick_additional_css filter
 * Added body class to the stack-only pages
+* Added “Optimize for MP Stacks” Page Template if no Stack Page Template exists
 
 = 1.0.1.0 = May 8, 2014
 * Stack template functions added
