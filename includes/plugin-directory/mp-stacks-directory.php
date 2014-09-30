@@ -78,4 +78,4 @@ function mp_stacks_template_packs_plugin_directory(){
 	
 	new MP_CORE_Plugin_Directory( $args );
 }
-add_action( '_admin_menu', 'mp_stacks_template_packs_plugin_directory' );
+//add_action( '_admin_menu', 'mp_stacks_template_packs_plugin_directory' );
