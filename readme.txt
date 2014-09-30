@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
-Tested up to: 3.9
-Stable tag: 1.0.1.0
+Tested up to: 4.0
+Stable tag: 1.0.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.2 = September X, 2014
+= 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
 * Changed name of Add-Ons page from “Add Ons” to “Add on Shop”
 * Added Split Percentage Control - to control Left/Right Content-Type width percentage
