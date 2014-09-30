@@ -205,6 +205,8 @@ function mp_stacks_edit_taxonomy_url_for_stacks( $location, $term_id, $taxonomy,
 		return add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $term_id ), admin_url('admin.php') );	
 	}
 	
+	return $location;
+	
 }
 add_filter( 'get_edit_term_link', 'mp_stacks_edit_taxonomy_url_for_stacks', 10, 4 );
 
