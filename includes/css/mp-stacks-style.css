@@ -92,6 +92,7 @@
 }
 .mp-brick .mp-brick-first-content-type, 
 .mp-brick .mp-brick-second-content-type {
+	display: inline-block; /* Added in Version 1.0.1.3 to cause these container divs to always wrap entirely around their contents - even if those contents are not set to be inline-block*/
 	position:relative;
 	width:100%;
 	z-index:2;
