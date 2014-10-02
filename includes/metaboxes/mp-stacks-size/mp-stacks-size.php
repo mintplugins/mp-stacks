@@ -52,7 +52,7 @@ function mp_stacks_size_create_meta_box(){
 			array(
 				'field_id'			=> 'brick_min_above_c1',
 				'field_title' 	=> __( '1st Content-Type - Min Space Above:', 'mp_stacks'),
-				'field_description' 	=> 'Enter the minimum height above/below the 1st Content-Type (in pixels) for this brick. Default: 10',
+				'field_description' 	=> 'Enter the minimum height above/below the 1st Content-Type (in pixels) for this brick. Default: 0',
 				'field_type' 	=> 'number',
 				'field_value' => '',
 				'field_showhider'  => 'brick_centered_inner_margins_showhider',
@@ -68,7 +68,7 @@ function mp_stacks_size_create_meta_box(){
 			array(
 				'field_id'			=> 'brick_min_above_c2',
 				'field_title' 	=> __( '2nd Content-Type - Min Space Above:', 'mp_stacks'),
-				'field_description' 	=> 'Enter the minimum height above/below the 2nd Content-Type (in pixels) for this brick. Default: 10',
+				'field_description' 	=> 'Enter the minimum height above/below the 2nd Content-Type (in pixels) for this brick. Default: 0',
 				'field_type' 	=> 'number',
 				'field_value' => '',
 				'field_showhider'  => 'brick_centered_inner_margins_showhider',
@@ -76,7 +76,7 @@ function mp_stacks_size_create_meta_box(){
 			array(
 				'field_id'			=> 'brick_min_below_c2',
 				'field_title' 	=> __( '2nd Content-Type - Min Space Below:', 'mp_stacks'),
-				'field_description' 	=> 'Enter the minimum height below the 2nd Content-Type (in pixels) for this brick. Default: 10',
+				'field_description' 	=> 'Enter the minimum height below the 2nd Content-Type (in pixels) for this brick. Default: 0',
 				'field_type' 	=> 'number',
 				'field_value' => '',
 				'field_showhider'  => 'brick_centered_inner_margins_showhider',

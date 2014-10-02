@@ -38,6 +38,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 = 1.0.1.3 = September 30, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
 * First and Second Content Type divs set to inline-block so they wrap around content no matter what.
+* Changed: No longer removes left right custom margins on mobile. They remain no matter what now - where before they were reset to 0.
 
 = 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
