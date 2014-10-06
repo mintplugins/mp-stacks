@@ -117,10 +117,9 @@ class MP_Stacks_Page_Templaer {
 				//Check the title of the default page template as well - This filter: https://core.trac.wordpress.org/ticket/27178
 				$default_page_template_title = apply_filters( 'default_page_template_title', __('Default Template') );
 				
-				if ( strpos( 'Stack', $default_page_template_title) !== false ){
+				if ( strpos( $default_page_template_title, 'Stack' ) !== false ){
 					$stack_template_exists = true;
 				}
-				
 				
 				if ( !$stack_template_exists ){
 				
