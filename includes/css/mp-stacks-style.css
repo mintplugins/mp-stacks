@@ -103,6 +103,10 @@
 
 /*Text*/
 
+.mp-stacks-text-areas{
+	display:inline-block; /* Added in Version 1.0.1.3 to cause text site centered. It was sitting off to the left in a left/right alignment - which doesn't follow how other content types work */
+}
+
 /*Make sure there are no margins after the last elements in a text area */	
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-1:last-child a:last-child, 
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-2 a:last-child,
@@ -144,7 +148,8 @@
 }
 
 /* Links */
-.mp_brick a{
+.mp_brick a,
+.mp_brick a:hover{
 	display:inline-block;
 	text-decoration:none;	
 }
