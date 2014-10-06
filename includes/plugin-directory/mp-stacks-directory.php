@@ -54,8 +54,7 @@ function mp_stacks_add_on_plugin_directory(){
 			),
 		),
 		'search_api_url' => 'https://mintplugins.com/',
-		'limit_search_to_repo_group_slug' => 'mp-stacks',
-		'plugin_success_link' => add_query_arg( array('page' => 'mp_stacks_plugin_directory' ), admin_url('admin.php') )
+		'limit_search_to_repo_group_slug' => 'mp-stacks'
 	);
 	
 	new MP_CORE_Plugin_Directory( $args );
