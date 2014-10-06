@@ -267,6 +267,15 @@
 	max-height: 390px;
 }
 
+/* Clear Fix */
+.mp-stacks-clearedfix:after {
+	content: ".";
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+}
+
 /*Easy Digital Downloads Shortcode buy buttons in bricks */
 .mp-brick .edd_price_options ul{
 	list-style:none;
