@@ -198,7 +198,7 @@ jQuery(document).ready(function($){
 						largest_width_px = $(this).width();
 					}
 					
-					all_elements_to_change.size_counter = $(this);
+					all_elements_to_change[size_counter] = $(this);
 				}
 				//If this element has the largest font size we've seen yet
 				else if ( this_font_size > largest_font_size ){
@@ -210,7 +210,7 @@ jQuery(document).ready(function($){
 						largest_width_px = $(this).width();
 					}
 				
-					all_elements_to_change.size_counter = $(this);
+					all_elements_to_change[size_counter] = $(this);
 				}
 				//If this element has a smaller font size than we've seen yet
 				else if ( this_font_size < largest_font_size ){
@@ -219,7 +219,7 @@ jQuery(document).ready(function($){
 					if ( $(this).width() > largest_width_px ){
 						main_element_to_change = $(this);
 						largest_width_px = $(this).width();
-						all_elements_to_change.size_counter = $(this);
+						all_elements_to_change[size_counter] = $(this);
 					}
 				
 				}
