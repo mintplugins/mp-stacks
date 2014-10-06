@@ -55,6 +55,49 @@ function mp_stacks_remove_hentry( $classes, $class = '', $post_id = '' ) {
 add_filter( 'post_class', 'mp_stacks_remove_hentry', 100, 3 );
 
 /**
+ * Remove "hentry" from page post_class if the page template is "Optimize for MP Stacks"
+ *
+ * @since 1.0
+ * @return void
+*/
+function mp_stacks_remove_hentry_from_stack_page_templates( $classes ) {
+	global $post;
+	
+	$class_name_counter = 0;
+	
+	//Loop through each class name
+	foreach( $classes as $class_name ){
+		//If one of the class names is hentry
+		if ( $class_name == 'hentry' ){
+			//If we are using the mp-stacks-page-template
+			if ( get_page_template_slug( $post->ID ) == 'mp-stacks-page-template.php' ){
+				//Remove hentry from the classes array
+				$classes[$class_name_counter] = '';	
+			}
+			
+			//If we are using the default page template but it has had its title converted to include the word 'stack'
+			else if ( empty( get_page_template_slug( $post->ID ) ) ){
+				
+				//Check the title of the default page template - This filter: https://core.trac.wordpress.org/ticket/27178
+				$default_page_template_title = apply_filters( 'default_page_template_title', __('Default Template') );
+					
+				//If the default page template's title includes the word "Stack"
+				if ( strpos( $default_page_template_title, 'Stack' ) !== false ){
+					//Remove hentry from the classes array
+					$classes[$class_name_counter] = '';	
+				}	
+			}
+			
+		}
+		
+		$class_name_counter = $class_name_counter + 1;
+	}
+	
+	return $classes;
+}
+add_filter( 'post_class', 'mp_stacks_remove_hentry_from_stack_page_templates' );
+
+/**
  * If there's no js in admin, let them know that life is too short for that.
  *
  * @since 1.0
