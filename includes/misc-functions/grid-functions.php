@@ -13,7 +13,88 @@
  */
 
 /**
- * Get the CSS for a text div based on the placement string the user has chosen
+ * Get ALL the CSS for text in a Grid
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $placement_string String - A string chosen by the user to specify the position of the title
+ * @param    $args Array - An associative array with additional options like image width and height, etc
+ * @return   $css_output String - A string containing the CSS for the titles in this grid
+ */
+function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defaults = array() ){
+	
+	//Set up defaults for CSS if none were provided to the function		
+	$css_defaults_if_none_provided = array(
+		'color' => NULL,
+		'size' => 20,
+		'lineheight' => 20,
+		'background_padding' => 5,
+		'background_color' => '#fff',
+		'background_opacity' => 100,
+		'placement_string' => 'below_image_left',
+	);
+	$css_defaults = wp_parse_args( $css_defaults, $css_defaults_if_none_provided );
+				
+	//Text placement
+	$placement = mp_core_get_post_meta($post_id, $meta_prefix . '_placement', $css_defaults['placement_string']);
+	
+	//Text Color and size
+	$color = mp_core_get_post_meta($post_id, $meta_prefix . '_color', $css_defaults['color']);
+	$size = mp_core_get_post_meta($post_id, $meta_prefix . '_size', $css_defaults['size']);
+	$lineheight = mp_core_get_post_meta($post_id, $meta_prefix . '_lineheight', $css_defaults['lineheight']);
+	
+	//Show Text Backgrounds?
+	$background_show = mp_core_get_post_meta($post_id, $meta_prefix . '_background_show');
+	
+	//If we should show the text backgrounds
+	if ( $background_show ){
+		
+		//Text background spacing (padding)
+		$background_padding = mp_core_get_post_meta($post_id, $meta_prefix . '_background_padding', $css_defaults['background_padding']);	
+		
+			//Calculate Minimum Line Height with Padding
+			$min_line_height_with_padding = ( $background_padding * 3 ) + $size;
+			//If the line height with padding is greater than the lineheight, we need to make the lineheight match or the layout gets thrown off
+			$lineheight = $min_line_height_with_padding  > $lineheight ? $min_line_height_with_padding : $lineheight;
+		
+		//Text background color 
+		$background_color = mp_core_get_post_meta($post_id, $meta_prefix . '_background_color', $css_defaults['background_color'] );	
+		
+		//Text background opacity 
+		$background_opacity = mp_core_get_post_meta($post_id, $meta_prefix . '_background_opacity', $css_defaults['background_opacity']);	
+	}
+	else{
+		//Text background spacing (padding)
+		$background_padding = '0';	
+		//Text background color - defaults to white
+		$background_color = '#FFFFFF';	
+		//Text background opacity 
+		$background_opacity = '0';	
+	}
+	
+	$css_output = '#mp-brick-' . $post_id . ' .' . $css_class . '-holder, 
+		#mp-brick-' . $post_id . ' .' . $css_class . '-holder a{
+			' . mp_stacks_grid_get_text_placement_css( $placement, array( 
+					'line_height' => ($size),
+				) ) . '; ' .
+			mp_core_css_line( 'color', $color ) . 
+			mp_core_css_line( 'font-size', $size, 'px' ) .
+			mp_core_css_line( 'line-height', $lineheight, 'px' ) . 
+		'}' . 
+		mp_stacks_grid_highlight_text_css( array( 
+				'brick_id' => $post_id,
+				'class_name' => $css_class,
+				'highlight_padding' => $background_padding, 
+				'highlight_color' => $background_color, 
+				'highlight_opacity' => $background_opacity
+		) );
+		
+	return $css_output;
+				
+}
+
+/**
+ * Get the CSS lines for a text div based on the placement string the user has chosen
  *
  * @access   public
  * @since    1.0.0
@@ -145,7 +226,10 @@ function mp_stacks_grid_highlight_text_html( $args ){
 	
 	extract( $args, EXTR_SKIP );
 	
-	$html_output = '<div class="' . $class_name . '-holder">';
+	//Add clear div to bump this below and clear floats
+	$html_output = '<div class="mp-stacks-clearedfix"></div>';
+	
+	$html_output .= '<div class="' . $class_name . '-holder">';
 		
 		$html_output .= '<div class="' . $class_name . '">';
 		
@@ -157,4 +241,33 @@ function mp_stacks_grid_highlight_text_html( $args ){
 	
 	return $html_output;
 						
+}
+
+/**
+ * Return the array of text pacement options a user can choose from
+ *
+ * @access   public
+ * @since    1.0.0
+ * @return   array
+ */
+function mp_stacks_get_text_position_options(){
+	
+	return array( 
+		'below_image_left' => __( 'Below Image, Left', 'mp_stacks' ),
+		'below_image_right' => __( 'Below Image, Right', 'mp_stacks' ),
+		'below_image_centered' => __( 'Below Image, Centered', 'mp_stacks' ),
+		
+		'over_image_top_left' => __( 'Over Image, Top-Left', 'mp_stacks' ),
+		'over_image_top_right' => __( 'Over Image, Top-Right', 'mp_stacks' ),
+		'over_image_top_centered' => __( 'Over Image, Top-Centered', 'mp_stacks' ),
+		
+		'over_image_middle_left' => __( 'Over Image, Middle-Left', 'mp_stacks' ),
+		'over_image_middle_right' => __( 'Over Image, Middle-Right', 'mp_stacks' ),
+		'over_image_middle_centered' => __( 'Over Image, Middle-Centered', 'mp_stacks' ),
+		
+		'over_image_bottom_left' => __( 'Over Image, Bottom-Left', 'mp_stacks' ),
+		'over_image_bottom_right' => __( 'Over Image, Bottom-Right', 'mp_stacks' ),
+		'over_image_bottom_centered' => __( 'Over Image, Bottom-Centered', 'mp_stacks' ),
+	);
+	
 }
