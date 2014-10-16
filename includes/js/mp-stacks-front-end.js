@@ -1,18 +1,27 @@
 jQuery(document).ready(function($){
 	
-	//Creating a trigger that we can hook to when the screen is done resizing - rather than firing hundreds of times upon resize
+	/**
+	 * Creating a trigger that we can hook to when the screen is done resizing - rather than firing hundreds of times upon resize
+	 *
+	 */
 	var mp_stacks_resize_timer;
 	$(window).resize(function(){
 		clearTimeout(mp_stacks_resize_timer);
 		mp_stacks_resize_timer = setTimeout(mp_stacks_resize_end, 100);
 	});
 	
-	//This function fires when the screen is done resizing. Hook jquery functions to it.
+	/**
+	 * This function fires when the screen is done resizing. Hook jquery functions to it.
+	 *
+	 */
 	function mp_stacks_resize_end(){
 		$(document).trigger( 'mp_stacks_resize_complete' );
 	}
 	
-	// Override the appendContent function in magnificPopup
+	/**
+	 * Override the appendContent function in magnificPopup
+	 *
+	 */
 	$.magnificPopup.instance.appendContent = function(newContent, type) {
 		
 		//Get the instance
@@ -52,10 +61,12 @@ jQuery(document).ready(function($){
 
 		mfp.contentContainer.append(mfp.content);
 	
-	
-	
 	};
 	
+	/**
+	 * Modify the Magnific Popup to open using the popup source - and set sized and behaviours for Media like YouTube, JPGs, etc
+	 *
+	 */
 	function mp_stacks_magnific_editor( popup_source ){
 		$.magnificPopup.open({
 			
@@ -119,20 +130,29 @@ jQuery(document).ready(function($){
 	
 	}
 
-	//Set the class names of links which should open magnific popup
+	/**
+	 * Set the class names of links which should open magnific popup
+	 *
+	 */
 	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(event){ 
 		event.preventDefault();
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor( $(this).attr('href') );
 	});	
 	
-	//Set the class names of links which should open magnific popup
+	/**
+	 * Upon Double Click, Open the Brick Editor
+	 *
+	 */
 	$(document).on('dblclick', '.mp-brick', function(){ 
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor($(this).find('.mp-brick-edit-link').attr('href'));
 	});	
 	
-	//Perform smooth scroll when brick's achored are linked to
+	/**
+	 * Perform smooth scroll when brick's achored are linked to
+	 *
+	 */
 	$(function() {
 	  $('a[href*=#]:not([href=#])').click(function() {
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -148,11 +168,19 @@ jQuery(document).ready(function($){
 	  });
 	});
 			
-	//Set the font size of a brick to max out based on its longest word fitting into the width of the page
+	/**
+	 * Upon Resize, Set the font size of a brick to max out based on its longest word fitting into the width of the page
+	 *
+	 */
 	$(window).on('mp_stacks_resize_complete load', function(){
 		mp_stacks_check_text_size();
 	});
 	
+	
+	/**
+	 * Set the font size of a brick to max out based on its longest word fitting into the width of the page
+	 *
+	 */
 	function mp_stacks_check_text_size(){	
 	
 		var run_check_again_when_finished = false;
