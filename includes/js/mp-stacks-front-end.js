@@ -363,7 +363,53 @@ jQuery(document).ready(function($){
 	
 	}
 	
-	//jQuery Plugin to Change an Element Type
+	/**
+	 * Load more posts into a Grid.
+	 *
+	 */
+	$( document ).on( 'click', '.mp-stacks-grid-load-more-button', function(event){
+		
+		event.preventDefault();
+		
+		//Change the message on the Load More button to say "Loading..."
+		$(this).html($(this).attr( 'mp_stacks_grid_loading_text' ));
+		
+		// Use ajax to load more posts
+		var postData = {
+			action: 'mp_stacks_' + $(this).attr( 'mp_stacks_grid_ajax_prefix' ) + '_load_more',
+			mp_stacks_grid_post_id: $(this).attr( 'mp_stacks_grid_post_id' ),
+			mp_stacks_grid_offset: $(this).attr( 'mp_stacks_grid_brick_offset' ),
+			mp_stacks_grid_post_counter: $(this).attr( 'mp_stacks_grid_post_counter' ),
+		}
+		
+		var the_grid_container = $(this).parent().prev();
+		var the_button_container = $(this).parent();
+		
+		//Ajax load more posts
+		$.ajax({
+			type: "POST",
+			data: postData,
+			dataType:"json",
+			url: mp_stacks_frontend_vars.ajaxurl,
+			success: function (response) {
+				
+				var $newitems = $(response.items);
+				the_grid_container.append($newitems).imagesLoaded( function(){ the_grid_container.masonry('appended', $newitems) });
+				the_button_container.after(response.animation_trigger);
+				the_button_container.replaceWith(response.button);
+				
+			
+			}
+		}).fail(function (data) {
+			console.log(data);
+		});	
+		
+	});
+	
+	/**
+	 * jQuery Plugin to Change an Element Type
+	 *
+	 */
 	$.fn.mp_stacks_changeElementType = function(newType) {
 		
 		var attrs = {};
