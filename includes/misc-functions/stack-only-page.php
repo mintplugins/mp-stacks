@@ -13,6 +13,23 @@
  * @author      Philip Johnston
  */
 
+
+function mp_stacks_show_the_right_post( $query_vars ){
+	
+	//If a page slug has been set with brick in the URL
+	if ( isset($query_vars['mp_stacks_page_slug']) ){
+		
+		//Get the id of the post which has this slug
+		$page = get_page_by_path( $query_vars['mp_stacks_page_slug'] );
+		
+		//Tell WordPress we are on the post/page with that id
+		$query_vars['page_id'] = $page->ID;
+	}
+	
+	return $query_vars;
+}
+add_filter( 'request', 'mp_stacks_show_the_right_post' );	
+
 /**
  * Create Rewrite permalink rules for MP Stacks
  * Parameter: $rules the current rewrite rules from WP
@@ -21,8 +38,38 @@ function mp_stacks_rewrites($rules){
 			
 		$new_rules = array(
 	
-			//mp-stack/178
+			//stack/stack-slug
 			"stack/([^/]*)/?$" => 'index.php?mp_stack_only_page=$matches[1]',
+			
+			/**
+			 * Here we make 2 URL variables which are arrays.
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//page-slug/brick/brick-slug/page/2
+			"([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_stacks_page_slug=$matches[1]&mp_brick_pagination_slugs=$matches[2]&mp_brick_pagination_page_numbers=$matches[3]',
+			
+			/**
+			 * Here we make 2 URL variables which are arrays.
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//post-type/page-slug/brick/brick-slug/page/2
+			//"([^/]*)/([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_brick_pagination_slugs=$matches[3]&mp_brick_pagination_page_numbers=$matches[4]',
+			
+			/**
+			 * Here we make 2 URL variables which are arrays:
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1', 'brick-2' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2', '4' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//post-type/page-slug/brick/brick-slug/page/2/brick/brick-slug-2/page/4
+			//"([^/]*)/([^/]*)/brick/([^/]*)/page/([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_brick_pagination_slugs=$matches[3]|||$matches[5]&mp_brick_pagination_page_numbers=$matches[4]|||$matches[6]',
 
 		);
 		
@@ -39,6 +86,12 @@ add_filter('rewrite_rules_array', 'mp_stacks_rewrites');
 function mp_stacks_rewrite_tags(){
 	
 	add_rewrite_tag('%mp_stack_only_page%','([^/]*)');
+	
+	add_rewrite_tag('%mp_stacks_page_slug%','([^/]*)');
+	
+	add_rewrite_tag('%mp_brick_pagination_slugs%','([^/]*)');
+	
+	add_rewrite_tag('%mp_brick_pagination_page_numbers%','([^/]*)');
 		
 }
 add_action('init', 'mp_stacks_rewrite_tags');
