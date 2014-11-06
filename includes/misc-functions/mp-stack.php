@@ -738,13 +738,23 @@ add_filter( 'mp_brick_second_container_css', 'mp_stacks_second_container_css', 1
 function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	
 	//Check alignment
-	$brick_alignment = get_post_meta( $post_id, 'brick_alignment', true );
+	$brick_alignment = mp_core_get_post_meta( $post_id, 'brick_alignment', 'leftright' );
+	
+	//Check if there is a content type in slot #2
+	$mp_stacks_second_content_type = mp_core_get_post_meta($post_id, 'brick_second_content_type', 'none');
 	
 	//Check c1's above margins
 	$brick_min_above_c1 = mp_core_get_post_meta( $post_id, 'brick_min_above_c1', 0 );
 	
-	//Check c1's below margins
-	$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 10 );
+	//If there is no second content-type OR this is a left/right allignmnet, don't apply the 10px bottom margin
+	if ( $mp_stacks_second_content_type == 'none' || $brick_alignment == 'leftright' ){
+		//Check c1's below margins (default to 0)
+		$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 0 );
+	}
+	else{
+		//Check c1's below margins (default to 10)
+		$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 10 );	
+	}
 	
 	//Check c2's above margins
 	$brick_min_above_c2 = mp_core_get_post_meta( $post_id, 'brick_min_above_c2', 0 );
