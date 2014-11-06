@@ -67,6 +67,9 @@ function mp_stacks_remove_hentry_from_stack_page_templates( $classes ) {
 	
 	//Loop through each class name
 	foreach( $classes as $class_name ){
+		
+		$page_template_slug = get_page_template_slug( $post->ID );
+		
 		//If one of the class names is hentry
 		if ( $class_name == 'hentry' ){
 			//If we are using the mp-stacks-page-template
@@ -76,7 +79,7 @@ function mp_stacks_remove_hentry_from_stack_page_templates( $classes ) {
 			}
 			
 			//If we are using the default page template but it has had its title converted to include the word 'stack'
-			else if ( empty( get_page_template_slug( $post->ID ) ) ){
+			else if ( empty( $page_template_slug ) ){
 				
 				//Check the title of the default page template - This filter: https://core.trac.wordpress.org/ticket/27178
 				$default_page_template_title = apply_filters( 'default_page_template_title', __('Default Template') );
