@@ -93,6 +93,7 @@
 .mp-brick .mp-brick-first-content-type, 
 .mp-brick .mp-brick-second-content-type {
 	display: inline-block; /* Added in Version 1.0.1.3 to cause these container divs to always wrap entirely around their contents - even if those contents are not set to be inline-block*/
+	float:left; /* Added in Version 1.0.1.3 */
 	position:relative;
 	width:100%;
 	z-index:2;
@@ -293,4 +294,171 @@
 	max-width:100%!important;
 	z-index: 3;
 	position: relative;
+}
+
+/* Grid Styles */
+.mp-stacks-grid,
+.mp-stacks-grid .mp-stacks-grid-item a{
+	display:block;
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid{ 
+	margin: 0px;	
+}
+.mp-stacks-grid-item{
+	position:relative;
+	overflow:hidden;
+	display:inline-block;
+	text-align:left;
+	float:left;	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-image-link{
+	display:inline-block;
+	width:100%;	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-item-image-holder{
+	position:relative;
+	display:table;	
+	width:101%;
+	overflow:hidden;
+}
+.mp-stacks-grid-item-image-overlay{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	display: block;
+	overflow: hidden;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 9999999;
+}
+.mp-stacks-grid-over-image-text-container,
+.mp-stacks-grid-over-image-text-container-top,
+.mp-stacks-grid-over-image-text-container-middle,
+.mp-stacks-grid-over-image-text-container-bottom{
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:0px;
+	display:block;	
+	overflow:hidden;
+	z-index: 99999999;
+	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-over-image-text-container-top .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:top;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-middle .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:middle;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-bottom .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:bottom;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-table{
+	display:table;
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.mp-stacks-grid-over-image-text-container-table-cell > *{
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-table-cell p{
+	margin:0px;
+}
+.mp-stacks-grid-item-image{
+	max-width:100%;	
+	width:100%;	
+}
+.mp-stacks-grid-item-title-holder{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */	
+}
+.mp-stacks-grid-item-title,
+.mp-stacks-grid-item-excerpt{
+	display: inline-block;
+	text-decoration:none;
+	position:relative;
+}
+.mp-stacks-grid-item-title-foreground,
+.mp-stacks-grid-item-excerpt-foreground{
+	display: inline-block;
+	text-decoration:none;
+	position:relative;
+	z-index:9999;
+}
+.mp-stacks-grid-item-title-background,
+.mp-stacks-grid-item-excerpt-background{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	display: block;
+	overflow: hidden;
+	z-index:999;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.mp-stacks-grid-item-title-highlight,
+.mp-stacks-grid-item-excerpt-highlight,
+.mp-stacks-grid-item-price-highlight{
+	display: inline;
+    padding-left: 0!important;
+    padding-right: 0!important;	
+}
+
+.mp-stacks-grid-item-excerpt-holder, 
+.mp-stacks-grid-item-excerpt-holder a{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */			
+}
+.mp-stacks-grid-item-excerpt-holder{
+	display: inline-block;	
+	padding-top:5px;
+}
+.mp-stacks-grid-item-clearedfix:after {
+	content: ".";
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+}
+.mp-stacks-grid-item .mp-stacks-grid-item-image{
+	padding:0px;
+	margin:0px;	
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid .mp-stacks-grid-item{ 
+	width:100%!important;
+}
+.mp-stacks-grid-load-more-button{
+	margin:20px;	
+}
+.mp-stacks-grid-read-more{
+	white-space: nowrap;	
+}
+.mp-stacks-grid-load-more-container #posts-navigation{
+	margin:0px;
 }
