@@ -142,14 +142,19 @@ button::-moz-focus-inner {
 .mfp-close-btn-in .mfp-close {
   color: #333333; }
 
-.mfp-image-holder .mfp-close, .mfp-iframe-holder .mfp-close {
+.mfp-image-holder .mfp-close, 
+.mfp-iframe-holder .mfp-close {
   color: white;
   right: -6px;
   text-align: right;
   padding-right: 6px;
   width: 100%; 
   background-color:transparent;
-  }
+}
+.mfp-image-holder .mfp-close:hover, 
+.mfp-iframe-holder .mfp-close:hover {
+	background-color:transparent;
+}
 
 .mfp-counter {
   position: absolute;
