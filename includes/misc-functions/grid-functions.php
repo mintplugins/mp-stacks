@@ -13,6 +13,80 @@
  */
 
 /**
+ * If we are using pagination in a grid, make that pagination pretty by setting up some rewrite rules
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $rules array - The array of rewrite rules for WordPress
+ * @return   $rules array - The array of rewrite rules for WordPress
+ */
+function mp_stacks_grid_pagination_rewrites($rules){
+			
+		$new_rules = array(
+			
+			/**
+			 * Here we make 2 URL variables which are arrays.
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//page-slug/brick/brick-slug/page/2
+			"([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_stacks_page_slug=$matches[1]&mp_brick_pagination_slugs=$matches[2]&mp_brick_pagination_page_numbers=$matches[3]',
+			
+			/**
+			 * Here we make 2 URL variables which are arrays.
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//post-type/page-slug/brick/brick-slug/page/2
+			//"([^/]*)/([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_brick_pagination_slugs=$matches[3]&mp_brick_pagination_page_numbers=$matches[4]',
+			
+			/**
+			 * Here we make 2 URL variables which are arrays:
+			 * The 1st contains all the brick slugs which have pagination. array( 'brick-1', 'brick-2' )
+			 * The 2nd contains all the page numbers of the above bricks. array( '2', '4' )
+			 * To break them into arrays use explode( '|||', array )
+			 */
+			 
+			//post-type/page-slug/brick/brick-slug/page/2/brick/brick-slug-2/page/4
+			//"([^/]*)/([^/]*)/brick/([^/]*)/page/([^/]*)/brick/([^/]*)/page/([^/]*)/?$" => 'index.php?mp_brick_pagination_slugs=$matches[3]|||$matches[5]&mp_brick_pagination_page_numbers=$matches[4]|||$matches[6]',
+
+		);
+		
+		$new_rules = array_merge($new_rules, $rules);
+		
+		return $new_rules;
+}
+add_filter('rewrite_rules_array', 'mp_stacks_grid_pagination_rewrites');
+
+/**
+ * If we are using pagination in a grid, we need to tell wordpress which page to load
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $query_vars array - The array WordPress uses to setup the Query
+ * @return   $query_vars array - The array WordPress uses to setup the Query
+ */
+function mp_stacks_show_the_right_post( $query_vars ){
+	
+	//If a page slug has been set with brick in the URL
+	if ( isset($query_vars['mp_stacks_page_slug']) ){
+		
+		//Get the id of the post which has this slug
+		$page = get_page_by_path( $query_vars['mp_stacks_page_slug'] );
+		
+		//Tell WordPress we are on the post/page with that id
+		$query_vars['page_id'] = $page->ID;
+	}
+	
+	return $query_vars;
+}
+add_filter( 'request', 'mp_stacks_show_the_right_post' );	
+
+/**
  * Get ALL the CSS for text in a Grid
  *
  * @access   public
