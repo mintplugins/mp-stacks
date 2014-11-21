@@ -41,6 +41,9 @@ jQuery(document).ready(function($){
 			}
 		}
 		
+		//"Action Hook" trigger so Add-Ons can modify the magnific popup further
+		$(window).trigger("mp_stacks_magnific_popup_content_modifier", mfp );
+		
 		//Continue with original appendContent function
 		if(newContent) {
 			if(mfp.st.showCloseBtn && mfp.st.closeBtnInside &&
@@ -124,14 +127,16 @@ jQuery(document).ready(function($){
 			
 			},
 			
-			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
+			mainClass: 'mp-stacks-iframe-full-screen',
 			
+			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
+	
 		}, 0);
 	
 	}
 
 	/**
-	 * Set the class names of links which should open magnific popup
+	 * Set the class names of links which should open a full-size magnific popup
 	 *
 	 */
 	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(event){ 
@@ -139,6 +144,45 @@ jQuery(document).ready(function($){
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor( $(this).attr('href') );
 	});	
+	
+	/**
+	 * Modify the Magnific Popup to open using the popup source - and set sized for height of content
+	 *
+	 */
+	function mp_stacks_magnific_height_match( popup_source, width ){
+		$.magnificPopup.open({
+			
+			items: {
+				src: popup_source
+			},
+			type: 'iframe',
+			iframe: {
+				markup: '<div class="mfp-iframe-height-match" style="width:100%; max-width:' + width + ';">'+
+				'<iframe class="mfp-iframe" frameborder="0" scrolling="no" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%;" allowfullscreen></iframe>'+
+				'<div class="mfp-close"></div>'+
+				'</div>'
+			},
+			mainClass: 'mp-stacks-iframe-height-match'
+		
+		}, 0);
+	
+	}
+	
+	/**
+	 * Set items with the class 'mp-stacks-iframe-height-match-lightbox-link' to open a lightbox iframe matching the height of its contents 
+	 * and at the width defined in its 'mfp-width' attribute
+	 */		
+	$(document).on( 'click', '.mp-stacks-iframe-height-match-lightbox-link', function( event ){
+		
+		event.preventDefault();
+		
+		//Call the function which opens our customized magnific popup for mp stacks
+		mp_stacks_magnific_height_match( $(this).attr('href'), $( this ).attr( 'mfp-width' ) );
+		
+		//Set the mfp-content div to be the width we want for this popup
+		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
+		
+	});
 	
 	/**
 	 * Upon Double Click, Open the Brick Editor
@@ -458,7 +502,6 @@ function mp_stacks_close_lightbox(){
 	
 	//Close the iframe and reload the window
 	jQuery(document).ready(function($){
-		
 				
 		$('.mfp-iframe, .mfp-close').hide();
 		
@@ -476,6 +519,28 @@ function mp_stacks_close_lightbox(){
 		});
 	});
 }
+
+//This function can be used to set an iframe's height to match the height of its contents.
+function mp_stacks_mfp_match_height(iframe) {
+	
+	jQuery(document).ready(function($){
+		
+		var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
+		if (iframeWin.document.body) {
+			
+			//We use an interval to loop the resize function several times to make sure the iframe's content is fully loaded
+			var iframe_height_interval_counter = 1;
+			var iframe_height_interval = setInterval( function(){
+				iframe.height = iframeWin.document.documentElement.scrollHeight + 'px' || iframeWin.document.body.scrollHeight + 'px';
+				iframe_height_interval_counter = iframe_height_interval_counter + 1;
+				if ( iframe_height_interval_counter >= 50 ){
+					clearInterval(iframe_height_interval);	
+				}
+			}, 100 );
+		}
+	
+	});
+};
 
 //Check for old versions of Browsers that suck
 if(  !document.addEventListener  ){
