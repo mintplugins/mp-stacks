@@ -222,7 +222,7 @@
 	cursor:move!important;
 	opacity:0;
 }
-.hentry:hover .menu-order-drag-button {
+.type-mp_brick:hover .menu-order-drag-button {
 	opacity:1;
 }
 #posts-filter .check-column{
