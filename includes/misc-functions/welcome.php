@@ -58,7 +58,7 @@ class MP_Stacks_Welcome {
 			'mp-stacks-about',
 			array( $this, 'about_screen' ),
 			NULL,
-			25.9283746566547773382
+			26.9283746566547773382
 		);
 		
 		//Show link to manage stacks in submenu

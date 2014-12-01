@@ -31,10 +31,7 @@ function mp_stacks_admin_enqueue_reorder_scripts(){
  			
 		//Allows posts to be reordered by dragging and dropping if the 'mp_stack_order' column has been added to the post type
 		wp_enqueue_script( 'mp-stacks-sortable-bricks-js', plugins_url( 'js/mp-stacks-sortable-bricks.js', dirname(__FILE__)),  array( 'jquery', 'jquery-ui-sortable') );
-		
-		//Style the 'mp_stack_order' column
-		wp_enqueue_style( 'mp-stacks-sortable-bricks-css', plugins_url( 'css/mp-stacks-sortable-bricks.css', dirname(__FILE__) ) );
-		
+			
 	}
 	
 }

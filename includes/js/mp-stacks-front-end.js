@@ -16,6 +16,7 @@ jQuery(document).ready(function($){
 	 */
 	function mp_stacks_resize_end(){
 		$(document).trigger( 'mp_stacks_resize_complete' );
+		$('.mfp-content').trigger( 'mp_stacks_resize_complete' );
 	}
 	
 	/**
@@ -81,6 +82,13 @@ jQuery(document).ready(function($){
 			
 			callbacks: {
 				
+				open: function() {
+					// Will fire when popup is opened
+				},
+				close: function() {
+					//Will fire the popup is closed
+				},
+			
 				//Change the type of popup this is based on what's in the src
 				elementParse: function(item) {
 				
@@ -130,6 +138,8 @@ jQuery(document).ready(function($){
 			mainClass: 'mp-stacks-iframe-full-screen',
 			
 			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
+			
+			preloader: true
 	
 		}, 0);
 	
@@ -158,11 +168,23 @@ jQuery(document).ready(function($){
 			type: 'iframe',
 			iframe: {
 				markup: '<div class="mfp-iframe-height-match" style="width:100%; max-width:' + width + ';">'+
-				'<iframe class="mfp-iframe" frameborder="0" scrolling="no" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%;" allowfullscreen></iframe>'+
+				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
 				'</div>'
 			},
-			mainClass: 'mp-stacks-iframe-height-match'
+			callbacks: {
+				open: function() {
+					// Will fire when popup is opened
+				},
+				close: function() {
+					//Will fire the popup is closed
+					$( document ).off( "mp_stacks_mfp_match_height_trigger", '.mfp-content' );
+					$( document ).off( "mp_stacks_resize_complete", '.mfp-content' );
+				}
+				
+			},
+			mainClass: 'mp-stacks-iframe-height-match',
+			preloader: true
 		
 		}, 0);
 	
@@ -184,6 +206,68 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	/**
+	 * Modify the Magnific Popup to open using the popup source - and set sized for height of content
+	 *
+	 */
+	function mp_stacks_magnific_custom_width_height( popup_source, width, height ){
+		$.magnificPopup.open({
+			
+			items: {
+				src: popup_source
+			},
+			type: 'iframe',
+			iframe: {
+				markup: '<div class="mfp-iframe-custom-width-height" style="width:100%; height:100%; max-width:' + width + '; max-height:' + height + ';">'+
+				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" style="width:100%; height:100%;" allowfullscreen></iframe>'+
+				'<div class="mfp-close"></div>'+
+				'</div>'
+			},
+			callbacks: {
+				open: function() {
+					// Will fire when popup is opened
+				},
+				close: function() {
+					//Will fire the popup is closed
+					$( document ).off( "mp_stacks_mfp_match_height_trigger", '.mfp-content' );
+					$( document ).off( "mp_stacks_resize_complete", '.mfp-content' );
+				}
+				
+			},
+			mainClass: 'mp-stacks-iframe-height-match',
+			preloader: true
+		
+		}, 0);
+	
+	}
+	
+	/**
+	 * Set items with the class 'mp-stacks-iframe-height-match-lightbox-link' to open a lightbox iframe matching the height of its contents 
+	 * and at the width defined in its 'mfp-width' attribute
+	 */		
+	$(document).on( 'click', '.mp-stacks-iframe-custom-width-height', function( event ){
+		
+		event.preventDefault();
+		
+		//Call the function which opens our customized magnific popup for mp stacks
+		mp_stacks_magnific_custom_width_height( $(this).attr('href'), $( this ).attr( 'mfp-width' ), $( this ).attr( 'mfp-height' ) );
+		
+		//Set the mfp-content div to be the width we want for this popup
+		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
+		
+	});
+	
+	//If the URL variable mplsmh (Stand for: mp lightbox source matched height) is set,
+	//open the value of it in a lightbox upon page load at the specified width and mathing the height of the contents
+	if ( mp_stacks_getQueryVariable( 'mplsmh' ) ){
+		
+		//Call the function which opens our customized magnific popup for mp stacks
+		mp_stacks_magnific_height_match( mp_stacks_getQueryVariable( 'mplsmh' ), mp_stacks_getQueryVariable( 'width' )  );
+		
+		//Set the mfp-content div to be the width we want for this popup
+		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', mp_stacks_getQueryVariable( 'width' ) );
+	}
+		
 	/**
 	 * Upon Double Click, Open the Brick Editor
 	 *
@@ -533,16 +617,41 @@ function mp_stacks_mfp_match_height(iframe) {
 			var iframe_height_interval = setInterval( function(){
 				iframe.height = iframeWin.document.documentElement.scrollHeight + 'px' || iframeWin.document.body.scrollHeight + 'px';
 				iframe_height_interval_counter = iframe_height_interval_counter + 1;
-				if ( iframe_height_interval_counter >= 50 ){
+				if ( iframe_height_interval_counter >= 25 ){
 					clearInterval(iframe_height_interval);	
 				}
 			}, 100 );
 		}
+		
+		//This function is fired upon screen resize (and the mp_stacks_mfp_match_height_trigger) so that the height continues to match the contents of the iframe
+		$( document ).on( 'mp_stacks_resize_complete mp_stacks_mfp_match_height_trigger', '.mfp-content', function(){
+			mp_stacks_mfp_match_height( iframe );
+		});
+
 	
 	});
 };
 
+//Allow events in iframes to trigger the 'mp_stacks_mfp_match_height' event by calling this function using parent.mp_stacks_mfp_match_height_trigger()
+function mp_stacks_mfp_match_height_trigger(){
+	jQuery(document).ready(function($){
+		$( '.mfp-content' ).trigger( 'mp_stacks_mfp_match_height_trigger' );	
+	});
+}
+
 //Check for old versions of Browsers that suck
 if(  !document.addEventListener  ){
 	alert("Your Internet Browser is out of date and is at risk for being hacked and your personal information stolen. Please upgrade to a secure browser like Google Chrome or Firefox.");
+}
+
+//This function allows us to grab URL variables
+function mp_stacks_getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
 }

@@ -97,9 +97,6 @@
     .mfp-preloader a:hover {
       color: white; }
 
-.mfp-s-ready .mfp-preloader {
-  display: none; }
-
 .mfp-s-error .mfp-content {
   display: none; }
 

@@ -33,7 +33,7 @@ function mp_stacks_size_create_meta_box(){
 			'field_title' 	=> __( 'Minimum Space Above/Below:', 'mp_stacks'),
 			'field_description' 	=> 'Enter the minimum space above/below the Content_types Area inside this brick. (in pixels)',
 			'field_type' 	=> 'number',
-			'field_value' => '10',
+			'field_value' => '20',
 		),
 		array(
 			'field_id'			=> 'brick_min_height',

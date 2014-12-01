@@ -581,7 +581,7 @@ function mp_stacks_first_content_type_css( $css_output, $post_id ){
 	
 	//1st Content Type Float
 	$first_content_type_float = get_post_meta($post_id, 'brick_float_c1', true);
-	$first_content_type_float = $first_content_type_float == 'center' || empty( $first_content_type_float) ? 'margin: 0px auto;' : 'float:' . $first_content_type_float;
+	$first_content_type_float = $first_content_type_float == 'center' || empty( $first_content_type_float) ? 'margin: 0px auto; float: none;' : 'float:' . $first_content_type_float;
 	
 	//If there is a float value
 	if ( !empty( $first_content_type_float ) ){
@@ -648,9 +648,9 @@ function mp_stacks_second_content_type_css( $css_output, $post_id ){
 		$css_output .= 'max-width:' . $second_content_type_max_width . 'px; ';
 	}
 	
-	//1st Content Type Float
+	//2nd Content Type Float
 	$second_content_type_float = get_post_meta($post_id, 'brick_float_c2', true);
-	$second_content_type_float = $second_content_type_float == 'center' || empty( $second_content_type_float) ? 'margin: 0px auto;' : 'float:' . $second_content_type_float;
+	$second_content_type_float = $second_content_type_float == 'center' || empty( $second_content_type_float) ? 'margin: 0px auto; float: none;' : 'float:' . $second_content_type_float;
 	
 	//If there is a float value
 	if ( !empty( $second_content_type_float ) ){

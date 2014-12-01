@@ -35,10 +35,17 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.3 = September 30, 2014
+= 1.0.1.3 = October X, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
 * First and Second Content Type divs set to inline-block so they wrap around content no matter what.
 * Changed: No longer removes left right custom margins on mobile. They remain no matter what now - where before they were reset to 0.
+* Fixed issue with Text Resizing javascript (If text is too big for the screen it shrinks it down until it fits - removed an inefficiency).
+* Added more Grid Functions in PHP, CSS, and JS
+* Fixed Page template error on 404 pages where there is no Post ID.
+* Added Rewrite rules for Grids pagination
+* Fixed Content-Type Width + Float Center bug
+* Fixed ‘Grip’ icon not showing on Re-Order Bricks Page
+* Changed the position number for the MP Stacks Menu - it was cancelling out the comments menu. Comments menu will show up again now.
 
 = 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
