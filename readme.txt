@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.3 = October X, 2014
+= 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
 * First and Second Content Type divs set to inline-block so they wrap around content no matter what.
 * Changed: No longer removes left right custom margins on mobile. They remain no matter what now - where before they were reset to 0.
