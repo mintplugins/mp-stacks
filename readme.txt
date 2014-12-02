@@ -46,6 +46,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Fixed Content-Type Width + Float Center bug
 * Fixed ‘Grip’ icon not showing on Re-Order Bricks Page
 * Changed the position number for the MP Stacks Menu - it was cancelling out the comments menu. Comments menu will show up again now.
+* Fixed redirection upon install issue. Now auto redirects to install needed plugins if needed before redirecting to welcome page.
+* Added activation tracking
 
 = 1.0.1.2 = September 30, 2014
 * Fixed create_stack_from_template function not properly checking repeaters for attachments
