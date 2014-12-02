@@ -16,23 +16,124 @@
     <li>Added activation tracking.</li>
 </ul>
 
-<strong>1.0.0.2 November 19, 2014</strong>
+<strong>1.0.1.2 September 30, 2014</strong>
 <ul>
-    <li>Added the mp_core_value_exists function for checking saved values</li>
-    <li>Used new mp_core_value_exists to apply field defaults if the user has never saved it.</li>
-    <li>Added Time Ago function for getting the date in a string like (1 week ago) etc</li>
-    <li>Fixed issue with Installation of plugins from directory pages</li>
-    <li>Added function which wraps media items in their html tag equivalent (mp_core_wrap_media_url_in_html_tag)</li>
+    <li>Fixed create_stack_from_template function not properly checking repeaters for attachments</li>
+    <li>Changed name of Add-Ons page from "Add Ons" to "Add on Shop"</li>
+    <li>Added Split Percentage Control - to control Left/Right Content-Type width percentage</li>
+    <li>Changed brick's post_class to no longer show the .hentry class</li>
+    <li>Removed mp_brick_container_css Filter Hook</li>
+    <li>Added mp_brick_first_container_css Filter Hook</li>
+    <li>Added mp_brick_second_container_css Filter Hook</li>
+    <li>Changed Text Content Type to be repeatable </li>
+    <li>Added backwards compatibility function for text content types to auto update their formatting to be repeaters</li>
+    <li>Added Grid Functions for Add-ons to share and use</li>
+    <li>Added Brick/Stack Titles on each Brick</li>
+    <li>Removed previously deprecated JS which set the font size in TinyMCE for text areas.</li>
+    <li>Added user-required confirmation for inserting existing stack - users were getting confused</li>
+    <li>Removed misc options for Drafts, Dates etc for Bricks as they aren't needed.</li>
+    <li>Added dismissable "Tip" to let people know they can double click a brick to edit it.</li>
+    <li>Added support description in Brick editor.</li>
+    <li>Made Lightbox close upon the deletion of a brick.</li>
+    <li>Added action hook "mp_brick_metabox" so brick metaboxes only load on brick admin screens</li>
+    <li>Added activation hook and redirection to Welcome Page upon activation</li>
+    <li>Changed Capability Type for MP Stacks to Page instead of Post. This way authors don't have access.</li>
+    <li>Added Directory page for Stack Templates</li>
+    <li>Added notice at the top of Directory pages about the master license</li>
+    <li>Added auto text-resize system for mobile</li>
+    <li>If Content Types max width is blank, default to 1000</li>
 </ul>
-<strong>1.0.0.1 October 9, 2014</strong>
+<strong>1.0.1.1 June 8, 2014</strong>
 <ul>
-	<li>Made Theme and Plugin updates more efficient</li>
-	<li>Fixed bug in plugin installs via directory tabs</li>
-	<li>Included Scale in Animation Functions  </li>
-	<li>mp_core_the_featured_image now only crops the image if a height is provided  </li>
+	<li>Left/Right Brick widths go from, 37% to 50%
+    <li>Content-Type areas get "position:relative;", Width 100%, no left/right margins by default, border box sizing.</li>
+    <li>Added a jQuery trigger called "mp_stacks_content_type_change" when a content type is changed</li>
+    <li>Added magnific popup to admin for use in managing back-end options</li>
+    <li>Added Content-Type width and float controls</li>
+    <li>Added "Full-Width" option for content-types (to remove default 10px padding)</li>
+    <li>Changed edit stack settings save callback to admin_init instead of edited_mp_stacks hook</li>
+    <li>Added Filter hook for "mp_brick_first_content_type_css_filter"</li>
+    <li>Added Filter hook for "mp_brick_first_content_type_mobile_css_filter"</li>
+    <li>Added Filter hook for "mp_brick_second_content_type_css_filter"</li>
+    <li>Added Filter hook for "mp_brick_second_content_type_mobile_css_filter"</li>
+    <li>Added arguments for content-types to the mp_brick_additional_css filter</li>
+    <li>Added body class to the stack-only pages</li>
+    <li>Added "Optimize for MP Stacks" Page Template if no Stack Page Template exists</li>
 </ul>
-<strong>1.0.0.0 September 29, 2014</strong>
+<strong>1.0.1.0 May 8, 2014</strong>
 <ul>
-	<li>Original production release following 167 beta releases since Feb 13, 2013</li>
- </ul>
+	<li>Stack template functions added</li>
+    <li>Added functions for getting brick titles in a stack</li>
+    <li>Move to Mint</li>
+</ul>
+<strong>1.0.1.0 May 8, 2014</strong>
+<ul>
+	<li>Stack template functions added</li>
+    <li>Added functions for getting brick titles in a stack</li>
+    <li>Move to Mint</li>
+</ul>
+<strong>1.0.0.9 April 16, 2014</strong>
+<ul>
+    <li>Updated TinyMCE Plugin for TinyMCE 4.0</li>
+    <li>CSS is now output in the header instead of the footer</li>
+    <li>Added "Stack Only" pages and rewrite parameter</li>
+    <li>Changed variable for mp_brick_additional_css filter from $css_output to null</li>
+    <li>JS Scripts are now enqueued to show in the footer instead of header</li>
+    <li>Smooth Scrolling and anchor points added for bricks</li>
+</ul>
+
+<strong>1.0.0.8 March 22, 2014</strong>
+<ul>
+    <li>Removed priority of 1 from Brick size settings metabox action</li>
+    <li>Add-on directory now links to https://mintplugins </li>
+</ul>
+
+<strong>1.0.0.7 March 8, 2014</strong>
+<ul>
+	<li>Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue</li>
+</ul>
+
+<strong>1.0.0.6 March 8, 2014</strong>
+<ul>
+	<li>Prevent default event for brick edit links - wasn't working in Firefox</li>
+</ul>
+
+<strong>1.0.0.5 March 5, 2014</strong>
+<ul>
+    <li>Better responsive Handling</li>
+    <li>Double click on bricks to edit them </li>
+    <li>mp_stacks_metabox becomes mp_stacks_size_metabox</li>
+    <li>Content Type Margins added to size metabox</li>
+</ul>
+
+<strong>1.0.0.4 March 5, 2014</strong>
+<ul>
+	<li>Added context to footer css to prevent double style tags in footer</li>
+</ul>
+
+<strong>1.0.0.3 March 5, 2014</strong>
+<ul>
+	<li>Attached Brick CSS to footer instead of scanning posts for shortcodes</li>
+</ul>
+
+<strong>1.0.0.2 February 23, 2014</strong>
+<ul>
+    <li>Upgraded Security using Nonces for Ajax</li>
+    <li>Fix wp_query to show all bricks in stack rather than posts_per_page</li>
+    <li>Improved code documentation on Custom Post Type file</li>
+    <li>Added 15px margins below links in Text Areas - except if last-child</li>
+</ul>
+
+<strong>1.0.0.1 February 19, 2014</strong>
+<ul>
+    <li>Added Video Tutorials for all default Metaboxes</li>
+    <li>Added MP Stacks Dashboard/Welcome Page</li>
+    <li>Improved Default Responsive Styling</li>
+</ul>
+
+<strong>1.0.0.0 February 10, 2014</strong>
+<ul>
+	<li>Original release</li>
+</ul>
+ 
 </p>
