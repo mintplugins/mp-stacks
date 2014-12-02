@@ -32,7 +32,7 @@ function mp_stacks_global_options_init(){
 	global $mp_stacks_options;
 	
 	$mp_stacks_options = get_option('mp_stacks_options');
-	
+		
 }
 
 /**
@@ -55,30 +55,31 @@ function mp_stacks_install() {
 	//Tell the mp_stacks_options that we just activated
 	$mp_stacks_options['just_activated'] = true;
 	
-	//When we've built this feature, take this out 
-	$sample_page_feature_built = false;
-	
-	// Checks if the mp stacks sample page exists
-	if ( ! isset( $mp_stacks_options['sample_stack_page'] ) && $sample_page_feature_built == true ) {
-	  // Sample Stack Page
-		$sample_stack_page = wp_insert_post(
-			array(
-				'post_title'     => __( 'Sample Stack Page', 'mp_stacks' ),
-				'post_content'   => '[mp_stack="NULL"]',
-				'post_status'    => 'publish',
-				'post_author'    => 1,
-				'post_type'      => 'page',
-				'comment_status' => 'closed'
-			)
-		);
-
-		// Store our sample stack page ID
-		$mp_stacks_options['sample_stack_page'] = $sample_stack_page;
-
-	}
-	
 	//Save our mp_stacks_options - since we've just activated and changed some of them
 	update_option( 'mp_stacks_options', $mp_stacks_options );
+	
+	$active_theme = wp_get_theme();
+	
+	//Notify
+	wp_remote_post( 'http://tracking.mintplugins.com', array(
+		'method' => 'POST',
+		'timeout' => 1,
+		'redirection' => 5,
+		'httpversion' => '1.0',
+		'blocking' => true,
+		'headers' => array(),
+		'body' => array( 
+			'mp_track_event' => true, 
+			'event_product_title' => 'MP Stacks', 
+			'event_action' => 'activation', 
+			'event_url' => get_bloginfo( 'wpurl'),
+			'wp_version' => $wp_version,
+			'active_plugins' => json_encode( get_option('active_plugins') ),
+			'active_theme' => $active_theme->get( 'Name' ),
+		),
+		'cookies' => array()
+		)
+	);
 
 }
 register_activation_hook( MP_STACKS_PLUGIN_FILE, 'mp_stacks_install' );
@@ -105,14 +106,27 @@ function mp_stacks_redirect_upon_activation(){
 		
 		// Bail if activating from network, or bulk
 		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+			
+			//Flush the rewrite rules
+			flush_rewrite_rules();
+			
+			//Tell the mp_stacks_options that we no longer just activated so no redirects happen.
+			$mp_stacks_options['just_activated'] = false;	
+		
 			return;
 		}
-		
-		//Debug:
-		//wp_mail('support@mintplugins.com', 'Activation Hook running', 'Testing Activation' );
-		
-		// Redirect the user to our welcome page
-		wp_redirect( admin_url() . '?page=mp-stacks-about' );
+				
+		//If the core IS active, redirect to the welcome page
+		if (function_exists('mp_core_textdomain')){
+			// Redirect the user to our welcome page - or other page if an add-on filters this redirect
+			wp_redirect( apply_filters( 'mp_stacks_install_redirect', admin_url() . '?page=mp-stacks-about' ) );
+			exit();
+		}
+		//If the mp-core is NOT active, redirect to the mp-core intaller and install any other needed plugins too.
+		else{
+			wp_redirect( admin_url( sprintf( 'options-general.php?page=mp_core_install_plugins_page&action=install-plugin&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ) );	
+			exit();
+		}
 		
 	}
 	
@@ -136,12 +150,49 @@ function mp_stacks_activated_one_page_load_ago(){
 		//Flush the rewrite rules
 		flush_rewrite_rules();
 		
-		//Tell the mp_stacks_options that we no longer just activated
-		$mp_stacks_options['just_activated'] = false;
+		//If we were redirected to install mp-core and other required plugins
+		if ( isset( $_GET['page'] ) && $_GET['page'] == 'mp_core_install_plugins_page' ){
+			
+			//When we've built this feature, take this out 
+			$sample_page_feature_built = false;
+			
+			// Checks if the mp stacks sample page exists
+			if ( ! isset( $mp_stacks_options['sample_stack_page'] ) && $sample_page_feature_built == true ) {
+			    // Sample Stack Page
+				$sample_stack_page = wp_insert_post(
+					array(
+						'post_title'     => __( 'Sample Stack Page', 'mp_stacks' ),
+						'post_content'   => '[mp_stack="NULL"]',
+						'post_status'    => 'publish',
+						'post_author'    => 1,
+						'post_type'      => 'page',
+						'comment_status' => 'closed'
+					)
+				);
+		
+				// Store our sample stack page ID
+				$mp_stacks_options['sample_stack_page'] = $sample_stack_page;
+		
+			}
+			
+			// We haven't been to the welcome page yet so Redirect the user to our welcome page - or other page if an add-on filters this redirect
+			echo '<script type="text/javascript">';
+				echo "window.location = '" . apply_filters( 'mp_stacks_install_redirect', admin_url() . '?page=mp-stacks-about' ) . "';";
+			echo '</script>';
+			
+			echo '</div>';
+				
+				
+		}
+		//If we have now installed all needed plugins and the redirections to the welcome page etc have taken place.
+		else{
+			//Tell the mp_stacks_options that we no longer just activated
+			$mp_stacks_options['just_activated'] = false;	
+		}
 		
 		//Save our mp_stacks_options - since we've just activated and changed some of them
 		update_option( 'mp_stacks_options', $mp_stacks_options );
 		
 	}
 }
-add_action( 'admin_init', 'mp_stacks_activated_one_page_load_ago');
+add_action( 'admin_footer', 'mp_stacks_activated_one_page_load_ago');
