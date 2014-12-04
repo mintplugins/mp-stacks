@@ -672,3 +672,52 @@ class MP_Stacks_Grid_Load_More{
 		
 	}
 }
+
+/**
+ * Set the CSS for the image overlay to be the last animation frame if on mobile
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $post_id String - The id of the brick where the meta is saved
+ * @param    $repeater_name String - The name of the repeater holding the meta data for the overlay
+ * @return   $css_output String - A string containing the CSS for the overlay on mobile
+ */
+function mp_stacks_grid_overlay_mobile_css( $post_id, $repeater_name ){
+	
+	//If we are on an iphone, ipad, android, or other touch enabled screens, don't do this because mouse over's aren't available
+	if ( mp_core_is_iphone() || mp_core_is_ipad() || mp_core_is_android() ){
+		
+		//Get the repeater holding these values
+		$animation_repeater = mp_core_get_post_meta( $post_id, $repeater_name );
+		$animation_repeater = array_reverse( $animation_repeater );
+		
+		$css_output = '#mp-brick-' . $post_id . ' .mp-stacks-grid-item-image-overlay{';
+			
+			//Loop through each value in this keyframe
+			foreach( $animation_repeater[0] as $id => $value ){
+				
+				//If this is the background color
+				if ( $id == 'backgroundColor' ){
+					$css_output .= 'background-color: ' . $value . ';';
+				}
+				
+				//If this is the background color
+				else if ( $id == 'opacity' ){
+					$css_output .= 'opacity: ' . $value/100 . ';';
+				}
+				
+				else{
+					$css_output .=  $id . ': ' . $value . ';';	
+				}
+					
+			}
+			
+		$css_output .= '}';
+		
+		return $css_output;	
+	}
+	else{
+		return NULL;	
+	}
+				
+}
