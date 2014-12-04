@@ -385,3 +385,96 @@ function mp_stacks_edit_brick_loading_title(){
 	
 }
 add_action( 'admin_head', 'mp_stacks_edit_brick_loading_title' );
+
+/**
+ * Check if Knapstack exists on this install. If not, add a pseudo version so the user can install it
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_add_knapstack_to_themes( $themes ){
+	 
+	 //If knapstack is not in existence on this install
+	 if ( !array_key_exists( 'knapstack', $themes) ){
+	
+		 //Add a pseudo version so the user can easily install it
+		 $knapstack= array(
+		 	'knapstack' => array(
+				'id' => 'knapstack',
+				'name' => 'KnapStack Theme',
+				'screenshot' => array( 'https://mintplugins.com/dynamic-images/knapstack-screenshot.png' ),
+				'description' => __( 'A Clean, Responsive, Retina, Flat-Styled WordPress theme with Unlimited Page Layout variations controlled using the MP Stacks Plugin.', 'mp_stacks' ),
+				'author' => 'Mint Plugins',
+				'authorAndUri' => '<a href="https://mintplugins.com/">Mint Plugins</a>',
+				'version' => 'Latest',
+				'tags' => 'One-Column',
+				'parent' => NULL,
+				'active' => NULL,
+				'hasUpdate' => NULL,
+				'update' => NULL,
+				'actions' => array(
+					'activate' => admin_url( sprintf( 'options-general.php?page=mp_core_install_plugins_page&action=install-plugin&mp_stacks_install_knapstack&_wpnonce=%s', wp_create_nonce( 'install-plugin' ) ) ),
+					'preview' => 'http://demo.mintplugins.com/knapstack/'
+				)	
+			)
+		 );
+		 
+		 $themes = $knapstack + $themes;
+	}
+	
+	return $themes;
+	 
+}
+add_filter( 'wp_prepare_themes_for_js', 'mp_stacks_add_knapstack_to_themes' );
+
+/**
+ * If the URL has 'mp_stacks_install_knapstack' in it, hook in the check for Knapstack
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_prepare_knapstack_for_install(){
+	 
+	//If knapstack already exists and we don't need to prepare it for installation, get out of here 
+	if ( !isset( $_GET['mp_stacks_install_knapstack'] ) ){
+			return; 
+	}
+	
+	add_filter( 'mp_core_check_plugins', 'mp_knapstack_plugin_check' );
+	 
+}
+add_action( 'init', 'mp_stacks_prepare_knapstack_for_install' );
+
+/**
+* Check to make sure the KnapStack Theme is installed.
+*
+* @since    1.0.0
+* @link     http://mintplugins.com/doc/plugin-checker-class/
+* @return   array $plugins An array of plugins to be installed. This is passed in through the mp_core_check_plugins filter.
+* @return   array $plugins An array of plugins to be installed. This is passed to the mp_core_check_plugins filter. (see link).
+*/
+if (!function_exists('mp_knapstack_plugin_check')){
+	function mp_knapstack_plugin_check( $plugins ) {
+		
+		$add_plugins = array(
+			array(
+				'plugin_name' => 'KnapStack Theme',
+				'plugin_message' => __('You require the KnapStack Theme. Install it here.', 'mp_knapstack'),
+				'plugin_filename' => '',
+				'plugin_download_link' => 'http://mintplugins.com/repo/knapstack-theme/?downloadfile=true',
+				'plugin_api_url' => 'https://mintplugins.com/',
+				'plugin_info_link' => 'http://mintplugins.com/knapstack-theme',
+				'plugin_group_install' => true,
+				'plugin_licensed' => true,
+				'plugin_licensed_parent_name' => NULL,
+				'plugin_required' => true,
+				'plugin_wp_repo' => true,
+				'plugin_is_theme' => true,
+			)
+		);
+		
+		return array_merge( $plugins, $add_plugins );
+	}
+}
