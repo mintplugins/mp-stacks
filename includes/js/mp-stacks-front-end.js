@@ -234,7 +234,7 @@ jQuery(document).ready(function($){
 				}
 				
 			},
-			mainClass: 'mp-stacks-iframe-height-match',
+			mainClass: 'mp-stacks-iframe-custom-width-height',
 			preloader: true
 		
 		}, 0);
@@ -242,8 +242,9 @@ jQuery(document).ready(function($){
 	}
 	
 	/**
-	 * Set items with the class 'mp-stacks-iframe-height-match-lightbox-link' to open a lightbox iframe matching the height of its contents 
-	 * and at the width defined in its 'mfp-width' attribute
+	 * Set items with the class 'mp-stacks-iframe-custom-width-height' to open a lightbox iframe
+	 * at the width defined in its 'mfp-width' attribute
+	 * at the height defined in its 'mfp-height' attribute
 	 */		
 	$(document).on( 'click', '.mp-stacks-iframe-custom-width-height', function( event ){
 		
@@ -252,8 +253,11 @@ jQuery(document).ready(function($){
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_custom_width_height( $(this).attr('href'), $( this ).attr( 'mfp-width' ), $( this ).attr( 'mfp-height' ) );
 		
-		//Set the mfp-content div to be the width we want for this popup
-		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
+		//Set the mfp-content div to be the width and height we want for this popup
+		$( '.mp-stacks-iframe-custom-width-height .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
+		$( '.mp-stacks-iframe-custom-width-height .mfp-content' ).css( 'max-width', '100%' );
+		$( '.mp-stacks-iframe-custom-width-height .mfp-content' ).css( 'height', $( this ).attr( 'mfp-height' ) );
+		$( '.mp-stacks-iframe-custom-width-height .mfp-content' ).css( 'max-height', '100%' );
 		
 	});
 	
