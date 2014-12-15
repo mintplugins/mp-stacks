@@ -43,14 +43,9 @@ function mp_stacks_add_on_plugin_directory(){
 		'slug' => 'mp_stacks_plugin_directory',
 		'directory_list_urls' => array(
 			'content_types' => array(
-				'title' => __( '"Content-Type" Add-Ons', 'mp_stacks' ),
-				'description' => __( 'A "Content-Type" is the main content a Brick displays in MP Stacks.', 'mp_stacks' ),
-				'directory_list_url' => 'http://mintplugins.com/repo-group/mp-stacks-content-types/',
-			),
-			'utility' => array(
-				'title' => __('"Utility" Add-Ons', 'mp_stacks' ),
-				'description' => __( 'Utility Add-Ons extend the overall functionality of MP Stacks.', 'mp_stacks' ),
-				'directory_list_url' => 'http://mintplugins.com/repo-group/mp-stacks-utility-add-ons/',
+				'title' => __( 'MP Stacks Add-Ons', 'mp_stacks' ),
+				'description' => __( 'Add-Ons extend MP Stacks to display content in even more ways.', 'mp_stacks' ),
+				'directory_list_url' => 'http://mintplugins.com/repo-group/mp-stacks/',
 			),
 		),
 		'search_api_url' => 'https://mintplugins.com/',

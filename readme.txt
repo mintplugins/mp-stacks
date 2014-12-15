@@ -35,6 +35,12 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.4 = December X, 2014
+* Grid Overlays function for Mobile Styles added
+* Fixed custom width and height lightbox js functions
+* Added a Pseudo Version of Knapstack to the Appearance>Themes page if not installed.
+* Changed Add-On Directory page to be a single category.
+
 = 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
 * First and Second Content Type divs set to inline-block so they wrap around content no matter what.
