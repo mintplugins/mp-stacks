@@ -251,6 +251,11 @@ function mp_stacks_include_files(){
 		 * Default Stack Template
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/stack-templates/default-template/default-template.php' );
+		
+		/**
+		 * Stack Widget
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/widgets/class-stack-widget.php' );
 	
 	}
 }
