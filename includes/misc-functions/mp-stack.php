@@ -785,7 +785,6 @@ add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2)
 /**
  * Output css for all bricks on this page in shortcodes into the header of the theme
  * Parameter: none
- * Global Variable: array $mp_bricks_on_page This array contains all the ids of every brick previously called on this page
  */
 function mp_stacks_header_css(){
 	
@@ -818,3 +817,24 @@ function mp_stacks_header_css(){
 		
 }
 add_action( 'wp_enqueue_scripts', 'mp_stacks_header_css'); 
+
+/**
+ * Output css for all Stacks inside widgets in the footer. We use the global variable $mp_stacks_widget_stacks to know which ones have been displayed.
+ * Parameter: none
+ */
+function mp_stacks_widgets_css(){
+	
+	global $mp_stacks_widget_stacks;
+	
+	//Loop through each stack in each widget (this array is created in the widget class)
+	if ( is_array( $mp_stacks_widget_stacks ) ){
+		foreach( $mp_stacks_widget_stacks as $widget_stack ){
+			
+			//Output CSS for this stack
+			mp_stack_css( $widget_stack, true ); 
+						
+		}
+	}
+	
+}
+add_action( 'wp_footer', 'mp_stacks_widgets_css' );
