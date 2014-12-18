@@ -109,15 +109,19 @@
 }
 
 /*Make sure there are no margins after the last elements in a text area */	
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text:last-child a:last-child, 
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-1:last-child a:last-child, 
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-2 a:last-child,
+.mp-brick .mp-stacks-text-area:last-child .mp-brick-text:last-child p:last-child, 
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-1:last-child p:last-child, 
 .mp-brick .mp-stacks-text-area:last-child .mp-brick-text-line-2 p:last-child{
 	margin-bottom:0px!important;
 	margin-bottom:0rem!important;
 }
+.mp-brick .mp-brick-text, 
 .mp-brick .mp-brick-text-line-1, 
 .mp-brick .mp-brick-text-line-2,
+.mp-brick .mp-brick-text:last-child p:last-child,
 .mp-brick .mp-brick-text-line-1:last-child p:last-child,
 .mp-brick .mp-brick-text-line-2 p:last-child{	
 	line-height:1.4;
@@ -125,12 +129,16 @@
 	text-align:left;
 }
 
+.mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text, 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-1, 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-2,
+.mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text p,
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-1 p,
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text-line-2 p,
+.mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text, 
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text-line-1, 
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text-line-2,
+.mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text p,
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text-line-1 p,
 .mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text-line-2 p
 {
@@ -482,4 +490,13 @@
 	height:auto;
 	max-width: 95%!important;
 	max-height: 95%!important;
+}
+
+/* This compensates for the fitvids script which isn't needed, but some people might be using it */
+.mp-brick .mp-core-oembed-full-width-div .fluid-width-video-wrapper{
+	position:absolute!important;
+	top:0!important;
+	left:0!important;
+	width: 100%!important;
+	height: 100%!important;
 }
