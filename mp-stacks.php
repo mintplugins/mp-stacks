@@ -160,7 +160,8 @@ function mp_stacks_include_files(){
 		/**
 		 * Text metabox for mp_stacks
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-text.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-singletext.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-text/mp-stacks-doubletext.php' );
 		
 		/**
 		 * Image metabox for mp_stacks
