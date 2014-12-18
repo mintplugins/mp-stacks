@@ -16,6 +16,9 @@ function mp_stacks_content_create_meta_box(){
 		'metabox_priority' => 'high' 
 	);
 	
+	//Set up and filter the default content types available.
+	$default_content_types = apply_filters( 'mp_stacks_default_content_types', array('none' => 'None', 'singletext' => 'Text', 'image' => 'Image', 'video' => 'Video') );
+	
 	/**
 	 * Array which stores all info about the options within the metabox
 	 *
@@ -27,7 +30,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_description' => 'Select the first content type to use for this brick.',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video'),
+			'field_select_values' => $default_content_types,
 			'field_popup_help' => esc_html(
 				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-1.png" \/>
 				<strong class="mp-ajax-popup-title">' . __( '1st Content-Type:', 'mp_stacks' ) . '</strong>
@@ -40,7 +43,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_description' => 'Select the second content type to use for this brick.',
 			'field_type' => 'select',
 			'field_value' => '',
-			'field_select_values' => array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video'),
+			'field_select_values' => $default_content_types,
 			'field_popup_help' => esc_html(
 				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-2.png" \/>
 				<strong class="mp-ajax-popup-title">' . __( '2nd Content-Type:', 'mp_stacks' ) . '</strong>
@@ -96,6 +99,41 @@ function mp_stacks_alignment_radio_allonright_before(){
 }
 add_action('mp_core_metabox_before_' . 'allright' . '_radio_description', 'mp_stacks_alignment_radio_allonright_before'); 
 
+/**
+ * If this brick has previously saved the old 'text' content-type, keep using that.
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @param    array $default_content_types See link for description.
+ * @return   array $default_content_types
+ */
+function mp_stacks_default_content_types_doubletext( $default_content_types ){
+		
+	//If there is a post id in the URL (ie this has been saved)
+	if ( isset( $_GET['post'] ) ){
+		
+		$post_id = $_GET['post'];
+		
+		//Check what is currently saved in each content type slot
+		$ct_1 = mp_core_get_post_meta( $post_id, 'brick_first_content_type' );
+		$ct_2 = mp_core_get_post_meta( $post_id, 'brick_second_content_type' );
+		
+		//If this content-type was previously saved as a 'text', it's an "old" brick.
+		if ( $ct_1 == 'text' || $ct_2 == 'text' ){
+			$default_content_types = array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video');
+		}
+		//If this content-type hasn't been saved as 'text', give them the new, simpler 'singletext' option.
+		else{
+			$default_content_types = array('none' => 'None', 'singletext' => 'Text', 'image' => 'Image', 'video' => 'Video');
+		}
+		
+	}
+	
+	return $default_content_types;
+	
+}
+add_filter( 'mp_stacks_default_content_types' , 'mp_stacks_default_content_types_doubletext' );
+	
 /**
  * Add "More Content Types..." as a content Type to the dropdown
  *

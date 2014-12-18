@@ -3,7 +3,7 @@
  * Function which creates new Meta Box
  *
  */
-function mp_stacks_text_create_meta_box(){	
+function mp_stacks_doubletext_create_meta_box(){	
 	/**
 	 * Array which stores all info about the new metabox
 	 *
@@ -159,4 +159,4 @@ function mp_stacks_text_create_meta_box(){
 	global $mp_stacks_text_meta_box;
 	$mp_stacks_text_meta_box = new MP_CORE_Metabox($mp_stacks_text_add_meta_box, $mp_stacks_text_items_array);
 }
-add_action('mp_brick_metabox', 'mp_stacks_text_create_meta_box');
+add_action('mp_brick_metabox', 'mp_stacks_doubletext_create_meta_box');
