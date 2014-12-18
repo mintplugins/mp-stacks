@@ -40,6 +40,9 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Fixed custom width and height lightbox js functions
 * Added a Pseudo Version of Knapstack to the Appearance>Themes page if not installed.
 * Changed Add-On Directory page to be a single category.
+* Added Stack Widget so Stacks can be used in sidebars.
+* Changed Text Content-Types from being “Text Pairs” to being single areas that repeat. This only applies to new bricks as backwards compatibility has been ensured for old bricks.
+* Color-Coded content-types so they are easier to follow upon first-glance.
 
 = 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
