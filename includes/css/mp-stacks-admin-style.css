@@ -45,6 +45,14 @@
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
+
+/* Hide both singletext and doubletext areas by default */
+#mp_stacks_singletext_metabox,
+#mp_stacks_text_metabox{
+	display:none;	
+}
+
+/*Styles for the doubletext "old" text content-type */
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_1_font_sizeBBBBB"],
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_2_font_sizeBBBBB"]{
 	width:140px;
@@ -56,6 +64,28 @@
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_text_line_1BBBBB"]{
 	margin-bottom:30px;	
 }
+
+/* Styles for the singletext "new" text content-type */
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_text_font_sizeBBBBB"],
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_text_font_sizeBBBBB"]{
+	width:140px;
+}
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_textBBBBB"],
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_textBBBBB "]{
+	clear:both;	
+}
+
+/* Make the 'Paragraph Height' align to the right */
+div[class*="brick_text_paragraph_margin_bottomBBBBB"]{
+	text-align:right;	
+}
+
+/*Make the color picker sit above the text size box if they are overlapping */
+div[class*="brick_text_colorBBBBB "]{
+	z-index:10;
+}
+
+
 
 #mp_stack-media-button:before{
 	background-size: 20px;
@@ -84,6 +114,22 @@
 	margin-right:4px;	
 	float:left;
 }
+
+/* Colored borders around the content-type selects */
+select.brick_first_content_type{	
+	border: 2px solid #e47e30;
+}
+select.brick_second_content_type{	
+	border: 2px solid #3a99da;
+}
+/* Color-Coded Outlines around the content types metaboxes */
+#advanced-sortables > div:nth-child(3){
+	border: solid #e47e30 2px;
+}
+#advanced-sortables > div:nth-child(4){
+	border: solid #3a99da 2px;
+}
+
 /*Shortcode insert designs*/
 .mp-stacks-shortcode-choose-action{
 	width:100%;
