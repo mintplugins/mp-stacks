@@ -123,10 +123,10 @@ select.brick_second_content_type{
 	border: 2px solid #3a99da;
 }
 /* Color-Coded Outlines around the content types metaboxes */
-#advanced-sortables > div:nth-child(3){
+#advanced-sortables #mp_stacks_content_metabox + div{
 	border: solid #e47e30 2px;
 }
-#advanced-sortables > div:nth-child(4){
+#advanced-sortables #mp_stacks_content_metabox + div + div{
 	border: solid #3a99da 2px;
 }
 

@@ -114,7 +114,7 @@ jQuery(document).ready(function($){
 	
 	//Show the notice about which brick we are editing (if we don't show it this way, it does a weird "jump in" thing. Probably should create a better fix than this but it appears to be an issue with admin_notices in WordPress
 	$('.mp-stacks-editor-title-notice').css('display', '');
-	
+			
 	//Now that the page is loaded and our content types are reset properly, lets show the body div (hidden by css)
 	$('.post-type-mp_brick #poststuff').css('opacity', '1');
 	
