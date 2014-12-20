@@ -276,43 +276,6 @@ function mp_stacks_support_admin_notice(){
 add_action('admin_notices', 'mp_stacks_support_admin_notice');
 
 /**
- * Function which creates the TIP letting the user know they can double click on a brick
- *
- * @since    1.0.0
- * @param    void
- * @return   void
- */
-function mp_stacks_double_click_tip(){
-	
-	global $pagenow;
-	 
-	 //Only load message if mp_stack_id is set
-	 if ( isset( $_GET['mp_stack_id'] ) && $pagenow == 'post.php'){
-		
-	 }
-	 else{
-		 return; 
-	 }
-	 
-	 //Check if this user has dismissed this tip
-	 $user_dismissed_tip = get_user_meta( get_current_user_id(), 'mp_stacks_dis_doubleclick_tip', true);
-	 
-	 if ( $user_dismissed_tip ){
-		 return;
-	 }
-	 
-	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
-	 
-	 ?>
-	 <div class="updated">
-        <p><?php echo '<img style="width:10px;" class="mp-stacks-editor-notice-icon" src="' . plugins_url( 'assets/icon-256x256.png', dirname(dirname(__FILE__) ) ) . '" />' . __( 'MP Stacks TIP: You can open this Brick editor at any time by double clicking <em>anywhere</em> on a brick. ', 'mp_stacks' ) . '<a class="mp-stacks-dismiss-double-click button">' . __( 'Hide Tip', 'mp_stacks') . '</a>'; ?>
-     </div>
-     <?php
-	
-}
-add_action('admin_notices', 'mp_stacks_double_click_tip');
-
-/**
  * Function which adds extra "safe" styles to wp_kses
  *
  * @since    1.0.0
