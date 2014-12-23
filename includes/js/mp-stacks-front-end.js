@@ -218,7 +218,7 @@ jQuery(document).ready(function($){
 			},
 			type: 'iframe',
 			iframe: {
-				markup: '<div class="mfp-iframe-custom-width-height" style="width:100%; height:100%; max-width:' + width + '; max-height:' + height + ';">'+
+				markup: '<div class="mfp-iframe-custom-width-height" style="width:100%; height:100%;">'+
 				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" style="width:100%; height:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
 				'</div>'
