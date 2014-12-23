@@ -43,6 +43,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Added Stack Widget so Stacks can be used in sidebars.
 * Changed Text Content-Types from being “Text Pairs” to being single areas that repeat. This only applies to new bricks as backwards compatibility has been ensured for old bricks.
 * Color-Coded content-types so they are easier to follow upon first-glance.
+* When duplicating a stack, you now have the option to preview the stack you are duplicating.
 
 = 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
