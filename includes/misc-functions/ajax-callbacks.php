@@ -55,6 +55,13 @@ function mp_stacks_add_new_stack_ajax() {
 				'mp_stacks' // the taxonomy
 			);
 			
+			//If there was an error making the stack, echo that error
+			if ( is_wp_error( $new_stack_array ) ){
+				$error_string = $new_stack_array->get_error_message();
+   				echo '<div id="message" class="error"><p>' . $error_string . '</p></div>';
+				die();
+			}
+			
 			$new_stack_id = $new_stack_array['term_id'];
 		}
 		

@@ -313,6 +313,11 @@ body.mp-stacks_page_mp_stacks_plugin_directory .wrap h2{
 }
 
 /* Stack Template Selector when Creating a New Stack */
+.mp-stacks-new-stack-duplicate-stack .mp-stacks-id{
+	display:none!important;	
+}
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-button,
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-preview-container,
 .mp-stacks-installed-templates > li{
 	padding:7px;
 	background-color:#222;
@@ -322,11 +327,34 @@ body.mp-stacks_page_mp_stacks_plugin_directory .wrap h2{
 	display:table;
 	width:100%;
 	max-width:400px;
+	float:left;
+	margin-right:5px;
+	cursor:pointer;
 }
+.mp-stacks-new-stack-duplicate-stack > li{
+	max-width: 400px;
+	width:100%;
+	margin-bottom:1px;
+	display:inline-block;
+}
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-button{
+	max-width:250px;
+	padding:6px;
+}
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-preview-container{
+	max-width:90px;
+	padding:5px;	
+	text-align:center;
+}
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-preview-container a{
+	display:inline-block;	
+}
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-button:hover,
 .mp-stacks-installed-templates > li:hover{
 	background-color:#0074a2;
 	color:#fff;
 }
+.mp-stacks-new-stack-duplicate-stack > li > .mp-stacks-duplicate-button > div,
 .mp-stacks-installed-templates > li > div{
 	display:table-cell;
 	vertical-align:middle;	
@@ -342,8 +370,35 @@ body.mp-stacks_page_mp_stacks_plugin_directory .wrap h2{
 }
 .mp-stacks-installed-templates > li .template-tag-container{
 	display: inline-block;
-	float: right;
 	margin-right: 4px;	
+	text-align:right;
+}
+.mp-stacks-duplicate-preview,
+.mp-stacks-duplicate-preview-icon{
+	display:inline-block;
+	float:left;	
+}
+.mp-stacks-duplicate-preview{
+	margin-top: 4.5px;
+}
+.mp-stacks-duplicate-icon{
+	width:25px;	
+}
+.mp-stacks-duplicate-preview-icon:after,
+.mp-stacks-duplicate-icon:after{
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size:20px;
+	line-height:20px;
+	content: "\f504";	
+}
+.mp-stacks-duplicate-icon:after{
+content: "\f161";
+}
+.mp-stacks-installed-template-tag{
+	text-align:right;	
 }
 .mp-stacks-installed-templates > li .template-tag-title{
 	font-weight: bold;
@@ -392,4 +447,12 @@ body.mp-stacks_page_mp_stacks_plugin_directory .wrap h2{
 .mp-stacks-permalink-slug{
 	display:table-cell;
 	width:100%;
+}
+
+.mp-stacks-clearedfix:after {
+	content: ".";
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
 }

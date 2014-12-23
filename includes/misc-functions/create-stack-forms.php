@@ -90,21 +90,40 @@ function mp_stacks_shortcode_make_new_stack(){
              
                 <div class="mp-stacks-new-stack-option-title">
                     <label for="mp_stack_stack">
-                        <strong><?php echo __('3. Choose which Stack to Duplicate', 'mp_stacks'); ?></strong> <em><?php echo __('Choose one of the following options', 'mp_stacks'); ?></em>
+                        <strong><?php echo __('3. Choose which Stack to Duplicate', 'mp_stacks'); ?></strong> <em><?php echo __('Here are your existing Stacks:', 'mp_stacks'); ?></em>
                     </label>
                 </div>
                 
-                <select class="mp-stacks-new-stack-duplicate-stack" name="new_stack_duplicate_stack" />
+                <?php //When the user selects one of the following options, we add "mp-stacks-selected-stack-for-duplication" as a class to that li through js ?>
+                <ul class="mp-stacks-new-stack-duplicate-stack" />
                     <?php 
-                    //Get all Stacks	
+                    
+              		//Get all Stacks	
                     $all_stacks = mp_core_get_all_terms_by_tax('mp_stacks');
                     
                     //Populate the dropdown with a list of all stacks
                     foreach( $all_stacks as $stack_id => $stack_value ){
-                        ?><option value="<?php echo $stack_id; ?>"><?php echo $stack_value; ?></option><?php
+                        ?><li>	
+                        	<div class="mp-stacks-duplicate-button">					
+                                <div class="mp-stacks-id"><?php echo $stack_id; ?></div>	
+                                <div class="mp-stacks-duplicate-icon"></div>
+                                <div class="mp-stacks-installed-template-title"><?php echo $stack_value; ?></div>
+                            </div>
+                            
+                            <div class="mp-stacks-duplicate-preview-container">
+                             	<a href="<?php echo get_bloginfo( 'wpurl' ) . '/stack/' . sanitize_title( $stack_value ); ?>" class="mp-stacks-iframe-custom-width-height" mfp-width="90%" mfp-height="90%">
+                                    <div class="mp-stacks-duplicate-preview">Preview</div>
+                                    <div class="mp-stacks-duplicate-preview-icon"></div>
+                                </a>
+                            </div>
+                                    
+                          </li>
+                          
+                          <div class="mp-stacks-clearedfix"></div>
+						<?php
                     }
                     ?>
-                </select>
+                </ul>
             
             </div>
            
