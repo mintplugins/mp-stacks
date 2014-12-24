@@ -316,6 +316,9 @@ jQuery(document).ready(function($){
 	 */
 	 function mp_stacks_make_new_stack(){
 	 	 
+		//Scroll to the top of the page - where all of the feedback is shown.
+		window.scrollTo(0, 0);
+		 
 		//Hide Step 2 Stack Options once the user has clicked "Create New Stack"
 		$('.mp-stacks-shortcode-existing-stack-div').hide();
 		$('.mp-stacks-shortcode-new-stack-div').hide();
