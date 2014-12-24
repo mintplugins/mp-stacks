@@ -254,86 +254,88 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 	$wp_upload_dir = wp_upload_dir();
 	
 	//Loop through each brick in the original stack
-	foreach ( $mp_stack_template_array['stack_bricks'] as $original_brick ){
-					
-		//New Brick Setup
-		$new_brick = array(
-		  'post_title'     => $original_brick['brick_title'],
-		  'post_status'    => 'publish',
-		  'post_type'      => 'mp_brick',
-		);  
-		
-		//Create a new brick 
-		$new_brick_id = wp_insert_post( $new_brick, true );
-		
-		//Apply the new Stack ID (Taxonomy Term) to this Brick (Post)
-		wp_set_object_terms( $new_brick_id, $new_stack_id, 'mp_stacks' );
-		
-		//Loop through the meta in the original brick
-		foreach ( $original_brick as $brick_meta_id => $brick_meta_value ){
+	if ( !empty( $mp_stack_template_array['stack_bricks'] ) && is_array( $mp_stack_template_array['stack_bricks'] ) ){
+		foreach ( $mp_stack_template_array['stack_bricks'] as $original_brick ){
+						
+			//New Brick Setup
+			$new_brick = array(
+			  'post_title'     => $original_brick['brick_title'],
+			  'post_status'    => 'publish',
+			  'post_type'      => 'mp_brick',
+			);  
 			
-			//Don't save the brick title as a meta field
-			if ( $brick_meta_id != 'brick_title' ){
+			//Create a new brick 
+			$new_brick_id = wp_insert_post( $new_brick, true );
+			
+			//Apply the new Stack ID (Taxonomy Term) to this Brick (Post)
+			wp_set_object_terms( $new_brick_id, $new_stack_id, 'mp_stacks' );
+			
+			//Loop through the meta in the original brick
+			foreach ( $original_brick as $brick_meta_id => $brick_meta_value ){
 				
-				//If this meta field is the stack order one
-				if ( $brick_meta_id == 'mp_stack_order' ){
+				//Don't save the brick title as a meta field
+				if ( $brick_meta_id != 'brick_title' ){
 					
-					//Set the Stack Order
-					update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value );
-					
-				}
-				//If this meta field is not the stack order one
-				else{
-					
-					//If this is a repeater
-					if ( isset( $brick_meta_value['value'] ) && is_array( $brick_meta_value['value'] ) ) {
+					//If this meta field is the stack order one
+					if ( $brick_meta_id == 'mp_stack_order' ){
 						
-						//Reset our checked meta variable
-						$brick_meta_checked_value = array();
+						//Set the Stack Order
+						update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value );
 						
-						$repeat_counter = 0;
+					}
+					//If this meta field is not the stack order one
+					else{
 						
-						//Loop through each repeat in this repeater
-						foreach( $brick_meta_value['value'] as $repeat ){
+						//If this is a repeater
+						if ( isset( $brick_meta_value['value'] ) && is_array( $brick_meta_value['value'] ) ) {
 							
-							//Loop through each field in this repeat
-							foreach( $repeat as $field_id => $field_value_array ){
+							//Reset our checked meta variable
+							$brick_meta_checked_value = array();
+							
+							$repeat_counter = 0;
+							
+							//Loop through each repeat in this repeater
+							foreach( $brick_meta_value['value'] as $repeat ){
 								
-								//If this should be an imported attachment
-								if ( isset( $field_value_array['attachment'] ) && $field_value_array['attachment'] ){
-									$brick_meta_checked_value[$repeat_counter][$field_id] = mp_stack_check_value_for_attachment( $field_value_array['value'] );
+								//Loop through each field in this repeat
+								foreach( $repeat as $field_id => $field_value_array ){
+									
+									//If this should be an imported attachment
+									if ( isset( $field_value_array['attachment'] ) && $field_value_array['attachment'] ){
+										$brick_meta_checked_value[$repeat_counter][$field_id] = mp_stack_check_value_for_attachment( $field_value_array['value'] );
+									}
+									else{
+										$brick_meta_checked_value[$repeat_counter][$field_id] = $field_value_array['value'];
+									}
+									
 								}
-								else{
-									$brick_meta_checked_value[$repeat_counter][$field_id] = $field_value_array['value'];
-								}
+								
+								$repeat_counter = $repeat_counter + 1;
 								
 							}
-							
-							$repeat_counter = $repeat_counter + 1;
-							
+								
 						}
+						//If this is not a repeater
+						else{
+							//If this should be an imported attachment
+							if ( isset( $brick_meta_value['attachment'] ) && $brick_meta_value['attachment'] ){
+								$brick_meta_checked_value = mp_stack_check_value_for_attachment($brick_meta_value['value']);
+							}
+							else{
+								$brick_meta_checked_value = isset( $brick_meta_value['value'] ) ? $brick_meta_value['value'] : NULL;
+							}
+							
+						}//End of: If $brick_meta_value['value'] is not a repeater
+						
+						//Save the metadata to the new brick
+						update_post_meta( $new_brick_id, $brick_meta_id, $brick_meta_checked_value );
 							
 					}
-					//If this is not a repeater
-					else{
-						//If this should be an imported attachment
-						if ( isset( $brick_meta_value['attachment'] ) && $brick_meta_value['attachment'] ){
-							$brick_meta_checked_value = mp_stack_check_value_for_attachment($brick_meta_value['value']);
-						}
-						else{
-							$brick_meta_checked_value = isset( $brick_meta_value['value'] ) ? $brick_meta_value['value'] : NULL;
-						}
-						
-					}//End of: If $brick_meta_value['value'] is not a repeater
-					
-					//Save the metadata to the new brick
-					update_post_meta( $new_brick_id, $brick_meta_id, $brick_meta_checked_value );
-						
 				}
+				
 			}
 			
 		}
-		
 	}
 	
 	return $new_stack_id;
