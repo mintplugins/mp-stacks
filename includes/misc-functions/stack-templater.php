@@ -153,16 +153,18 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 						
 						//Loop through each repeat in this repeater
 						foreach( $meta_value as $repeat ){
-														
-							//Loop through each field in this repeat
-							foreach( $repeat as $field_id => $field_value ){
 							
-								//Add this field_value_array to the parent's meta_value_array
-								$meta_value_array['value'][$repeat_counter][$field_id] = array( 
-									'value' => $field_value,
-									'attachment' => false
-								);								
+							if ( is_array( $repeat ) ){							
+								//Loop through each field in this repeat
+								foreach( $repeat as $field_id => $field_value ){
 								
+									//Add this field_value_array to the parent's meta_value_array
+									$meta_value_array['value'][$repeat_counter][$field_id] = array( 
+										'value' => $field_value,
+										'attachment' => false
+									);								
+									
+								}
 							}
 							
 							//Increment Repeat Counter
@@ -284,7 +286,7 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 				else{
 					
 					//If this is a repeater
-					if ( is_array( $brick_meta_value['value'] ) ) {
+					if ( isset( $brick_meta_value['value'] ) && is_array( $brick_meta_value['value'] ) ) {
 						
 						//Reset our checked meta variable
 						$brick_meta_checked_value = array();
@@ -319,7 +321,7 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 							$brick_meta_checked_value = mp_stack_check_value_for_attachment($brick_meta_value['value']);
 						}
 						else{
-							$brick_meta_checked_value = $brick_meta_value['value'];
+							$brick_meta_checked_value = isset( $brick_meta_value['value'] ) ? $brick_meta_value['value'] : NULL;
 						}
 						
 					}//End of: If $brick_meta_value['value'] is not a repeater
