@@ -488,7 +488,7 @@
 
 /* For Lightbox Popups that match the height of their content */
 .mp-stacks-iframe-height-match .mfp-content{
-	height:auto;
+	height:100%;
 	max-width: 95%!important;
 	max-height: 95%!important;
 }
