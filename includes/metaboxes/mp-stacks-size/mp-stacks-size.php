@@ -31,7 +31,7 @@ function mp_stacks_size_create_meta_box(){
 		array(
 			'field_id'			=> 'brick_min_above_below',
 			'field_title' 	=> __( 'Minimum Space Above/Below:', 'mp_stacks'),
-			'field_description' 	=> 'Enter the minimum space above/below the Content_types Area inside this brick. (in pixels)',
+			'field_description' 	=> 'Enter the minimum space above/below the Content-Types Area inside this brick. (in pixels)',
 			'field_type' 	=> 'number',
 			'field_value' => '20',
 		),
@@ -138,7 +138,7 @@ function mp_stacks_size_create_meta_box(){
 				'field_value' => '50',
 				'field_showhider'  => 'brick_content_type_widths_and_floats',
 			),
-		array(
+		/*array(
 			'field_id'	 => 'brick_content_type_help',
 			'field_title' => 'Content Types',
 			'field_description' => NULL,
@@ -152,7 +152,7 @@ function mp_stacks_size_create_meta_box(){
 					'target' => NULL
 				),
 			)
-		),
+		),*/
 		array(
 			'field_id'			=> 'brick_class_name',
 			'field_title' 	=> __( 'Brick Class Name:', 'mp_stacks'),
