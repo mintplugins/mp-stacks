@@ -45,6 +45,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Color-Coded content-types so they are easier to follow upon first-glance.
 * When duplicating a stack, you now have the option to preview the stack you are duplicating.
 * Added some error checking when making a new stack via the stack template function.
+* In grids, we remove the title attribute upon mouse over so we don’t have it covering the  grid item
+* Removed “Edit” link from bottom of Stack Page Template.
 
 = 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
