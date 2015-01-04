@@ -530,6 +530,7 @@ jQuery(document).ready(function($){
 			success: function (response) {
 				
 				var $newitems = $(response.items);
+				$newitems.css('visibility', 'hidden' );
 				
 				//Add the new items to the page
 				if ( masonry_on ){
@@ -539,10 +540,12 @@ jQuery(document).ready(function($){
 					the_grid_container.append($newitems);
 				}
 				
+				$newitems.css('visibility', 'visible' );
+				
 				//Add the updated "Load More" button to the page
 				the_button_container.replaceWith(response.button);
 				
-				//Add the animation trigger whichr esets animations on newly added items
+				//Add the animation trigger which resets animations on newly added items
 				the_after_container.html(response.animation_trigger);
 				
 				//Refresh waypoints to reflect new page size
