@@ -76,21 +76,6 @@ function mp_stacks_bg_create_meta_box(){
 			'field_value' 	=> '100',
 			'field_showhider' => 'brick_bg_color_showhider'
 		),
-		array(
-			'field_id'	 => 'brick_content_type_help',
-			'field_title' => 'Content Types',
-			'field_description' => NULL,
-			'field_type' => 'help',
-			'field_value' => '',
-			'field_select_values' => array(
-				array( 
-					'type' => 'oembed',
-					'link' => 'https://mintplugins.com/embed/?post_id=3895',
-					'link_text' => __( 'Brick Background Tutorial', 'mp_stacks'),
-					'target' => NULL
-				),
-			),
-		),
 	);
 	
 	
