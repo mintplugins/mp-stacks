@@ -569,6 +569,29 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	//In Grids, remove the title attributes upon mouse over
+    $( document ).on( 'mouseover', '.mp-stacks-grid a', function( event ){
+
+		// Get the current title
+		var title = $(this).attr("title");
+		
+		// Store it in a temporary attribute
+		$(this).attr("tmp_title", title);
+
+		// Set the title to nothing so we don't see the tooltips
+		$(this).attr("title","");
+	});
+	//And add it back upon mouse out
+	$( document ).on( 'mouseout', '.mp-stacks-grid a', function( event ){
+
+		// Retrieve the title from the temporary attribute
+		var title = $(this).attr("tmp_title");
+
+		// Return the title to what it was
+		$(this).attr("title", title);
+	});
+
+	
 	/**
 	 * jQuery Plugin to Change an Element Type
 	 *
