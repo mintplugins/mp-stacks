@@ -167,8 +167,8 @@ jQuery(document).ready(function($){
 			},
 			type: 'iframe',
 			iframe: {
-				markup: '<div class="mfp-iframe-height-match" style="width:100%; max-width:' + width + ';">'+
-				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%;" allowfullscreen></iframe>'+
+				markup: '<div class="mfp-iframe-height-match" style="width:100%; height:100%; max-width:' + width + ';">'+
+				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
 				'</div>'
 			},
@@ -646,11 +646,24 @@ function mp_stacks_mfp_match_height(iframe) {
 			var iframe_height_interval_counter = 1;
 			var iframe_height_interval = setInterval( function(){
 				iframe.height = iframeWin.document.documentElement.scrollHeight + 'px' || iframeWin.document.body.scrollHeight + 'px';
+				$('.mfp-iframe-height-match').velocity({
+					height:iframe.height,
+				}, 250, function() {
+					// Animation complete.
+				});
+				
+				$('.mfp-content').velocity({
+					height:iframe.height,
+				}, 250, function() {
+	
+				});
+				
 				iframe_height_interval_counter = iframe_height_interval_counter + 1;
 				if ( iframe_height_interval_counter >= 25 ){
 					clearInterval(iframe_height_interval);	
 				}
 			}, 100 );
+			
 		}
 		
 		//This function is fired upon screen resize (and the mp_stacks_mfp_match_height_trigger) so that the height continues to match the contents of the iframe
