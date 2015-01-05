@@ -48,6 +48,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * In grids, we remove the title attribute upon mouse over so we don’t have it covering the  grid item
 * Removed “Edit” link from bottom of Stack Page Template.
 * Made matched-height lightboxes animate to the correct size.
+* New Filter hook called mp_stacks_brick_head_output which is used to output meta information based on a brick’s content.
 
 = 1.0.1.3 = December 1, 2014
 * Fixed:  Other taxonomies' "edit" buttons weren't returned and so, were not linking to anything.
