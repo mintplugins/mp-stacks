@@ -26,6 +26,8 @@ function mp_stack_css( $stack_id, $echo = false ) {
 	//Create new query for stacks
 	$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
 	
+	$head_output = NULL;
+	
 	$css_output = '<style type="text/css">';
 	
 	//Loop through the stack group		
@@ -33,8 +35,12 @@ function mp_stack_css( $stack_id, $echo = false ) {
 		
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
 			
+			$post_id = get_the_ID();
+			
 			//Build Brick CSS Output
-			$css_output .= mp_brick_css( get_the_ID(), $stack_id );
+			$css_output .= mp_brick_css( $post_id, $stack_id );
+			
+			$head_output .= mp_brick_head_output( $post_id, $stack_id );
 			
 		endwhile;
 		
@@ -42,13 +48,40 @@ function mp_stack_css( $stack_id, $echo = false ) {
 		
 		if ( $echo == true ){
 			echo $css_output;
+			echo $head_output;
 		}
 		else{
-			return $css_output;
+			return $css_output . $head_output;
 		}
 		
 	}
 	
+}
+
+/**
+ * Function which returns the output for each brick in the document <head> tag. This can be used for meta tags etc.
+ * Parameter: Brick ID
+ */
+function mp_brick_head_output( $post_id, $stack_id ){
+	
+	//First Media Type
+	$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
+	
+	//Second Media Type
+	$mp_stacks_second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);
+	
+	//Default outputs
+	$first_head_output = NULL;
+	$second_head_output = NULL;
+		
+	//First Output for the document HEAD
+	$first_output = has_filter('mp_stacks_brick_head_output') ? apply_filters( 'mp_stacks_brick_head_output', $first_head_output, $mp_stacks_first_content_type, $post_id) : NULL;
+	
+	//Second Output for the document HEAD
+	$second_output = has_filter('mp_stacks_brick_head_output') ? apply_filters( 'mp_stacks_brick_head_output', $second_head_output, $mp_stacks_second_content_type, $post_id) : NULL;
+	
+	return $first_output . $second_output;
+				
 }
 
 /**
