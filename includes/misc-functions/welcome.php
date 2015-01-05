@@ -176,7 +176,7 @@ class MP_Stacks_Welcome {
 		?>
 		<div class="wrap about-wrap">
 			<h1><?php printf( __( 'Welcome to MP Stacks %s', 'mp_stacks' ), $display_version ); ?></h1>
-			<div class="about-text"><?php printf( __( 'Thank you for creating with MP Stacks! An amazing way to build pages without coding.', 'mp_stacks' ), $display_version ); ?></div>
+			<div class="about-text"><?php printf( __( 'Thank you for creating with MP Stacks! An amazing way to build/design pages in WordPress.', 'mp_stacks' ), $display_version ); ?></div>
 			<div class="mp-stacks-badge"><?php printf( __( 'Version %s', 'mp_stacks' ), $display_version ); ?></div>
 
 			<?php $this->tabs(); ?>
