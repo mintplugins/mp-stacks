@@ -3,8 +3,8 @@ Contributors: johnstonphilip
 Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.0.1.3
+Tested up to: 4.1
+Stable tag: 1.0.1.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.4 = December X, 2014
+= 1.0.1.4 = January 4, 2014
 * Grid Overlays function for Mobile Styles added
 * Fixed custom width and height lightbox js functions
 * Added a Pseudo Version of Knapstack to the Appearance>Themes page if not installed.
