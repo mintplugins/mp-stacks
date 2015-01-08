@@ -35,7 +35,11 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.4 = January 4, 2014
+= 1.0.1.5 = January X, 2015
+* Fix for text areas when re-ordering contentTypes. TinyMce’s weren’t being re-set right when Content-Types were re-ordered.
+
+
+= 1.0.1.4 = January 4, 2015
 * Grid Overlays function for Mobile Styles added
 * Fixed custom width and height lightbox js functions
 * Added a Pseudo Version of Knapstack to the Appearance>Themes page if not installed.

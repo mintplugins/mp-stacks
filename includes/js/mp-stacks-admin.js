@@ -46,7 +46,7 @@ jQuery(document).ready(function($){
 						$('#'+this.id+'_parent').remove();
 						
 						//Text area must be in view for tinymce to load correctly
-						$(this).css('display', 'block');
+						//$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );		
 					
 					});	
@@ -83,7 +83,7 @@ jQuery(document).ready(function($){
 						$('#'+this.id+'_parent').remove();
 						
 						//Text area must be in view for tinymce to load correctly
-						$(this).css('display', 'block');
+						//$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 						
 					});
