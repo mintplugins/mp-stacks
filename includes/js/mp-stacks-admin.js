@@ -45,9 +45,20 @@ jQuery(document).ready(function($){
 						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
 						$('#'+this.id+'_parent').remove();
 						
-						//Text area must be in view for tinymce to load correctly
-						//$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceAddEditor', true, this.id );		
+						$(this).css('display', 'block');
+						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+							
+						//Set the class for the container to be for visual - we're forcing visual mode as the default
+						$(this).parent().parent().find('.quicktags-toolbar').css('display', 'none' );
+						$(this).parent().parent().find('.wp-editor-tabs').remove();
+						
+						if ( $(this).parent().parent().find('.mce-container').css( 'display' ) == 'none' ){
+							$(this).parent().parent().find('.wp-editor-area').css( 'display', '' );
+						}
+						
+						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).addClass('tmce-active');
+						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).removeClass('html-active');
 					
 					});	
 				}
@@ -82,9 +93,20 @@ jQuery(document).ready(function($){
 						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
 						$('#'+this.id+'_parent').remove();
 						
-						//Text area must be in view for tinymce to load correctly
-						//$(this).css('display', 'block');
+						$(this).css('display', 'block');
+						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+							
+						//Set the class for the container to be for visual - we're forcing visual mode as the default
+						$(this).parent().parent().find('.quicktags-toolbar').css('display', 'none' );
+						$(this).parent().parent().find('.wp-editor-tabs').remove();
+						
+						if ( $(this).parent().parent().find('.mce-container').css( 'display' ) == 'none' ){
+							$(this).parent().parent().find('.wp-editor-area').css( 'display', '' );
+						}
+						
+						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).addClass('tmce-active');
+						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).removeClass('html-active');
 						
 					});
 					
