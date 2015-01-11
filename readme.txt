@@ -37,6 +37,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 = 1.0.1.5 = January X, 2015
 * Fix for text areas when re-ordering contentTypes. TinyMce’s weren’t being re-set right when Content-Types were re-ordered.
+* New option for Space Below: This allows the user to change the margin below the content-type area independently from the top (above) margin. Prevously, above and below had to match
+* Moved Minimum height Meta option under the “Margin” showhider.
+* Removed “Minimum” from space above/below option descriptions.
+* Apply default of 20px below 1st content type on mobile sizes (<600px)
 
 
 = 1.0.1.4 = January 4, 2015
