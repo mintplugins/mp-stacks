@@ -782,14 +782,14 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	//Check c1's above margins
 	$brick_min_above_c1 = mp_core_get_post_meta( $post_id, 'brick_min_above_c1', 0 );
 	
-	//If there is no second content-type OR this is a left/right allignmnet, don't apply the 10px bottom margin
+	//If there is no second content-type OR this is a left/right alignmnet, don't apply the 20px bottom margin
 	if ( $mp_stacks_second_content_type == 'none' || $brick_alignment == 'leftright' ){
 		//Check c1's below margins (default to 0)
 		$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 0 );
 	}
 	else{
 		//Check c1's below margins (default to 10)
-		$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 10 );	
+		$brick_min_below_c1 = mp_core_get_post_meta( $post_id, 'brick_min_below_c1', 20 );	
 	}
 	
 	//Check c2's above margins
@@ -804,6 +804,19 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 		margin-top:' . $brick_min_above_c1 . 'px;	
 		margin-bottom:' . $brick_min_below_c1 . 'px;	
 	}';
+	
+	//If there is a second content type
+	if ( $mp_stacks_second_content_type != 'none' ){
+		
+		//For Mobile, add custom margin below the 1st content type - if none, default to 20
+		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type
+		{';
+			
+			//If there is no value to add below the first content-type, default to 20
+			$css_output .= !empty( $brick_min_below_c1 ) ? 'margin-bottom:' . $brick_min_below_c1 . 'px' : 'margin-bottom:20px';	
+		
+		$css_output .= '}';
+	}
 	
 	//Add custom margin to the 2nd content type 
 	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-second-content-type
