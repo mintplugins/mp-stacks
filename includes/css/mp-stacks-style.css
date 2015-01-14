@@ -166,7 +166,7 @@
 
 /*Image*/
 .mp-brick .mp-brick-main-image{
-	vertical-align: bottom;
+	vertical-align: middle;
 	box-shadow:none;
 	border-radius:0;
 	width:100%;
