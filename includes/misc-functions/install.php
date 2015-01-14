@@ -94,7 +94,7 @@ register_activation_hook( MP_STACKS_PLUGIN_FILE, 'mp_stacks_install' );
  */
 function mp_stacks_redirect_upon_activation(){
 	
-	global $mp_stacks_options;
+	global $mp_stacks_options, $mp_core_options;
 	
 	//If we haven't just activated, get out of here
 	if ( $mp_stacks_options['just_activated'] == true ){
@@ -105,13 +105,16 @@ function mp_stacks_redirect_upon_activation(){
 		update_option( 'mp_stacks_options', $mp_stacks_options );
 		
 		// Bail if activating from network, or bulk
-		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) {
+		if ( is_network_admin() || isset( $_GET['activate-multi'] ) || ( isset( $mp_core_options['parent_plugin_activation_status'] ) && $mp_core_options['parent_plugin_activation_status'] != 'complete' ) ) {
 			
 			//Flush the rewrite rules
 			flush_rewrite_rules();
 			
 			//Tell the mp_stacks_options that we no longer just activated so no redirects happen.
 			$mp_stacks_options['just_activated'] = false;	
+			
+			//Save our mp_stacks_options - since we've just activated and changed some of them
+			update_option( 'mp_stacks_options', $mp_stacks_options );
 		
 			return;
 		}
@@ -142,7 +145,7 @@ add_action('shutdown', 'mp_stacks_redirect_upon_activation' );
  * @return void
  */
 function mp_stacks_activated_one_page_load_ago(){
-	global $mp_stacks_options;
+	global $mp_stacks_options, $mp_core_options;
 	 
 	//If we activated one page before this one 
 	if( $mp_stacks_options['just_activated'] == 'one_page_load_ago' ){
@@ -175,6 +178,21 @@ function mp_stacks_activated_one_page_load_ago(){
 		
 			}
 			
+			// Bail if activating from network, or bulk
+			if ( is_network_admin() || isset( $_GET['activate-multi'] ) || ( isset( $mp_core_options['parent_plugin_activation_status'] ) && $mp_core_options['parent_plugin_activation_status'] != 'complete' ) ) {
+				
+				//Flush the rewrite rules
+				flush_rewrite_rules();
+				
+				//Tell the mp_stacks_options that we no longer just activated so no redirects happen.
+				$mp_stacks_options['just_activated'] = false;	
+				
+				//Save our mp_stacks_options - since we've just activated and changed some of them
+				update_option( 'mp_stacks_options', $mp_stacks_options );
+			
+				return;
+			}
+		
 			// We haven't been to the welcome page yet so Redirect the user to our welcome page - or other page if an add-on filters this redirect
 			echo '<script type="text/javascript">';
 				echo "window.location = '" . apply_filters( 'mp_stacks_install_redirect', admin_url() . '?page=mp-stacks-about' ) . "';";
