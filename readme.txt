@@ -41,6 +41,9 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Moved Minimum height Meta option under the “Margin” showhider.
 * Removed “Minimum” from space above/below option descriptions.
 * Apply default of 20px below 1st content type on mobile sizes (<600px)
+* Install change: if there is a parent plugin installing, it won't redirect to the welcome page
+* Improved Font Shrinking for mobile by wrapping each word in a span tag and checking its width.
+* Make CSS for short codes external instead of inline.
 
 
 = 1.0.1.4 = January 4, 2015
