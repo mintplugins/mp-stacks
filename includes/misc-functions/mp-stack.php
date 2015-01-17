@@ -3,7 +3,7 @@
  * Function which returns the CSS output for the bricks in a stack
  * Parameter: Stack ID
  */
-function mp_stack_css( $stack_id, $echo = false ) {		
+function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {		
 	
 	//Set the args for the new query
 	$mp_stacks_args = array(
@@ -28,7 +28,7 @@ function mp_stack_css( $stack_id, $echo = false ) {
 	
 	$head_output = NULL;
 	
-	$css_output = '<style type="text/css">';
+	$css_output = $include_style_tags ? '<style type="text/css">' : NULL;
 	
 	//Loop through the stack group		
 	if ( $mp_stack_query->have_posts() ) { 
@@ -44,7 +44,7 @@ function mp_stack_css( $stack_id, $echo = false ) {
 			
 		endwhile;
 		
-		$css_output .= '</style>';
+		$css_output .= $include_style_tags ? '</style>' : NULL;
 		
 		if ( $echo == true ){
 			echo $css_output;
@@ -853,7 +853,11 @@ function mp_stacks_header_css(){
 				foreach ($matches as $val) {
 					
 					//Output CSS for this stack
-					mp_stack_css( $val[2], true ); 
+					//mp_stack_css( $val[2], true );
+					
+					//Enqueue the CSS for this stack
+					wp_enqueue_style( 'mp_stacks_css_' . $val[2], add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) ); 
+					
 				}
 			}
 			
