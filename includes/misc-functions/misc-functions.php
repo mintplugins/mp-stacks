@@ -118,7 +118,7 @@ function mp_stacks_brick_edit_page_no_js_message() {
 				.wrap {display:none;}
 			</style>
 			<div class="noscriptmsg error">
-			You don\'t have javascript enabled. Life\'s too short for that! Turn it on and then let\'s get cookin\'!
+			' . __( "You don't have javascript enabled. Life's too short for that! Turn it on and then let's get cookin'!", 'mp_stacks' ) . '
 			</div>
 		</noscript>';
 		
@@ -440,4 +440,203 @@ if (!function_exists('mp_knapstack_plugin_check')){
 		
 		return array_merge( $plugins, $add_plugins );
 	}
+}
+
+/**
+* There is a potential that some webhosts might have a limit on the numbver of meta options a single post can save at any given time. Here, we make sure that number is 5000
+*
+* @since    1.0.0
+* @link     http://bullmandesign.com/quick-tips/too-much-of-a-good-thing
+* @param    array $rules 
+* @return   array $rules 
+*/
+function mp_stacks_htaccess_contents( $rules ){
+   	
+    return $rules . "
+# Allow more custom fields - Added by MP Stacks.
+php_value max_input_vars 5000";
+
+}
+add_filter('mod_rewrite_rules', 'mp_stacks_htaccess_contents');
+
+
+/**
+* Output JUST the css for a stack 
+*
+* @since    1.0.0
+* @link     http://bullmandesign.com/quick-tips/too-much-of-a-good-thing
+* @param    array $rules 
+* @return   array $rules 
+*/
+function mp_stacks_css_page(){
+   	
+   if ( !isset( $_GET['mp_stacks_css_page'] )){
+	   return false;
+   }
+   
+   header('Content-Type: text/css');
+   
+   //Output CSS for this stack
+	echo mp_stack_css( $_GET['mp_stacks_css_page'], false, false );
+	
+	die();
+					
+}
+add_action('init', 'mp_stacks_css_page');
+
+/**
+* Get the time() when a Stack was last modified
+*
+* @since    1.0.0
+* @link     http://bullmandesign.com/quick-tips/too-much-of-a-good-thing
+* @param    int $stack_id 
+* @return   string $time when the stack was lasst modified 
+*/
+function mp_stack_last_modified( $stack_id ){
+	
+	$stack_meta = get_option( 'mp_stack_meta_' . $stack_id ); 
+	
+	return $stack_meta['last_modified'];
+	
+}
+
+/**
+* Update Stack Meta Info each time a Brick within that Stack is saved
+*
+* @since    1.0.0
+* @param    int $stack_id 
+* @return   string $time when the stack was last modified 
+*/
+function mp_stack_update_meta_upon_brick_save(){
+	
+	//Check if post type has been set
+	$this_post_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : NULL;		
+			
+	//If this is a brick in MP Stacks 
+	if ( $this_post_type != 'mp_brick' ){
+		return false;	
+	}
+	
+	//Get the Stack ID this brick is in
+	foreach($_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
+		$stack_id = $mp_stack_id;
+	}
+					
+	//Get the pre-existing Stack Meta
+	$stack_meta = get_option( 'mp_stack_meta_' . $stack_id ); 
+	
+	//Set the last modified date 
+	$stack_meta['last_modified'] = time();
+	
+	//Update the Stack Meta
+	update_option( 'mp_stack_meta_' . $stack_id, $stack_meta ); 
+		
+}
+add_action( 'save_post', 'mp_stack_update_meta_upon_brick_save' );
+
+/**
+ * Theme Bundle Installation Function: This function will check if we've created this Theme Bundle's Default Stacks and corresponding Pages/Posts
+ * If they haven't been created - or just don't exist (they've been deleted), re-create them. 
+ 
+ * Additionally we can apply Stacks to certain roles. If a page is supposed to be the 'home' page, set that as well.
+ * If a stack is supposed to be the 'footer' stack, set that as well.
+ 
+ * @since 1.0
+ * @param $theme_bundle_slug The slug of the theme bundle using underscores.
+ * @return void
+ */
+function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
+		
+	/*The $default_stacks_to_create filtered array is formatted like so:
+	//array(
+		'post_type (we'll create a post for each item in this array and put the corresponding Stack onto it)' => array(
+			'stack's template_slug' => array( 'is_home' => true ),
+			'stack's template_slug' => array( 'is_footer' => true ),
+			'stack's template_slug' => array(),
+		),
+		'post' => array(
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+		),
+		'page' => array(
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+		),
+		'download' => array(
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+			'stack's template_slug' => array(),
+		),	
+	);
+	*/
+	
+	//Set up a default empty array for us to begin filtering
+	$default_stacks_to_create = array(
+		'post' => array(),
+		'page' => array(),
+	);
+	
+	$default_stacks_to_create = apply_filters( $theme_bundle_slug . '_default_stacks', $default_stacks_to_create );
+	
+	//Get the option where we save all default-created stacks
+	$previously_created_default_stacks = get_option( 'mp_stacks_default_stacks_created' );
+	
+	//Loop through each post type in the $default_stacks_to_create
+	foreach( $default_stacks_to_create as $post_type => $stacks_to_create ){
+		
+		//Loop through each stack to create for this post type
+		foreach( $stacks_to_create as $stack_template_slug => $other_info ){
+			
+			//If a default stack doesn't exist for this template
+			if ( !isset( $previously_created_default_stacks[$stack_template_slug]['stack_id'] ) || !get_term_by('id', $previously_created_default_stacks[$stack_template_slug]['stack_id'], 'mp_stacks') ){
+				
+				$stack_template_function_name = 'mp_stacks_' . $stack_template_slug . '_array';
+				
+				//Create a new stack using the stack template slug and create a pretty, Capitalized+Spaced title from the slug
+				$new_stack_id = mp_stacks_create_stack_from_template( $stack_template_function_name(), ucwords( str_replace( '_', ' ', $stack_template_slug ) ) );
+									
+				//Add this post to the list of default posts we've created for this stack template
+				$previously_created_default_stacks[$stack_template_slug]['stack_id'] = $new_stack_id;		
+				
+			}
+			
+			//If a default corresponding post doesn't exist for this template
+			if ( !isset( $previously_created_default_stacks[$stack_template_slug]['post_id'] )  || !mp_core_post_exists( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) ){
+				
+				//Set up the new post to use
+				$default_post = array(
+				  'post_title'    => ucwords( str_replace( '_', ' ', $stack_template_slug ) ),
+				  'post_content'  => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
+				  'post_type'	  => $post_type,	
+				  'post_status'   => 'publish',
+				  'post_author'   => 1
+				);
+				
+				//Creat the new default post and assign the Stack to be on the page
+				$new_post_id = wp_insert_post( $default_post );
+				
+				//Add this post to the list of default posts we've created for this stack template
+				$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;					
+			
+			}
+			
+			//If this stack template/corresponding post is supposed to be the homepage
+			if ( $other_info['is_home'] ){
+				
+				//Set the home page to be this Stack Template/Corresponding Post
+				update_option( 'page_on_front', $previously_created_default_stacks[$stack_template_slug]['post_id'] );
+				update_option( 'show_on_front', 'page' );
+				
+			}
+			
+				
+		}
+			
+	}
+	
+	//Update the option which tells us which default stacks have been created and their corresponding ids
+	update_option( 'mp_stacks_default_stacks_created', $previously_created_default_stacks );
+
 }
