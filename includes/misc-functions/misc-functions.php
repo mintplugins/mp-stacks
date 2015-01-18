@@ -602,32 +602,44 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 				
 			}
 			
-			//If a default corresponding post doesn't exist for this template
-			if ( !isset( $previously_created_default_stacks[$stack_template_slug]['post_id'] )  || !mp_core_post_exists( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) ){
-				
-				//Set up the new post to use
-				$default_post = array(
-				  'post_title'    => ucwords( str_replace( '_', ' ', $stack_template_slug ) ),
-				  'post_content'  => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
-				  'post_type'	  => $post_type,	
-				  'post_status'   => 'publish',
-				  'post_author'   => 1
-				);
-				
-				//Creat the new default post and assign the Stack to be on the page
-				$new_post_id = wp_insert_post( $default_post );
-				
-				//Add this post to the list of default posts we've created for this stack template
-				$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;					
+			//If there should be a corresponding post for this stack
+			if ( $post_type != 'none' ){
 			
+				//If a default corresponding post doesn't exist for this template (it has never been created before, OR it has been deleted) 
+				if ( !isset( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) || ( isset( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) && !mp_core_post_exists( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) ) ){
+					
+					//Set up the new post to use
+					$default_post = array(
+					  'post_title'    => ucwords( str_replace( '_', ' ', $stack_template_slug ) ),
+					  'post_content'  => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
+					  'post_type'	  => $post_type,	
+					  'post_status'   => 'publish',
+					  'post_author'   => 1
+					);
+					
+					//Creat the new default post and assign the Stack to be on the page
+					$new_post_id = wp_insert_post( $default_post );
+					
+					//Add this post to the list of default posts we've created for this stack template
+					$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;					
+				
+				}
 			}
 			
 			//If this stack template/corresponding post is supposed to be the homepage
-			if ( $other_info['is_home'] ){
+			if ( isset( $other_info['is_home'] ) && $other_info['is_home'] ){
 				
 				//Set the home page to be this Stack Template/Corresponding Post
 				update_option( 'page_on_front', $previously_created_default_stacks[$stack_template_slug]['post_id'] );
 				update_option( 'show_on_front', 'page' );
+				
+			}
+			
+			//If this stack template/corresponding post is supposed to be the footer
+			if ( isset( $other_info['is_footer'] ) && $other_info['is_footer'] ){		
+
+				//Set the home page to be this Stack Template/Corresponding Post
+				set_theme_mod( 'mp_stacks_footer_stack', $previously_created_default_stacks[$stack_template_slug]['stack_id'] );
 				
 			}
 			
