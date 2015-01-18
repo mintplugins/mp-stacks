@@ -357,7 +357,7 @@ jQuery(document).ready(function($){
 				
 				//Add our cloned, spanned text after it's parent so it gets the same styling				
 				this_p_in_this_brick.after( '<div class="mp_stacks_temp_text">' + text + '</div>');
-				
+												
 				//Capture the current font size for this p
 				var new_font_size = parseFloat(this_p_in_this_brick.css('font-size'));
 				
@@ -369,6 +369,8 @@ jQuery(document).ready(function($){
 					//Loop through each "span" tag (each word) in our cloned text
 					$(this).find( 'span' ).each( function(){
 						
+						$(this).css('display', 'inline-block' );
+						
 						var resize_counter = 0;
 						
 						//While the width of this span tag (word) is greater than the width of the outer brick
@@ -379,6 +381,10 @@ jQuery(document).ready(function($){
 							new_font_size = new_font_size * .9; 							
 							
 							this_p_in_this_brick.css( 'font-size', new_font_size );
+							this_p_in_this_brick.find( 'a' ).each( function(){
+								$(this).css( 'font-size', new_font_size );
+							});
+							
 							this_span.css( 'font-size', new_font_size + 'px' );
 							
 							console.log(this_span.html() + ': ' +this_span.width());
