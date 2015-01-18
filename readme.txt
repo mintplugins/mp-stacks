@@ -44,6 +44,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Install change: if there is a parent plugin installing, it won't redirect to the welcome page
 * Improved Font Shrinking for mobile by wrapping each word in a span tag and checking its width.
 * Make CSS for short codes external instead of inline.
+* Pseudo Knapstack Installation incorrectly required a license - but it doesn’t anymore.
+* Added Theme Bundle Function to create default Stacks mp_stacks_theme_bundle_create_default_pages
 
 
 = 1.0.1.4 = January 4, 2015
