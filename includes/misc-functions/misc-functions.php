@@ -430,7 +430,7 @@ if (!function_exists('mp_knapstack_plugin_check')){
 				'plugin_api_url' => 'https://mintplugins.com/',
 				'plugin_info_link' => 'http://mintplugins.com/knapstack-theme',
 				'plugin_group_install' => true,
-				'plugin_licensed' => true,
+				'plugin_licensed' => false,
 				'plugin_licensed_parent_name' => NULL,
 				'plugin_required' => true,
 				'plugin_wp_repo' => true,
