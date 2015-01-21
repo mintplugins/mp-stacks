@@ -118,7 +118,7 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 		
 	}
 }
-add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order', 100);
+add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order' );
 
 /**
  * Save new menu order for each post
