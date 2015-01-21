@@ -118,31 +118,32 @@ jQuery(document).ready(function($){
 					}
 				}
 			},
-			
-			patterns: {
-							
-				youtube: {
-					index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+			iframe: {
+				patterns: {
+								
+					youtube: {
+						index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+						
+						id: 'v=', // String that splits URL in a two parts, second part should be %id%
+						// Or null - full URL will be returned
+						// Or a function that should return %id%, for example:
+						// id: function(url) { return 'parsed id'; } 
+						
+						src: '//www.youtube.com/embed/%id%?autoplay=1&rel=0&modestbranding=1&showinfo=0&wmode=transparent&autohide=1' // URL that will be set as a source for iframe. 
+					},
+					vimeo: {
+						index: 'vimeo.com/',
+						id: '/',
+						src: '//player.vimeo.com/video/%id%?autoplay=1'
+					},
+					gmaps: {
+						index: '//maps.google.',
+						src: '%id%&output=embed'
+					}
 					
-					id: 'v=', // String that splits URL in a two parts, second part should be %id%
-					// Or null - full URL will be returned
-					// Or a function that should return %id%, for example:
-					// id: function(url) { return 'parsed id'; } 
-					
-					src: '//www.youtube.com/embed/%id%?autoplay=1' // URL that will be set as a source for iframe. 
-				},
-				vimeo: {
-					index: 'vimeo.com/',
-					id: '/',
-					src: '//player.vimeo.com/video/%id%?autoplay=1'
-				},
-				gmaps: {
-					index: '//maps.google.',
-					src: '%id%&output=embed'
-				}
+					// you may add here more sources
 				
-				// you may add here more sources
-			
+				}
 			},
 			
 			mainClass: 'mp-stacks-iframe-full-screen',
@@ -180,7 +181,33 @@ jQuery(document).ready(function($){
 				markup: '<div class="mfp-iframe-height-match" style="width:100%; height:100%; max-width:' + width + ';">'+
 				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
-				'</div>'
+				'</div>',
+				patterns: {
+								
+					youtube: {
+						index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+						
+						id: 'v=', // String that splits URL in a two parts, second part should be %id%
+						// Or null - full URL will be returned
+						// Or a function that should return %id%, for example:
+						// id: function(url) { return 'parsed id'; } 
+						
+						src: '//www.youtube.com/embed/%id%?autoplay=1&rel=0&modestbranding=1&showinfo=0&wmode=transparent&autohide=1' // URL that will be set as a source for iframe. 
+					},
+					vimeo: {
+						index: 'vimeo.com/',
+						id: '/',
+						src: '//player.vimeo.com/video/%id%?autoplay=1'
+					},
+					gmaps: {
+						index: '//maps.google.',
+						src: '%id%&output=embed'
+					}
+					
+					// you may add here more sources
+				
+				}
+			
 			},
 			callbacks: {
 				open: function() {
@@ -231,7 +258,34 @@ jQuery(document).ready(function($){
 				markup: '<div class="mfp-iframe-custom-width-height" style="width:100%; height:100%;">'+
 				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" style="width:100%; height:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
-				'</div>'
+				'</div>',
+				
+				patterns: {
+								
+					youtube: {
+						index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+						
+						id: 'v=', // String that splits URL in a two parts, second part should be %id%
+						// Or null - full URL will be returned
+						// Or a function that should return %id%, for example:
+						// id: function(url) { return 'parsed id'; } 
+						
+						src: '//www.youtube.com/embed/%id%?autoplay=1&rel=0&modestbranding=1&showinfo=0&wmode=transparent&autohide=1' // URL that will be set as a source for iframe. 
+					},
+					vimeo: {
+						index: 'vimeo.com/',
+						id: '/',
+						src: '//player.vimeo.com/video/%id%?autoplay=1'
+					},
+					gmaps: {
+						index: '//maps.google.',
+						src: '%id%&output=embed'
+					}
+					
+					// you may add here more sources
+				
+				}
+			
 			},
 			callbacks: {
 				open: function() {
