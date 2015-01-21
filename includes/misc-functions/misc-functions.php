@@ -457,7 +457,7 @@ function mp_stacks_htaccess_contents( $rules ){
 php_value max_input_vars 5000";
 
 }
-add_filter('mod_rewrite_rules', 'mp_stacks_htaccess_contents');
+//add_filter('mod_rewrite_rules', 'mp_stacks_htaccess_contents');
 
 
 /**
