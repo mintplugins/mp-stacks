@@ -157,6 +157,21 @@
 	display: inline-block;
 }
 
+/* Buttons in text areas */
+.mp-brick-text p .button{
+	margin-left:10px;
+}
+.mp-brick-text p .button:first-child{
+	margin-left:0px;
+}
+.mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text p .button{
+	margin-left:0px;
+	margin-bottom:10px;
+}
+.mp-brick[max-width~='600px'] .mp-brick-content-type-container .mp-brick-text p .button:last-child{
+	margin-bottom:0;
+}
+
 /* Links */
 .mp_brick a,
 .mp_brick a:hover{
