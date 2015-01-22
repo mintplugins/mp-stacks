@@ -614,7 +614,8 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					  'post_content'  => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
 					  'post_type'	  => $post_type,	
 					  'post_status'   => 'publish',
-					  'post_author'   => 1
+					  'post_author'   => 1,
+					  'comment_status' => 'closed'
 					);
 					
 					//Creat the new default post and assign the Stack to be on the page
@@ -638,11 +639,36 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 			//If this stack template/corresponding post is supposed to be the footer
 			if ( isset( $other_info['is_footer'] ) && $other_info['is_footer'] ){		
 
-				//Set the home page to be this Stack Template/Corresponding Post
+				//Set the footer to be this Stack Template/Corresponding Post
 				set_theme_mod( 'mp_stacks_footer_stack', $previously_created_default_stacks[$stack_template_slug]['stack_id'] );
 				
 			}
 			
+			//If this stack template/corresponding post requires a page template
+			if ( isset( $other_info['page_template'] ) ){		
+
+				//Set the page template of this post
+				update_post_meta( $previously_created_default_stacks[$stack_template_slug]['post_id'], '_wp_page_template', $other_info['page_template'] );
+				
+			}
+			
+			//If this stack template/corresponding post requires a post format
+			if ( isset( $other_info['post_format'] ) ){		
+
+				//Set the post format of this post
+				set_post_format( $previously_created_default_stacks[$stack_template_slug]['post_id'], $other_info['post_format'] );	
+				
+			}
+			
+			//If a corresponding post exists for this stack
+			if ( isset( $previously_created_default_stacks[$stack_template_slug]['post_id'] ) ){
+				//Disable Comments on this corresponding post
+				wp_update_post( array( 
+					'ID' => $previously_created_default_stacks[$stack_template_slug]['post_id'], 
+					'comment_status' => 'closed'
+					)
+				);
+			}
 				
 		}
 			
