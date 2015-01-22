@@ -45,10 +45,11 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Improved Font Shrinking for mobile by wrapping each word in a span tag and checking its width.
 * Make CSS for short codes external instead of inline.
 * Pseudo Knapstack Installation incorrectly required a license - but it doesn’t anymore.
-* Added Theme Bundle Function to create default Stacks mp_stacks_theme_bundle_create_default_pages
+* Added Theme Bundle Function to create Default Stacks mp_stacks_theme_bundle_create_default_pages
 * Made Lightbox Popup YouTube videos have no related videos at end and minimal YT branding by default
 * Improved Button Styling inside text areas so they don’t bump into each other on mobile.
 * Fixed bug where, on some WP installs bricks weren’t getting added to Stacks because a priority was assigned to the save_post function - the priority was 100 - but 100 wasn’t firing at all on Brick saves. This fixes that.
+* Better Masonry Handling for Grids
 
 
 = 1.0.1.4 = January 4, 2015
