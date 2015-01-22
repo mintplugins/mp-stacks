@@ -158,9 +158,13 @@
 }
 
 /* Buttons in text areas */
+.mp-brick-text-line-1 p .button,
+.mp-brick-text-line-2 p .button,
 .mp-brick-text p .button{
 	margin-left:10px;
 }
+.mp-brick-text-line-1 p .button:first-child,
+.mp-brick-text-line-2 p .button:first-child,
 .mp-brick-text p .button:first-child{
 	margin-left:0px;
 }
