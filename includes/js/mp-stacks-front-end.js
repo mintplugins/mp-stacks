@@ -497,38 +497,33 @@ jQuery(document).ready(function($){
 			url: mp_stacks_frontend_vars.ajaxurl,
 			success: function (response) {
 				
-				var $newitems = $(response.items);
-				$newitems.css('visibility', 'hidden' );
+				var newitems = $(response.items);
+				newitems.css('visibility', 'hidden' );
 				
 				//Add the new items to the page
 				if ( masonry_on ){
-					the_grid_container.append($newitems).imagesLoaded( function(){ the_grid_container.masonry('appended', $newitems) });
+					the_grid_container.append(newitems).imagesLoaded( function(){ 
+						the_grid_container.masonry('appended', newitems);
+						newitems.css('visibility', 'visible' );
+						//Add the updated "Load More" button to the page
+						the_button_container.replaceWith(response.button);
+						//Add the animation trigger which resets animations on newly added items
+						the_after_container.html(response.animation_trigger);
+						//Refresh waypoints to reflect new page size
+						$.waypoints('refresh');
+							
+					});
 				}
 				else{
-					the_grid_container.append($newitems);
-				}
-				
-				$newitems.css('visibility', 'visible' );
-				
-				//Add the updated "Load More" button to the page
-				the_button_container.replaceWith(response.button);
-				
-				//Add the animation trigger which resets animations on newly added items
-				the_after_container.html(response.animation_trigger);
-				
-				//Refresh waypoints to reflect new page size
-				var refresh_counter = 0;
-				var refresh_waypoints = setInterval(function() {
-					
-					//Clear loop after 20 refreshes
-					if ( refresh_counter > 20 ){
-						clearInterval(refresh_waypoints);
-					}
-					//Refresh Waypoints
+					the_grid_container.append(newitems);
+					newitems.css('visibility', 'visible' );
+					//Add the updated "Load More" button to the page
+					the_button_container.replaceWith(response.button);
+					//Add the animation trigger which resets animations on newly added items
+					the_after_container.html(response.animation_trigger);
+					//Refresh waypoints to reflect new page size
 					$.waypoints('refresh');
-					//Increment Refresh Counter
-					refresh_counter = refresh_counter + 1;
-				}, 25);	
+				}
 			
 			}
 		}).fail(function (data) {
