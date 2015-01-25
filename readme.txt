@@ -50,7 +50,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Improved Button Styling inside text areas so they don’t bump into each other on mobile.
 * Fixed bug where, on some WP installs bricks weren’t getting added to Stacks because a priority was assigned to the save_post function - the priority was 100 - but 100 wasn’t firing at all on Brick saves. This fixes that.
 * Better Masonry Handling for Grids
-
+* Main Image Lightbox has moved from an Add-On to MP Stacks core.
+* Made Image links css default to 100% width (only images without a link were doing this - although for most scenarios it isn’t an issue because of the max-width setting).
 
 = 1.0.1.4 = January 4, 2015
 * Grid Overlays function for Mobile Styles added
