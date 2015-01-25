@@ -513,7 +513,7 @@ function mp_stack_update_meta_upon_brick_save(){
 	$this_post_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : NULL;		
 			
 	//If this is a brick in MP Stacks 
-	if ( $this_post_type != 'mp_brick' ){
+	if ( $this_post_type != 'mp_brick' || !isset( $_POST['mp_stack_order'] ) || !is_array( $_POST['mp_stack_order'] ) ){
 		return false;	
 	}
 	
