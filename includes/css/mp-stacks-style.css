@@ -193,7 +193,8 @@
 	margin:0px;
 }
 .mp-brick .mp-brick-main-link{
-	display:inline-block;	
+	display:inline-block;
+	width:100%;	
 }
 
 /*Brick Meta*/
