@@ -191,7 +191,9 @@ function mp_stacks_include_files(){
 		/**
 		 * Media Filters
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters/image-content-filters.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters/video-content-filters.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters/text-content-filters.php' );
 		
 		/**
 		 * Enqueue Scripts
