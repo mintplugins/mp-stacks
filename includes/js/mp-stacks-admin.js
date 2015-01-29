@@ -29,6 +29,17 @@ jQuery(document).ready(function($){
 				//Show metaboxes with the matching name to this select item
 				$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
 				
+				//If we should reset all tinymce objects in this metabox
+				if (args['reset_tinymce']){
+					
+					//Loop through all elements and if they are a tinyMCE, remove them
+					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+						//$(this).css('display', 'block');
+						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+					})
+					
+				}
+				
 				//Jquery trigger which allows add-ons to make things happen upon change
 				$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
 							
@@ -41,12 +52,8 @@ jQuery(document).ready(function($){
 					//Loop through all elements and if they are a tinyMCE, reset them
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
-						//Re-initialize tinymce for each TInyMCE area and remove old one
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
-						$('#'+this.id+'_parent').remove();
-						
-						$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+						//Re-initialize tinymce for each TInyMCE area				
+						//$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 							
 						//Set the class for the container to be for visual - we're forcing visual mode as the default
@@ -76,7 +83,18 @@ jQuery(document).ready(function($){
 			else{
 				//Show metaboxes with the matching name to this select item
 				$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
+				
+				//If we should reset all tinymce objects in this metabox
+				if (args['reset_tinymce']){
 					
+					//Loop through all elements and if they are a tinyMCE, remove them
+					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
+						//$(this).css('display', 'block');
+						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+					})
+					
+				}
+				
 				//Jquery trigger which allows add-ons to make things happen upon change
 				$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
 										
@@ -86,15 +104,11 @@ jQuery(document).ready(function($){
 				//If we should reset all tinymce objects in this metabox
 				if (args['reset_tinymce']){
 					
-					//Loop through all elements and if they are a tinyMCE, reset them
+					//Loop through all elements and if they are a tinyMCE, re-create them
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
-						//Re-initialize tinymce for each TInyMCE area and remove old one
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
-						$('#'+this.id+'_parent').remove();
-						
-						$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+						//Re-initialize tinymce for each TInyMCE area				
+						//$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 							
 						//Set the class for the container to be for visual - we're forcing visual mode as the default
