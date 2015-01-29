@@ -191,6 +191,7 @@
 	width:100%;
 	max-width:100%;
 	margin:0px;
+	box-sizing:border-box;
 }
 .mp-brick .mp-brick-main-link{
 	display:inline-block;
