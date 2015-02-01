@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
 						//Re-initialize tinymce for each TInyMCE area				
-						//$(this).css('display', 'block');
+						$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 							
 						//Set the class for the container to be for visual - we're forcing visual mode as the default
@@ -108,7 +108,7 @@ jQuery(document).ready(function($){
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
 						//Re-initialize tinymce for each TInyMCE area				
-						//$(this).css('display', 'block');
+						$(this).css('display', 'block');
 						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 							
 						//Set the class for the container to be for visual - we're forcing visual mode as the default
