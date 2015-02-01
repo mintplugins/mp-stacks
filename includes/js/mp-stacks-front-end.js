@@ -162,8 +162,16 @@ jQuery(document).ready(function($){
 	 */
 	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(event){ 
 		event.preventDefault();
+		
+		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
+		}
+		else{
+			var lightbox_url = $(this).attr('href');	
+		}
+		
 		//Call the function which opens our customized magnific popup for mp stacks
-		mp_stacks_magnific_editor( $(this).attr('href') );
+		mp_stacks_magnific_editor( lightbox_url );
 	});	
 	
 	/**
@@ -235,8 +243,15 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault();
 		
+		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
+		}
+		else{
+			var lightbox_url = $(this).attr('href');	
+		}
+		
 		//Call the function which opens our customized magnific popup for mp stacks
-		mp_stacks_magnific_height_match( $(this).attr('href'), $( this ).attr( 'mfp-width' ) );
+		mp_stacks_magnific_height_match( lightbox_url, $( this ).attr( 'mfp-width' ) );
 		
 		//Set the mfp-content div to be the width we want for this popup
 		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
@@ -314,8 +329,15 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault();
 		
+		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
+		}
+		else{
+			var lightbox_url = $(this).attr('href');	
+		}
+		
 		//Call the function which opens our customized magnific popup for mp stacks
-		mp_stacks_magnific_custom_width_height( $(this).attr('href'), $( this ).attr( 'mfp-width' ), $( this ).attr( 'mfp-height' ) );
+		mp_stacks_magnific_custom_width_height( lightbox_url, $( this ).attr( 'mfp-width' ), $( this ).attr( 'mfp-height' ) );
 		
 		//Set the mfp-content div to be the width and height we want for this popup
 		$( '.mp-stacks-iframe-custom-width-height .mfp-content' ).css( 'width', $( this ).attr( 'mfp-width' ) );
