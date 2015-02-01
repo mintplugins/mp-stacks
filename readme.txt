@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.1.4
+Stable tag: 1.0.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.5 = January X, 2015
+= 1.0.1.5 = February 1, 2015
 * Fix for text areas when re-ordering contentTypes. TinyMce’s weren’t being re-set right when Content-Types were re-ordered.
 * New option for Space Below: This allows the user to change the margin below the content-type area independently from the top (above) margin. Prevously, above and below had to match
 * Moved Minimum height Meta option under the “Margin” showhider.
@@ -52,6 +52,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Better Masonry Handling for Grids
 * Main Image Lightbox has moved from an Add-On to MP Stacks core.
 * Made Image links css default to 100% width (only images without a link were doing this - although for most scenarios it isn’t an issue because of the max-width setting).
+* For Lightboxes, added ability for alternate URL
+* CSS Vertical Alignment change for img types to “baseline” instead of “text-bottom”.
 
 = 1.0.1.4 = January 4, 2015
 * Grid Overlays function for Mobile Styles added

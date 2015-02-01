@@ -1,4 +1,26 @@
 <p>
+<strong>1.0.1.5 = February 1, 2015</strong>
+	<ul>
+    	<li>Fix for text areas when re-ordering contentTypes. TinyMce’s weren’t being re-set right when Content-Types were re-ordered.</li>
+        <li>New option for Space Below: This allows the user to change the margin below the content-type area independently from the top (above) margin. Prevously, above and below had to match</li>
+        <li>Moved Minimum height Meta option under the “Margin” showhider.</li>
+        <li>Removed “Minimum” from space above/below option descriptions.</li>
+        <li>Apply default of 20px below 1st content type on mobile sizes (<600px)</li>
+        <li>Install change: if there is a parent plugin installing, it won't redirect to the welcome page</li>
+        <li>Improved Font Shrinking for mobile by wrapping each word in a span tag and checking its width.</li>
+        <li>Make CSS for short codes external instead of inline.</li>
+        <li>Pseudo Knapstack Installation incorrectly required a license - but it doesn’t anymore.</li>
+        <li>Added Theme Bundle Function to create Default Stacks mp_stacks_theme_bundle_create_default_pages</li>
+        <li>Made Lightbox Popup YouTube videos have no related videos at end and minimal YT branding by default</li>
+        <li>Improved Button Styling inside text areas so they don’t bump into each other on mobile.</li>
+        <li>Fixed bug where, on some WP installs bricks weren’t getting added to Stacks because a priority was assigned to the save_post function - the priority was 100 - but 100 wasn’t firing at all on Brick saves. This fixes that.</li>
+        <li>Better Masonry Handling for Grids</li>
+        <li>Main Image Lightbox has moved from an Add-On to MP Stacks core.</li>
+        <li>Made Image links css default to 100% width (only images without a link were doing this - although for most scenarios it isn’t an issue because of the max-width setting).</li>
+        <li>For Lightboxes, added ability for alternate URL</li>
+        <li>CSS Vertical Alignment change for img types to “baseline” instead of “text-bottom”.</li>
+</ul>
+
 <strong>1.0.1.4 = January 4, 2015</strong>
 	<ul>
     	<li>Grid Overlays function for Mobile Styles added</li>
