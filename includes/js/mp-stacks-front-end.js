@@ -163,7 +163,7 @@ jQuery(document).ready(function($){
 	$(document).on('click', '.mp-brick-edit-link, .mp-brick-add-before-link, .mp-brick-add-after-link, .mp-brick-reorder-bricks, .mp-brick-add-new-link, .mp-stacks-lightbox-link', function(event){ 
 		event.preventDefault();
 		
-		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+		if ( $(this).attr('mp_lightbox_alternate_url') ){
 			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
 		}
 		else{
@@ -243,7 +243,7 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault();
 		
-		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+		if ( $(this).attr('mp_lightbox_alternate_url') ){
 			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
 		}
 		else{
@@ -329,7 +329,7 @@ jQuery(document).ready(function($){
 		
 		event.preventDefault();
 		
-		if ( $(this).attr('mp_lightbox_alternate_url') != '' ){
+		if ( $(this).attr('mp_lightbox_alternate_url') ){
 			var lightbox_url = $(this).attr('mp_lightbox_alternate_url');
 		}
 		else{
