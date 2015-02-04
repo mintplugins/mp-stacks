@@ -106,10 +106,19 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 	}
 	//If there are bricks in this stack
 	elseif ( $mp_stack_query->have_posts() ) {
-			
+		
+		//Set the Stack Description based on whether this is a developer or not
+		if ( function_exists('mp_stacks_developer_textdomain') ){
+			$stack_description = __( 'Created using:', 'mp_stacks' ) . ' ' . $term_exists->description;	
+		}
+		else{
+			$stack_description = NULL;	
+		}
+		
 		//Build Brick Output
 		$mp_stack_template_array = array(
 			'stack_title' => get_the_title("New Stack Template"),
+			'stack_description' => $stack_description,
 		);
 		
 		//Brick Counter		
@@ -242,7 +251,7 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 		$new_stack_name, // the term 
 		'mp_stacks', // the taxonomy
 		array(
-			'description'=> '',
+			'description'=> isset( $mp_stack_template_array['stack_description'] ) ? $mp_stack_template_array['stack_description'] : NULL,
 			'slug' => wp_unique_term_slug( sanitize_title($new_stack_name), (object) array( 'parent' => 0, 'taxonomy' => 'mp_stacks' ) ),
 		)
 	);
