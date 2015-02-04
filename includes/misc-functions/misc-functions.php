@@ -594,10 +594,10 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 				
 				$stack_template_function_name = 'mp_stacks_' . $stack_template_slug . '_array';
 				
-				//Create a new stack using the stack template slug and create a pretty, Capitalized+Spaced title from the slug
-				$new_stack_id = mp_stacks_create_stack_from_template( $stack_template_function_name(), ucwords( str_replace( '_', ' ', $stack_template_slug ) ) );
+				//Create a new stack using this stack template.
+				$new_stack_id = mp_stacks_create_stack_from_template( $stack_template_function_name(), isset( $other_info['title'] ) ? $other_info['title'] : ucwords( str_replace( '_', ' ', $stack_template_slug ) ) );
 									
-				//Add this post to the list of default posts we've created for this stack template
+				//Add this stack to the list of default stacks we've created for this stack template
 				$previously_created_default_stacks[$stack_template_slug]['stack_id'] = $new_stack_id;		
 				
 			}
@@ -610,7 +610,7 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					
 					//Set up the new post to use
 					$default_post = array(
-					  'post_title'    => ucwords( str_replace( '_', ' ', $stack_template_slug ) ),
+					  'post_title'    => isset( $other_info['title'] ) ? $other_info['title'] : ucwords( str_replace( '_', ' ', $stack_template_slug ) ),
 					  'post_content'  => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
 					  'post_type'	  => $post_type,	
 					  'post_status'   => 'publish',
@@ -625,6 +625,19 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;					
 				
 				}
+				//If a default corresponding post does exist, make sure it has the current default stack too.
+				else{
+					
+					$default_post = array(
+						'ID'           => $previously_created_default_stacks[$stack_template_slug]['post_id'],
+						'post_content' => '[mp_stack stack="' . $previously_created_default_stacks[$stack_template_slug]['stack_id'] . '"]',
+					);
+					
+					// Update the post into the database
+					wp_update_post( $default_post );
+  				
+				}
+				
 			}
 			
 			//If this stack template/corresponding post is supposed to be the homepage
