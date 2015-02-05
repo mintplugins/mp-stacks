@@ -104,6 +104,7 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 		'lineheight' => 20,
 		'bold' => false,
 		'italic' => false,
+		'padding' => 0,
 		'background_padding' => 5,
 		'background_color' => '#fff',
 		'background_opacity' => 100,
@@ -113,6 +114,8 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 				
 	//Text placement
 	$placement = mp_core_get_post_meta($post_id, $meta_prefix . '_placement', $css_defaults['placement_string']);
+	$padding = mp_core_get_post_meta($post_id, $meta_prefix . '_spacing', $css_defaults['color']);
+	$padding_css = $padding != '0' ? mp_core_css_line( 'padding', $padding, 'px' ) : NULL;
 	
 	//Text Color and size
 	$color = mp_core_get_post_meta($post_id, $meta_prefix . '_color', $css_defaults['color']);
@@ -160,6 +163,7 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 			mp_core_css_line( 'font-style', $italic ? 'italic;' : 'normal' ) . 
 			mp_core_css_line( 'font-size', $size, 'px' ) .
 			mp_core_css_line( 'line-height', $lineheight, 'px' ) . 
+			$padding_css . 
 		'}' . 
 		mp_stacks_grid_highlight_text_css( array( 
 				'brick_id' => $post_id,

@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.1.6
+Stable tag: 1.0.1.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.1.7 = February 4, 2015
+* Default Stacks for Theme Bundles: Use the Stack Title in the template for defaults.
+* Add Stack Description to Stack Template code if developer add-on is active.
 
 = 1.0.1.6 = February 3, 2015
 * Fixed bug with lightbox popups where they wouldn’t open because of the alternate URL.
