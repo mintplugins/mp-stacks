@@ -214,14 +214,58 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						
 			//Check plugins and store needed ones in $plugins
 			$plugins = $this->mp_core_check_plugins( $this->_args, false );
+			
+			//If there are no plugins to show, return false.
+			if ( empty( $plugins ) ){
+				return false;	
+			}
+			
+			//Install_loop_counter
+			$install_loop_counter = 0;
 						
 			//Loop through each plugin that is supposed to be installed
 			foreach ( $plugins as $plugin_key => $plugin ){
+				
+				$install_loop_counter = $install_loop_counter + 1;
+								
+				//If we have installed 3 plugins
+				if ( $install_loop_counter >= 4 ){
+					
+					//Refresh the page so we don't crash anybody's servers with too much in one request.					
+					echo '
+					<script type="text/javascript">
+						document.location.reload(true);
+					</script>';
+					
+					exit;
+												
+				}
 				
 				//If this plugin requires a license to be installed
 				if ( $plugin['plugin_licensed'] ){
 									
 					$plugin_name_slug = sanitize_title ( $plugin['plugin_name'] );
+					
+					//Listen for our Submit License button to be clicked
+					if( isset( $_POST[ $plugin_name_slug . '_license_key' ] ) ) {
+										
+						//If it has, store it in the license_key variable 
+						$license_key = $_POST[ $plugin_name_slug . '_license_key' ];
+						
+						//Check nonce
+						if( ! check_admin_referer( $plugin_name_slug . '_nonce', $plugin_name_slug . '_nonce' ) ) 	
+							return false; // get out if we didn't click the Activate button
+							
+						$args = array(
+							'software_name'      => $plugin['plugin_name'],
+							'software_api_url'   => $plugin['plugin_api_url'],
+							'software_license_key'   => $license_key, //EG move-plugins-core_license_key
+							'software_store_license' => true, //Store this newly submitted license
+						);
+									
+						mp_core_verify_license( $args );
+						
+					}
 					
 					//If this plugin could use a different/parent plugin's license (this is likely an add-on plugin).
 					//If this passes, it just means the user doesn't have to enter the same license again
@@ -231,6 +275,9 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						
 						//Get the previously saved license for the parent plugin from the database
 						$license_key = get_option( $parent_plugin_name_slug . '_license_key' );
+						
+						//If there's no parent license key entered, see if there's one entered for this plugin
+						$license_key = empty( $license_key ) ? get_option( $plugin_name_slug . '_license_key' ) : $license_key;
 						
 						$verify_license_args = array(
 							'software_name'      => $plugin['plugin_name'],
@@ -471,7 +518,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 					foreach( $installed_themes as $theme_slug => $theme ){
 					
 						//If this theme is not the theme we're hoping to install
-						if ( $theme['headers:WP_Theme:private']['Name'] != $plugin['plugin_name'] ){
+						if ( $theme[0] != $plugin['plugin_name'] ){
 							
 							//For now, set this theme to be listed as not installed
 							$theme_installed = false;
