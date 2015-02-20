@@ -35,6 +35,14 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.8 = February X, 2015
+* Added versions to all enqueues
+* mp_core_post_submitted Jquery Trigger Added.
+* Grid Background CSS Added
+* Made it more difficult to accidentally insert existing stack by adding longer Warning message.
+* Set default for leftright brick alignment using mp_core_get_post_meta
+* Updated plugin checker to coincide with MP Core 1.0.1.1
+
 = 1.0.1.7 = February 4, 2015
 * Default Stacks for Theme Bundles: Use the Stack Title in the template for defaults.
 * Add Stack Description to Stack Template code if developer add-on is active.
