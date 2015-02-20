@@ -49,6 +49,7 @@ function mp_stacks_shortcode_make_new_stack(){
             <div class="mp-stacks-shortcode-action-choice new-stack">
                 <div class="mp-stacks-new-stack-action-icon"></div>
                 <div class="mp-stacks-new-stack-action"><?php echo __( 'Make A New Stack', 'mp_stacks' ); ?></div>
+                 <div class="mp-stacks-new-stack-action-description"><?php echo __( '(New Blank, Duplicate Existing, or use a Stack Template)', 'mp_stacks' ); ?></div>
             </div>
             <div class="mp-stacks-shortcode-action-choice existing-stack">
                 <div class="mp-stacks-existing-stack-action-icon"></div>
@@ -175,11 +176,11 @@ function mp_stacks_shortcode_make_new_stack(){
                 
                 <div class="mp-stacks-new-stack-option-title">
                     <label for="mp_stack_stack">
-                        <strong><?php echo __('Confirm Insert', 'mp_stacks'); ?></strong> <em><?php echo __('Please note: You are not creating a new stack. Rather, you are inserting an existing one. This is really only useful if you have removed a stack from a page and need to re-add it. To confirm you understand, please type exactly "This is NOT a new Stack" (case sensitive) into the box below.', 'mp_stacks'); ?></em>
+                        <strong><?php echo __('Confirm Insert', 'mp_stacks'); ?></strong> <em><?php echo __('WARNING: You are not creating a new Stack. Rather, you are inserting an existing one. This is really only useful if you have removed a stack from a page and need to re-add it. To confirm you understand, please type exactly "WARNING: I understand this is NOT a new Stack and changes made to it will reflect on ALL pages containing this Stack" (case sensitive) into the box below.', 'mp_stacks'); ?></em>
                     </label>
                 </div>
               
-                <input class="mp-stacks-insert-stack-confirmation" name="insert_stack_confirmation" placeholder="<?php echo __('Type confirmation message listed above...', 'mp_stacks'); ?>"/>
+                <textarea class="mp-stacks-insert-stack-confirmation" name="insert_stack_confirmation" placeholder="<?php echo __('Type confirmation message listed above...', 'mp_stacks'); ?>"/></textarea>
         
             <?php
 }
