@@ -104,7 +104,7 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 		'lineheight' => 20,
 		'bold' => false,
 		'italic' => false,
-		'padding' => 0,
+		'padding_top' => 0,
 		'background_padding' => 5,
 		'background_color' => '#fff',
 		'background_opacity' => 100,
@@ -114,8 +114,8 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 				
 	//Text placement
 	$placement = mp_core_get_post_meta($post_id, $meta_prefix . '_placement', $css_defaults['placement_string']);
-	$padding = mp_core_get_post_meta($post_id, $meta_prefix . '_spacing', $css_defaults['color']);
-	$padding_css = $padding != '0' ? mp_core_css_line( 'padding', $padding, 'px' ) : NULL;
+	$padding = mp_core_get_post_meta($post_id, $meta_prefix . '_spacing', $css_defaults['padding_top']);
+	$padding_css = $padding != '0' ? mp_core_css_line( 'padding-top', $padding, 'px' ) : NULL;
 	
 	//Text Color and size
 	$color = mp_core_get_post_meta($post_id, $meta_prefix . '_color', $css_defaults['color']);
@@ -194,13 +194,13 @@ function mp_stacks_grid_get_text_placement_css( $placement_string, $args ){
 	
 	if( $placement_string == 'below_image_left' ){
 		
-		$css_output = 'text-align:left; padding-top:' . $text_line_height . '';
+		$css_output = 'text-align:left;';
 	}
 	else if(  $placement_string == 'below_image_right' ){
-		$css_output = 'text-align:right; padding-top:' . $text_line_height . '';
+		$css_output = 'text-align:right;';
 	}
 	else if(  $placement_string == 'below_image_centered' ){
-		$css_output = 'text-align:center; padding-top:' . $text_line_height . '';
+		$css_output = 'text-align:center;';
 	}
 	else if(  $placement_string == 'over_image_top_left' ){
 		$css_output = 'text-align:left; ';
@@ -319,9 +319,9 @@ function mp_stacks_grid_highlight_text_html( $args ){
 	}
 	
 	//Add clear div to bump this below and clear floats
-	$html_output = '<div class="mp-stacks-clearedfix"></div>';
+	//$html_output = '<div class="mp-stacks-clearedfix"></div>';
 	
-	$html_output .= '<div class="' . $class_name . '-holder" ' . $container_style . '>';
+	$html_output = '<div class="' . $class_name . '-holder" ' . $container_style . '>';
 		
 		$html_output .= '<div class="' . $class_name . '">';
 		
