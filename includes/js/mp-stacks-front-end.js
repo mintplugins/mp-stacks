@@ -463,7 +463,7 @@ jQuery(document).ready(function($){
 							
 							this_span.css( 'font-size', new_font_size + 'px' );
 							
-							console.log(this_span.html() + ': ' +this_span.width());
+							//console.log(this_span.html() + ': ' +this_span.width());
 							
 							resize_counter = resize_counter + 1;
 							
