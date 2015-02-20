@@ -139,16 +139,16 @@ select.brick_second_content_type{
 /*Make new stack button area*/
 .mp-stacks-shortcode-choose-action .mp-stacks-shortcode-action-choice{
 	display:table-cell;
-	width:50%;
 	vertical-align:middle;	
 	text-align:center;
 	cursor:pointer;
 }
 .mp-stacks-shortcode-action-choice.new-stack{
-	background-color:#2ecc71;
+	background-color:#24A45A;
+	width:70%;
 }
 .mp-stacks-shortcode-action-choice.new-stack:hover{
-	background-color:#36e27f;
+	background-color:#03682E;
 }
 .mp-stacks-new-stack-action-icon{
 	display: inline-block;
@@ -167,16 +167,16 @@ select.brick_second_content_type{
 /*Use Existing Stack button area*/
 .mp-stacks-shortcode-choose-action .mp-stacks-shortcode-action-choice{
 	display:table-cell;
-	width:50%;
 	vertical-align:middle;	
 	text-align:center;
 	color:#fff;
 }
 .mp-stacks-shortcode-action-choice.existing-stack{
 	background-color:#3498db;
+	width:30%;
 }
 .mp-stacks-shortcode-action-choice.existing-stack:hover{
-	background-color:#3bacf7;
+	background-color:#005995;
 }
 .mp-stacks-existing-stack-action-icon{
 	display: inline-block;

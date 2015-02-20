@@ -166,7 +166,7 @@ jQuery(document).ready(function($){
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */				
-	$( '#post, #posts-filter' ).on( 'submit', function(event) {
+	$( document ).on( 'mp_core_post_submitted', function(event) {
 	
 		parent.mp_stacks_close_lightbox();
 		
@@ -179,6 +179,16 @@ jQuery(document).ready(function($){
 	 * @link     http://mintplugins.com/doc/
 	 */
 	$( '#delete-action .submitdelete' ).on( 'click', function(event) {
+		parent.mp_stacks_close_lightbox();
+	});
+		
+	/**
+	 * Close the lightbox if we just re-ordered some bricks
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */
+	$( '#posts-filter' ).on( 'submit', function(event) {
 		parent.mp_stacks_close_lightbox();
 	});
 	
