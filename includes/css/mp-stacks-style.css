@@ -339,13 +339,15 @@
 }
 .mp-stacks-grid-item{
 	position:relative;
-	overflow:hidden;
 	display:inline-block;
 	text-align:left;
 	float:left;	
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-item-inner{
+	overflow:hidden;	
 }
 .mp-stacks-grid-image-link{
 	display:inline-block;
