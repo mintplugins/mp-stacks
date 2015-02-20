@@ -713,8 +713,8 @@ add_filter( 'mp_brick_second_content_type_css_filter', 'mp_stacks_second_content
 function mp_stacks_first_container_css( $css_output, $post_id ){
 	
 	//Get the alignment
-	$alignment = get_post_meta($post_id, 'brick_alignment', true);
-	
+	$alignment = mp_core_get_post_meta($post_id, 'brick_alignment', 'leftright' );
+		
 	//If alignment in centered, we don't apply the split percentage
 	if ( $alignment != 'leftright' ){
 		return $css_output;	
