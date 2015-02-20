@@ -508,7 +508,7 @@ function mp_stack_last_modified( $stack_id ){
 * @return   string $time when the stack was last modified 
 */
 function mp_stack_update_meta_upon_brick_save(){
-	
+		
 	//Check if post type has been set
 	$this_post_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : NULL;		
 			
