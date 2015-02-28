@@ -210,7 +210,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			
 			screen_icon();
 						
-			echo '<h2>' . __('Install Items', 'mp_core') . '</h2>';
+			echo '<h2>' . __('Installing Required Items. Please wait...', 'mp_core') . '</h2>';
 						
 			//Check plugins and store needed ones in $plugins
 			$plugins = $this->mp_core_check_plugins( $this->_args, false );
@@ -231,13 +231,13 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 				//If we have installed 3 plugins
 				if ( $install_loop_counter >= 4 ){
 					
-					//Refresh the page so we don't crash anybody's servers with too much in one request.					
-					echo '
+					//Refresh the page so we don't crash anybody's servers with too much in one request. (This hasn't happened yet so for now we'll leave it).				
+					/*echo '
 					<script type="text/javascript">
 						document.location.reload(true);
 					</script>';
 					
-					exit;
+					exit;*/
 												
 				}
 				
