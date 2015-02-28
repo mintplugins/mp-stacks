@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.1.7
+Stable tag: 1.0.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,13 +35,14 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.8 = February X, 2015
+= 1.0.1.8 = February 27, 2015
 * Added versions to all enqueues
 * mp_core_post_submitted Jquery Trigger Added.
 * Grid Background CSS Added
 * Made it more difficult to accidentally insert existing stack by adding longer Warning message.
 * Set default for leftright brick alignment using mp_core_get_post_meta
 * Updated plugin checker to coincide with MP Core 1.0.1.1
+* CSS Vertical Alignment change for first/second content type areas to “bottom” instead of “baseline”.
 
 = 1.0.1.7 = February 4, 2015
 * Default Stacks for Theme Bundles: Use the Stack Title in the template for defaults.
