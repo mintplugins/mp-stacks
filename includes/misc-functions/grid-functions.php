@@ -540,7 +540,6 @@ class MP_Stacks_Grid_Load_More{
 			 'total_posts' => 0, 
 			 'posts_per_page' => 0, 
 			 'paged' => 0, 
-			 'post_counter' => 0, 
 			 'post_offset' => 0
 		);
 		
@@ -567,7 +566,7 @@ class MP_Stacks_Grid_Load_More{
 			}
 			
 			//Button
-			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_post_counter="' . $args['post_counter'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a></div>';	
+			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a></div>';	
 				
 		
 		}
@@ -582,7 +581,7 @@ class MP_Stacks_Grid_Load_More{
 			}
 		
 			//JS for the Load More Button
-			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_post_counter="' . $args['post_counter'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a></div>';	
+			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a></div>';	
 				
 			//If we are not doing ajax
 			if ( !defined('DOING_AJAX') ){
