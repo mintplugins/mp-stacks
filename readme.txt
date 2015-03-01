@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.8 = February 27, 2015
+= 1.0.1.8 = March 1, 2015
 * Added versions to all enqueues
 * mp_core_post_submitted Jquery Trigger Added.
 * Grid Background CSS Added
@@ -43,6 +43,8 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Set default for leftright brick alignment using mp_core_get_post_meta
 * Updated plugin checker to coincide with MP Core 1.0.1.1
 * CSS Vertical Alignment change for first/second content type areas to “bottom” instead of “baseline”.
+* Removed Mobile text size check. It’s too much of a hog for mobile devices.
+* Removed float left from grid layouts (and also post_counter variable as it tracked the need for a float clear).
 
 = 1.0.1.7 = February 4, 2015
 * Default Stacks for Theme Bundles: Use the Stack Title in the template for defaults.
