@@ -385,105 +385,6 @@ jQuery(document).ready(function($){
 		}
 	  });
 	});
-			
-	/**
-	 * Upon Resize, Set the font size of a brick to max out based on its longest word fitting into the width of the page
-	 *
-	 */
-	$(window).on('load', function(){
-		mp_stacks_check_text_size();
-	});
-	$(document).on('mp_stacks_resize_complete', function(){
-		mp_stacks_check_text_size();
-	});
-	
-	
-	/**
-	 * Set the font size of a brick to max out based on its longest word fitting into the width of the page
-	 *
-	 */
-	function mp_stacks_check_text_size(){	
-	
-		//Loop through each brick on the page
-		$('.mp-brick').each( function(){
-			
-			var brick = $(this);
-						
-			var brick_outer_width = $(this).find('.mp-brick-outer').innerWidth() - ( parseFloat($(this).find('.mp-brick-first-content-type').css('padding-left')) + parseFloat($(this).find('.mp-brick-first-content-type').css('padding-right')) );
-						
-			//Loop through each p element in this brick
-			brick.find('p').each( function(){
-				
-				var this_p_in_this_brick = $(this);
-				
-				var text = this_p_in_this_brick.html();
-				
-				//Strip all html out of this string
-				text = text.replace(/(<([^>]+)>)/ig,"");
-				
-				//Replace any &nbsp; with a straight up space
-				text = text.replace(/&nbsp;/ig," ");
-				
-				//Add a span to the start and end
-				text = '<span>' + text.replace(' ', '</span><span>')
-				
-				//Replace all spaces with span tags - now each word is wrapped in a span tag so we can find its width.
-				text = text.replace(/ /g, '</span><span>')
-				text = text + '</span>';
-				
-				//Add our cloned, spanned text after it's parent so it gets the same styling				
-				this_p_in_this_brick.after( '<div class="mp_stacks_temp_text">' + text + '</div>');
-												
-				//Capture the current font size for this p
-				var new_font_size = parseFloat(this_p_in_this_brick.css('font-size'));
-				
-				//Loop through each mp_stacks_temp_text in this brick (There actually should only be one at any time)
-				brick.find('.mp_stacks_temp_text').each( function(){
-					
-					var this_temp_text = $(this);
-					
-					//Loop through each "span" tag (each word) in our cloned text
-					$(this).find( 'span' ).each( function(){
-						
-						$(this).css('display', 'inline-block' );
-						
-						var resize_counter = 0;
-						
-						//While the width of this span tag (word) is greater than the width of the outer brick
-						while ( $(this).width() > brick_outer_width ){
-							
-							var this_span = $(this);
-							
-							new_font_size = new_font_size * .9; 							
-							
-							this_p_in_this_brick.css( 'font-size', new_font_size );
-							this_p_in_this_brick.find( 'a' ).each( function(){
-								$(this).css( 'font-size', new_font_size );
-							});
-							
-							this_span.css( 'font-size', new_font_size + 'px' );
-							
-							//console.log(this_span.html() + ': ' +this_span.width());
-							
-							resize_counter = resize_counter + 1;
-							
-							//In case there's an error, break after 50 tries so we don't crash up a computer.
-							if ( resize_counter > 50 ){
-								break;	
-							}
-						}
-					});
-					
-					
-					this_temp_text.remove();
-					
-				});
-				
-			});
-				
-		});
-			
-	}
 	
 	/**
 	 * Load more posts into a Grid.
@@ -501,7 +402,6 @@ jQuery(document).ready(function($){
 			action: 'mp_stacks_' + $(this).attr( 'mp_stacks_grid_ajax_prefix' ) + '_load_more',
 			mp_stacks_grid_post_id: $(this).attr( 'mp_stacks_grid_post_id' ),
 			mp_stacks_grid_offset: $(this).attr( 'mp_stacks_grid_brick_offset' ),
-			mp_stacks_grid_post_counter: $(this).attr( 'mp_stacks_grid_post_counter' ),
 		}
 		
 		//Are we using Masonry?
