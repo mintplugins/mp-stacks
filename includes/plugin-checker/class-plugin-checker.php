@@ -210,7 +210,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			
 			screen_icon();
 						
-			echo '<h2>' . __('Installing Required Items. Please wait...', 'mp_core') . '</h2>';
+			echo '<h2>' . __('Installing Required Items.', 'mp_core') . '</h2>';
 						
 			//Check plugins and store needed ones in $plugins
 			$plugins = $this->mp_core_check_plugins( $this->_args, false );
