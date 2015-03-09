@@ -221,7 +221,11 @@ function mp_stacks_remove_quick_edit( $actions, $tag ) {
 		
 	unset($actions['inline hide-if-no-js']);
 	
-	$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
+	//If this is a developer
+	if ( function_exists('mp_stacks_developer_textdomain') ){
+		//Show the manual brick edit option
+		$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
+	}
 	
 	//Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
 	$actions['edit'] = '<a href="' . add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $tag->term_id ), admin_url('admin.php') ) . '">' . __("Edit", 'mp_stacks') . '</a>';
