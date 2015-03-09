@@ -1,5 +1,8 @@
 jQuery(document).ready(function($){
 	
+	//Close up the side metaboxes upon page load
+	$( '.post-type-mp_brick #side-sortables .postbox:not( #submitdiv )' ).addClass( 'closed' );
+	
 	//Show only the content types the user has selected for this brick
 	function mp_stacks_reset_content_types( args ){		
 		
@@ -52,20 +55,14 @@ jQuery(document).ready(function($){
 					//Loop through all elements and if they are a tinyMCE, reset them
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
-						//Re-initialize tinymce for each TInyMCE area				
-						$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+						//If tinymce is supposed to be active for this text area
+						if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
 							
-						//Set the class for the container to be for visual - we're forcing visual mode as the default
-						$(this).parent().parent().find('.quicktags-toolbar').css('display', 'none' );
-						$(this).parent().parent().find('.wp-editor-tabs').remove();
-						
-						if ( $(this).parent().parent().find('.mce-container').css( 'display' ) == 'none' ){
-							$(this).parent().parent().find('.wp-editor-area').css( 'display', '' );
+							//Re-initialize tinymce for each TInyMCE area				
+							$(this).css('display', 'block');
+							tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+								
 						}
-						
-						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).addClass('tmce-active');
-						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).removeClass('html-active');
 					
 					});	
 				}
@@ -107,20 +104,14 @@ jQuery(document).ready(function($){
 					//Loop through all elements and if they are a tinyMCE, re-create them
 					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
 						
-						//Re-initialize tinymce for each TInyMCE area				
-						$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+						//If tinymce is supposed to be active for this text area
+						if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
 							
-						//Set the class for the container to be for visual - we're forcing visual mode as the default
-						$(this).parent().parent().find('.quicktags-toolbar').css('display', 'none' );
-						$(this).parent().parent().find('.wp-editor-tabs').remove();
-						
-						if ( $(this).parent().parent().find('.mce-container').css( 'display' ) == 'none' ){
-							$(this).parent().parent().find('.wp-editor-area').css( 'display', '' );
+							//Re-initialize tinymce for each TInyMCE area				
+							$(this).css('display', 'block');
+							tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+															
 						}
-						
-						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).addClass('tmce-active');
-						$(this).parent().parent().parent().find( '.wp-editor-wrap' ).removeClass('html-active');
 						
 					});
 					
