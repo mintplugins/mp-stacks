@@ -32,3 +32,6 @@ html.wp-toolbar {
 #contextual-help-link-wrap{
 	display:none;
 }
+#wpfooter{
+	margin-left:0px;	
+}
