@@ -62,7 +62,7 @@ function mp_stacks_image_create_meta_box(){
 			'brick_main_image_lightbox_width' => array( 
 				'field_id'			=> 'brick_main_image_lightbox_width',
 				'field_title' 	=> __( 'Lightbox Width', 'mp_stacks'),
-				'field_description' 	=> 'Enter width the lightbox popup should be. Leave blank for 100% of screen.',
+				'field_description' 	=> 'Enter width the lightbox popup should be. Leave blank for 100% of screen. Video Tip: If you are linking to a video that is 16x9 aspect ratio, try using "640" here.',
 				'field_type' 	=> 'number',
 				'field_value' => '',
 				'field_conditional_id' => 'brick_main_image_open_type',
@@ -72,7 +72,7 @@ function mp_stacks_image_create_meta_box(){
 			'brick_main_image_lightbox_height' => array( 
 				'field_id'			=> 'brick_main_image_lightbox_height',
 				'field_title' 	=> __( 'Lightbox Height', 'mp_stacks'),
-				'field_description' 	=> 'Enter height the lightbox popup should be. Leave blank for 100% of screen.',
+				'field_description' 	=> 'Enter height the lightbox popup should be. Leave blank for 100% of screen. Video Tip: If you are linking to a video that is 16x9 aspect ratio, try using "360" here.',
 				'field_type' 	=> 'number',
 				'field_value' => '',
 				'field_conditional_id' => 'brick_main_image_open_type',
