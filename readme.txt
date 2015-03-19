@@ -35,6 +35,19 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.1.9 = March X, 2015
+* TinyMCE Fix: Only re-initialize TinyMCE after Content-Type Reorders if it was previously set to be in “Visual” mode. Otherwise don’t reinitialize. This fixes the issue of having multiple text areas in one area upon re-ordering.
+* Better styling for wp admin footer in minimal mode
+* vertical-align grid items to "top" in front end css.
+* Only show the "Edit this Stack's Bricks" if developer
+* Added tip for video popup size to image link
+* Add the Slug of a brick to the Brick Editor Footer
+* Right Side-Items in Brick Editor are now “closed” by default.
+* Updated plugin checker to version in mp_core 1.0.1.2
+* Changed priority of MP Stacks front end Enqueue to 1 so it's styles are output before other styles (was a lag on some machines where MP Stacks styles 'kicked-in' after load).
+* Added bg inner div  which now holds the brick backgrounds
+* Bricks-In-Stack list added to TinyMCE "Link" creator
+
 = 1.0.1.8 = March 1, 2015
 * Added versions to all enqueues
 * mp_core_post_submitted Jquery Trigger Added.
