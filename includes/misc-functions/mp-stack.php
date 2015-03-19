@@ -110,7 +110,7 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		//Brick Background CSS
 		$css_brick_bg_filter = apply_filters( 'mp_brick_bg_css', '', $post_id );
 		if ( !empty($css_brick_bg_filter) ) {
-			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg {';
+			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg, #mp-brick-' . $post_id .' .mp-brick-bg-inner {';
 			$css_output .= $css_brick_bg_filter;
 			$css_output .= '}';
 		}
@@ -118,7 +118,7 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		//Brick Background:after CSS
 		$mp_brick_bg_after_css_filter = apply_filters( 'mp_brick_bg_after_css', '', $post_id );
 		if ( !empty($mp_brick_bg_after_css_filter) ) {
-			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg:after {';
+			$css_output .= '#mp-brick-' . $post_id .' .mp-brick-bg-inner:after {';
 			$css_output .= $mp_brick_bg_after_css_filter;
 			$css_output .= '}';
 		}
@@ -194,7 +194,7 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		if ( empty( $stack_id ) ){
 			$css_output .= '</style>';
 		}
-		
+				
 		return $css_output;	
 				
 }
@@ -463,7 +463,9 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 		$html_output .= '</div>';
 		
 		//Brick BG Div
-		$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '>' . apply_filters( 'mp_brick_background_content', '', $post_id ) . '</div>';
+		$html_output .= '<div class="mp-brick-bg" ' . $extra_brick_bg_attributes . '>';
+			$html_output .= '<div class="mp-brick-bg-inner">' . apply_filters( 'mp_brick_background_content', '', $post_id ) . '</div>';
+		$html_output .= '</div>';
 		
 		//Brick Content Divs
 		$html_output .= '<div class="mp-brick-outer"' . $extra_brick_outer_attributes . ' >';

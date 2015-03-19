@@ -21,7 +21,8 @@
 	height:0px;
 	width:0px;
 }
-.mp-brick .mp-brick-bg{
+.mp-brick .mp-brick-bg,
+.mp-brick .mp-brick-bg-inner{
 	position: absolute;
 	top: 0px;
 	left: 0px;
@@ -30,7 +31,7 @@
 	height: 100%;
 	z-index:-100;
 }
-.mp-brick .mp-brick-bg:after{
+.mp-brick .mp-brick-bg-inner:after{
 	content: "";
 	top: 0;
 	left: 0;
