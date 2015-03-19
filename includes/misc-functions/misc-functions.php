@@ -702,6 +702,9 @@ function mp_stacks_brick_footer_slug( $text ){
 		if ( isset( $post->post_name ) && !empty( $post->post_name ) ){
 			return __( 'This Brick\'s URL', 'mp_stacks' ) . ': <strong>#' . $post->post_name . '</strong><br />' . __('To make a browser scroll to this brick, link to that as the URL. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
 		}
+		else{
+			return __( 'Thank you for creating with WordPress and MP Stacks.', 'mp_stacks' );	
+		}
 		
 	}
 	
