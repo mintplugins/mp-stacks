@@ -108,3 +108,55 @@ function mp_stacks_dismiss_double_click_tip() {
 	
 }
 add_action( 'wp_ajax_mp_stacks_dismiss_double_click_tip', 'mp_stacks_dismiss_double_click_tip' );
+
+
+/**
+ * Ajax callback for links to Bricks in the TinyMCE Link Button
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_link_to_bricks_ajax() {	
+
+	//Check nonce
+	if ( !check_ajax_referer( 'mp-stacks-nonce-action-name', 'mp_stacks_nonce', false ) ){
+		echo __('Ajax Security Check', 'mp_stacks');
+		die();
+	}
+	
+	//If a stack id has been passed to the URL
+	if ( isset( $_POST['mp_stack_id'] ) ){
+				
+		//Get all the brick titles in this stack
+		$brick_titles_in_stack = mp_stacks_get_brick_titles_in_stack( $_POST['mp_stack_id'] );
+		
+	}
+	else{
+		
+		$brick_titles_in_stack = array();
+	}	
+	
+	ob_start(); 
+	?>
+	<p class="howto"><a href="#" id="wp-link-search-toggle"><?php echo __( 'Link to Bricks in this Stack', 'mp_stacks' ); ?></a></p>
+    <div id="search-panel">
+        <div id="most-recent-results" class="query-results" tabindex="0">
+            <ul>
+            	<?php
+				foreach ( $brick_titles_in_stack as $brick_in_stack ){
+					echo '<li class="mp-stacks-brick-url">' . $brick_in_stack . '</li>';
+				}
+				?>
+            </ul>
+        </div>
+    </div>
+    
+	<?php
+	
+	echo json_encode( array( 'output' => ob_get_clean() ) ); 
+	
+	die();
+	
+}
+add_action( 'wp_ajax_mp_stacks_link_to_bricks_ajax', 'mp_stacks_link_to_bricks_ajax' );

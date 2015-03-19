@@ -809,6 +809,50 @@ jQuery(document).ready(function($){
 		//Set the mfp-content div to be the width we want for this popup
 		$( '.mp-stacks-iframe-height-match .mfp-content' ).css( 'width', mp_stacks_getQueryVariable( 'width' ) );
 	}
+	
+	/**
+	 * When a person clicks on the "link" button in TinyMCE while on a Brick page, add the list of bricks in the current stack to the list of options for linking
+	 */	
+	 
+	 var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
+	 
+	 if ( stack_id ){
+	 
+		 // Form the array to pass to the wp_ajax_mp_stacks_make_new_stacks php function
+		 var mp_stacks_link_to_bricks_postData = {
+			action: 'mp_stacks_link_to_bricks_ajax',
+			mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
+			mp_stack_id: stack_id
+		 };
+		
+		 //Ajax to make new stack
+		 $.ajax({
+			type: "POST",
+			data: mp_stacks_link_to_bricks_postData,
+			dataType:"json",
+			url: mp_stacks_vars.ajaxurl,
+			success: function (response) {
+				
+				//Remove existing links to existing content
+				$( '#wp-link-wrap .howto, #wp-link-wrap #search-panel').remove();
+				
+				$( '#wp-link-wrap #link-selector #link-options').after( response.output );
+				
+				//Make the results visible 
+				$( '#wp-link-wrap').addClass('search-panel-visible');
+				
+				//Make it so that when one of the Birck URLs is clicked, it puts it into the URl field for this link
+				$( '#wp-link-wrap .mp-stacks-brick-url').on( 'click', function(){
+					
+					$( '#url-field' ).val( $(this).html() );
+					
+				});
+			}
+		 }).fail(function (data) {
+			console.log(data);
+		 });	
+	 }
+
 		
 });
 
