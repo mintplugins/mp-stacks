@@ -83,4 +83,4 @@ function mp_stacks_frontend_enqueue(){
 		//lightbox css
 		wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ), MP_STACKS_VERSION );
 }
-add_action( 'wp_enqueue_scripts', 'mp_stacks_frontend_enqueue' );
+add_action( 'wp_enqueue_scripts', 'mp_stacks_frontend_enqueue', 1 );
