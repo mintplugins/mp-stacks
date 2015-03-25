@@ -266,7 +266,7 @@ function mp_stacks_support_admin_notice(){
 		 ?>
 		 <div class="mp-stacks-editor-title-notice updated" style="display:none;">
 			<p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
-			<?php echo __(' Having trouble? Feel free to email us: support@mintplugins.com and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
+			<?php echo __(' Having trouble? Feel free to email us:', 'mp_stacks' ) . ' <strong>support@mintplugins.com</strong> ' . __( 'and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
 		 </div>
 		 <?php
 	
