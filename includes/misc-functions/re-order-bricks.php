@@ -41,7 +41,7 @@ add_action( 'admin_enqueue_scripts', 'mp_stacks_admin_enqueue_reorder_scripts' )
  * If Menu Order URL variable is set, Make a new field for it on edit pages
  *
  * @since   1.0.0
- * @link    http://moveplugins.com/doc/
+ * @link    http://mintplugins.com/doc/
  * @return  array $plugin_array
  */
 function mp_stacks_display_brick_mp_stack_order_input_field() {
@@ -59,32 +59,7 @@ function mp_stacks_display_brick_mp_stack_order_input_field() {
 			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $_GET['mp_stack_id'] . ']" value="' . $_GET['mp_stack_order_new'] . '">';
 										
 		}
-		else{
-			
-			//Get ids of all stacks this post is in
-			$mp_stack_ids = wp_get_post_terms( get_the_ID(), 'mp_stacks', array("fields" => "ids") );
-						
-			if (!empty($mp_stack_ids)){
-				//Loop through all stacks ids attached to this post
-				foreach ($mp_stack_ids as $mp_stack_id){
-					//Get the stack order saved for this stack to this post
-					$mp_stack_order_array[$mp_stack_id] = get_post_meta( get_the_ID(), 'mp_stack_order_' . $mp_stack_id, true);	
-					//If none have been saved, use 1000 as a starting number
-					$mp_stack_order_array[$mp_stack_id] = !empty($mp_stack_order_array[$mp_stack_id]) ? $mp_stack_order_array[$mp_stack_id] : 1000;
-				}
-				
-				//Loop through each stack_id => order_value
-				foreach ($mp_stack_order_array as $mp_stack_id => $mp_stack_order_value){
-					
-					//Create a field for each stack and this post's order position within it
-					echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $mp_stack_id . ']" value="' . $mp_stack_order_value . '">';
-				
-				}
-						
-			}
-					
-		}
-		
+	
 	}
 	
 }
@@ -94,12 +69,13 @@ add_action( 'edit_form_top', 'mp_stacks_display_brick_mp_stack_order_input_field
  * Set Menu Order of Bricks upon save
  *
  * @since   1.0.0
- * @link    http://moveplugins.com/doc/
+ * @link    http://mintplugins.com/doc/
  * @return  array $plugin_array
  */
 function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 	
-	if (isset($_POST['mp_stack_order'] ) && isset( $_POST['mp_stacks_mp_stack_order_nonce'] ) ){
+	//This is only run if this is a new brick
+	if ( isset( $_POST['mp_stack_order'] ) && isset( $_POST['mp_stacks_mp_stack_order_nonce'] ) ){
 			
 		if ( ! wp_verify_nonce( $_POST['mp_stacks_mp_stack_order_nonce'], plugin_basename( __FILE__ ) )  ) {
 		
@@ -110,15 +86,59 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 		
 			global $wpdb;
 			
-			//Save this posts's order for each stack
+			//Save this posts's order for each stack (this will only be 1 Stack here and 1 loop)
 			foreach($_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
 				update_post_meta( $post_id, 'mp_stack_order_' . $mp_stack_id, $mp_stack_order_value );
 			}
+			
+			//Reset the order for all Bricks in this Stack so they sit 10 number apart. This guarantees the order is always correct.
+			
+			//Set the args for the new query
+			$mp_stacks_args = array(
+				'post_type' => "mp_brick",
+				'posts_per_page' => -1,
+				'meta_key' => 'mp_stack_order_' . $mp_stack_id,
+				'orderby' => 'meta_value_num menu_order',
+				'order' => 'ASC',
+				'tax_query' => array(
+					'relation' => 'AND',
+					array(
+						'taxonomy' => 'mp_stacks',
+						'field'    => 'id',
+						'terms'    => array( $mp_stack_id ),
+						'operator' => 'IN'
+					)
+				)
+			);	
+		
+			//Create new query for stacks
+			$mp_stack_query = new WP_Query( apply_filters( 'mp_stacks_args', $mp_stacks_args ) );
+			
+			//Start Brick order at 1000
+			$brick_counter = 1000;
+			
+			//Loop through all bricks
+			if ( $mp_stack_query->have_posts() ) { 
+				
+				while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
+				
+					$brick_id = get_the_ID(); 
+										
+					//Add 10 to the order so this brick is 10 greater than the previous brick
+					update_post_meta( $brick_id, 'mp_stack_order_' . $mp_stack_id, $brick_counter );
+					
+					//Add 10 to the order so this brick is 10 greater than the previous brick
+					$brick_counter = $brick_counter + 10;
+				
+				endwhile;
+				
+			}
+			
 		}
 		
 	}
 }
-add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order' );
+add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order', 99 );
 
 /**
  * Save new menu order for each post
@@ -130,7 +150,6 @@ add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order' );
  * @return   void
  */
 function mp_stacks_reorder_posts_on_submit(){
-	
 	
 	//Only do this if the mp_submitted_order field has been submitted
 	if ( isset( $_GET['mp_submitted_order'] ) ){
