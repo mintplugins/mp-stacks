@@ -893,3 +893,16 @@ function mp_stacks_widgets_css(){
 	
 }
 add_action( 'wp_footer', 'mp_stacks_widgets_css' );
+
+/**
+ * Output all inline js for all Stacks late in the footer. We use the global variable $mp_stacks_inline_js inlside content-type filters to generate this output string.
+ * Parameter: none
+ */
+function mp_stacks_inline_js(){
+	
+	global $mp_stacks_footer_inline_js;
+	
+	echo $mp_stacks_footer_inline_js;
+	
+}
+add_action( 'wp_footer', 'mp_stacks_inline_js', 99 );
