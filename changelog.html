@@ -1,5 +1,23 @@
 <p>
-<strong>1.0.1.8 = February 27, 2015</strong>
+<strong>1.0.1.9 = March 24, 2015</strong>
+<ul>
+    <li>TinyMCE Fix: Only re-initialize TinyMCE after Content-Type Reorders if it was previously set to be in “Visual” mode. Otherwise don’t reinitialize. This fixes the issue of having multiple text areas in one area upon re-ordering.</li>
+    <li>Better styling for wp admin footer in minimal mode</li>
+    <li>vertical-align grid items to "top" in front end css.</li>
+    <li>Only show the "Edit this Stack's Bricks" if developer</li>
+    <li>Added tip for video popup size to image link</li>
+    <li>Add the Slug of a brick to the Brick Editor Footer</li>
+    <li>Right Side-Items in Brick Editor are now “closed” by default.</li>
+    <li>Updated plugin checker to version in mp_core 1.0.1.2</li>
+    <li>Changed priority of MP Stacks front end Enqueue to 1 so it's styles are output before other styles (was a lag on some machines where MP Stacks styles 'kicked-in' after load).</li>
+    <li>Added bg inner div  which now holds the brick backgrounds</li>
+    <li>Bricks-In-Stack list added to TinyMCE "Link" creator</li>
+    <li>Brick Auto Scroll is now 100ms instead of 500ms</li>
+    <li>Added CSS ID Selectors to Content Types and their container divs</li>
+    <li>Added inline_js output in wp_footer</li>
+    <li>Upon new Brick added to Stack, we loop through all Bricks in the Stack and order them starting at 1000 and going up by 10 each time. This fixes a bug where Stacks randomly had Bricks out of order.</li>
+</ul>
+<strong>1.0.1.8 = March 1, 2015</strong>
 <ul>
     <li>Added versions to all enqueues</li>
     <li>mp_core_post_submitted Jquery Trigger Added.</li>

@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.1.8
+Stable tag: 1.0.1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
-= 1.0.1.9 = March X, 2015
+= 1.0.1.9 = March 24, 2015
 * TinyMCE Fix: Only re-initialize TinyMCE after Content-Type Reorders if it was previously set to be in “Visual” mode. Otherwise don’t reinitialize. This fixes the issue of having multiple text areas in one area upon re-ordering.
 * Better styling for wp admin footer in minimal mode
 * vertical-align grid items to "top" in front end css.
@@ -47,6 +47,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 * Changed priority of MP Stacks front end Enqueue to 1 so it's styles are output before other styles (was a lag on some machines where MP Stacks styles 'kicked-in' after load).
 * Added bg inner div  which now holds the brick backgrounds
 * Bricks-In-Stack list added to TinyMCE "Link" creator
+* Brick Auto Scroll is now 100ms instead of 500ms
+* Added CSS ID Selectors to Content Types and their container divs
+* Added inline_js output in wp_footer
+* Upon new Brick added to Stack, we loop through all Bricks in the Stack and order them starting at 1000 and going up by 10 each time. This fixes a bug where Stacks randomly had Bricks out of order.
 
 = 1.0.1.8 = March 1, 2015
 * Added versions to all enqueues
