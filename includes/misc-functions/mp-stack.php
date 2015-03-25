@@ -279,7 +279,7 @@ function mp_stack( $stack_id ){
 						$html_output .= '<div class="mp-brick-content-types-inner">';
 							$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
 			
-								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
+								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
 							$html_output .= '</div>';		
 					$html_output .= '</div>';		
 				$html_output .= '</div>';		
@@ -358,15 +358,15 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 	$second_content_type_display = empty( $second_output ) ? 'style="display:block;"' : NULL;				
 	
 	//First Content Type HTML output
-	$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
-		$content_output .= '<div class="mp-brick-first-content-type" ' . $first_content_type_display . '>';
+	$content_output .= '<div id="mp-brick-' . $post_id . '-first-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+		$content_output .= '<div id="mp-brick-' . $post_id . '-first-content-type" class="mp-brick-first-content-type" ' . $first_content_type_display . '>';
 			$content_output .= $first_output;
 		$content_output .= '</div>';
 	$content_output .= '</div>';
 	
 	//Second Content Type HTML output
-	$content_output .= '<div class="mp-brick-content-type-container ' . $brick_container_classes . '">';
-		$content_output .= '<div class="mp-brick-second-content-type" ' . $second_content_type_display . '>';
+	$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+		$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type" class="mp-brick-second-content-type" ' . $second_content_type_display . '>';
 			$content_output .= $second_output;
 		$content_output .= '</div>';
 	$content_output .= '</div>';
@@ -416,13 +416,13 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 					'containing_page_url' => mp_core_get_current_url()
 				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 				
-				//Get Menu Order Info for this Brick						
-				$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
-				$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
-				
 				//If this brick is being shown as part of a stack
 				if ( !empty( $stack_id ) ){
 					
+					//Get Menu Order Info for this Brick						
+					$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
+					$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
+				
 					//Tell the user which stack and brick they are editing
 					$stack_info = get_term( $stack_id, 'mp_stacks' );
 					$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
@@ -834,7 +834,7 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2);
 
 /**
- * Output css for all bricks on this page in shortcodes into the header of the theme
+ * Output css for all Stacks on this page in shortcodes into the a separate CSS file which is enqueued.
  * Parameter: none
  */
 function mp_stacks_header_css(){
