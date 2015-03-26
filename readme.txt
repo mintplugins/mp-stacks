@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.1.9
+Stable tag: 1.0.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,9 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.2.0 = March 26, 2015
+* Brick ordering bug fix: Remove menu_order from all Brick WP Queries. This forces it to use meta_value_num and mp_stacks_oder{stack_id} so the order won't get changed when it shouldn't.
 
 = 1.0.1.9 = March 24, 2015
 * TinyMCE Fix: Only re-initialize TinyMCE after Content-Type Reorders if it was previously set to be in “Visual” mode. Otherwise don’t reinitialize. This fixes the issue of having multiple text areas in one area upon re-ordering.
