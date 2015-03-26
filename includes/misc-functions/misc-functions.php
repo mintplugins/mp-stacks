@@ -7,7 +7,7 @@
  * @package    MP Stacks
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2014, Mint Plugins
+ * @copyright  Copyright (c) 2015, Mint Plugins
  * @license    http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author     Philip Johnston
  */
@@ -211,7 +211,7 @@ function mp_stacks_get_brick_titles_in_stack( $stack_id ) {
 			'post_type' => "mp_brick",
 			'posts_per_page' => -1,
 			'meta_key' => 'mp_stack_order_' . $stack_id,
-			'orderby' => 'meta_value_num menu_order',
+			'orderby' => 'meta_value_num',
 			'order' => 'ASC',
 			'tax_query' => array(
 				'relation' => 'AND',
@@ -309,7 +309,7 @@ function mp_stacks_delete_stack( $deleted_stack_term_taxonomy_id ){
 		'post_type' => "mp_brick",
 		'posts_per_page' => -1,
 		'meta_key' => 'mp_stack_order_' . $deleted_stack_id,
-		'orderby' => 'meta_value_num menu_order',
+		'orderby' => 'meta_value_num',
 		'order' => 'ASC',
 	);	
 		

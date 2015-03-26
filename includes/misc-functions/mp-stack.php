@@ -10,7 +10,7 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
 		'post_type' => "mp_brick",
 		'posts_per_page' => -1,
 		'meta_key' => 'mp_stack_order_' . $stack_id,
-		'orderby' => 'meta_value_num menu_order',
+		'orderby' => 'meta_value_num',
 		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',
@@ -212,7 +212,7 @@ function mp_stack( $stack_id ){
 		'post_type' => "mp_brick",
 		'posts_per_page' => -1,
 		'meta_key' => 'mp_stack_order_' . $stack_id,
-		'orderby' => 'meta_value_num menu_order',
+		'orderby' => 'meta_value_num',
 		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',

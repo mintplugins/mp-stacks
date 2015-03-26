@@ -8,7 +8,7 @@
  * @package    MP Stacks
  * @subpackage Functions
  *
- * @copyright  Copyright (c) 2014, Mint Plugins
+ * @copyright  Copyright (c) 2015, Mint Plugins
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @author      Philip Johnston
  */
@@ -36,7 +36,7 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 		'posts_per_page' => -1,
 		'post_status' => 'publish',
 		'meta_key' => 'mp_stack_order_' . $stack_id,
-		'orderby' => 'meta_value_num menu_order',
+		'orderby' => 'meta_value_num',
 		'order' => 'ASC',
 		'tax_query' => array(
 			'relation' => 'AND',
