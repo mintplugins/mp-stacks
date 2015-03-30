@@ -279,7 +279,7 @@ function mp_stack( $stack_id ){
 						$html_output .= '<div class="mp-brick-content-types-inner">';
 							$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
 			
-								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
+								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
 							$html_output .= '</div>';		
 					$html_output .= '</div>';		
 				$html_output .= '</div>';		
