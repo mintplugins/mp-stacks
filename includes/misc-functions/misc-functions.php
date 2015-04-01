@@ -689,7 +689,8 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 	
 	//Update the option which tells us which default stacks have been created and their corresponding ids
 	update_option( 'mp_stacks_default_stacks_created', $previously_created_default_stacks );
-
+	
+	return true;
 }
 
 //Add the slug of a brick to the footer
