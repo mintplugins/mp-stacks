@@ -21,20 +21,9 @@ function mp_stacks_admin_enqueue(){
 	//lightbox css
 	wp_enqueue_style( 'mp_stacks_lightbox_css', plugins_url('css/lightbox.css', dirname(__FILE__) ), MP_STACKS_VERSION );
 	
-	if(has_action('after_wp_tiny_mce')) {	
-	
-		//enqueue js after tiny mce 
-		function custom_after_wp_tiny_mce() {
-			 printf( '<script type="text/javascript" src="%s"></script>', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ) );
-		}
-		add_action( 'after_wp_tiny_mce', 'custom_after_wp_tiny_mce' );	
+	//mp stacks admin js
+	wp_enqueue_script( 'mp_stacks_admin_js', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ), array( 'jquery', 'mp_stacks_lightbox' ), MP_STACKS_VERSION, true );
 		
-	}else{
-		//mp stacks admin js
-		wp_enqueue_script( 'mp_stacks_admin_js', plugins_url('js/mp-stacks-admin.js', dirname(__FILE__) ), array( 'jquery' ), MP_STACKS_VERSION );
-	
-	}
-	
 	wp_localize_script( 'mp_stacks_admin_js', 'mp_stacks_vars', 
 		array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
