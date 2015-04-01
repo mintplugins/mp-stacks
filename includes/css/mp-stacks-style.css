@@ -293,6 +293,7 @@
 
 /*No Brick*/
 .no-brick .mp-brick-inner{
+	height:250px;
 	min-height:250px;	
 	background-color:#FF9DA0;
 	color:#fff;
