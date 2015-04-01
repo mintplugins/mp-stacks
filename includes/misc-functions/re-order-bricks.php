@@ -91,6 +91,17 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 				update_post_meta( $post_id, 'mp_stack_order_' . $mp_stack_id, $mp_stack_order_value );
 			}
 			
+			//Make sure this new brick is set to be published - Firefox was saving them as drafts for some reason...
+			if ( get_post_status( $post_id ) != 'publish' ){
+				
+				//If it's not, Publish this post (brick)
+				$this_new_brick = array(
+					'ID'           => $post_id,
+					'post_status' => 'publish'
+				);
+				wp_update_post( $this_new_brick );	 
+			}
+			
 			//Reset the order for all Bricks in this Stack so they sit 10 number apart. This guarantees the order is always correct.
 			
 			//Set the args for the new query
