@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://mintplugins.com
 Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
-Version: 1.0.2.1
+Version: 1.0.2.2
 Author: Mint Plugins
 Author URI: http://mintplugins.com
 Text Domain: mp_stacks
@@ -11,7 +11,7 @@ Domain Path: languages
 License: GPL2
 */
 
-/*  Copyright 2014  Phil Johnston  (email : phil@mintplugins.com)
+/*  Copyright 2015  Phil Johnston  (email : phil@mintplugins.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_VERSION' ) )
-	define( 'MP_STACKS_VERSION', '1.0.2.1' );
+	define( 'MP_STACKS_VERSION', '1.0.2.2' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_PLUGIN_URL' ) )

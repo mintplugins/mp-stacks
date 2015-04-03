@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.1
+Stable tag: 1.0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,8 +35,14 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 == Changelog ==
 
+= 1.0.2.2 = April 3, 2015
+* Added lightbox.js as dependancy for admin.js enqueue
+* Added default height of 250px for "no brick" brick.
+* Upon new brick save, double check it is published. In firefox it was saving the bricks as drafts.
+* Added return true to mp_stacks_theme_bundle_create_default_pages function.
+
 = 1.0.2.1 = March 30, 2015
-Bug Fix: Empty Stacks Weren't Adding Bricks.
+* Bug Fix: Empty Stacks Weren't Adding Bricks.
 
 = 1.0.2.0 = March 26, 2015
 * Brick ordering bug fix: Remove menu_order from all Brick WP Queries. This forces it to use meta_value_num and mp_stacks_oder{stack_id} so the order won't get changed when it shouldn't.
