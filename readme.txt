@@ -4,7 +4,7 @@ Donate link: http://mintplugins.com/
 Tags: message bar, header
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.2
+Stable tag: 1.0.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ See full instructions at http://mintplugins.com/doc/mp-stacks
 
 
 == Changelog ==
+
+= 1.0.2.3 = April 5, 2015
+* Added HTML note about inline JS
+* Fixed Bug with some WordPress installations not firing the '99' function priority for 'save_post'. This was causing Bricks to not be placed into Stacks upon creation. Now the mp_stacks_order function that fires upon 'save_post' fires at priority 11 instead of 99.
 
 = 1.0.2.2 = April 3, 2015
 * Added lightbox.js as dependancy for admin.js enqueue
