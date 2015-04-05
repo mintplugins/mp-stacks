@@ -49,15 +49,27 @@ function mp_stacks_display_brick_mp_stack_order_input_field() {
 	global $post;
 		
 	if ( $post->post_type == 'mp_brick' ){
-				
-		// Set up nonce for verification
-		wp_nonce_field( plugin_basename( __FILE__ ), 'mp_stacks_mp_stack_order_nonce' );	
-				
+		
+		//When a new brick is being saved.
 		if ( isset($_GET['mp_stack_order_new']) && isset($_GET['mp_stack_id']) ){
-							
+					
+			// Set up nonce for verification
+			wp_nonce_field( plugin_basename( __FILE__ ), 'mp_stacks_mp_stack_order_nonce' );	
+						
 			//Create a field for the new brick's stack and its order position within that stack
 			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $_GET['mp_stack_id'] . ']" value="' . $_GET['mp_stack_order_new'] . '">';
 										
+		}
+		//When editing an existing brick. I'm leaving this here so I can check the order by inspecting the source code for troubleshooting purposes for now.
+		//Notice the field has no "name" attribute and no nonce.
+		elseif( isset( $_GET['post'] ) && isset( $_GET['mp_stack_id'] ) ){
+			
+			$post_id = 	$_GET['post'];
+			$stack_id = $_GET['mp_stack_id'];
+			$stack_order = mp_core_get_post_meta( $post_id, 'mp_stack_order_' . $stack_id );
+									
+			//Create a field for the new brick's stack and its order position within that stack
+			echo '<input type="hidden" class="mp_stack_order" value="' . $stack_order . '">';
 		}
 	
 	}
@@ -73,14 +85,14 @@ add_action( 'edit_form_top', 'mp_stacks_display_brick_mp_stack_order_input_field
  * @return  array $plugin_array
  */
 function mp_stacks_save_brick_mp_stack_order( $post_id ) {
-	
+		
 	//This is only run if this is a new brick
 	if ( isset( $_POST['mp_stack_order'] ) && isset( $_POST['mp_stacks_mp_stack_order_nonce'] ) ){
 			
 		if ( ! wp_verify_nonce( $_POST['mp_stacks_mp_stack_order_nonce'], plugin_basename( __FILE__ ) )  ) {
 		
-			 //We won't kill the page, but we at least will only run the function if the nonce passes
-			 //die( 'Security check' ); 
+			//We won't kill the page, but we at least will only run the function if the nonce passes
+			// die( 'Security check' ); 
 		
 		} else {
 		
@@ -149,7 +161,7 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 		
 	}
 }
-add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order', 99 );
+add_action( 'save_post', 'mp_stacks_save_brick_mp_stack_order', 11 );
 
 /**
  * Save new menu order for each post
