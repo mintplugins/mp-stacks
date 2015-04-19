@@ -853,7 +853,20 @@ jQuery(document).ready(function($){
 		 });	
 	 }
 
-		
+	 //Add Link to Addons on right side at bottom
+	$( '.post-type-mp_brick #side-sortables' ).append( '<div id="extend-mp-stacks-container"><a id="extend-mp-stacks" href="' + mp_stacks_vars.more_content_types + '" target=_blank">' + mp_stacks_vars.extend_mp_stacks_text + '</a></div>' );
+	
+	//When the extend button is clicked
+	$( document ).on( 'click', '#extend-mp-stacks', function(){
+		$(this).parent().html( mp_stacks_vars.need_to_refresh_text );
+	});	
+	
+	//When the More content-types button is clicked
+	$( document ).on( 'click', '.mp-stacks-more-content-types', function(){
+		$(this).replaceWith( '<div>' + mp_stacks_vars.need_to_refresh_text + '</div>' );
+	});	
+	
+	
 });
 
 //Resize an iframe to be as big as its contents
