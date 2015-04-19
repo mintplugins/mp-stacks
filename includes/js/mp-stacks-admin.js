@@ -25,7 +25,7 @@ jQuery(document).ready(function($){
 			//If this is the "More Content Types..." option, open the Add-On Shop in a new tab
 			if ( $(this).val() == 'more_content_types' ){
 				$('.mp-stacks-more-content-types').remove();
-				$(this).parent().after( '<a href="' + mp_stacks_vars.more_content_types + '" target="_blank" class="mp-stacks-more-content-types button" style="margin-left:10px">Click here to get more Content-Types</a>' );
+				$(this).parent().after( '<a href="' + mp_stacks_vars.more_content_types + '" target="_blank" class="mp-stacks-more-content-types button" style="margin-left:10px">' + mp_stacks_vars.more_content_types_text + '</a>' );
 			}
 			else{
 					
