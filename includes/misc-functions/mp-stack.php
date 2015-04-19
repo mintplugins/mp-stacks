@@ -586,8 +586,7 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '50';
 	
 	//Min content-type margin Above
-	$brick_content_type_margin_above_below = get_post_meta($post_id, 'brick_min_above_below', true);
-	$brick_content_type_margin_above_below = is_numeric($brick_content_type_margin_above_below) ? $brick_content_type_margin_above_below : '20';
+	$brick_content_type_margin_above_below = mp_core_get_post_meta($post_id, 'brick_min_above_below', 50);
 	
 	//Min content-type margin below - if empty, it defaults to above_below value
 	$brick_content_type_margin_below = mp_core_get_post_meta($post_id, 'brick_min_below', $brick_content_type_margin_above_below);
