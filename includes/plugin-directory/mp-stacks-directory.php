@@ -19,7 +19,7 @@ function mp_stacks_addon_directory_header(){
 	</div>
     <?php
 }
-add_action( 'mp_core_directory_header_' . 'mp_stacks_plugin_directory', 'mp_stacks_addon_directory_header' );
+add_action( 'mp_core_directory_footer_' . 'mp_stacks_plugin_directory', 'mp_stacks_addon_directory_header' );
 
 /**
  * MP Stacks Template Shop Page Title
