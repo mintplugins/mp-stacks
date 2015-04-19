@@ -1,0 +1,650 @@
+/* Stylesheet for mp_stacks grid */
+
+/* Grid Styles */
+.mp-stacks-grid,
+.mp-stacks-grid .mp-stacks-grid-item a{
+	display:block;
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid{ 
+	margin: 0px;	
+}
+.mp-stacks-grid-item{
+	position:relative;
+	display:inline-block;
+	text-align:left;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+	vertical-align:top;
+}
+.mp-stacks-grid-item-inner{
+	overflow:hidden;	
+}
+.mp-stacks-grid-image-link{
+	display:inline-block;
+	width:100%;	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-item-image-holder{
+	position:relative;
+	display:table;	
+	width:100%;
+	overflow:hidden;
+	margin: 0px auto
+}
+.mp-stacks-grid-item-image-overlay{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	display: block;
+	overflow: hidden;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	z-index: 9999999;
+}
+.mp-stacks-grid-over-image-text-container,
+.mp-stacks-grid-over-image-text-container-top,
+.mp-stacks-grid-over-image-text-container-middle,
+.mp-stacks-grid-over-image-text-container-bottom{
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:0px;
+	display:block;	
+	overflow:hidden;
+	z-index: 99999999;
+	
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */
+}
+.mp-stacks-grid-over-image-text-container-top .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:top;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-middle .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:middle;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-bottom .mp-stacks-grid-over-image-text-container-table-cell{
+	display:table-cell;
+	vertical-align:bottom;	
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-table{
+	display:table;
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.mp-stacks-grid-over-image-text-container-table-cell > *{
+	width:100%;
+}
+.mp-stacks-grid-over-image-text-container-table-cell p{
+	margin:0px;
+}
+.mp-stacks-grid-item-image{
+	max-width:100%;	
+	width:100%;
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */		
+}
+.mp-stacks-grid-item-title-holder{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */	
+}
+.mp-stacks-grid-item-title,
+.mp-stacks-grid-item-excerpt{
+	display: inline-block;
+	text-decoration:none;
+	position:relative;
+}
+.mp-stacks-grid-item-title-foreground,
+.mp-stacks-grid-item-excerpt-foreground{
+	display: inline-block;
+	text-decoration:none;
+	position:relative;
+	z-index:9999;
+}
+.mp-stacks-grid-item-title-background,
+.mp-stacks-grid-item-excerpt-background{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+	display: block;
+	overflow: hidden;
+	z-index:999;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.mp-stacks-grid-item-title-highlight,
+.mp-stacks-grid-item-excerpt-highlight,
+.mp-stacks-grid-item-price-highlight{
+	display: inline;
+    padding-left: 0!important;
+    padding-right: 0!important;	
+}
+
+.mp-stacks-grid-item-excerpt-holder, 
+.mp-stacks-grid-item-excerpt-holder a{
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box;         /* Opera/IE 8+ */			
+}
+.mp-stacks-grid-item-excerpt-holder{
+	display: inline-block;	
+	padding-top:5px;
+}
+.mp-stacks-grid-item-clearedfix:after {
+	content: ".";
+	visibility: hidden;
+	display: block;
+	height: 0;
+	clear: both;
+}
+.mp-stacks-grid-item .mp-stacks-grid-item-image{
+	padding:0px;
+	margin:0px;	
+}
+.mp-brick[max-width~='850px'] .mp-stacks-grid .mp-stacks-grid-item{ 
+	width:50%!important;
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid .mp-stacks-grid-item{ 
+	width:100%!important;
+}
+.mp-stacks-grid-load-more-button{
+	margin-top:20px;	
+}
+.mp-stacks-grid-read-more{
+	white-space: nowrap;	
+}
+.mp-stacks-grid-load-more-container #posts-navigation{
+	margin:0px;
+}
+.mp-stacks-grid-load-more-container ul.page-numbers{
+	display: block;
+	margin: 20px 0px 0px 0px;
+}
+
+/*Isotope Filter Buttons*/
+.button.mp-stacks-grid-isotope-button{
+	display:none;
+}
+.button.mp-stacks-grid-isotope-button-all{
+	display:inline-block;	
+}
+/* Icons used in isotope navigation */
+.mp-stacks-grid-isotope-icon,
+.mp-stacks-grid-isotope-btn-text{
+	display:inline-block;
+	vertical-align:middle;
+}
+/* Isotope image icons */
+.mp-stacks-grid-isotope-icon *{
+	width:100%;	
+}
+/* Isotope All Button Icon */
+.mp-stacks-grid-isotope-icon-all-1,
+.mp-stacks-grid-isotope-icon-all-2,
+.mp-stacks-grid-isotope-icon-all-3,
+.mp-stacks-grid-isotope-icon-all-4{
+	width: 45%;
+	height: 45%;
+	display:inline-block;
+	vertical-align:top;
+	float:left;
+}
+.mp-stacks-grid-isotope-icon-all-1,
+.mp-stacks-grid-isotope-icon-all-3{
+	margin-right:5%;	
+}
+.mp-stacks-grid-isotope-icon-all-1,
+.mp-stacks-grid-isotope-icon-all-2{
+	margin-bottom:5%;	
+}
+/* Isotope Spacing betweetn Dropdown Menus/Buttons */
+.mp-stacks-grid-isotope-sort-select,
+.mp-stacks-grid-isotope-button{
+	margin-left:12px;	
+}
+.mp-stacks-grid-isotope-filterby-text-left{
+	display:inline-block;	
+}
+.mp-stacks-grid-isotope-filterby-text-above{
+	display:block;	
+}
+.mp-stacks-grid-isotope-sort-container{
+	display:inline-block;	
+}
+
+/* Grid Loading More animation style starts here. - Code from http://codepen.io/DanielleMoser/pen/vEMmeN
+Adjust sizes and timing within secion labeled "animation timing specifics."
+Squares number ordered by animation color fill
+To get the HTML output call the mp_stacks_grid_loading_more_animation function
+*/
+
+.mp-stacks-grid-load-more-animation-container{
+	display:inline-block;
+}
+.mp-stacks-grid-load-more-animation-container .square{
+	-webkit-box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.47);
+	-moz-box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.47);
+	box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.47);
+}
+
+/*squares*/
+.row .square {
+	float: left;
+	background: #f9f9f9;
+  display: block;
+  overflow: hidden;
+  width: 30px;
+	height: 30px;
+  margin: 0px 5px 5px 0;
+  opacity: 0;
+/*animation*/
+     /* Chrome, Safari, Opera */ 
+  -webkit-animation-name: gotime;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in;
+  /* Standard*/ 
+  animation-name: gotime;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+}
+
+/*line break */
+.clearfix:after {
+     visibility: hidden;
+     display: block;
+     font-size: 0;
+     content: " ";
+     clear: both;
+     height: 0;
+     }
+.clearfix { display: inline-block; }
+
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+
+
+/*animation timing specifics -- Edit this section to for timing adjustments*/
+.one {
+    /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: 0s;
+  /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: 0s;
+  
+}
+
+.two {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: 0.15s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: 0.15s;
+}
+
+.three {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: 0.25s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: 0.25s;
+}
+
+.four {
+ /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: 0.25s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: 0.25s;
+}
+
+.five {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration:5.5s; 
+  -webkit-animation-delay: .3s;
+   /* Standard*/ 
+  animation-duration:5.5s; 
+  animation-delay: .3s;
+}
+
+.six {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s;  
+  -webkit-animation-delay: .35s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: .35s;
+}
+
+.seven {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: .4s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: .4s;
+}
+
+.eight {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+  -webkit-animation-delay: .45s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: .45s;
+}
+
+.nine {
+  /* Chrome, Safari, Opera */ 
+  -webkit-animation-duration: 5.5s; 
+    -webkit-animation-delay: .5s;
+   /* Standard*/ 
+  animation-duration: 5.5s; 
+  animation-delay: .5s;
+}
+
+/*End of animation timing specifics*/
+
+/*-------AVOID EDITING BELOW IF POSSIBLE, UNLESS CLEANING IT UP, THEN BE MY GUEST-------*/
+
+/*COLORS: 
+1. Orange: #f9f9f9
+2. Yellow: #f9f9f9
+3. Red: #f9f9f9
+4. Purple: #f9f9f9
+5. Blue: #f9f9f9
+6. Green: #f9f9f9
+*/
+
+/* Animation -- Chrome, Safari, Opera */ 
+@-webkit-keyframes gotime {
+/*--Lightest-- */ 
+  0%{background: #f9f9f9;
+opacity: 0;}
+  1.5%{background: #f9f9f9;
+opacity: 1;}
+  3%{background: #f9f9f9;
+opacity: 0.9;}
+  4.5%{background: #f9f9f9;
+opacity: 0.8;}
+  6%{background: #f9f9f9;
+opacity: 0.7;}
+  7.5%{background: #f9f9f9;
+opacity: 0.6;}
+  9%{background: #f9f9f9;
+opacity: 0.5;}
+  10.5%{background: #f9f9f9;
+opacity: 0.4;}
+  12%{background: #f9f9f9;
+opacity: 0.3;}
+  13.5%{background: #f9f9f9;
+opacity: 0.2;}
+    15% {background: #f9f9f9;
+opacity: 0.1;}
+/*--Medium Lightness--*/
+  16.5%{background: #f9f9f9;
+opacity: 1;}
+  18%{background: #f9f9f9;
+opacity: 0.9;}
+  19.5%{background: #f9f9f9;
+opacity: 0.8;}
+  21%{background: #f9f9f9;
+opacity: 0.7;}
+  22.5%{background: #f9f9f9;
+opacity: 0.6;}
+  24%{background: #f9f9f9;
+opacity: 0.5;}
+  25.5%{background: #f9f9f9;
+opacity: 0.4;}
+  27%{background: #f9f9f9;
+opacity: 0.3;}
+  28.5%{background: #f9f9f9;
+opacity: 0.2;}
+   30% {background: #f9f9f9;
+opacity: 0.1;}
+/*--Darkest--*/
+   31.5%{background: #f9f9f9;
+opacity: 1;}
+  33%{background: #f9f9f9;
+opacity: 0.9;}
+  34.5%{background: #f9f9f9;
+opacity: 0.8;}
+  36%{background: #f9f9f9;
+opacity: 0.7;}
+  37.5%{background: #f9f9f9;
+opacity: 0.6;}
+  39%{background: #f9f9f9;
+opacity: 0.5;}
+  40.5%{background: #f9f9f9;
+opacity: 0.4;}
+  42%{background: #f9f9f9;
+opacity: 0.3;}
+  43.5%{background: #f9f9f9;
+opacity: 0.2;}
+   45% {background: #f9f9f9;
+opacity: 0.1;}
+/*--PURPLE--*/
+   46.5%{background: #f9f9f9;
+opacity: 1;}
+  48%{background: #f9f9f9;
+opacity: 0.9;}
+  49.5%{background: #f9f9f9;
+opacity: 0.8;}
+  51%{background: #f9f9f9;
+opacity: 0.7;}
+  52.5%{background: #f9f9f9;
+opacity: 0.6;}
+  54%{background: #f9f9f9;
+opacity: 0.5;}
+  55.5%{background: #f9f9f9;
+opacity: 0.4;}
+  57%{background: #f9f9f9;
+opacity: 0.3;}
+  58.5%{background: #f9f9f9;
+opacity: 0.2;}
+   60% {background: #f9f9f9;
+opacity: 0.1;}
+/*--BLUE--*/
+   61.5%{background: #f9f9f9;
+opacity: 1;}
+  63%{background: #f9f9f9;
+opacity: 0.9;}
+  64.5%{background: #f9f9f9;
+opacity: 0.8;}
+  66%{background: #f9f9f9;
+opacity: 0.7;}
+  67.5%{background: #f9f9f9;
+opacity: 0.6;}
+  69%{background: #f9f9f9;
+opacity: 0.5;}
+  70.5%{background: #f9f9f9;
+opacity: 0.4;}
+  72%{background: #f9f9f9;
+opacity: 0.3;}
+  73.5%{background: #f9f9f9;
+opacity: 0.2;}
+    75% {background: #f9f9f9;
+opacity: 0.1;}
+/*--GREEN--*/
+   76.5%{background: #f9f9f9;
+opacity: 1;}
+  78%{background: #f9f9f9;
+opacity: 0.9;}
+  79.5%{background: #f9f9f9;
+opacity: 0.8;}
+  81%{background: #f9f9f9;
+opacity: 0.7;}
+  82.5%{background: #f9f9f9;
+opacity: 0.6;}
+  84%{background: #f9f9f9;
+opacity: 0.5;}
+  85.5%{background: #f9f9f9;
+opacity: 0.4;}
+  87%{background: #f9f9f9;
+opacity: 0.3;}
+  88.5%{background: #f9f9f9;
+opacity: 0.2;}
+   90% {background: #f9f9f9;
+opacity: 0.1;}
+--
+100% {background: #f9f9f9;
+opacity: 0.0;}
+}
+
+/*Animation -- Standard*/ 
+  @keyframes gotime {
+/*--ORANGE-- */ 
+  0%{background: #f9f9f9;
+opacity: 0;}
+  1.5%{background: #f9f9f9;
+opacity: 1;}
+  3%{background: #f9f9f9;
+opacity: 0.9;}
+  4.5%{background: #f9f9f9;
+opacity: 0.8;}
+  6%{background: #f9f9f9;
+opacity: 0.7;}
+  7.5%{background: #f9f9f9;
+opacity: 0.6;}
+  9%{background: #f9f9f9;
+opacity: 0.5;}
+  10.5%{background: #f9f9f9;
+opacity: 0.4;}
+  12%{background: #f9f9f9;
+opacity: 0.3;}
+  13.5%{background: #f9f9f9;
+opacity: 0.2;}
+    15% {background: #f9f9f9;
+opacity: 0.1;}
+/*--YELLOW--*/
+  16.5%{background: #f9f9f9;
+opacity: 1;}
+  18%{background: #f9f9f9;
+opacity: 0.9;}
+  19.5%{background: #f9f9f9;
+opacity: 0.8;}
+  21%{background: #f9f9f9;
+opacity: 0.7;}
+  22.5%{background: #f9f9f9;
+opacity: 0.6;}
+  24%{background: #f9f9f9;
+opacity: 0.5;}
+  25.5%{background: #f9f9f9;
+opacity: 0.4;}
+  27%{background: #f9f9f9;
+opacity: 0.3;}
+  28.5%{background: #f9f9f9;
+opacity: 0.2;}
+   30% {background: #f9f9f9;
+opacity: 0.1;}
+/*--RED--*/
+   31.5%{background: #f9f9f9;
+opacity: 1;}
+  33%{background: #f9f9f9;
+opacity: 0.9;}
+  34.5%{background: #f9f9f9;
+opacity: 0.8;}
+  36%{background: #f9f9f9;
+opacity: 0.7;}
+  37.5%{background: #f9f9f9;
+opacity: 0.6;}
+  39%{background: #f9f9f9;
+opacity: 0.5;}
+  40.5%{background: #f9f9f9;
+opacity: 0.4;}
+  42%{background: #f9f9f9;
+opacity: 0.3;}
+  43.5%{background: #f9f9f9;
+opacity: 0.2;}
+   45% {background: #f9f9f9;
+opacity: 0.1;}
+/*--PURPLE--*/
+   46.5%{background: #f9f9f9;
+opacity: 1;}
+  48%{background: #f9f9f9;
+opacity: 0.9;}
+  49.5%{background: #f9f9f9;
+opacity: 0.8;}
+  51%{background: #f9f9f9;
+opacity: 0.7;}
+  52.5%{background: #f9f9f9;
+opacity: 0.6;}
+  54%{background: #f9f9f9;
+opacity: 0.5;}
+  55.5%{background: #f9f9f9;
+opacity: 0.4;}
+  57%{background: #f9f9f9;
+opacity: 0.3;}
+  58.5%{background: #f9f9f9;
+opacity: 0.2;}
+   60% {background: #f9f9f9;
+opacity: 0.1;}
+/*--BLUE--*/
+   61.5%{background: #f9f9f9;
+opacity: 1;}
+  63%{background: #f9f9f9;
+opacity: 0.9;}
+  64.5%{background: #f9f9f9;
+opacity: 0.8;}
+  66%{background: #f9f9f9;
+opacity: 0.7;}
+  67.5%{background: #f9f9f9;
+opacity: 0.6;}
+  69%{background: #f9f9f9;
+opacity: 0.5;}
+  70.5%{background: #f9f9f9;
+opacity: 0.4;}
+  72%{background: #f9f9f9;
+opacity: 0.3;}
+  73.5%{background: #f9f9f9;
+opacity: 0.2;}
+    75% {background: #f9f9f9;
+opacity: 0.1;}
+/*--GREEN--*/
+   76.5%{background: #f9f9f9;
+opacity: 1;}
+  78%{background: #f9f9f9;
+opacity: 0.9;}
+  79.5%{background: #f9f9f9;
+opacity: 0.8;}
+  81%{background: #f9f9f9;
+opacity: 0.7;}
+  82.5%{background: #f9f9f9;
+opacity: 0.6;}
+  84%{background: #f9f9f9;
+opacity: 0.5;}
+  85.5%{background: #f9f9f9;
+opacity: 0.4;}
+  87%{background: #f9f9f9;
+opacity: 0.3;}
+  88.5%{background: #f9f9f9;
+opacity: 0.2;}
+   90% {background: #f9f9f9;
+opacity: 0.1;}
+--
+100% {background: #f9f9f9;
+opacity: 0.0;}
+}
+/* Loading animation style ends here */
