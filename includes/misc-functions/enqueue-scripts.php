@@ -36,7 +36,10 @@ function mp_stacks_admin_enqueue(){
 			'stack_confirmation_incorrect' => __( 'Make sure to type exactly "WARNING: I understand this is NOT a new Stack and changes made to it will reflect on ALL pages containing this Stack"', 'mp_stacks' ),
 			'add_new_brick_title' => __( 'Add New Brick', 'mp_stacks' ),
 			'edit_brick_title' => __( 'Edit Brick', 'mp_stacks' ),
-			'more_content_types' => admin_url( 'admin.php?page=mp_stacks_plugin_directory')
+			'more_content_types' => admin_url( 'admin.php?page=mp_stacks_plugin_directory'),
+			'more_content_types_text' => __( 'Click here to get more Content-Types.', 'mp_stacks' ),
+			'extend_mp_stacks_text' => __( 'Extend MP Stacks with Add-Ons &#8611;', 'mp_stacks' ),
+			'need_to_refresh_text' => __( 'If you just installed an Add-On, you will need to refresh this page to see it. Don\'t forget to hit "Update" if you\'ve made changes to this Brick.', 'mp_stacks' ),
 		) 
 	);	
 	
