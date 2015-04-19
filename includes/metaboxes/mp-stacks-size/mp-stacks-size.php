@@ -33,7 +33,7 @@ function mp_stacks_size_create_meta_box(){
 			'field_title' 	=> __( 'Space Above Content:', 'mp_stacks'),
 			'field_description' 	=> __( 'Enter the amount of space above the Content in this Brick. (in pixels)', 'mp_stacks' ),
 			'field_type' 	=> 'number',
-			'field_value' => '20',
+			'field_value' => '50',
 		),
 		array(
 			'field_id'			=> 'brick_min_below',
