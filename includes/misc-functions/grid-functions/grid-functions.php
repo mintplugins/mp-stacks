@@ -591,13 +591,13 @@ class MP_Stacks_Grid_Load_More{
 				jQuery(document).ready(function($){ 
 					
 					$(\'#mp-brick-' . $post_id . ' .mp-stacks-grid-after\').waypoint(function( direction ) {
-		
+												
 						if (direction === \'up\') return;
-				
-						$(this).parent().parent().find(\'.mp-stacks-grid-load-more-button\').trigger(\'click\' );
+						
+						$(\'#mp-brick-' . $post_id . ' .mp-stacks-grid-load-more-button\').trigger(\'click\' );
 						
 					}, {
-						offset: \'100%\'
+						offset: \'bottom-in-view\'
 					});
 					
 				});
