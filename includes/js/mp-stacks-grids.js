@@ -83,39 +83,48 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	var mp_stacks_grid_filter_value = '*';
+	
 	//Initialize Grid Isotopes
 	$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
 		$('.mp-stacks-grid-isotope').isotope({
 		  // main isotope options
 		  itemSelector: '.mp-stacks-grid-item-masonry',
 		  layoutMode: 'masonry',
-		  gutterWidth: 0
+		  gutterWidth: 0,
+		  filter: mp_stacks_grid_filter_value
 		});
 	});
 	
 	//Re-Initialize Grid Isotopes when Ajax is done
 	$( document ).ajaxComplete(function() {
-		$('.mp-stacks-grid-isotope').isotope({
-		  // main isotope options
-		  itemSelector: '.mp-stacks-grid-item-masonry',
-		  layoutMode: 'masonry',
-		  gutterWidth: 0
+		
+		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
+			$('.mp-stacks-grid-isotope').isotope({
+			  // main isotope options
+			  itemSelector: '.mp-stacks-grid-item-masonry',
+			  layoutMode: 'masonry',
+			  gutterWidth: 0,
+			  filter: mp_stacks_grid_filter_value
+			});
+				
+			var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
+				clearInterval( wait_for_isotope_filter_to_kick_in );
+				//Refresh waypoints to reflect new page size
+				Waypoint.refreshAll();
+				var mp_stacks_grid_ajax_trigger_delay = setInterval( function(){ 
+					clearInterval( mp_stacks_grid_ajax_trigger_delay );
+					$(document).trigger( 'mp_stacks_grid_ajax_complete' );
+				}, 500);
+			}, 500);
 		});
-		
-		$( '.mp-stacks-grid-isotope-button-all' ).trigger( 'click' );
-		
-		var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
-			clearInterval( wait_for_isotope_filter_to_kick_in );
-			//Refresh waypoints to reflect new page size
-			Waypoint.refreshAll();
-		}, 500);
 		
 	});
 	
 	//Filter grid items when filter button is clicked		
 	$( document ).on( 'click', '.mp-stacks-grid-isotope-sort-container > div', function() {
-		var filterValue = $(this).attr('data-filter');
-		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: filterValue } );
+		mp_stacks_grid_filter_value = $(this).attr('data-filter');
+		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: mp_stacks_grid_filter_value } );
 	  
 		var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
 			clearInterval( wait_for_isotope_filter_to_kick_in );
@@ -127,8 +136,8 @@ jQuery(document).ready(function($){
 	
 	//Filter grid items when filter dropdown is changed
 	$(document).on( 'change', '.mp-stacks-grid-isotope-sort-select', function(){
-		var selector = $(this).val();
-		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: selector });
+		var mp_stacks_grid_filter_value = $(this).val();
+		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: mp_stacks_grid_filter_value });
 		
 		var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
 			clearInterval( wait_for_isotope_filter_to_kick_in );
