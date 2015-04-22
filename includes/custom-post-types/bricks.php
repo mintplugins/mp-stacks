@@ -199,7 +199,7 @@ function mp_stacks_edit_taxonomy_url_for_stacks( $location, $term_id, $taxonomy,
 	
 	//If this is an mp_stacks taxonomy term
 	if ( $taxonomy == 'mp_stacks' ){
-		return add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $term_id ), admin_url('admin.php') );	
+		return mp_core_add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $term_id ), admin_url('admin.php') );	
 	}
 	
 	return $location;
@@ -212,7 +212,7 @@ add_filter( 'get_edit_term_link', 'mp_stacks_edit_taxonomy_url_for_stacks', 10, 
  *
  * @since    1.0.0
  * @link     http://mintplugins.com/doc/
- * @see      add_query_arg()
+ * @see      mp_core_add_query_arg()
  * @param  	 $actions 
  * @param  	 $tag 
  * @return   $actions
@@ -224,11 +224,11 @@ function mp_stacks_remove_quick_edit( $actions, $tag ) {
 	//If this is a developer
 	if ( function_exists('mp_stacks_developer_textdomain') ){
 		//Show the manual brick edit option
-		$actions['view'] = '<a href="' . add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
+		$actions['view'] = '<a href="' . mp_core_add_query_arg( array('mp_stacks' => $tag->term_id), 'edit.php?post_type=mp_brick' ) . '">' . __("Edit this Stack's Bricks", 'mp_stacks') . '</a>';
 	}
 	
 	//Make the "Manage Stacks" page's "view" links to lists of bricks-per-stack instead of the front end archive page
-	$actions['edit'] = '<a href="' . add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $tag->term_id ), admin_url('admin.php') ) . '">' . __("Edit", 'mp_stacks') . '</a>';
+	$actions['edit'] = '<a href="' . mp_core_add_query_arg( array('page' => 'mp-stacks-single-stack-edit-page', 'stack_id' => $tag->term_id ), admin_url('admin.php') ) . '">' . __("Edit", 'mp_stacks') . '</a>';
 
 	return $actions;
 }

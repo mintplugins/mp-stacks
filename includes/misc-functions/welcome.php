@@ -147,15 +147,15 @@ class MP_Stacks_Welcome {
 		$selected = isset( $_GET['page'] ) ? $_GET['page'] : 'mp-stacks-about';
 		?>
 		<h2 class="nav-tab-wrapper">
-			<a class="nav-tab <?php echo $selected == 'mp-stacks-about' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'mp-stacks-about' ), 'index.php' ) ) ); ?>">
+			<a class="nav-tab <?php echo $selected == 'mp-stacks-about' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( mp_core_add_query_arg( array( 'page' => 'mp-stacks-about' ), 'index.php' ) ) ); ?>">
 				<?php _e( 'Getting Started', 'mp_stacks' ); ?>
 			</a>
             <?php /*
-            <a class="nav-tab <?php echo $selected == 'mp-stacks-whats-new' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'mp-stacks-whats-new' ), 'index.php' ) ) ); ?>">
+            <a class="nav-tab <?php echo $selected == 'mp-stacks-whats-new' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( mp_core_add_query_arg( array( 'page' => 'mp-stacks-whats-new' ), 'index.php' ) ) ); ?>">
 				<?php _e( "What's New", 'mp_stacks' ); ?>
 			</a>
 			
-            <a class="nav-tab <?php echo $selected == 'mp-stacks-credits' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'mp-stacks-credits' ), 'index.php' ) ) ); ?>">
+            <a class="nav-tab <?php echo $selected == 'mp-stacks-credits' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( mp_core_add_query_arg( array( 'page' => 'mp-stacks-credits' ), 'index.php' ) ) ); ?>">
 				<?php _e( 'Credits', 'mp_stacks' ); ?>
 			</a>
 			

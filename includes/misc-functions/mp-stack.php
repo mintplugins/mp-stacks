@@ -279,7 +279,7 @@ function mp_stack( $stack_id ){
 						$html_output .= '<div class="mp-brick-content-types-inner">';
 							$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
 			
-								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
+								$html_output .=  __('No Bricks are currently in this Stack. ', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . mp_core_add_query_arg( array( 'post_type' => 'mp_brick', 'mp-stacks-minimal-admin' => 'true', 'mp_stack_id' => $stack_id, 'mp_stack_order_new' => '1000' ), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add A Brick To this Stack', 'mp_stacks' ) . '</a>';
 							$html_output .= '</div>';		
 					$html_output .= '</div>';		
 				$html_output .= '</div>';		
@@ -410,7 +410,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 			//Edit Brick Link
 			if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
 				
-				$html_output .= '<a class="mp-brick-edit-link" href="' . add_query_arg( array( 
+				$html_output .= '<a class="mp-brick-edit-link" href="' . mp_core_add_query_arg( array( 
 					'mp-stacks-minimal-admin' => 'true',
 					'mp_stack_id' => $stack_id, 
 					'containing_page_url' => mp_core_get_current_url()
@@ -428,7 +428,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 					$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
 		
 					//Show buttons to add new bricks above/below
-					$html_output .= '<a class="mp-brick-add-before-link" href="' . add_query_arg( array( 
+					$html_output .= '<a class="mp-brick-add-before-link" href="' . mp_core_add_query_arg( array( 
 						'post_type' => 'mp_brick', 
 						'mp-stacks-minimal-admin' => 'true', 
 						'mp_stack_id' => $stack_id, 
@@ -436,7 +436,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 						'containing_page_url' => mp_core_get_current_url()
 					), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
 					
-					$html_output .= '<a class="mp-brick-add-after-link" href="' . add_query_arg( array( 
+					$html_output .= '<a class="mp-brick-add-after-link" href="' . mp_core_add_query_arg( array( 
 						'post_type' => 'mp_brick',
 						'mp-stacks-minimal-admin' => 'true', 
 						'mp_stack_id' => $stack_id, 
@@ -451,7 +451,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 					if ( $number_of_bricks > 1 ){
 						
 						//Show buttons to add new bricks above/below
-						$html_output .= '<a class="mp-brick-reorder-bricks" href="' . add_query_arg( array( 
+						$html_output .= '<a class="mp-brick-reorder-bricks" href="' . mp_core_add_query_arg( array( 
 							'post_type' => 'mp_brick', 
 							'mp-stacks-minimal-admin' => 'true', 
 							'mp_stacks' => $stack_id 
@@ -857,7 +857,7 @@ function mp_stacks_header_css(){
 					//mp_stack_css( $val[2], true );
 					
 					//Enqueue the CSS for this stack
-					wp_enqueue_style( 'mp_stacks_css_' . $val[2], add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) ); 
+					wp_enqueue_style( 'mp_stacks_css_' . $val[2], mp_core_add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) ); 
 					
 				}
 			}

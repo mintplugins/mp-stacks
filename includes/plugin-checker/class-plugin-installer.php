@@ -252,7 +252,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Installer' ) ){
 			if( ini_get('allow_url_fopen') ) {
 					
 				//Download the plugin file defined in the passed in array
-				$saved_file = $wp_filesystem->get_contents( add_query_arg( array( 'site_activating' => get_bloginfo( 'wpurl' ) ), $this->_args['plugin_download_link'] ) );
+				$saved_file = $wp_filesystem->get_contents( mp_core_add_query_arg( array( 'site_activating' => get_bloginfo( 'wpurl' ) ), $this->_args['plugin_download_link'] ) );
 			
 				//Save the contents into a temp.zip file (string stored in $filename)
 				$wp_filesystem->put_contents( $filename, $saved_file, FS_CHMOD_FILE);

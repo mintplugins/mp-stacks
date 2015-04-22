@@ -67,7 +67,7 @@ function mp_stacks_template_packs_plugin_directory(){
 		'page_title' => 'Stack Templates',
 		'slug' => 'mp_stacks_template_packs_plugin_directory',
 		'directory_list_url' => 'http://mintplugins.com/repo-group/mp-stacks-template-packs/',
-		'plugin_success_link' => add_query_arg( array('page' => 'mp_stack_template_packs_plugin_directory' ), admin_url('admin.php') )
+		'plugin_success_link' => mp_core_add_query_arg( array('page' => 'mp_stack_template_packs_plugin_directory' ), admin_url('admin.php') )
 	);
 	
 	new MP_CORE_Plugin_Directory( $args );
