@@ -134,6 +134,26 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 					),
 					'field_showhider' => $meta_prefix . '_isotope_filter_by_showhider',
 				),
+			$meta_prefix . '_isotope_all_btn_showhider' => array(
+				'field_id'			=> $meta_prefix . '_isotope_all_btn_showhider',
+				'field_title' 	=> __( '"All" Button Settings', 'mp_stacks'),
+				'field_description' 	=> __( '', 'mp_stacks' ),
+				'field_type' 	=> 'showhider',
+				'field_value' => '',
+				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
+				'field_conditional_values' => array( 'buttons' ), 
+				'field_showhider' => $meta_prefix . '_isotope_settings',
+			),
+				$meta_prefix . '_isotope_all_btn_text' => array(
+					'field_id'			=> $meta_prefix . '_isotope_all_btn_text',
+					'field_title' 	=> __( '"All" Button Text', 'mp_stacks'),
+					'field_description' 	=> __( 'What should the "All" Button say?', 'mp_stacks' ),
+					'field_type' 	=> 'textbox',
+					'field_conditional_id' => $meta_prefix . '_isotope_navigation',
+					'field_conditional_values' => array( 'buttons' ), 
+					'field_value' => __( 'All', 'mp_stacks' ),
+					'field_showhider' => $meta_prefix . '_isotope_all_btn_showhider',
+				),
 			$meta_prefix . '_isotope_btn_bg_showhider' => array(
 				'field_id'			=> $meta_prefix . '_isotope_btn_bg_showhider',
 				'field_title' 	=> __( 'Isotope Filter Button Background Settings', 'mp_stacks'),
@@ -288,6 +308,27 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 						'field_value' => '',
 						'field_showhider' => $meta_prefix . '_isotope_btn_icons_showhider',
 					),
+			$meta_prefix . '_isotope_hidden_buttons_showhider' => array(
+				'field_id'			=> $meta_prefix . '_isotope_hidden_buttons_showhider',
+				'field_title' 	=> __( 'Hide Filter Buttons', 'mp_stacks'),
+				'field_description' 	=> __( '', 'mp_stacks' ),
+				'field_type' 	=> 'showhider',
+				'field_value' => '',
+				'field_conditional_id' => $meta_prefix . '_isotope',
+				'field_conditional_values' => array( $meta_prefix . '_isotope' ), 
+				'field_showhider' => $meta_prefix . '_isotope_settings',
+			),
+				$meta_prefix . '_isotope_hidden_buttons' => array(
+						'field_id'			=> $meta_prefix . '_isotope_hidden_buttons',
+						'field_title' 	=> __( 'Hidden Filter Buttons', 'mp_stacks'),
+						'field_description' 	=> __( 'If you want to skip showing a Filter Button and you know the "slug" for that group, enter it here (comma separated)', 'mp_stacks' ),
+						'field_type' 	=> 'textarea',
+						'field_conditional_id' => $meta_prefix . '_isotope_nav_btn_icons',
+						'field_conditional_values' => array( $meta_prefix . '_isotope_nav_btn_icons' ), 
+						'field_value' => '',
+						'field_placeholder' => 'tag1, tag2, etc',
+						'field_showhider' => $meta_prefix . '_isotope_hidden_buttons_showhider',
+					),
 	);
 	
 	return $new_fields;
@@ -322,6 +363,9 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	
 	//Get the array containing all taxonomies and tax terms by which we should do Isotope Filtering. Each Tax is a dropdown or button group.
 	$master_filter_groups_array = mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array, $filter_groups_to_include, $all_isotope_filter_groups );
+	
+	$buttons_to_skip = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_hidden_buttons' );
+	$buttons_to_skip = str_replace( ' ,', ',', explode( ',', trim( $buttons_to_skip ) ) );
 		
 	if ( !$master_filter_groups_array ){
 		return false;	
@@ -360,7 +404,9 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 							$return_html .= '<option value="*">' . $tax_term['name'] . '</option>';
 						}
 						else{
-							$return_html .= '<option value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">' . $tax_term['name'] . '</option>';
+							if ( !in_array( $tax_term['slug'], $buttons_to_skip ) ){
+								$return_html .= '<option value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">' . $tax_term['name'] . '</option>';		
+							}
 						}
 						
 						$tax_term_counter = $tax_term_counter  + 1;
@@ -398,90 +444,109 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 					$tax_term_counter = 0;
 					foreach( $taxonomy as $tax_term ){
 						
-						//If this is one of the "All" buttons - but not the first "All Button, skip it.
+						//If this is one of the "All" buttons - but not the first "All" Button, skip it.
 						if ( $tax_counter > 0 && $tax_term_counter == 0 ){
 							$tax_term_counter = $tax_term_counter + 1;
 							continue;	
 						}
-						
-						//If this is the "All" Filter
+												
+						//If this is the "All" Filter Button
 						if ( $tax_term_counter == 0 ){
-	
-							//"All button" icon
-							$maybe_all_icon_class = 'mp-stacks-grid-isotope-icon-all';
+														 							
+							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all" data-filter="*">';					
 							
-							$button_text = __( 'All', 'mp_stacls' );
+							//If icons are enabled and we're on the "All" button
+							if ( $enable_button_icons ){	
+								//Set up the HTML icon for "ALL"
+								$all_icon = '<div class="mp-stacks-grid-isotope-icon-all-1"></div>';
+								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-2"></div>';
+								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-3"></div>';
+								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-4"></div>';
+								$all_icon_html = apply_filters( 'mp_stacks_grid_isotope_all_icon_html', $all_icon, $meta_prefix );
 								
-							$isotope_icon = '<div class="mp-stacks-grid-isotope-icon-all-1"></div>';
-							$isotope_icon .= '<div class="mp-stacks-grid-isotope-icon-all-2"></div>';
-							$isotope_icon .= '<div class="mp-stacks-grid-isotope-icon-all-3"></div>';
-							$isotope_icon .= '<div class="mp-stacks-grid-isotope-icon-all-4"></div>';
+								//Set up the icon font icon for "ALL"
+								$all_icon_class = apply_filters( 'mp_stacks_grid_isotope_all_icon_font_class', '', $meta_prefix );
+															
+								//If an Icon Font string has been passed for the "All" button
+								if ( !empty( $all_icon_class ) ){						
+									$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all ' . $all_icon_class . '"></div>';
+								}
+								//If we should use an image or the dedault squares as the "All" Button icon
+								else{
+									$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all">' . $isotope_icon_html  . ' </div>';	
+								}
+							}
 							
-
-							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all" data-filter="*">';
+							$all_button_text = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_all_btn_text', __( 'All', 'mp_stacks' ) );
+							
+							$return_html .= '<div class="mp-stacks-grid-isotope-btn-text">' . $all_button_text . '</div>';
+		
 						}
+						//If this is not the "All" filter button
 						else{
 							
-							$maybe_all_icon_class  = NULL;
+							//If we should skip this button
+							if ( in_array( $tax_term['slug'], $buttons_to_skip ) ){
+								continue;
+							}
 							
 							$button_text = $tax_term['name'];
 							
 							$return_html .= '<div class="button mp-stacks-grid-isotope-button" data-filter="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">';
-							$isotope_icon = NULL;
-						}				
+									
 						
-						if ( $enable_button_icons ){
-							
-							$icon_font_html = NULL;
-							$icon_image_html = NULL;
-							
-							//If an icon font string exists
-							if ( !empty( $tax_term['icon_font_string'] ) || !empty( $tax_term['default_icon_font_string'] ) ){
+							if ( $enable_button_icons ){
 								
-								//Check if there is a unique icon or if we just use the default fallback icon
-								$icon_font_string = !empty( $tax_term['icon_font_string'] ) ? $tax_term['icon_font_string'] : $tax_term['default_icon_font_string'];
+								$icon_font_html = NULL;
+								$icon_image_html = NULL;
 								
-								//Add any prefix that might be needed to the icon font class name
-								$icon_font_string = apply_filters( 'mp_stacks_grid_isotope_icon_font_prefix', '', $meta_prefix ) . $icon_font_string;
+								//If an icon font string exists
+								if ( !empty( $tax_term['icon_font_string'] ) || !empty( $tax_term['default_icon_font_string'] ) ){
+									
+									//Check if there is a unique icon or if we just use the default fallback icon
+									$icon_font_string = !empty( $tax_term['icon_font_string'] ) ? $tax_term['icon_font_string'] : $tax_term['default_icon_font_string'];
+									
+									//Filter the icon font class name
+									$icon_font_string = apply_filters( 'mp_stacks_grid_isotope_icon_font_class', $icon_font_string, $meta_prefix );
+									
+									//Icon font class might be "mp-stacks-socialgrid-icon-twitter"
+									$icon_font_html = !empty( $icon_font_string ) ? '<div class="mp-stacks-grid-isotope-icon ' . $icon_font_string . '"></div>' : NULL;
+									
+								}
 								
-								//Icon font class might be "mp-stacks-socialgrid-icon-twitter"
-								$icon_font_html = !empty( $icon_font_string ) ? '<div class="mp-stacks-grid-isotope-icon ' . $maybe_all_icon_class . ' ' . $icon_font_string . '">' . $isotope_icon  . ' </div>' : NULL;
+								//If an icon image url exists
+								if ( !empty( $tax_term['icon_image_url'] ) || !empty( $tax_term['default_icon_image_url'] ) ){
+									
+									//Check if there is a unique icon or if we just use the default fallback icon
+									$icon_image_url = !empty( $tax_term['icon_image_url'] ) ? $tax_term['icon_image_url'] : $tax_term['default_icon_image_url'];
+									//Output the icon - if there is one
+									$icon_image_html = !empty( $icon_image_url ) ? '<div class="mp-stacks-grid-isotope-icon"><img src="' . $icon_image_url . '" /></div>' : NULL;
+									
+								}
 								
-							}
-							
-							//If an icon image url exists
-							if ( !empty( $tax_term['icon_image_url'] ) || !empty( $tax_term['default_icon_image_url'] ) ){
+								//Set default for icon html
+								$icon_html = NULL;	
 								
-								//Check if there is a unique icon or if we just use the default fallback icon
-								$icon_image_url = !empty( $tax_term['icon_image_url'] ) ? $tax_term['icon_image_url'] : $tax_term['default_icon_image_url'];
-								//Output the icon - if there is one
-								$icon_image_html = !empty( $icon_image_url ) ? '<div class="mp-stacks-grid-isotope-icon"><img src="' . $icon_image_url . '" /></div>' : NULL;
-								
-							}
-							
-							//Set default for icon html
-							$icon_html = NULL;	
-							
-							//If we have a preference for whether to use an image or an icon font
-							if ( !empty( $tax_term['icon_type_preference'] ) ){
-								
-								//If we prefer to use an icon font over an image
-								if ( $tax_term['icon_type_preference'] == 'icon' ){
+								//If we have a preference for whether to use an image or an icon font
+								if ( !empty( $tax_term['icon_type_preference'] ) ){
+									
+									//If we prefer to use an icon font over an image
+									if ( $tax_term['icon_type_preference'] == 'icon' ){
+										$icon_html = !empty( $icon_font_html ) ? $icon_font_html : $icon_image_html;
+									}
+									//If we prefer to use an image over an icon font
+									else if ( !empty(  $tax_term['icon_type_preference'] ) && $tax_term['icon_type_preference'] == 'image' ){
+										$icon_html = !empty( $icon_image_html ) ? $icon_image_html : $icon_font_html;
+									}
+									
+								}
+								else{
+									//Prefer to use an icon font over an image, with fall back to image
 									$icon_html = !empty( $icon_font_html ) ? $icon_font_html : $icon_image_html;
 								}
-								//If we prefer to use an image over an icon font
-								else if ( !empty(  $tax_term['icon_type_preference'] ) && $tax_term['icon_type_preference'] == 'image' ){
-									$icon_html = !empty( $icon_image_html ) ? $icon_image_html : $icon_font_html;
-								}
-								
+							
+									
 							}
-							else{
-								//Prefer to use an icon font over an image, with fall back to image
-								$icon_html = !empty( $icon_font_html ) ? $icon_font_html : $icon_image_html;
-							}
-						
-								
-						}
 						
 							//If the icon should be on the left of the isotope button
 							if ( $button_icon_alignment == 'left' && $enable_button_icons){
@@ -499,6 +564,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 								$return_html .= $icon_html;
 								
 							}
+						}
 						
 						$return_html .= '</div>';
 						
@@ -757,6 +823,17 @@ function mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array,
 				//If there are no posts in this term, skip it
 				if ( $wp_tax_term->count == 0 ){
 					continue;	
+				}
+				
+				//Forumlate the meta field id where the tax term if is stored for this source array
+				$full_meta_field_id  = NULL;
+				foreach( $filter_group_array['meta_field_ids_representing_tax_term'] as $meta_field_id => $meta_field_info ){
+					$full_meta_field_id .= $meta_field_id;
+				}
+								
+				//If there is only 1 WP source and that source is this tax term, skip it because the "all" button will be the exact same thing.
+				if ( count( $sources_array ) == 1 && ( isset( $sources_array[0][$full_meta_field_id] ) && $wp_tax_term->term_id == $sources_array[0][$full_meta_field_id] ) ){
+					continue;
 				}
 				
 				//Here we add each tax term to the master taxonomy array
@@ -1036,7 +1113,10 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 			}
 			
 		$css_output .= '}';	
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-icon-all *{';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-icon-all .mp-stacks-grid-isotope-icon-all-1,';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-icon-all .mp-stacks-grid-isotope-icon-all-2,';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-icon-all .mp-stacks-grid-isotope-icon-all-3,';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-icon-all .mp-stacks-grid-isotope-icon-all-4{';
 			//If the button icons should be shown
 			if ( $enable_button_icons ){
 					
