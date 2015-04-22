@@ -196,6 +196,8 @@
 /* Isotope image icons */
 .mp-stacks-grid-isotope-icon *{
 	width:100%;	
+	margin:0!important;
+	padding:0!important;
 }
 /* Isotope All Button Icon */
 .mp-stacks-grid-isotope-icon-all-1,
@@ -210,11 +212,11 @@
 }
 .mp-stacks-grid-isotope-icon-all-1,
 .mp-stacks-grid-isotope-icon-all-3{
-	margin-right:5%;	
+	margin-right:5%!important;	
 }
 .mp-stacks-grid-isotope-icon-all-1,
 .mp-stacks-grid-isotope-icon-all-2{
-	margin-bottom:5%;	
+	margin-bottom:5%!important;	
 }
 /* Isotope Spacing betweetn Dropdown Menus/Buttons */
 .mp-stacks-grid-isotope-sort-select,
