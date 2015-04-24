@@ -7,11 +7,13 @@ jQuery(document).ready(function($){
 	$( document ).on( 'click', '.mp-stacks-grid-load-more-button', function(event){
 		
 		event.preventDefault();
-			
+		
+		var mp_stacks_grid_post_id = $(this).attr( 'mp_stacks_grid_post_id' );
+		
 		// Use ajax to load more posts
 		var postData = {
 			action: 'mp_stacks_' + $(this).attr( 'mp_stacks_grid_ajax_prefix' ) + '_load_more',
-			mp_stacks_grid_post_id: $(this).attr( 'mp_stacks_grid_post_id' ),
+			mp_stacks_grid_post_id: mp_stacks_grid_post_id,
 			mp_stacks_grid_offset: $(this).attr( 'mp_stacks_grid_brick_offset' ),
 		}
 		
@@ -50,7 +52,7 @@ jQuery(document).ready(function($){
 						
 						//Add the animation trigger which resets animations on newly added items
 						the_after_container.html(response.animation_trigger);
-						
+												
 						var wait_for_masonry_to_kick_in = setInterval( function(){ 
 							clearInterval( wait_for_masonry_to_kick_in );
 							//Refresh waypoints to reflect new page size
@@ -98,6 +100,31 @@ jQuery(document).ready(function($){
 	
 	//Re-Initialize Grid Isotopes when Ajax is done
 	$( document ).ajaxComplete(function() {
+		
+		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
+			$('.mp-stacks-grid-isotope').isotope({
+			  // main isotope options
+			  itemSelector: '.mp-stacks-grid-item-masonry',
+			  layoutMode: 'masonry',
+			  gutterWidth: 0,
+			  filter: mp_stacks_grid_filter_value
+			});
+				
+			var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
+				clearInterval( wait_for_isotope_filter_to_kick_in );
+				//Refresh waypoints to reflect new page size
+				Waypoint.refreshAll();
+				var mp_stacks_grid_ajax_trigger_delay = setInterval( function(){ 
+					clearInterval( mp_stacks_grid_ajax_trigger_delay );
+					$(document).trigger( 'mp_stacks_grid_ajax_complete' );
+				}, 500);
+			}, 500);
+		});
+		
+	});
+	
+	//Re-Initialize Grid Isotopes when page is resized
+	$( document ).on( 'mp_stacks_resize_complete', function() {
 		
 		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
 			$('.mp-stacks-grid-isotope').isotope({
