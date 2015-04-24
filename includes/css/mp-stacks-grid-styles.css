@@ -32,7 +32,7 @@
 	display:table;	
 	width:100%;
 	overflow:hidden;
-	margin: 0px auto
+	margin: 0px auto;
 }
 .mp-stacks-grid-item-image-overlay{
 	position: absolute;
