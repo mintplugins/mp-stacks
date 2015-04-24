@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.3
+Stable tag: 1.0.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.2.4 = April 24, 2015
 * Add all grid css to new, separate stylesheet
 * Set grid image holders to 100% width instead of 100.2%
 * Localized JS String: "Click here to get more Content Types" for easy translation.
