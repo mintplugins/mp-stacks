@@ -1,7 +1,7 @@
 === MP Stacks ===
-Contributors: johnstonphilip
-Donate link: http://mintplugins.com/
-Tags: message bar, header
+Contributors: johnstonphilip, mintplugins
+Donate link: https://mintplugins.com/
+Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.1
 Stable tag: 1.0.2.3
@@ -14,7 +14,7 @@ An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in
 
 Build pages using the MP Stacks plugin by making "Bricks". Each Brick can have its own background image, colour, size, and 2 "Content-Types". 
 
-There are 3 Content-Types" built into the MP Stacks Plugin: Video, Image, and Text.
+There are 3 Content-Types built into the MP Stacks Plugin: Video, Image, and Text.
 
 == Installation ==
 
@@ -22,18 +22,38 @@ This section describes how to install the plugin and get it working.
 
 1. Upload the 'mp-stacks' folder to the '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Build Bricks under the "Stacks and Bricks" menu. 
-4. Publish your bricks into a "Stack".
-5. Put Stacks on pages using the shortcode or the "Add Stack" button.
+3. On any page or post, click the "Add Stack" button, save, and view the page/post.
+4. Add Bricks into the "Stack" by clicking "Add a Brick to this Stack" when viewing the page or post.
 
 == Frequently Asked Questions ==
 
-See full instructions at http://mintplugins.com/doc/mp-stacks
+See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Screenshots ==
 
+1. Example page built entirely using MP Stacks
+
+2. Another example page built entirely using MP Stacks
+
+3. Creating/Adding a new Stack.
+
+4. Adding Bricks to Stacks.
+
+5. Re-Ordering Bricks by dragging and dropping.
+
 
 == Changelog ==
+
+* Add all grid css to new, separate stylesheet
+* Set grid image holders to 100% width instead of 100.2%
+* Localized JS String: "Click here to get more Content Types" for easy translation.
+* Added link to AddOns on right side of Brick Editor
+* Moved all grid-based js to it's own js file which is only enqueued by the add-on using it.
+* Moved all grid-based php to their own files.
+* Changed default space above/below Brick Content from 20px to 50px.
+* One-Click "MP Buttons" installer added above Brick Text areas to make it easy for users who need this plugin.
+* Security Fix: All "add_query_arg" function changed to "mp_core_add_query_arg" to properly sanitize the URLs
+* Security Fix: All "remove_query_arg" function changed to "mp_core_remove_query_arg" to properly sanitize the URLs
 
 = 1.0.2.3 = April 5, 2015
 * Added HTML note about inline JS
