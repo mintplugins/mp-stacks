@@ -44,9 +44,7 @@ jQuery(document).ready(function($){
 					the_grid_container.append(newitems).imagesLoaded( function(){ 
 					
 						the_grid_container.append(newitems).isotope( 'appended', newitems );
-					
-						newitems.css('visibility', 'visible' );
-												
+																	
 						//Add the updated "Load More" button to the page
 						the_button_container.replaceWith(response.button);
 						
@@ -54,6 +52,9 @@ jQuery(document).ready(function($){
 						the_after_container.html(response.animation_trigger);
 												
 						var wait_for_masonry_to_kick_in = setInterval( function(){ 
+						
+							newitems.css('visibility', 'visible' );
+														
 							clearInterval( wait_for_masonry_to_kick_in );
 							//Refresh waypoints to reflect new page size
 							Waypoint.refreshAll();
@@ -96,22 +97,35 @@ jQuery(document).ready(function($){
 		  gutterWidth: 0,
 		  filter: mp_stacks_grid_filter_value
 		});
+		
 	});
 	
 	//Re-Initialize Grid Isotopes when Ajax is done
 	$( document ).ajaxComplete(function() {
 		
 		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
+			
+			//Load it with the filter set to "8" so it properly places the new items
+			$('.mp-stacks-grid-isotope').isotope({
+			  // main isotope options
+			  itemSelector: '.mp-stacks-grid-item-masonry',
+			  layoutMode: 'masonry',
+			  gutterWidth: 0,
+			  filter: '*'
+			});		
+			
+			//Then relayout isotope with the user's currently chosen filter
 			$('.mp-stacks-grid-isotope').isotope({
 			  // main isotope options
 			  itemSelector: '.mp-stacks-grid-item-masonry',
 			  layoutMode: 'masonry',
 			  gutterWidth: 0,
 			  filter: mp_stacks_grid_filter_value
-			});
+			});	
 				
 			var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
 				clearInterval( wait_for_isotope_filter_to_kick_in );
+			
 				//Refresh waypoints to reflect new page size
 				Waypoint.refreshAll();
 				var mp_stacks_grid_ajax_trigger_delay = setInterval( function(){ 
