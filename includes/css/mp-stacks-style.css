@@ -133,7 +133,8 @@
 
 /*Make sure any tags inside a text area paragraph are set to be inline-block;*/
 .mp-brick p *{
-	display:inline-block;	
+	display:inline-block;
+	word-break:break-all;	
 }
 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text, 
