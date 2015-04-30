@@ -719,7 +719,7 @@ function mp_stacks_install_mp_buttons_shortcode_btn( $context ){
 	global $pagenow, $typenow, $wp_version;
 		
 	//Only run if MP Buttons plugin is not installed AND in Brick Editor pages
-	if ( !function_exists( 'mp_buttons_textdomain' ) && $type_now == 'mp_brick' ){
+	if ( !function_exists( 'mp_buttons_textdomain' ) && isset( $type_now ) && $type_now == 'mp_brick' ){
 			
 		//Output old style button
 		$context .= '<a target="_blank" href="' . admin_url( sprintf( 'options-general.php?page=mp_core_install_plugin_page_mp-buttons&action=install-plugin&mp-source=mp_core_directory&plugin=mp-buttons&plugin_api_url=' . base64_encode( 'http://mintplugins.com' ) . '&mp_core_directory_page=mp_stacks_plugin_directory&mp_core_directory_tab=content_types&_wpnonce=%s', wp_create_nonce( 'install-plugin'  ) ) ) . '" class="button" title="' . __('Install Button Creator', 'mp_core') . '">' . __( 'Install Button Creator from Mint Plugins (free)', 'mp_stacks' ) . '</a>';
