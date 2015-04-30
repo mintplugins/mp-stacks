@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.4
+Stable tag: 1.0.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,6 +44,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.2.5 = April 30, 2015
+* Fixed "undefined var typenow" error when making a new page - error was introduced in 1.0.2.4
+* Added word-break:break-all for items in p tags
+
 = 1.0.2.4 = April 24, 2015
 * Add all grid css to new, separate stylesheet
 * Set grid image holders to 100% width instead of 100.2%
@@ -55,6 +59,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * One-Click "MP Buttons" installer added above Brick Text areas to make it easy for users who need this plugin.
 * Security Fix: All "add_query_arg" function changed to "mp_core_add_query_arg" to properly sanitize the URLs
 * Security Fix: All "remove_query_arg" function changed to "mp_core_remove_query_arg" to properly sanitize the URLs
+* Added default Isotope Filtering functions for Grids.
 
 = 1.0.2.3 = April 5, 2015
 * Added HTML note about inline JS
