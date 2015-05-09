@@ -23,6 +23,15 @@
 .post-type-mp_brick #submitdiv .hndle{
 	display:none;	
 }
+/* Make the "Submit" button fixed to the top right*/
+.post-type-mp_brick #submitdiv{
+	position: fixed;
+	z-index: 999;
+	top: 0;
+	right: 0;
+	width: 100%;
+	max-width: 300px;
+}
 
 .post-type-mp_brick #major-publishing-actions{
 	border-top:none;
