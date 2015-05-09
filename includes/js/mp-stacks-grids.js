@@ -43,7 +43,7 @@ jQuery(document).ready(function($){
 				if ( masonry_on ){
 					the_grid_container.append(newitems).imagesLoaded( function(){ 
 					
-						the_grid_container.append(newitems).isotope( 'appended', newitems );
+						the_grid_container.append(newitems).isotope( 'appended', newitems ).isotope('layout');
 																	
 						//Add the updated "Load More" button to the page
 						the_button_container.replaceWith(response.button);
@@ -54,6 +54,8 @@ jQuery(document).ready(function($){
 						var wait_for_masonry_to_kick_in = setInterval( function(){ 
 						
 							newitems.css('visibility', 'visible' );
+							
+							the_grid_container.isotope('layout');
 														
 							clearInterval( wait_for_masonry_to_kick_in );
 							//Refresh waypoints to reflect new page size
@@ -104,23 +106,14 @@ jQuery(document).ready(function($){
 	$( document ).ajaxComplete(function() {
 		
 		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
-			
-			//Load it with the filter set to "8" so it properly places the new items
-			$('.mp-stacks-grid-isotope').isotope({
-			  // main isotope options
-			  itemSelector: '.mp-stacks-grid-item-masonry',
-			  layoutMode: 'masonry',
-			  gutterWidth: 0,
-			  filter: '*'
-			});		
-			
+
 			//Then relayout isotope with the user's currently chosen filter
 			$('.mp-stacks-grid-isotope').isotope({
 			  // main isotope options
 			  itemSelector: '.mp-stacks-grid-item-masonry',
 			  layoutMode: 'masonry',
 			  gutterWidth: 0,
-			  filter: mp_stacks_grid_filter_value
+			  //filter: mp_stacks_grid_filter_value
 			});	
 				
 			var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
@@ -146,7 +139,7 @@ jQuery(document).ready(function($){
 			  itemSelector: '.mp-stacks-grid-item-masonry',
 			  layoutMode: 'masonry',
 			  gutterWidth: 0,
-			  filter: mp_stacks_grid_filter_value
+			  //filter: mp_stacks_grid_filter_value
 			});
 				
 			var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
@@ -165,7 +158,7 @@ jQuery(document).ready(function($){
 	//Filter grid items when filter button is clicked		
 	$( document ).on( 'click', '.mp-stacks-grid-isotope-sort-container > div', function() {
 		mp_stacks_grid_filter_value = $(this).attr('data-filter');
-		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: mp_stacks_grid_filter_value } );
+		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope('layout').isotope({ filter: mp_stacks_grid_filter_value } );
 	  
 		var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
 			clearInterval( wait_for_isotope_filter_to_kick_in );
@@ -178,7 +171,7 @@ jQuery(document).ready(function($){
 	//Filter grid items when filter dropdown is changed
 	$(document).on( 'change', '.mp-stacks-grid-isotope-sort-select', function(){
 		var mp_stacks_grid_filter_value = $(this).val();
-		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope({ filter: mp_stacks_grid_filter_value });
+		$(this).parent().parent().find( '.mp-stacks-grid-isotope' ).isotope('layout').isotope({ filter: mp_stacks_grid_filter_value });
 		
 		var wait_for_isotope_filter_to_kick_in = setInterval( function(){ 
 			clearInterval( wait_for_isotope_filter_to_kick_in );
