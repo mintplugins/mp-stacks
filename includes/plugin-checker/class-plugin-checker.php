@@ -81,7 +81,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 				$this->_args[$key] = wp_parse_args( $args[$key], $defaults[$key] );
 				
 			}
-			
+					
 			//Make sure we are not on the "plugin-install.php" page because there is a conflict with the plugins_api on this page		
 			if ( stripos( basename( $_SERVER['PHP_SELF'] ), 'plugin-install.php' ) === false ){
 				//Set up install page/pages
@@ -118,7 +118,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 	 	 * @return   void
 		 */
 		public function mp_core_create_pages(){
-			
+									
 			//Loop through each plugin that is supposed to be installed
 			foreach ( $this->_args as $plugin_key => $plugin ){
 				
@@ -302,8 +302,16 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 							
 							<div id="<?php echo $plugin_name_slug; ?>-plugin-license-wrap" class="wrap mp-core-plugin-license-wrap">
 								
-								<p class="plugin-description"><?php echo __( "You need a license for ", 'mp_core' ) . $plugin['plugin_name']; ?></p>
-								
+                                <?php 
+								//If there is nothing entered for the license key, tell the user they need one.
+								if ( empty( $license_key ) ){ ?>
+									<p class="plugin-description"><?php echo __( "You need a license for ", 'mp_core' ) . $plugin['plugin_name']; ?></p><?php 
+								} 
+								//If there is a license key entered, let the user know it is invalid
+								else{?>
+									<p class="plugin-description"><?php echo __( "The license key is invalid for ", 'mp_core' ) . $plugin['plugin_name']; ?></p><?php 
+								}?>
+                                
 								<form method="post">
 													
 									<input style="float:left; margin-right:10px;" id="<?php echo $plugin_name_slug; ?>_license_key" name="<?php echo $plugin_name_slug; ?>_license_key" type="text" class="regular-text" value="<?php esc_attr_e( $license_key ); ?>" />						
@@ -529,6 +537,25 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 							
 							//This theme is installed
 							$theme_installed = true;
+							
+							$current_theme = wp_get_theme();
+							$current_theme_name = $current_theme->get( 'Name' );
+							
+							//If the currently active theme is not the one we require here
+							if ( $plugin['plugin_name'] != $current_theme_name  ){
+								
+								//Output a notice that the theme needs to be activated
+								echo '<div class="updated fade"><p>';
+										
+									echo $plugin['plugin_message'] . '</p>';		
+																		
+									//Activate Theme
+									echo '<a href="' . wp_nonce_url('themes.php?action=activate&stylesheet=' . $theme_slug, 'switch-theme_' . $theme_slug ) . '" title="' . esc_attr__('Activate this theme') . '" class="button">' . __('Activate', 'mp_core') . ' "' . $plugin['plugin_name'] . '"</a>'; 
+									//Dismiss button
+									$this->mp_core_dismiss_button( $plugin );
+								
+								echo '</p></div>';
+							}
 							
 							//Stop looping
 							break;
