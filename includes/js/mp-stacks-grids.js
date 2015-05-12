@@ -15,6 +15,7 @@ jQuery(document).ready(function($){
 			action: 'mp_stacks_' + $(this).attr( 'mp_stacks_grid_ajax_prefix' ) + '_load_more',
 			mp_stacks_grid_post_id: mp_stacks_grid_post_id,
 			mp_stacks_grid_offset: $(this).attr( 'mp_stacks_grid_brick_offset' ),
+			mp_stacks_grid_orderby: $(this).attr( 'mp_stacks_grid_orderby' ),
 		}
 		
 		//Are we using Masonry?
@@ -178,6 +179,15 @@ jQuery(document).ready(function($){
 			//Refresh waypoints to reflect new page size
 			Waypoint.refreshAll();
 		}, 500);
+		
+	});
+	
+	//When the orderby dropdown is changed, refresh the page with the new order set
+	$(document).on( 'change', '.mp-stacks-grid-orderby-select', function(){
+		
+		var mp_stacks_order_url = $('option:selected', this).attr('orderby_url');
+		
+		window.location.href = mp_stacks_order_url;
 		
 	});
 	
