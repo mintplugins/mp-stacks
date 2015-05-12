@@ -184,6 +184,9 @@
 .button.mp-stacks-grid-isotope-button{
 	display:none;
 }
+.button.mp-stacks-grid-orderby-select{
+	vertical-align:middle;	
+}
 .button.mp-stacks-grid-isotope-button-all{
 	display:inline-block;	
 }
@@ -220,8 +223,12 @@
 }
 /* Isotope Spacing betweetn Dropdown Menus/Buttons */
 .mp-stacks-grid-isotope-sort-select,
-.mp-stacks-grid-isotope-button{
+.mp-stacks-grid-isotope-button,
+.mp-stacks-grid-orderby-select{
 	margin-left:12px;	
+}
+.mp-stacks-grid-orderby-select{
+	margin-right:12px;	
 }
 .mp-stacks-grid-isotope-filterby-text-left{
 	display:inline-block;	
