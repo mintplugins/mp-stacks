@@ -60,7 +60,28 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_select_values' => apply_filters( $meta_prefix . '_isotope_filter_groups', array() ),
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
-			$meta_prefix . '_isotope_navigation' => array(
+		);
+		//Check if we should add the orderby options based on the addon plugin
+		$order_by_options = apply_filters( $meta_prefix . '_isotope_orderby_options', array(), $meta_prefix );
+		
+		//If there are orderby options available to choose from (assigned by addon plugins)
+		if ( !empty( $order_by_options ) && is_array( $order_by_options ) ){
+			$new_fields[$meta_prefix . '_isotope_orderby_options'] = array(
+					'field_id'			=> $meta_prefix . '_isotope_orderby_options',
+					'field_title' 	=> __( 'Ordering Options:', 'mp_stacks'),
+					'field_description' 	=> __( 'Which ordering options should be included?', 'mp_stacks' ),
+					'field_type' 	=> 'multiple_checkboxes',
+					'field_conditional_id' => $meta_prefix . '_isotope',
+					'field_conditional_values' => array( $meta_prefix . '_isotope' ), 
+					'field_value' => '',
+					'field_select_values' => apply_filters( $meta_prefix . '_isotope_orderby_options', array(), $meta_prefix ),		
+					'field_showhider' => $meta_prefix . '_isotope_settings',
+			);
+			
+		}
+						
+		$more_new_fields = array(
+				$meta_prefix . '_isotope_navigation' => array(
 				'field_id'			=> $meta_prefix . '_isotope_navigation',
 				'field_title' 	=> __( 'Isotope Navigation', 'mp_stacks'),
 				'field_description' 	=> __( 'What type of Navigation should Isotope use?', 'mp_stacks' ),
@@ -160,8 +181,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
-				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
-				'field_conditional_values' => array( 'buttons' ), 
+				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
 				$meta_prefix . '_isotope_nav_btn_bg' => array(
@@ -176,8 +196,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				),
 					$meta_prefix . '_isotope_nav_btn_bg_color' => array(
 						'field_id'			=> $meta_prefix . '_isotope_nav_btn_bg_color',
-						'field_title' 	=> __( 'Default Button Background Color', 'mp_stacks'),
-						'field_description' 	=> __( 'This color is over-rided by the feed background colors (above) so they match up', 'mp_stacks' ),
+						'field_title' 	=> __( 'Button Background Color', 'mp_stacks'),
+						'field_description' 	=> __( 'Set a background color for the filter buttons.', 'mp_stacks' ),
 						'field_type' 	=> 'colorpicker',
 						'field_conditional_id' => $meta_prefix . '_isotope_nav_btn_bg',
 						'field_conditional_values' => array( $meta_prefix . '_isotope_nav_btn_bg' ), 
@@ -200,8 +220,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
-				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
-				'field_conditional_values' => array( 'buttons' ), 
+				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
 				$meta_prefix . '_isotope_nav_btn_text' => array(
@@ -250,8 +269,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
-				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
-				'field_conditional_values' => array( 'buttons' ), 
+				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
 				$meta_prefix . '_isotope_nav_btn_icons' => array(
@@ -331,6 +349,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 					),
 	);
 	
+	$new_fields = array_merge( $new_fields, $more_new_fields );
+			
 	return $new_fields;
 						
 }
@@ -364,6 +384,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	//Get the array containing all taxonomies and tax terms by which we should do Isotope Filtering. Each Tax is a dropdown or button group.
 	$master_filter_groups_array = mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array, $filter_groups_to_include, $all_isotope_filter_groups );
 	
+	//Buttons to skip
 	$buttons_to_skip = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_hidden_buttons' );
 	$buttons_to_skip = str_replace( ' ,', ',', explode( ',', trim( $buttons_to_skip ) ) );
 		
@@ -375,7 +396,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	if ( $isotope_filtering_on ){
 		
 		$isotope_sorting_type = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_navigation', 'buttons' );
-		
+						
 		//Output the "Filter By" text
 		$filter_by_text = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filter_by_text', 'Filter By:' );
 		$filter_by_position = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filter_by_position', 'left' );
@@ -383,7 +404,10 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						
 		//If we should use a dropdown for sorting
 		if ( $isotope_sorting_type == 'dropdown' ){
-						
+			
+			//Hook any additional code that should appear before the first filtering dropdown
+			$return_html = apply_filters( 'mp_stacks_isotopes_before_first_dropdown', $return_html, $post_id );
+								
 			//Now that we have all the "taxonomies" separated out into an array, loop through them and only export Isotope Filter Groups for each
 			$tax_counter = 0;
 			foreach( $master_filter_groups_array as $taxonomy_name => $taxonomy ){
@@ -393,7 +417,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 					continue;
 				}
 				
-				$return_html .= '<select id="mp-isotope-sort-select-' . $post_id . '" class="mp-stacks-grid-isotope-sort-select" value="*">';
+				$return_html .= '<select id="mp-isotope-sort-select-' . $post_id . '" class="button mp-stacks-grid-isotope-sort-select" value="*">';
 										
 					//Loop through each tax term in this taxonomy
 					$tax_term_counter = 0;
@@ -402,15 +426,27 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						//If this is the "All" Filter
 						if ( $tax_term_counter == 0 ){
 							$return_html .= '<option value="*">' . $tax_term['name'] . '</option>';
+							
+							//Hook any additional items to the start - after the "All" Button
+							$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_start', $return_html, $post_id, 'select' );
+												
 						}
 						else{
 							if ( !in_array( $tax_term['slug'], $buttons_to_skip ) ){
-								$return_html .= '<option value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">' . $tax_term['name'] . '</option>';		
+								
+								//Get the number of posts in this term
+								$term_info = get_term_by('name', $tax_term['name'], $taxonomy_name);
+								$term_count = $term_info ? ' (' . $term_info->count . ')' : NULL;
+								
+								$return_html .= '<option disabled value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">' . $tax_term['name'] . $term_count . '</option>';		
 							}
 						}
 						
 						$tax_term_counter = $tax_term_counter  + 1;
 					}
+					
+					//Hook any additional items to the end
+					$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_end', $return_html, $post_id );
 				
 				$return_html .= '</select>';
 			
@@ -455,31 +491,38 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 														 							
 							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all" data-filter="*">';					
 							
-							//If icons are enabled and we're on the "All" button
-							if ( $enable_button_icons ){	
-								//Set up the HTML icon for "ALL"
-								$all_icon = '<div class="mp-stacks-grid-isotope-icon-all-1"></div>';
-								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-2"></div>';
-								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-3"></div>';
-								$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-4"></div>';
-								$all_icon_html = apply_filters( 'mp_stacks_grid_isotope_all_icon_html', $all_icon, $meta_prefix );
+								//If icons are enabled and we're on the "All" button
+								if ( $enable_button_icons ){	
+									//Set up the HTML icon for "ALL"
+									$all_icon = '<div class="mp-stacks-grid-isotope-icon-all-1"></div>';
+									$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-2"></div>';
+									$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-3"></div>';
+									$all_icon .= '<div class="mp-stacks-grid-isotope-icon-all-4"></div>';
+									$all_icon_html = apply_filters( 'mp_stacks_grid_isotope_all_icon_html', $all_icon, $meta_prefix );
+									
+									//Set up the icon font icon for "ALL"
+									$all_icon_class = apply_filters( 'mp_stacks_grid_isotope_all_icon_font_class', '', $meta_prefix );
+																
+									//If an Icon Font string has been passed for the "All" button
+									if ( !empty( $all_icon_class ) ){						
+										$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all ' . $all_icon_class . '"></div>';
+									}
+									//If we should use an image or the dedault squares as the "All" Button icon
+									else{
+										$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all">' . $isotope_icon_html  . ' </div>';	
+									}
+								}
 								
-								//Set up the icon font icon for "ALL"
-								$all_icon_class = apply_filters( 'mp_stacks_grid_isotope_all_icon_font_class', '', $meta_prefix );
-															
-								//If an Icon Font string has been passed for the "All" button
-								if ( !empty( $all_icon_class ) ){						
-									$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all ' . $all_icon_class . '"></div>';
-								}
-								//If we should use an image or the dedault squares as the "All" Button icon
-								else{
-									$return_html .= '<div class="mp-stacks-grid-isotope-icon mp-stacks-grid-isotope-icon-all">' . $isotope_icon_html  . ' </div>';	
-								}
-							}
+								$all_button_text = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_all_btn_text', __( 'All', 'mp_stacks' ) );
+								
+								$return_html .= '<div class="mp-stacks-grid-isotope-btn-text">' . $all_button_text . '</div>';
 							
-							$all_button_text = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_all_btn_text', __( 'All', 'mp_stacks' ) );
+							$return_html .= '</div>';
 							
-							$return_html .= '<div class="mp-stacks-grid-isotope-btn-text">' . $all_button_text . '</div>';
+							
+			
+							//Hook any additional items to the start - after the "All" Button
+							$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_start', $return_html, $post_id, 'buttons' );
 		
 						}
 						//If this is not the "All" filter button
@@ -564,10 +607,13 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 								$return_html .= $icon_html;
 								
 							}
+							
+							$return_html .= '</div>';
+							
+							//Hook any additional items to the start - after the "All" Button
+							$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_end', $return_html, $post_id, 'buttons' );
 						}
-						
-						$return_html .= '</div>';
-						
+												
 						$tax_term_counter = $tax_term_counter + 1;
 					
 					}
@@ -579,6 +625,9 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 			}
 			
 		}
+		
+		//Output the Order By Options
+		$return_html .= mp_stacks_grid_orderby_output( $post_id, $meta_prefix );
 				
 		return $return_html;
 	}
@@ -730,6 +779,10 @@ function mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $brick_
 								
 				$isotope_button_selectors .= '
 				$( ".mp-stacks-grid-isotope-button[data-filter*=\"\'' . $tax_term->slug . ',\'\"]").css( "display", "inline-block" );';
+				
+				$isotope_button_selectors .= '
+				$( ".mp-stacks-grid-isotope-sort-select option[value*=\"\'' . $tax_term->slug . ',\'\"]").attr( "disabled", false );';
+				
 							
 			}	
 		}
@@ -988,7 +1041,7 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		$css_output .= '}';
 		
 		//Isotope Button BACKGROUND
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button{';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button, #mp-brick-' . $post_id . ' .mp-stacks-grid-orderby-select, #mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-select{';
 		
 			//Button Background
 			$enable_button_background = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope_nav_btn_bg', true );	
@@ -1006,7 +1059,7 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		$css_output .= '}';
 		
 		//LAST Isotope Button with a BACKGROUND
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:last-child{';
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:last-child, #mp-brick-' . $post_id . ' .mp-stacks-grid-orderby-select:last-child, #mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-select:last-child{';
 			
 			//Remove the margin on the right
 			$css_output .= 'margin-right: 0px';
@@ -1015,7 +1068,7 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		
 		
 		//Isotope Button BACKGROUND Hover
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:hover{';	
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:hover, #mp-brick-' . $post_id . ' .mp-stacks-grid-orderby-select:hover, #mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-select:hover{';	
 			
 			//If the button should have a background
 			if ( $enable_button_background ){
@@ -1033,7 +1086,7 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		$css_output .= '}';	
 		
 		//Isotope Button TEXT
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button .mp-stacks-grid-isotope-btn-text{';	
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button .mp-stacks-grid-isotope-btn-text, #mp-brick-' . $post_id . ' .mp-stacks-grid-orderby-select, #mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-select{';	
 			
 			//If the button text should be shown
 			$enable_button_text = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope_nav_btn_text', true );	
@@ -1054,7 +1107,7 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		$css_output .= '}';
 		
 		//Isotope Button TEXT HOVER
-		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:hover .mp-stacks-grid-isotope-btn-text{';	
+		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-button:hover .mp-stacks-grid-isotope-btn-text, #mp-brick-' . $post_id . ' .mp-stacks-grid-orderby-select:hover .mp-stacks-grid-isotope-btn-text, #mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-select:hover .mp-stacks-grid-isotope-btn-text{';	
 			
 			//If the button text should be shown
 			if ( $enable_button_text ){
@@ -1300,3 +1353,75 @@ function mp_stacks_isotope_masonry_grid_item_class( $grid_item_class_string, $po
 
 }
 add_filter( 'mp_stacks_grid_item_classes', 'mp_stacks_isotope_masonry_grid_item_class', 10, 3 );
+
+/**
+ * Set the orderby string based on the URL or the Brick's Meta settings.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $post_id String - the ID of the Brick where all the meta is saved.
+ * @param    $meta_prefix String - the prefix to put before each meta_field key to differentiate it from other plugins. :EG "postgrid"
+ * @return   $orderby String The string which tells us how to order the posts in a grid
+*/
+function mp_stacks_grid_order_by( $post_id, $meta_prefix ){
+	//If we are not doing ajax
+	if ( !defined( 'DOING_AJAX' ) ){
+		//Get any orderby params from the URL that might exist
+		$orderby = isset( $_GET['mp_orderby_' . $post_id] ) ? sanitize_text_field( $_GET['mp_orderby_' . $post_id] ) : NULL;
+		
+		//If no orderby is set in the URL, get the default orderby setting saved to the brick
+		$orderby = empty( $orderby ) ? mp_core_get_post_meta($post_id, $meta_prefix . '_default_orderby', 'date') : $orderby;	
+	}
+	//If we are doing ajax
+	else{
+		//Get the order by from the ajax POST
+		$orderby = $_POST['mp_stacks_grid_orderby'];
+	}
+	
+	return $orderby;
+}
+
+/**
+ * Set the orderby string based on the URL or the Brick's Meta settings.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $post_id String - the ID of the Brick where all the meta is saved.
+ * @param    $meta_prefix String - the prefix to put before each meta_field key to differentiate it from other plugins. :EG "postgrid"
+ * @return   $return_html String The html for the dropdown where the user chooses the orderby options
+*/
+function mp_stacks_grid_orderby_output( $post_id, $meta_prefix ){
+			
+	$return_html = NULL;
+	
+	//Before we get to the isotope output, check if there are any orderby options first
+	$orderby_options = mp_core_get_post_meta_multiple_checkboxes( $post_id, $meta_prefix . '_isotope_orderby_options', array() );
+	
+	//If orderby options have been set
+	if ( is_array( $orderby_options ) && !empty( $orderby_options )){
+		
+		//Get any orderby params from the URL that might exist
+		$url_order_by = isset( $_GET['mp_orderby_' . $post_id] ) ? sanitize_text_field( $_GET['mp_orderby_' . $post_id] ) : NULL;
+		
+		//If there isn't a URL orderby param, get the default orderby setting
+		$default_orderby = empty( $url_order_by ) ? mp_core_get_post_meta($post_id, $meta_prefix . '_default_orderby', 'date') : $url_order_by;
+			
+		//Add an orderby dropdown menu before the first isotope dropdown
+		$return_html .= '<select class="button mp-stacks-grid-orderby-select" id="mp-isotope-sort-select-' . $post_id . '" class="mp-stacks-grid-orderby-select" value="' . $default_orderby . '">';
+			
+			//Nicely named orderby options
+			$nicelynamed_orderby_options = apply_filters( $meta_prefix . '_isotope_orderby_options', array(), $meta_prefix );
+			
+			//Add each orderby option to the output
+			foreach( $orderby_options as $orderby_option ){
+				
+				$return_html .= '<option orderby_url="' . mp_core_add_query_arg( array( 'mp_orderby_' . $post_id => $orderby_option ), mp_core_get_current_url() ) . '" value="' . $orderby_option . '" ' . ( $default_orderby == $orderby_option ? ' selected' : NULL ) . ' >' . __( 'Order By: ', 'mp_stacks' ) . $nicelynamed_orderby_options[$orderby_option] . '</option>';	
+				
+			}
+		
+		$return_html .= '</select>';
+
+	}	
+	
+	return $return_html;
+}
