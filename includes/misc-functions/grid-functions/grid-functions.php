@@ -540,7 +540,8 @@ class MP_Stacks_Grid_Load_More{
 			 'total_posts' => 0, 
 			 'posts_per_page' => 0, 
 			 'paged' => 0, 
-			 'post_offset' => 0
+			 'post_offset' => 0,
+			 'orderby' => NULL
 		);
 		
 		$args = wp_parse_args( $load_more_args, $default_load_more_args );
@@ -566,7 +567,7 @@ class MP_Stacks_Grid_Load_More{
 			}
 			
 			//Button
-			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
+			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
 				
 		
 		}
@@ -581,7 +582,7 @@ class MP_Stacks_Grid_Load_More{
 			}
 		
 			//JS for the Load More Button
-			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
+			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
 				
 			//If we are not doing ajax
 			if ( !defined('DOING_AJAX') ){
@@ -620,6 +621,8 @@ class MP_Stacks_Grid_Load_More{
 				<ul class="page-numbers">';
 			
 			//Set the base URL based on the current url by removing any brick pagination	
+			$base_url = explode( '?', mp_core_get_current_url());
+			$url_args = isset( $base_url[1] ) ? '?' . $base_url[1] : NULL;
 			$base_url = explode( 'brick/', mp_core_get_current_url() );
 			$base_url = $base_url[0];
 			
@@ -656,7 +659,7 @@ class MP_Stacks_Grid_Load_More{
 					$load_more_output .= '<li><span class="page-numbers current">' . $page_counter . '</span></li>';
 				}
 				else{
-					$load_more_output .= '<li><a class="page-numbers" href="' . $base_url . 'brick/' . $args['brick_slug'] . '/page/' . $page_counter . '/">' . $page_counter . '</a></li>';
+					$load_more_output .= '<li><a class="page-numbers" href="' . $base_url . 'brick/' . $args['brick_slug'] . '/page/' . $page_counter . '/' . $url_args . '">' . $page_counter . '</a></li>';
 				}
 				$page_counter = $page_counter + 1;
 				
