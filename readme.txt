@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.6
+Stable tag: 1.0.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.2.7 = May 13, 2015
+* Make the "Update Brick" button stick to the top of the Brick Editor.
+* Added orderby options for Grids.
 
 = 1.0.2.6 = May 1, 2015
 * Bug Fix: used esc_url_raw instead of mp_core_add_query_arg for installing mp_core
