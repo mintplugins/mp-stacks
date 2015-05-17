@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.1
-Stable tag: 1.0.2.7
+Stable tag: 1.0.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,12 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.2.8 = May 17, 2015
+* Fixed bug with mp_stacks_resize_complete firing
+* Added proper meta keys for bg content meta array
+* Fixed bug if Stack permalink was changed. When previewing the stack to duplicate it would have the wrong slug.
+* Added filters for stack template meta. Filters added: mp_stacks_template_metafield_value, mp_stacks_template_extra_meta
 
 = 1.0.2.7 = May 13, 2015
 * Make the "Update Brick" button stick to the top of the Brick Editor.
