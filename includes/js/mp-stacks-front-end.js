@@ -21,12 +21,13 @@ jQuery(document).ready(function($){
 	function mp_stacks_resize_end(){
 		
 		windowWidth = $(window).width();		
-		
+				
 		//Make sure the window was actually resized before triggering
-		if ( windowWidth != $(window).width() ){
+		//if ( windowWidth != $(window).width() ){
+			
 			$(document).trigger( 'mp_stacks_resize_complete' );
 			$('.mfp-content').trigger( 'mp_stacks_resize_complete' );
-		}
+		//}
 	}
 	
 	/**
