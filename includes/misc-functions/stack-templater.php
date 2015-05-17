@@ -169,7 +169,7 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 								
 									//Add this field_value_array to the parent's meta_value_array
 									$meta_value_array['value'][$repeat_counter][$field_id] = array( 
-										'value' => $field_value,
+										'value' => apply_filters( 'mp_stacks_template_metafield_value', $field_value, $field_id ),
 										'attachment' => false
 									);								
 									
@@ -185,16 +185,24 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 					
 						//Set up the standard meta_value_array
 						$meta_value_array = array( 
-							'value' => $meta_value,
+							'value' => apply_filters( 'mp_stacks_template_metafield_value', $meta_value, $meta_key ),
 							'attachment' => false
 						);	
 					}
 					
 					//Add post meta fields to the array for this brick
 					$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter][$meta_key] = $meta_value_array;
-				}
+				}			
 				
 			}
+			
+			//Filter-in any extra fields we want to save for this brick. 
+			$brick_meta = $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter];
+			$content_type_1 = $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_first_content_type']['value'];
+			$content_type_2 =$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_second_content_type']['value'];
+			//Filter-in any extra fields we want to save for this brick. 
+			$brick_meta = apply_filters( 'mp_stacks_template_extra_meta', $brick_meta, $content_type_1, $content_type_2 );
+			$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter] = $brick_meta;
 			
 			//Increment brick counter
 			$brick_counter = $brick_counter + 1;
