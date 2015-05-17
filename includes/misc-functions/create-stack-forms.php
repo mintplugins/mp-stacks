@@ -97,14 +97,17 @@ function mp_stacks_shortcode_make_new_stack(){
                 
                 <?php //When the user selects one of the following options, we add "mp-stacks-selected-stack-for-duplication" as a class to that li through js ?>
                 <ul class="mp-stacks-new-stack-duplicate-stack" />
-                    <?php 
-                    
+                    <?php
+					                   
               		//Get all Stacks	
                     $all_stacks = mp_core_get_all_terms_by_tax('mp_stacks');
                     
                     //Populate the dropdown with a list of all stacks
                     foreach( $all_stacks as $stack_id => $stack_value ){
-                        ?><li>	
+                        
+						$this_stack_info = get_term( $stack_id, 'mp_stacks' );					
+					
+						?><li>	
                         	<div class="mp-stacks-duplicate-button">					
                                 <div class="mp-stacks-id"><?php echo $stack_id; ?></div>	
                                 <div class="mp-stacks-duplicate-icon"></div>
@@ -112,7 +115,7 @@ function mp_stacks_shortcode_make_new_stack(){
                             </div>
                             
                             <div class="mp-stacks-duplicate-preview-container">
-                             	<a href="<?php echo get_bloginfo( 'wpurl' ) . '/stack/' . sanitize_title( $stack_value ); ?>" class="mp-stacks-iframe-custom-width-height" mfp-width="90%" mfp-height="90%">
+                             	<a href="<?php echo get_bloginfo( 'wpurl' ) . '/stack/' . $this_stack_info->slug; ?>" class="mp-stacks-iframe-custom-width-height" mfp-width="90%" mfp-height="90%">
                                     <div class="mp-stacks-duplicate-preview">Preview</div>
                                     <div class="mp-stacks-duplicate-preview-icon"></div>
                                 </a>
@@ -247,6 +250,9 @@ function mp_stacks_create_new_stack_form(){
                     
                     //Populate the dropdown with a list of all stacks
                     foreach( $all_stacks as $stack_id => $stack_value ){
+						
+						$this_stack_info = get_term( $stack_id, 'mp_stacks' );				
+						
                         ?><li>	
                         	<div class="mp-stacks-duplicate-button">					
                                 <div class="mp-stacks-id"><?php echo $stack_id; ?></div>	
@@ -255,7 +261,7 @@ function mp_stacks_create_new_stack_form(){
                             </div>
                             
                             <div class="mp-stacks-duplicate-preview-container">
-                             	<a href="<?php echo get_bloginfo( 'wpurl' ) . '/stack/' . sanitize_title( $stack_value ); ?>" class="mp-stacks-iframe-custom-width-height" mfp-width="90%" mfp-height="90%">
+                             	<a href="<?php echo get_bloginfo( 'wpurl' ) . '/stack/' . $this_stack_info->slug; ?>" class="mp-stacks-iframe-custom-width-height" mfp-width="90%" mfp-height="90%">
                                     <div class="mp-stacks-duplicate-preview">Preview</div>
                                     <div class="mp-stacks-duplicate-preview-icon"></div>
                                 </a>
