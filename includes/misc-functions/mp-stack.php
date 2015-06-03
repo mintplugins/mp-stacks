@@ -5,6 +5,8 @@
  */
 function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {		
 	
+	$css_output = NULL;
+	
 	//Set the args for the new query
 	$mp_stacks_args = array(
 		'post_type' => "mp_brick",
@@ -28,8 +30,6 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
 	
 	$head_output = NULL;
 	
-	$css_output = $include_style_tags ? '<style type="text/css">' : NULL;
-	
 	//Loop through the stack group		
 	if ( $mp_stack_query->have_posts() ) { 
 		
@@ -37,51 +37,30 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
 			
 			$post_id = get_the_ID();
 			
-			//Build Brick CSS Output
-			$css_output .= mp_brick_css( $post_id, $stack_id );
+			//For any extra code that you want in the <head>, to prevent needing to run a second loop through the Stacks, output it here. It will either be in the <head> or the Footer.
+			do_action( 'mp_stacks_before_brick_css', $post_id, $stack_id );
 			
-			$head_output .= mp_brick_head_output( $post_id, $stack_id );
+			$css_output .= $include_style_tags ? '
+<style id="mp-brick-css-' . $post_id . '" type="text/css">' : NULL;
 			
+				//Build Brick CSS Output (minified)
+				$css_output .= preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', mp_brick_css( $post_id, $stack_id ) );
+			
+			$css_output .= $include_style_tags ? '
+</style>
+' : NULL;
+		
 		endwhile;
-		
-		$css_output .= $include_style_tags ? '</style>' : NULL;
-		
-		if ( $echo == true ){
-			echo $css_output;
-			echo $head_output;
-		}
-		else{
-			return $css_output . $head_output;
-		}
 		
 	}
 	
-}
-
-/**
- * Function which returns the output for each brick in the document <head> tag. This can be used for meta tags etc.
- * Parameter: Brick ID
- */
-function mp_brick_head_output( $post_id, $stack_id ){
+	if ( $echo == true ){
+		echo $css_output;
+	}
+	else{
+		return $css_output;
+	}
 	
-	//First Media Type
-	$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
-	
-	//Second Media Type
-	$mp_stacks_second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);
-	
-	//Default outputs
-	$first_head_output = NULL;
-	$second_head_output = NULL;
-		
-	//First Output for the document HEAD
-	$first_output = has_filter('mp_stacks_brick_head_output') ? apply_filters( 'mp_stacks_brick_head_output', $first_head_output, $mp_stacks_first_content_type, $post_id) : NULL;
-	
-	//Second Output for the document HEAD
-	$second_output = has_filter('mp_stacks_brick_head_output') ? apply_filters( 'mp_stacks_brick_head_output', $second_head_output, $mp_stacks_second_content_type, $post_id) : NULL;
-	
-	return $first_output . $second_output;
-				
 }
 
 /**
@@ -89,15 +68,8 @@ function mp_brick_head_output( $post_id, $stack_id ){
  * Parameter: Brick ID
  */
 function mp_brick_css( $post_id, $stack_id = NULL ){
-	
-		//If we are getting this as part of a stack
-		if ( !empty( $stack_id ) ){
-			$css_output = '';
-		}
-		//If this is just a single brick
-		else{
-			$css_output = '<style type="text/css">';
-		}
+		
+		$css_output = NULL;
 		
 		//Brick CSS
 		$css_brick_filter = apply_filters( 'mp_brick_css', '', $post_id );
