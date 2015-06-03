@@ -22,7 +22,7 @@ function mp_stacks_rewrites($rules){
 		$new_rules = array(
 	
 			//stack/stack-slug
-			"stack/([^/]*)/?$" => 'index.php?mp_stack_only_page=$matches[1]',
+			apply_filters( 'mp_stacks_stack_only_slug', 'stack' ) . "/([^/]*)/?$" => 'index.php?mp_stack_only_page=$matches[1]',
 
 		);
 		
@@ -64,7 +64,7 @@ function mp_stacks_show_view_stack( $actions, $tag ){
 	$stack_slug = $tag->slug;
 	 
 	 //Add our new link to the array of row-actions
-	$actions['view_stack'] = '<a target="_blank" href="' . get_bloginfo('wpurl') . '/stack/' . $stack_slug . '">' . __( 'View Stack', 'mp_stacks' ) . '</a>';
+	$actions['view_stack'] = '<a target="_blank" href="' . get_bloginfo('wpurl') . '/' . apply_filters( 'mp_stacks_stack_only_slug', 'stack' ) . '/' . $stack_slug . '">' . __( 'View Stack', 'mp_stacks' ) . '</a>';
 	 
 	return $actions;
 }
