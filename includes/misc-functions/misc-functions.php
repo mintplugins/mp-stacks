@@ -58,22 +58,24 @@ add_filter( 'post_class', 'mp_stacks_remove_hentry', 100, 3 );
  * Remove "hentry" from page post_class if the page template is "Optimize for MP Stacks"
  *
  * @since 1.0
+ * @param array  $classes An array of post classes.
+ * @param string $class   A comma-separated list of additional classes added to the post.
+ * @param int    $post_id The post ID.
  * @return void
 */
-function mp_stacks_remove_hentry_from_stack_page_templates( $classes ) {
-	global $post;
+function mp_stacks_remove_hentry_from_stack_page_templates( $classes, $class, $post_id ) {
 	
 	$class_name_counter = 0;
 	
 	//Loop through each class name
 	foreach( $classes as $class_name ){
 		
-		$page_template_slug = get_page_template_slug( $post->ID );
+		$page_template_slug = get_page_template_slug( $post_id  );
 		
 		//If one of the class names is hentry
 		if ( $class_name == 'hentry' ){
 			//If we are using the mp-stacks-page-template
-			if ( get_page_template_slug( $post->ID ) == 'mp-stacks-page-template.php' ){
+			if ( get_page_template_slug( $post_id  ) == 'mp-stacks-page-template.php' ){
 				//Remove hentry from the classes array
 				$classes[$class_name_counter] = '';	
 			}
@@ -98,7 +100,7 @@ function mp_stacks_remove_hentry_from_stack_page_templates( $classes ) {
 	
 	return $classes;
 }
-add_filter( 'post_class', 'mp_stacks_remove_hentry_from_stack_page_templates' );
+add_filter( 'post_class', 'mp_stacks_remove_hentry_from_stack_page_templates', 10, 3 );
 
 /**
  * If there's no js in admin, let them know that life is too short for that.
@@ -730,3 +732,13 @@ function mp_stacks_install_mp_buttons_shortcode_btn( $context ){
 	return $context;
 }
 add_filter( 'media_buttons_context', 'mp_stacks_install_mp_buttons_shortcode_btn' );
+
+//Add mp-stacks-wp-queried-id to the body class on any page/post. This way, stacks can reference that ID for things like "related posts" in ajax requests.
+function mp_stacks_body_class_queried_object_id($classes) {
+       global $wp_query;
+	   $queried_object_id = $wp_query->queried_object_id;
+	  
+       $classes[] = 'mp-stacks-queried-object-id-'. $wp_query->queried_object_id;
+       return $classes;
+}
+add_filter('body_class', 'mp_stacks_body_class_queried_object_id');
