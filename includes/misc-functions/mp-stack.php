@@ -161,11 +161,6 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 					
 		//Additional CSS
 		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id, get_post_meta($post_id, 'brick_first_content_type', true), get_post_meta($post_id, 'brick_second_content_type', true) );
-		
-		//If this is a single brick
-		if ( empty( $stack_id ) ){
-			$css_output .= '</style>';
-		}
 				
 		return $css_output;	
 				
