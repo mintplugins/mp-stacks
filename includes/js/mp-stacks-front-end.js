@@ -83,13 +83,39 @@ jQuery(document).ready(function($){
 	 *
 	 */
 	function mp_stacks_magnific_editor( popup_source ){
+		
+		var lightbox_type;
+		var lightbox_main_class;
+		var extension = popup_source.split('.').pop();
+		
+		//Set the type of lightbox this is based on the content				
+		switch(extension) {
+			case 'jpg':
+			case 'png':
+			case 'gif':
+			case 'jpeg':
+			lightbox_type = 'image';
+			break;
+			case 'html':
+			lightbox_type = 'ajax';
+			break;
+			default:
+			lightbox_type = 'iframe';
+			if ( ( popup_source.indexOf("youtube.com/watch") > -1 ) || ( popup_source.indexOf("vimeo.com/") > -1 )  ){
+				lightbox_main_class = 'mp-stacks-iframe-16x9-video';
+			}
+			else{
+				lightbox_main_class = 'mp-stacks-iframe-full-screen';
+			}
+		}
+		
 		$.magnificPopup.open({
 			
 			items: {
 				src: popup_source
 			},
   
-			type: 'iframe', 
+			type: lightbox_type,
 			
 			callbacks: {
 				
@@ -100,24 +126,6 @@ jQuery(document).ready(function($){
 					//Will fire the popup is closed
 				},
 			
-				//Change the type of popup this is based on what's in the src
-				elementParse: function(item) {
-				
-					var extension = item.src.split('.').pop();
-					
-					switch(extension) {
-						case 'jpg':
-						case 'png':
-						case 'gif':
-						item.type = 'image';
-						break;
-						case 'html':
-						item.type = 'ajax';
-						break;
-						default:
-						item.type = 'iframe';
-					}
-				}
 			},
 			iframe: {
 				patterns: {
@@ -147,7 +155,7 @@ jQuery(document).ready(function($){
 				}
 			},
 			
-			mainClass: 'mp-stacks-iframe-full-screen',
+			mainClass: lightbox_main_class,
 			
 			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
 			
@@ -173,6 +181,13 @@ jQuery(document).ready(function($){
 		
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor( lightbox_url );
+		
+		//If the user just clicked on the edit-brick button
+		if ( $(this).hasClass('mp-brick-edit-link') ){
+			//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
+			$( 'body' ).attr( 'mp-brick-current-id', $(this).attr( 'mp-brick-id' ) );
+		}
+		
 	});	
 	
 	/**
@@ -188,7 +203,7 @@ jQuery(document).ready(function($){
 			type: 'iframe',
 			iframe: {
 				markup: '<div class="mfp-iframe-height-match" style="width:100%; height:100%; max-width:' + width + ';">'+
-				'<iframe class="mfp-iframe" frameborder="0" scrolling="yes" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
+				'<iframe class="mfp-iframe" frameborder="0" scrolling="no" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
 				'<div class="mfp-close"></div>'+
 				'</div>',
 				patterns: {
@@ -260,7 +275,7 @@ jQuery(document).ready(function($){
 	});
 	
 	/**
-	 * Modify the Magnific Popup to open using the popup source - and set sized for height of content
+	 * Modify the Magnific Popup to open at a custom set size
 	 *
 	 */
 	function mp_stacks_magnific_custom_width_height( popup_source, width, height ){
@@ -366,6 +381,9 @@ jQuery(document).ready(function($){
 	$(document).on('dblclick', '.mp-brick', function(){ 
 		//Call the function which opens our customized magnific popup for mp stacks
 		mp_stacks_magnific_editor($(this).find('.mp-brick-edit-link').attr('href'));
+		
+		//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
+		$( 'body' ).attr( 'mp-brick-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-brick-id' ) );
 	});	
 	
 	/**
@@ -414,7 +432,8 @@ function mp_stacks_close_lightbox(){
 	
 	//Close the iframe and reload the window
 	jQuery(document).ready(function($){
-				
+		
+		//Hide the Brick Editor		
 		$('.mfp-iframe, .mfp-close').hide();
 		
 		$('.mfp-content').css( 'width', 'initial' );
@@ -426,8 +445,56 @@ function mp_stacks_close_lightbox(){
 		
 		//Close iframe and refresh
 		$('.mfp-iframe').load(function(){
-			$.magnificPopup.instance.close();
-			location.reload();
+			
+			var brick_id = $( 'body' ).attr( 'mp-brick-current-id' ) ? $( 'body' ).attr( 'mp-brick-current-id' ) : false;
+			
+			var this_brick_css_string = '#mp-brick-css-' + brick_id;
+			var this_brick_string = '#mp-brick-' + brick_id;
+			
+			//If we added a new brick - it doesn't exist on the page yet so refresh the whole thing
+			if ( !brick_id ){
+				location.reload();	
+			}
+			
+			//If we got this far, we just edited a Brick that was already in existence on the current page.
+			
+			//Reload the Brick that was updated using ajax
+			var postData = {
+				action: 'mp_stacks_update_brick',
+				mp_stacks_update_brick_id: brick_id,
+			}
+			
+			//Ajax load more posts
+			$.ajax({
+				type: "POST",
+				data: postData,
+				dataType:"json",
+				url: mp_stacks_frontend_vars.ajaxurl,
+				success: function (response) {
+					
+					//console.log( 'Brick Updated' );
+					
+					//Put the Brick's CSS into the <head> of this document
+					if ( response.brick_css ){
+						$( this_brick_css_string ).append( response.brick_css );
+					}
+					
+					//Replace the Brick's HTML 
+					if ( response.brick_html ){
+						$( this_brick_string ).replaceWith( response.brick_html );
+					}
+					
+					//Close the lightbox
+					$.magnificPopup.instance.close();
+					
+					//Remove the current brick id from the body
+					$( 'body' ).removeAttr( 'mp-brick-current-id' )
+					
+				}
+			}).fail(function (data) {
+				console.log(data);
+			});	
+			
 		});
 	});
 }
@@ -455,7 +522,7 @@ function mp_stacks_mfp_match_height(iframe) {
 				}, 250, function() {
 	
 				});
-				
+	
 				iframe_height_interval_counter = iframe_height_interval_counter + 1;
 				if ( iframe_height_interval_counter >= 25 ){
 					clearInterval(iframe_height_interval);	
