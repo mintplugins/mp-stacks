@@ -230,7 +230,7 @@ function mp_stack( $stack_id ){
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
 			
 			//Build Brick Output
-			$html_output .= mp_brick( get_the_ID(), $stack_id, $brick_number );
+			$html_output .= mp_brick( get_the_ID(), true, $brick_number );
 			
 			$brick_number = $brick_number + 1;
 			
@@ -783,18 +783,16 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	$brick_min_below_c2 = mp_core_get_post_meta( $post_id, 'brick_min_below_c2', 0 );
 		
 	//Add custom margin to the 1st content type 
-	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type
-	{
-		margin-top:' . $brick_min_above_c1 . 'px;	
-		margin-bottom:' . $brick_min_below_c1 . 'px;	
-	}';
+	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type{';
+		$css_output .= 'margin-top:' . $brick_min_above_c1 . 'px;';
+		$css_output .= 'margin-bottom:' . $brick_min_below_c1 . 'px; ';
+	$css_output .= '}';
 	
 	//If there is a second content type
 	if ( $mp_stacks_second_content_type != 'none' ){
 		
 		//For Mobile, add custom margin below the 1st content type - if none, default to 20
-		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type
-		{';
+		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type{';
 			
 			//If there is no value to add below the first content-type, default to 20
 			$css_output .= !empty( $brick_min_below_c1 ) ? 'margin-bottom:' . $brick_min_below_c1 . 'px' : 'margin-bottom:20px';	
@@ -803,11 +801,10 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	}
 	
 	//Add custom margin to the 2nd content type 
-	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-second-content-type
-	{
-		margin-top:' . $brick_min_above_c2 . 'px;	
-		margin-bottom:' . $brick_min_below_c2 . 'px;	
-	}';
+	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-second-content-type{';
+		$css_output .= 'margin-top:' . $brick_min_above_c2 . 'px;';
+		$css_output .= 'margin-bottom:' . $brick_min_below_c2 . 'px;';	
+	$css_output .= '}';
 					
 	//Return CSS Output
 	return $css_output;
