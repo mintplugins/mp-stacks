@@ -258,7 +258,7 @@ function mp_stack( $stack_id ){
 	$html_output .= '</div>';
 	
 	//Filter for adding output to the html output 
-	$html_output = apply_filters( 'mp_stacks_html_output', $html_output );
+	$html_output = apply_filters( 'mp_stacks_html_output', $html_output, $stack_id );
 	
 	//Reset query
 	wp_reset_query();
@@ -273,9 +273,23 @@ function mp_stack( $stack_id ){
  * Parameter: Stack ID - The Stack which is calling this brick
  * Parameter: Brick Number - This is brick number X in this Stack
  */
-function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
+function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_number = NULL ){
 	
-	global $mp_stacks_active_bricks;
+	global $mp_stacks_active_bricks, $wpdb;
+
+	//Get the ID of the Stack this Brick belongs to. 
+	$stack_id = mp_core_get_post_meta( $post_id, 'mp_stack_id', 'no_stack_id_saved_yet' );
+	
+	//If there is no Stack ID saved to the meta of this Brick yet (Backwards Compatibility)
+	if ( $stack_id == 'no_stack_id_saved_yet' || empty( $stack_id ) ){
+		//Originally, Bricks could be part of multiple Stacks and thus, didn't save a Stack ID.
+		//Now Bricks can only belong to one Stack - but the only place the Stack ID was stored was in the key of the mp_stack_order_STACKID
+		$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
+		$stack_id = explode( 'mp_stack_order_', $stack_id_results[0]->meta_key );
+		$stack_id = $stack_id[1];
+		//Now that we have the Stack ID, save it to the Brick under the meta_key "mp_stack_id"
+		update_post_meta( $post_id, 'mp_stack_id', $stack_id );
+	}
 					
 	//Default outputs back to null
 	$first_output = NULL;
@@ -369,7 +383,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 		$html_output .= '<div class="mp-brick-meta">';
 			
 			//Action hook to run actions in the meta area for a brick
-			do_action( 'mp_stacks_brick_meta_action', $post_id );
+			//do_action( 'mp_stacks_brick_meta_action', $post_id );
 			
 			//Hook custom output to the meta div for this brick
 			$html_output .= apply_filters( 'mp_stacks_brick_meta_output', NULL, $post_id );
@@ -377,22 +391,24 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL ){
 			//Edit Brick Link
 			if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
 				
-				$html_output .= '<a class="mp-brick-edit-link" href="' . mp_core_add_query_arg( array( 
+				$html_output .= '<a class="mp-brick-edit-link" mp-brick-id="' . $post_id . '" mp-stack-id="' . $stack_id . '" href="' . mp_core_add_query_arg( array( 
 					'mp-stacks-minimal-admin' => 'true',
 					'mp_stack_id' => $stack_id, 
 					'containing_page_url' => mp_core_get_current_url()
 				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
 				
-				//If this brick is being shown as part of a stack
-				if ( !empty( $stack_id ) ){
+				//If we want to show the Stack-Related controls for admins (actions like re-order, add brick before/after. Edit Brick always remains.)
+				if ( !empty( $show_stack_controls_for_admin ) ){
 					
 					//Get Menu Order Info for this Brick						
 					$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
 					$mp_stack_order = !empty($mp_stack_order) ? $mp_stack_order : 1000;
 				
-					//Tell the user which stack and brick they are editing
-					$stack_info = get_term( $stack_id, 'mp_stacks' );
-					$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+					if ( !empty( $brick_number ) ){
+						//Tell the user which stack and brick they are editing
+						$stack_info = get_term( $stack_id, 'mp_stacks' );
+						$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+					}
 		
 					//Show buttons to add new bricks above/below
 					$html_output .= '<a class="mp-brick-add-before-link" href="' . mp_core_add_query_arg( array( 
