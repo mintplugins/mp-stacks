@@ -111,6 +111,12 @@ function mp_stacks_single_stack_edit_page_contents(){
                     <input type="hidden" name="new_stack_id" id="new_stack_id" size="3" style="width:60%;" value="<?php echo $stack_info->term_id; ?>"><br />
                 </td>
             </tr>
+            
+            <?php 
+				//Action which can be used to output additional Stack Options
+				do_action( 'mp_stacks_single_edit_page_options_table_bottom', $stack_info->term_id ); 
+			?>
+            
         </table>
       	
         <input type="hidden" name="mp_stack_id" id="mp_stack_id" size="3" value="<?php echo $stack_info->term_id; ?>">
@@ -163,12 +169,17 @@ function mp_stacks_update_stack(){
 		&& isset( $_POST['mp_stack_id'] ) ) 
 	{
 		
+		$stack_id = sanitize_text_field( $_POST['mp_stack_id'] );
+		
 		//Update the Stack
-		wp_update_term( $_POST['mp_stack_id'], 'mp_stacks', array(
+		wp_update_term( $stack_id, 'mp_stacks', array(
 		  'name' => sanitize_text_field( $_POST['mp_stack_name'] ),
 		  'slug' => sanitize_title( $_POST['mp_stack_slug'] ),
 		  'description' => sanitize_text_field( $_POST['mp_stack_description'] )
 		));
+		
+		//Action which can be used to save additional Stack Options
+		do_action( 'mp_stacks_update_stack_options', $stack_id );
 		
 		$mp_stacks_options['just_updated_stack'] = $_POST['mp_stack_name'];
 		
@@ -198,7 +209,7 @@ function mp_stacks_change_stack_id(){
 			array(
 				'taxonomy' => 'mp_stacks',
 				'field'    => 'id',
-				'terms'    => array( $_POST['new_stack_id'] ),
+				'terms'    => array( $_POST['old_stack_id'] ),
 				'operator' => 'IN'
 			)
 		)
@@ -219,6 +230,9 @@ function mp_stacks_change_stack_id(){
 			
 			//Update stack order to use the new stack id and old stack order value
 			update_post_meta( $post_id, 'mp_stack_order_' . $_POST['new_stack_id'], $old_stack_order_value );
+			
+			//Update the stack ID attached to this Brick
+			update_post_meta( $post_id, 'mp_stack_id', $_POST['new_stack_id'] );
 			
 			//Delete old stack order meta value
 			delete_post_meta( $post_id, 'mp_stack_order_' . $_POST['old_stack_id'] );
