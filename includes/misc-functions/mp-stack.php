@@ -854,10 +854,10 @@ function mp_stacks_header_css(){
 				foreach ($matches as $val) {
 					
 					//Output CSS for this stack
-					//mp_stack_css( $val[2], true );
+					mp_stack_css( $val[2], true );
 					
 					//Enqueue the CSS for this stack
-					wp_enqueue_style( 'mp_stacks_css_' . $val[2], mp_core_add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) ); 
+					//wp_enqueue_style( 'mp_stacks_css_' . $val[2], mp_core_add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) ); 
 					
 				}
 			}
@@ -870,7 +870,7 @@ function mp_stacks_header_css(){
 	wp_reset_postdata();
 		
 }
-add_action( 'wp_enqueue_scripts', 'mp_stacks_header_css'); 
+add_action( 'wp_head', 'mp_stacks_header_css', -1); 
 
 /**
  * Output css for all Stacks inside widgets in the footer. We use the global variable $mp_stacks_widget_stacks to know which ones have been displayed.
