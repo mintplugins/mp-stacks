@@ -13,6 +13,30 @@
  */
 
 /**
+ * Ajax callback for updating a brick
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    array $wp See link for description.
+ * @return   void
+ */
+function mp_stacks_update_brick() {	
+	
+	$brick_id = sanitize_text_field( $_POST['mp_stacks_update_brick_id'] );
+	
+	$return_array['success'] = true;
+	$return_array['brick_css'] = '<style type="text/css">' . mp_brick_css( $brick_id ) . '</style>';
+	$return_array['brick_html'] = mp_brick( $brick_id );
+	
+	echo json_encode( $return_array );
+	die();
+			
+}
+add_action( 'wp_ajax_mp_stacks_update_brick', 'mp_stacks_update_brick' );
+add_action( 'wp_ajax_nopriv_mp_stacks_update_brick', 'mp_stacks_update_brick' );
+
+/**
  * Ajax callback for Create New Stack button
  *
  * @since    1.0.0
