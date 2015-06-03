@@ -778,10 +778,10 @@ function mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $brick_
 			foreach( $tax_terms as $tax_term ){
 								
 				$isotope_button_selectors .= '
-				$( ".mp-stacks-grid-isotope-button[data-filter*=\"\'' . $tax_term->slug . ',\'\"]").css( "display", "inline-block" );';
+				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-button[data-filter*=\"\'' . $tax_term->slug . ',\'\"]").css( "display", "inline-block" );';
 				
 				$isotope_button_selectors .= '
-				$( ".mp-stacks-grid-isotope-sort-select option[value*=\"\'' . $tax_term->slug . ',\'\"]").attr( "disabled", false );';
+				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-sort-select option[value*=\"\'' . $tax_term->slug . ',\'\"]").attr( "disabled", false );';
 				
 							
 			}	
@@ -813,7 +813,7 @@ function mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $brick_
 					}	
 					
 					$isotope_button_selectors .= '
-						$( ".mp-stacks-grid-isotope-button[data-filter*=\"\'' . $filter_group_value . ',\'\"]").css( "display", "inline-block" );';
+						$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-button[data-filter*=\"\'' . $filter_group_value . ',\'\"]").css( "display", "inline-block" );';
 					
 						
 				}
@@ -1375,7 +1375,11 @@ function mp_stacks_grid_order_by( $post_id, $meta_prefix ){
 	//If we are doing ajax
 	else{
 		//Get the order by from the ajax POST
-		$orderby = $_POST['mp_stacks_grid_orderby'];
+		$orderby = isset( $_POST['mp_stacks_grid_orderby'] ) ? $_POST['mp_stacks_grid_orderby'] : NULL;
+		
+		//If no orderby is set in the URL, get the default orderby setting saved to the brick
+		$orderby = empty( $orderby ) ? mp_core_get_post_meta($post_id, $meta_prefix . '_default_orderby', 'date') : $orderby;	
+		
 	}
 	
 	return $orderby;
