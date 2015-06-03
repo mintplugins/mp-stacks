@@ -367,3 +367,9 @@
 	width: 100%!important;
 	height: 100%!important;
 }
+
+/* Make a shadow for any magnified popup */
+.mfp-iframe{
+	background-color:#000;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
