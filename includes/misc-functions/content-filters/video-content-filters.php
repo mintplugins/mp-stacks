@@ -40,25 +40,3 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 	}
 }
 add_filter('mp_stacks_brick_content_output', 'mp_stacks_brick_content_output_video', 10, 3);
-
-/**
- * Filter Content Output for the Document <head> for video based on this brick's settings
- */
-function mp_stacks_brick_head_output_video($default_content_output, $mp_stacks_content_type, $post_id){
-	
-	//If this stack content type is set to be an image	
-	if ($mp_stacks_content_type == 'video'){
-				
-		//Get video URL
-		$brick_video = get_post_meta($post_id, 'brick_video_url', true);
-						
-		//Add the Open Graph (Facebook) output for video to the head
-		return mp_core_open_graph_video_meta_tags( $brick_video );
-		
-	}
-	else{
-		//Return
-		return $default_content_output;	
-	}
-}
-add_filter('mp_stacks_brick_head_output', 'mp_stacks_brick_head_output_video', 10, 3);
