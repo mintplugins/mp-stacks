@@ -21,9 +21,9 @@ jQuery(document).ready(function($){
 		//Are we using Masonry?
 		var masonry_on = eval( 'masonry_grid_' + $(this).attr( 'mp_stacks_grid_post_id' ) );
 				
-		var the_grid_container = $(this).parent().prev();
-		var the_button_container = $(this).parent();
-		var the_after_container = $(this).parent().parent().find('.mp-stacks-grid-after');
+		var the_grid_container = $( '#mp-brick-' + mp_stacks_grid_post_id + ' .mp-stacks-grid' );
+		var the_button_container = $( '#mp-brick-' + mp_stacks_grid_post_id + ' .mp-stacks-grid-load-more-container' );
+		var the_after_container = $( '#mp-brick-' + mp_stacks_grid_post_id + ' .mp-stacks-grid-after' );
 		
 		//Replace the load more button with an animation to show it is loading more
 		$(this).hide();
