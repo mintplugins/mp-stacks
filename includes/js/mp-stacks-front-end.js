@@ -5,7 +5,6 @@ jQuery(document).ready(function($){
 	 *
 	 */
 	var mp_stacks_resize_timer;
-	var windowWidth = $(window).width();
 	
 	$(window).resize(function(){
 
@@ -19,64 +18,11 @@ jQuery(document).ready(function($){
 	 *
 	 */
 	function mp_stacks_resize_end(){
+	
+		$(document).trigger( 'mp_stacks_resize_complete' );
+		$('.mfp-content').trigger( 'mp_stacks_resize_complete' );
 		
-		windowWidth = $(window).width();		
-				
-		//Make sure the window was actually resized before triggering
-		//if ( windowWidth != $(window).width() ){
-			
-			$(document).trigger( 'mp_stacks_resize_complete' );
-			$('.mfp-content').trigger( 'mp_stacks_resize_complete' );
-		//}
 	}
-	
-	/**
-	 * Override the appendContent function in magnificPopup
-	 *
-	 */
-	$.magnificPopup.instance.appendContent = function(newContent, type) {
-		
-		//Get the instance
-		var mfp = $.magnificPopup.instance;
-        var proto = $.magnificPopup.proto;
-	  	
-		//Original appendContent function begins here
-		mfp.content = newContent;
-		
-		//Here we add our custom check for youtube or vimeo
-		var iframe_src = mfp.content.find('.mfp-iframe').attr('src');	
-		if (iframe_src){
-			if ( iframe_src.indexOf("youtube.com/embed") > -1 || iframe_src.indexOf("vimeo.com") > -1 ){
-				
-				//If it matches, add class mfp-video to mfp-content div
-				mfp.contentContainer.addClass('mfp-video');
-			}
-		}
-		
-		//"Action Hook" trigger so Add-Ons can modify the magnific popup further
-		$(window).trigger("mp_stacks_magnific_popup_content_modifier", mfp );
-		
-		//Continue with original appendContent function
-		if(newContent) {
-			if(mfp.st.showCloseBtn && mfp.st.closeBtnInside &&
-				mfp.currTemplate[type] === true) {
-				// if there is no markup, we just append close button element inside
-				if(!mfp.content.find('.mfp-close').length) {
-					mfp.content.append(_getCloseBtn());
-				}
-			} else {
-				mfp.content = newContent;
-			}
-		} else {
-			mfp.content = '';
-		}
-
-		//_mfpTrigger(BEFORE_APPEND_EVENT);
-		mfp.container.addClass('mfp-'+type+'-holder');
-
-		mfp.contentContainer.append(mfp.content);
-	
-	};
 	
 	/**
 	 * Modify the Magnific Popup to open using the popup source - and set sized and behaviours for Media like YouTube, JPGs, etc
@@ -86,7 +32,14 @@ jQuery(document).ready(function($){
 		
 		var lightbox_type;
 		var lightbox_main_class;
+		var overflow_y = 'auto';
 		var extension = popup_source.split('.').pop();
+		
+		//If the width of the screen is smaller than 600px, open the link in the parent window so it uses more of the screen. 
+		//Popup content should utilize some sort of "Back Button" for these cases.
+		if ( window.innerWidth <= 600 ){
+			window.location.href = popup_source;
+		}
 		
 		//Set the type of lightbox this is based on the content				
 		switch(extension) {
@@ -96,13 +49,16 @@ jQuery(document).ready(function($){
 			case 'jpeg':
 			lightbox_type = 'image';
 			break;
-			case 'html':
-			lightbox_type = 'ajax';
+			case 'mp4':
+			lightbox_type = 'iframe';
+			lightbox_main_class = 'mp-stacks-iframe-16x9-video';
 			break;
 			default:
 			lightbox_type = 'iframe';
-			if ( ( popup_source.indexOf("youtube.com/watch") > -1 ) || ( popup_source.indexOf("vimeo.com/") > -1 )  ){
+			if ( ( popup_source.indexOf("youtube.com/watch") > -1 ) || ( popup_source.indexOf("vimeo.com/") > -1 ) || ( popup_source.indexOf("mp-stacks-direct-video-link") > -1 ) ){
 				lightbox_main_class = 'mp-stacks-iframe-16x9-video';
+				fixedContentPos = true;
+				overflow_y = 'hidden';
 			}
 			else{
 				lightbox_main_class = 'mp-stacks-iframe-full-screen';
@@ -159,7 +115,9 @@ jQuery(document).ready(function($){
 			
 			srcAction: 'iframe_src', // Templating object key. First part defines CSS selector, second attribute. "iframe_src" means: find "iframe" and set attribute "src".
 			
-			preloader: true
+			preloader: true,
+			
+			overflowY: overflow_y,
 	
 		}, 0);
 	
@@ -195,59 +153,67 @@ jQuery(document).ready(function($){
 	 *
 	 */
 	function mp_stacks_magnific_height_match( popup_source, width ){
-		$.magnificPopup.open({
-			
-			items: {
-				src: popup_source
-			},
-			type: 'iframe',
-			iframe: {
-				markup: '<div class="mfp-iframe-height-match" style="width:100%; height:100%; max-width:' + width + ';">'+
-				'<iframe class="mfp-iframe" frameborder="0" scrolling="no" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
-				'<div class="mfp-close"></div>'+
-				'</div>',
-				patterns: {
-								
-					youtube: {
-						index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+		
+		//If the width of the screen is smaller than 600px, open the link in the parent window so it uses more of the screen. 
+		//Popup content should utilize some sort of "Back Button" for these cases.
+		if ( window.innerWidth <= 600 ){
+			window.location.href = popup_source;
+		}
+		else{
+			$.magnificPopup.open({
+				
+				items: {
+					src: popup_source
+				},
+				type: 'iframe',
+				iframe: {
+					markup: '<div class="mfp-iframe-height-match" style="width:100%; height:100%; max-width:' + width + ';">'+
+					'<iframe class="mfp-iframe" frameborder="0" onload="javascript:mp_stacks_mfp_match_height(this);" style="width:100%; height:100%;" allowfullscreen></iframe>'+
+					'<div class="mfp-close"></div>'+
+					'</div>',
+					patterns: {
+									
+						youtube: {
+							index: 'youtube.com/watch', // String that detects type of video (in this case YouTube). Simply via url.indexOf(index).
+							
+							id: 'v=', // String that splits URL in a two parts, second part should be %id%
+							// Or null - full URL will be returned
+							// Or a function that should return %id%, for example:
+							// id: function(url) { return 'parsed id'; } 
+							
+							src: '//www.youtube.com/embed/%id%?autoplay=1&rel=0&modestbranding=1&showinfo=0&wmode=transparent&autohide=1' // URL that will be set as a source for iframe. 
+						},
+						vimeo: {
+							index: 'vimeo.com/',
+							id: '/',
+							src: '//player.vimeo.com/video/%id%?autoplay=1'
+						},
+						gmaps: {
+							index: '//maps.google.',
+							src: '%id%&output=embed'
+						}
 						
-						id: 'v=', // String that splits URL in a two parts, second part should be %id%
-						// Or null - full URL will be returned
-						// Or a function that should return %id%, for example:
-						// id: function(url) { return 'parsed id'; } 
-						
-						src: '//www.youtube.com/embed/%id%?autoplay=1&rel=0&modestbranding=1&showinfo=0&wmode=transparent&autohide=1' // URL that will be set as a source for iframe. 
+						// you may add here more sources
+					
+					}
+				
+				},
+				callbacks: {
+					open: function() {
+						// Will fire when popup is opened
 					},
-					vimeo: {
-						index: 'vimeo.com/',
-						id: '/',
-						src: '//player.vimeo.com/video/%id%?autoplay=1'
-					},
-					gmaps: {
-						index: '//maps.google.',
-						src: '%id%&output=embed'
+					close: function() {
+						//Will fire the popup is closed
+						$( document ).off( "mp_stacks_mfp_match_height_trigger", '.mfp-content' );
+						$( document ).off( "mp_stacks_resize_complete", '.mfp-content' );
 					}
 					
-					// you may add here more sources
-				
-				}
-			
-			},
-			callbacks: {
-				open: function() {
-					// Will fire when popup is opened
 				},
-				close: function() {
-					//Will fire the popup is closed
-					$( document ).off( "mp_stacks_mfp_match_height_trigger", '.mfp-content' );
-					$( document ).off( "mp_stacks_resize_complete", '.mfp-content' );
-				}
-				
-			},
-			mainClass: 'mp-stacks-iframe-height-match',
-			preloader: true
-		
-		}, 0);
+				mainClass: 'mp-stacks-iframe-height-match',
+				preloader: true
+			
+			}, 0);
+		}
 	
 	}
 	
@@ -427,9 +393,9 @@ jQuery(document).ready(function($){
 
 });
 
-//Close the lightbox when the update button is clicked
+//Close the lightbox when the update button is clicked and either refresh the page - or rfresh the updated Brick using ajax.
 function mp_stacks_close_lightbox(){
-	
+		
 	//Close the iframe and reload the window
 	jQuery(document).ready(function($){
 		
@@ -442,60 +408,69 @@ function mp_stacks_close_lightbox(){
 		$('.mfp-content').prepend('<div class="mp-stacks-brick-updating" style="color:#fff; visibility:hidden; text-align: center;"><div class="mp-stacks-updating-message">' + mp_stacks_frontend_vars.updating_message + '</div><img width="100px" src="' + mp_stacks_frontend_vars.stacks_plugin_url + 'assets/images/Stacks-Icon-Gif.gif" /></div>');
 		
 		$('.mfp-content .mp-stacks-brick-updating').css('visibility', 'visible');
+			
+		var brick_id = $( 'body' ).attr( 'mp-brick-current-id' ) ? $( 'body' ).attr( 'mp-brick-current-id' ) : false;
 		
-		//Close iframe and refresh
-		$('.mfp-iframe').load(function(){
+		var this_brick_css_string = '#mp-brick-css-' + brick_id;
+		var this_brick_string = '#mp-brick-' + brick_id;
+					
+		//If we added a new brick - it doesn't exist on the page yet so refresh the whole thing
+		if ( !brick_id ){
 			
-			var brick_id = $( 'body' ).attr( 'mp-brick-current-id' ) ? $( 'body' ).attr( 'mp-brick-current-id' ) : false;
-			
-			var this_brick_css_string = '#mp-brick-css-' + brick_id;
-			var this_brick_string = '#mp-brick-' + brick_id;
-			
-			//If we added a new brick - it doesn't exist on the page yet so refresh the whole thing
-			if ( !brick_id ){
+			//Close iframe and refresh
+			$('.mfp-iframe').load(function(){
 				location.reload();	
-			}
+			})
 			
+		}
+		else{
+		
 			//If we got this far, we just edited a Brick that was already in existence on the current page.
-			
-			//Reload the Brick that was updated using ajax
-			var postData = {
-				action: 'mp_stacks_update_brick',
-				mp_stacks_update_brick_id: brick_id,
-			}
-			
-			//Ajax load more posts
-			$.ajax({
-				type: "POST",
-				data: postData,
-				dataType:"json",
-				url: mp_stacks_frontend_vars.ajaxurl,
-				success: function (response) {
-					
-					//console.log( 'Brick Updated' );
-					
-					//Put the Brick's CSS into the <head> of this document
-					if ( response.brick_css ){
-						$( this_brick_css_string ).append( response.brick_css );
-					}
-					
-					//Replace the Brick's HTML 
-					if ( response.brick_html ){
-						$( this_brick_string ).replaceWith( response.brick_html );
-					}
-					
-					//Close the lightbox
-					$.magnificPopup.instance.close();
-					
-					//Remove the current brick id from the body
-					$( 'body' ).removeAttr( 'mp-brick-current-id' )
-					
+			$('.mfp-iframe').load(function(){
+				
+				//Reload the Brick that was updated using ajax
+				var postData = {
+					action: 'mp_stacks_update_brick',
+					mp_stacks_update_brick_id: brick_id,
 				}
-			}).fail(function (data) {
-				console.log(data);
-			});	
-			
-		});
+				
+				//Ajax load more posts
+				$.ajax({
+					type: "POST",
+					data: postData,
+					dataType:"json",
+					url: mp_stacks_frontend_vars.ajaxurl,
+					success: function (response) {
+						
+						console.log( 'Brick Updated' );
+						//console.log(response.brick_html );
+						
+						if ( response.success ){
+							
+							//Put the Brick's CSS into the <head> of this document
+							$( this_brick_css_string ).replaceWith( response.brick_css );
+							
+							//Replace the Brick's HTML 
+							$( this_brick_string ).replaceWith( response.brick_html );
+						
+						}
+						
+						//Close the lightbox
+						$.magnificPopup.instance.close();
+						
+						//Remove the current brick id from the body
+						$( 'body' ).removeAttr( 'mp-brick-current-id' );
+						
+						//jQuery Trigger which Add-Ons can use to update themselves when a Brick is updated.
+						$( document ).trigger( 'mp_stacks_brick_loaded_via_ajax', [brick_id] );
+						
+					}
+				}).fail(function (data) {
+					console.log(data);
+				});	
+					
+			});
+		}
 	});
 }
 
@@ -510,18 +485,13 @@ function mp_stacks_mfp_match_height(iframe) {
 			//We use an interval to loop the resize function several times to make sure the iframe's content is fully loaded
 			var iframe_height_interval_counter = 1;
 			var iframe_height_interval = setInterval( function(){
-				iframe.height = iframeWin.document.documentElement.scrollHeight + 'px' || iframeWin.document.body.scrollHeight + 'px';
-				$('.mfp-iframe-height-match').velocity({
-					height:iframe.height,
-				}, 250, function() {
-					// Animation complete.
-				});
 				
-				$('.mfp-content').velocity({
-					height:iframe.height,
-				}, 250, function() {
-	
-				});
+				iframe.height = iframeWin.document.documentElement.scrollHeight || iframeWin.document.body.scrollHeight;
+				iframe_height_string = iframe.height + 'px';
+				if ( iframe.height > 0 ){
+					$('.mfp-iframe-height-match').animate( { 'height': iframe_height_string }, 200 );
+					$('.mfp-content').animate( { 'height': iframe_height_string }, 200 );
+				}
 	
 				iframe_height_interval_counter = iframe_height_interval_counter + 1;
 				if ( iframe_height_interval_counter >= 25 ){
