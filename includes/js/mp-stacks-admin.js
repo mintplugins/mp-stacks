@@ -5,20 +5,13 @@ jQuery(document).ready(function($){
 	
 	//Show only the content types the user has selected for this brick
 	function mp_stacks_reset_content_types( args ){		
-		
+				
 		default_args = new Array();
 		default_args['reset_tinymce'] = true;
+		default_args['content_type_num'] = false;
 		
 		args = args || default_args;
-			
-		//Hide content type metaboxes by looping through each item in the drodown
-		var values = $("#mp_stacks_content_metabox .brick_first_content_type>option").map(function() { 
-			
-			//Hide metaboxes with the matching name to this select item
-			$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'none');	
-				
-		});
-	
+		
 		//Show correct content type metaboxes by looping through each item in the 1st drodown
 		var values = $("#mp_stacks_content_metabox .brick_first_content_type>option:selected").map(function() { 
 			
@@ -28,44 +21,26 @@ jQuery(document).ready(function($){
 				$(this).parent().after( '<a href="' + mp_stacks_vars.more_content_types + '" target="_blank" class="mp-stacks-more-content-types button" style="margin-left:10px">' + mp_stacks_vars.more_content_types_text + '</a>' );
 			}
 			else{
-					
-				//Show metaboxes with the matching name to this select item
-				$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
-				
-				//If we should reset all tinymce objects in this metabox
-				if (args['reset_tinymce']){
-					
-					//Loop through all elements and if they are a tinyMCE, remove them
-					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
-						//$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
-					})
-					
-				}
-				
-				//Jquery trigger which allows add-ons to make things happen upon change
-				$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
-							
-				//Move metabox to the top of the metaboxes
-				$('#mp_stacks_content_metabox').after($('#mp_stacks_' + $(this).val() + '_metabox'));
-				
-				//If we should reset all tinymce objects in this metabox
-				if (args['reset_tinymce']){
-					
-					//Loop through all elements and if they are a tinyMCE, reset them
-					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
-						
-						//If tinymce is supposed to be active for this text area
-						if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
-							
-							//Re-initialize tinymce for each TInyMCE area				
-							$(this).css('display', 'block');
-							tinyMCE.execCommand( 'mceAddEditor', true, this.id );
 								
-						}
-					
-					});	
+				//Jquery trigger which allows add-ons to make things happen upon change
+				if ( args['content_type_num'] == 'one' || !args['content_type_num'] ){	
+					$(document).trigger( 'mp_stacks_content_type_change', [ content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post'), content_type_num = 1 ] );
 				}
+				
+				$(document).find('.wp-editor-area').each(function() {
+					
+					tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
+					
+					//If tinymce is supposed to be active for this text area
+					if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
+						
+						//Re-initialize tinymce for each TInyMCE area				
+						$(this).css('display', 'block');
+						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
+														
+					}
+					
+				});				
 			}
 		});
 		
@@ -78,44 +53,12 @@ jQuery(document).ready(function($){
 				$(this).parent().after( '<a href="' + mp_stacks_vars.more_content_types + '" target="_blank" class="mp-stacks-more-content-types button" style="margin-left:10px">Click here to get more Content-Types</a>' );
 			}
 			else{
-				//Show metaboxes with the matching name to this select item
-				$('#mp_stacks_' + $(this).val() + '_metabox').css('display', 'block');	
-				
-				//If we should reset all tinymce objects in this metabox
-				if (args['reset_tinymce']){
-					
-					//Loop through all elements and if they are a tinyMCE, remove them
-					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
-						//$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
-					})
-					
-				}
-				
+	
 				//Jquery trigger which allows add-ons to make things happen upon change
-				$(document).trigger( 'mp_stacks_content_type_change', [content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post')] );
-										
-				//Move metabox to the second-from-the-top of the metaboxes
-				$('#mp_stacks_content_metabox').next().after($('#mp_stacks_' + $(this).val() + '_metabox'));
-				
-				//If we should reset all tinymce objects in this metabox
-				if (args['reset_tinymce']){
-					
-					//Loop through all elements and if they are a tinyMCE, re-create them
-					$('#mp_stacks_' + $(this).val() + '_metabox').find('.wp-editor-area').each(function() {
-						
-						//If tinymce is supposed to be active for this text area
-						if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
-							
-							//Re-initialize tinymce for each TInyMCE area				
-							$(this).css('display', 'block');
-							tinyMCE.execCommand( 'mceAddEditor', true, this.id );
-															
-						}
-						
-					});
-					
+				if ( args['content_type_num'] == 'two' || args['content_type_num'] == false ){
+					$(document).trigger( 'mp_stacks_content_type_change', [ content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post'), content_type_num = 2 ] );
 				}
+				
 			}
 			
 		});
@@ -128,17 +71,69 @@ jQuery(document).ready(function($){
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */	
-	var args = new Array();
-	args['reset_tinymce'] = false;
-	mp_stacks_reset_content_types(args);
-	
-	$('#mp_stacks_content_metabox .brick_first_content_type').change(function() {
-		mp_stacks_reset_content_types();
+	$(document).ready(function(){
+		var args = new Array();
+		args['reset_tinymce'] = false;
+		args['content_type_num'] = false;
+		mp_stacks_reset_content_types(args);
 	});
 	
+	//When the First Content-Type option is changed
+	$('#mp_stacks_content_metabox .brick_first_content_type').change(function() {
+		var args = new Array();
+		args['reset_tinymce'] = true;
+		args['content_type_num'] = 'one';
+		mp_stacks_reset_content_types( args );
+		
+		//Auto change to "centered" for Content-Types that should be centered by default
+		if ( $(this).val() in mp_stacks_vars.centered_content_types ){
+			$(".brick_alignment[value='centered']").prop("checked", true);
+		}
+	});
 	
 	$('#mp_stacks_content_metabox .brick_second_content_type').change(function() {
-		mp_stacks_reset_content_types();
+		var args = new Array();
+		args['reset_tinymce'] = true;
+		args['content_type_num'] = 'two';
+		mp_stacks_reset_content_types( args );
+		
+		//Auto change to "centered" for Content-Types that should be centered by default
+		if ( $(this).val() in mp_stacks_vars.centered_content_types ){
+			$(".brick_alignment[value='centered']").prop("checked", true);
+		}
+	});
+	
+	//Load in metabox fields/content through ajax for metaboxes that have it enabled
+	$( document ).on( 'mp_stacks_content_type_change', function( event, content_type, post_id, content_type_num, tinyMCE ){
+		
+		console.log( 'running ajax' + content_type );
+		
+		//If this metabox content is supposed to be loaded via ajax, load it now
+		var ajax_metabox_function_name = 'mp_stacks_' + content_type + '_metabox_content';					
+		if ( ajax_metabox_function_name ){
+			//Load in the metabox content via ajax
+			var postData = {
+				action: ajax_metabox_function_name,
+				mp_core_metabox_ajax: true,
+				mp_core_metabox_post_id: post_id
+			};
+			
+			//Ajax to make new stack
+			$.ajax({
+				type: "POST",
+				data: postData,
+				dataType:"html",
+				url: mp_stacks_vars.ajaxurl,
+				success: function (response) {
+					
+					//Place the content-type controls into the designated metabox (contentn-type 1 or 2)
+					$( '#mp_stacks_content_type_' + content_type_num + '_metabox .inside' ).html( response );
+					
+				}
+			}).fail(function (data) {
+				console.log(data);
+			});
+		}
 	});
 	
 	//Show the notice about which brick we are editing (if we don't show it this way, it does a weird "jump in" thing. Probably should create a better fix than this but it appears to be an issue with admin_notices in WordPress
@@ -151,6 +146,20 @@ jQuery(document).ready(function($){
 	$('.post-new-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.add_new_brick_title );
 	$('.post-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.edit_brick_title );
 	
+	/**
+	 * Prevent brick editor form from submitting when Enter-Key is hit.
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */		
+	$(document).on("keyup keypress", '#post', function(e) {
+	  var code = e.keyCode || e.which; 
+	  if (code == 13) {               
+		e.preventDefault();
+		return false;
+	  }
+	});
+
 	/**
 	 * Close lightbox on update if we are loaded in a lightbox
 	 *
@@ -814,7 +823,7 @@ jQuery(document).ready(function($){
 	 * When a person clicks on the "link" button in TinyMCE while on a Brick page, add the list of bricks in the current stack to the list of options for linking
 	 */	
 	 
-	 $(window).load(function(){
+	 $(document).on( 'click', '.mce-i-link', function(){
 		 
 		 var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 		 
