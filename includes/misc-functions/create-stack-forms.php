@@ -14,8 +14,12 @@ add_shortcode( 'mp_stack', 'mp_stacks_display_mp_stack' );
 /**
  * Show "Insert Shortcode" above posts
  */
-function mp_stacks_show_insert_shortcode(){
+function mp_stacks_show_insert_shortcode( $current_screen = false ){
 		
+	if ( !empty( $current_screen ) && $current_screen->post_type == 'mp_brick' ){
+		return;
+	}
+	
 	$args = array(
 		'shortcode_id' => 'mp_stack',
 		'shortcode_title' => __('Stack', 'mp_stacks'),
@@ -37,7 +41,8 @@ function mp_stacks_show_insert_shortcode(){
 	
 	new MP_CORE_Shortcode_Insert($args);	
 }
-add_action('init', 'mp_stacks_show_insert_shortcode');
+add_action('current_screen', 'mp_stacks_show_insert_shortcode');
+add_action('mp_core_metabox_ajax_shortcode_init', 'mp_stacks_show_insert_shortcode');
 
 /**
  * Add "Make New Stack" button before shortcode inserter
