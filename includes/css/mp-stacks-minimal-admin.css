@@ -16,12 +16,8 @@ html.wp-toolbar {
 }
 
 /*Reset margin for main content area */
-#wpcontent{
-	margin-left:0px;
-}
-/*Dont need to show the MP Stacks selector box on the minimal page*/
-#mp_stacksdiv{
-	display:none;	
+#wpcontent, #wpfooter{
+	margin-left:0px!important;
 }
 #screen-options-link-wrap,
 .row-actions .inline,
@@ -31,7 +27,4 @@ html.wp-toolbar {
 .add-new-h2,
 #contextual-help-link-wrap{
 	display:none;
-}
-#wpfooter{
-	margin-left:0px;	
 }
