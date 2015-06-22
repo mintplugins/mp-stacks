@@ -40,6 +40,7 @@ function mp_stacks_admin_enqueue(){
 			'more_content_types_text' => __( 'Click here to get more Content-Types.', 'mp_stacks' ),
 			'extend_mp_stacks_text' => __( 'Extend MP Stacks with Add-Ons &#8611;', 'mp_stacks' ),
 			'need_to_refresh_text' => __( 'If you just installed an Add-On, you will need to refresh this page to see it. Don\'t forget to hit "Update" if you\'ve made changes to this Brick.', 'mp_stacks' ),
+			'centered_content_types' => apply_filters( 'mp_stacks_centered_content_types', array() )
 		) 
 	);	
 	
