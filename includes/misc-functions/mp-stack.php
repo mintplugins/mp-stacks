@@ -276,19 +276,39 @@ function mp_stack( $stack_id ){
 function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_number = NULL ){
 	
 	global $mp_stacks_active_bricks, $wpdb;
+	
+	//Check if the brick being called even exists
+	if ( !mp_core_post_exists( $post_id ) ){
+		return NULL;	
+	}
 
 	//Get the ID of the Stack this Brick belongs to. 
 	$stack_id = mp_core_get_post_meta( $post_id, 'mp_stack_id', 'no_stack_id_saved_yet' );
 	
-	//If there is no Stack ID saved to the meta of this Brick yet (Backwards Compatibility)
-	if ( $stack_id == 'no_stack_id_saved_yet' || empty( $stack_id ) ){
-		//Originally, Bricks could be part of multiple Stacks and thus, didn't save a Stack ID.
-		//Now Bricks can only belong to one Stack - but the only place the Stack ID was stored was in the key of the mp_stack_order_STACKID
-		$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
-		$stack_id = explode( 'mp_stack_order_', $stack_id_results[0]->meta_key );
-		$stack_id = $stack_id[1];
-		//Now that we have the Stack ID, save it to the Brick under the meta_key "mp_stack_id"
-		update_post_meta( $post_id, 'mp_stack_id', $stack_id );
+	if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
+		
+		//If there is no Stack ID saved to the meta of this Brick yet (Backwards Compatibility)
+		if ( $stack_id == 'no_stack_id_saved_yet' || empty( $stack_id ) ){
+			//Originally, Bricks could be part of multiple Stacks and thus, didn't save a Stack ID.
+			//Now Bricks can only belong to one Stack - but the only place the Stack ID was stored was in the key of the mp_stack_order_STACKID
+			
+			//Check if this is a multisite
+			$current_blog_id = get_current_blog_id();
+			
+			//If this is the main site (the "parent" site if you will)
+			if ( is_main_site( $current_blog_id ) ){
+				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
+			}
+			//If this is not the "main site", it is a child site in a multisite setup.
+			else{
+				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_%d_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( $current_blog_id, intval( $post_id ), '%mp_stack_order_%' ) )  );
+			}
+		
+			$stack_id = explode( 'mp_stack_order_', $stack_id_results[0]->meta_key );
+			$stack_id = $stack_id[1];
+			//Now that we have the Stack ID, save it to the Brick under the meta_key "mp_stack_id"
+			update_post_meta( $post_id, 'mp_stack_id', $stack_id );
+		}
 	}
 					
 	//Default outputs back to null
@@ -374,7 +394,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 	}
 									   
 	//Actual output
-	$html_output .= '<div id="mp-brick-' . $post_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
+	$html_output .= '<div id="mp-brick-' . $post_id . '" mp-stack-id="' . $stack_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
 		
 		//HTML Anchor for this brick
 		$html_output .= '<a class="brick-anchor" name="' . sanitize_title( get_the_title($post_id) ) . '"></a>';
@@ -407,7 +427,11 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 					if ( !empty( $brick_number ) ){
 						//Tell the user which stack and brick they are editing
 						$stack_info = get_term( $stack_id, 'mp_stacks' );
-						$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+						
+						//If the Stack Id has been found and it has a name we can show
+						if ( isset( $stack_info->name ) ){
+							$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+						}
 					}
 		
 					//Show buttons to add new bricks above/below
@@ -426,7 +450,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 						'mp_stack_order_new' => $mp_stack_order + 1,
 						'containing_page_url' => mp_core_get_current_url()
 					), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
-				
+	
 					//Get number of bricks in this stack
 					$number_of_bricks = mp_core_number_postpercat( $stack_id );
 					
@@ -440,7 +464,8 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 							'mp_stacks' => $stack_id 
 						), admin_url( 'edit.php' ) ) . '" >' . __( 'Re-Order Bricks', 'mp_stacks' ) . '</a>';
 						
-					}						
+					}
+											
 				}
 			}
 		$html_output .= '</div>';
@@ -881,8 +906,10 @@ function mp_stacks_inline_js(){
 	
 	global $mp_stacks_footer_inline_js;
 	
-	echo '<!-- MP Stacks Inline Js Output -->';
-	echo $mp_stacks_footer_inline_js;
+	if ( !empty( $mp_stacks_footer_inline_js ) ){
+		echo '<!-- MP Stacks Inline Js Output -->';
+		echo $mp_stacks_footer_inline_js;
+	}
 		
 }
 add_action( 'wp_footer', 'mp_stacks_inline_js', 99 );
