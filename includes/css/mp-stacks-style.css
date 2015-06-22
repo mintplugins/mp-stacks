@@ -3,7 +3,6 @@
 	padding:0px!important;
 	margin:0px!important;
 	position:relative;
-	word-wrap: break-word;
 }
 .mp-brick {
 	position:relative;
@@ -134,7 +133,7 @@
 /*Make sure any tags inside a text area paragraph are set to be inline-block;*/
 .mp-brick p *{
 	display:inline-block;
-	word-break:break-all;	
+	word-break:normal;
 }
 
 .mp-brick .mp-brick-content-type-container.mp-brick-centered .mp-brick-text, 
@@ -358,6 +357,9 @@
 	max-width: 95%!important;
 	max-height: 95%!important;
 }
+.mfp-iframe-height-match{
+	max-height: 100%!important;	
+}
 
 /* This compensates for the fitvids script which isn't needed, but some people might be using it */
 .mp-brick .mp-core-oembed-full-width-div .fluid-width-video-wrapper{
@@ -372,4 +374,11 @@
 .mfp-iframe{
 	background-color:#000;
 	box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+}
+/* Set video magnified popups to be 640 by 360 */
+.mp-stacks-iframe-16x9-video .mfp-content{
+	width:100%;
+	height:100%;
+	max-width:640px!important;
+	max-height:360px!important;
 }
