@@ -29,6 +29,8 @@ function mp_brick_metabox() {
 		//Use this action hook to run the metabox creation MP Core class for brick related metaboxes
 		do_action( 'mp_brick_metabox' );
 		
+		do_action( 'mp_brick_ajax_metabox' );
+		
 	}
 	
 }
@@ -723,7 +725,7 @@ function mp_stacks_install_mp_buttons_shortcode_btn( $context ){
 	//Only run if MP Buttons plugin is not installed AND in Brick Editor pages
 	if ( !function_exists( 'mp_buttons_textdomain' ) && isset( $type_now ) && $type_now == 'mp_brick' ){
 			
-		//Output old style button
+		//Output shortcode button
 		$context .= '<a target="_blank" href="' . admin_url( sprintf( 'options-general.php?page=mp_core_install_plugin_page_mp-buttons&action=install-plugin&mp-source=mp_core_directory&plugin=mp-buttons&plugin_api_url=' . base64_encode( 'http://mintplugins.com' ) . '&mp_core_directory_page=mp_stacks_plugin_directory&mp_core_directory_tab=content_types&_wpnonce=%s', wp_create_nonce( 'install-plugin'  ) ) ) . '" class="button" title="' . __('Install Button Creator', 'mp_core') . '">' . __( 'Install Button Creator from Mint Plugins (free)', 'mp_stacks' ) . '</a>';
 						
 	}
@@ -742,3 +744,16 @@ function mp_stacks_body_class_queried_object_id($classes) {
        return $classes;
 }
 add_filter('body_class', 'mp_stacks_body_class_queried_object_id');
+
+
+//remove all action that load content into the admin sidebar if we are on a "Brick Editor" page
+function mp_stacks_remove_admin_menu_for_brick_editor(){
+	
+	if ( get_current_screen()->post_type == 'mp_brick' ){
+		global $menu;
+		$menu = array();
+		remove_all_actions( 'adminmenu' );
+		remove_all_actions( 'admin_menu' );
+	}
+}
+add_action( 'admin_head', 'mp_stacks_remove_admin_menu_for_brick_editor' );
