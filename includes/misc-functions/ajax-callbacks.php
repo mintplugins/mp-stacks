@@ -24,10 +24,13 @@
 function mp_stacks_update_brick() {	
 	
 	$brick_id = sanitize_text_field( $_POST['mp_stacks_update_brick_id'] );
+	$brick_css = mp_brick_css( $brick_id );
+	$brick_html = mp_brick( $brick_id );
 	
 	$return_array['success'] = true;
-	$return_array['brick_css'] = '<style type="text/css">' . mp_brick_css( $brick_id ) . '</style>';
-	$return_array['brick_html'] = mp_brick( $brick_id );
+	$return_array['success_type'] = !empty( $brick_html ) ? 'brick_updated' : 'brick_deleted';
+	$return_array['brick_css'] = $brick_css ? '<style type="text/css">' . $brick_css . '</style>' : '';
+	$return_array['brick_html'] = $brick_html ? $brick_html : '';
 	
 	echo json_encode( $return_array );
 	die();
