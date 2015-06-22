@@ -153,9 +153,10 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-bg/mp-stacks-bg.php' );
 		
 		/**
-		 * Media metabox for mp_stacks
+		 * Content Type Chooser Metabox for mp_stacks
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-content/mp-stacks-content.php' );
+		require( MP_STACKS_PLUGIN_DIR . 'includes/metaboxes/mp-stacks-content/ct-placeholders.php' );
 		
 		/**
 		 * Text metabox for mp_stacks
