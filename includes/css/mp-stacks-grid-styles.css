@@ -4,6 +4,7 @@
 .mp-stacks-grid,
 .mp-stacks-grid .mp-stacks-grid-item a{
 	display:block;
+	text-decoration:none;
 }
 .mp-brick[max-width~='600px'] .mp-stacks-grid{ 
 	margin: 0px;	
