@@ -27,7 +27,7 @@ function mp_brick_metabox() {
 	if ( $current_page->id == 'mp_brick' || $current_page->id == 'settings_page_mp_stacks_create_template_page' ){
 		
 		//Use this action hook to run the metabox creation MP Core class for brick related metaboxes
-		do_action( 'mp_brick_metabox' );
+		do_action( 'mp_brick_non_ajax_metabox' );
 		
 		do_action( 'mp_brick_ajax_metabox' );
 		
