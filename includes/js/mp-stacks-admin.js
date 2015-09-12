@@ -1,13 +1,12 @@
 jQuery(document).ready(function($){
 	
 	//Close up the side metaboxes upon page load
-	$( '.post-type-mp_brick #side-sortables .postbox:not( #submitdiv )' ).addClass( 'closed' );
+	$( '.post-type-mp_brick #side-sortables .postbox:not( #submitdiv, #mp_stacks_bg_metabox )' ).addClass( 'closed' );
 	
 	//Show only the content types the user has selected for this brick
 	function mp_stacks_reset_content_types( args ){		
 				
 		default_args = new Array();
-		default_args['reset_tinymce'] = true;
 		default_args['content_type_num'] = false;
 		
 		args = args || default_args;
@@ -23,24 +22,26 @@ jQuery(document).ready(function($){
 			else{
 								
 				//Jquery trigger which allows add-ons to make things happen upon change
-				if ( args['content_type_num'] == 'one' || !args['content_type_num'] ){	
+				if ( args['content_type_num'] == 1 || !args['content_type_num'] ){	
 					$(document).trigger( 'mp_stacks_content_type_change', [ content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post'), content_type_num = 1 ] );
-				}
-				
-				$(document).find('.wp-editor-area').each(function() {
-					
-					tinyMCE.execCommand( 'mceRemoveEditor', true, this.id );
-					
-					//If tinymce is supposed to be active for this text area
-					if ( $(this).parent().parent().parent().find( '.wp-editor-wrap' ).hasClass('tmce-active') ){
-						
-						//Re-initialize tinymce for each TInyMCE area				
-						$(this).css('display', 'block');
-						tinyMCE.execCommand( 'mceAddEditor', true, this.id );
-														
+					//Set this Content-Type to be un-pickable for the Second Content-Type
+					if ( $(this).val() != 'none' && $(this).val() != '' ){
+						$("#mp_stacks_content_metabox .brick_second_content_type")
+							.children('option[value=' + $(this).val() + ']')
+							.attr('disabled', true)
+							.siblings().removeAttr('disabled');
+					}
+					else{
+						$("#mp_stacks_content_metabox .brick_second_content_type")
+							.children().removeAttr('disabled');
 					}
 					
-				});				
+					//Add the name of this content type to the metabox placeholder
+					$( '#content_type_1_title' ).remove();
+					$( '#mp_stacks_content_type_1_metabox h3' ).append( ' <span id="content_type_1_title">(' + $(this).html().trim() + ')</span>' );
+	
+				}
+						
 			}
 		});
 		
@@ -55,25 +56,40 @@ jQuery(document).ready(function($){
 			else{
 	
 				//Jquery trigger which allows add-ons to make things happen upon change
-				if ( args['content_type_num'] == 'two' || args['content_type_num'] == false ){
+				if ( args['content_type_num'] == 2 || args['content_type_num'] == false ){
 					$(document).trigger( 'mp_stacks_content_type_change', [ content_type = $(this).val(), post_id = mp_stacks_getQueryVariable('post'), content_type_num = 2 ] );
+					//Set this Content-Type to be un-pickable for the First Content-Type
+					if ( $(this).val() != 'none' && $(this).val() != '' ){
+						$("#mp_stacks_content_metabox .brick_first_content_type")
+							.children('option[value=' + $(this).val() + ']')
+							.attr('disabled', true)
+							.siblings().removeAttr('disabled');
+					}
+					else{
+						$("#mp_stacks_content_metabox .brick_first_content_type")
+							.children().removeAttr('disabled');
+					}
+					
+					//Add the name of this content type to the metabox placeholder
+					$( '#content_type_2_title' ).remove();
+					$( '#mp_stacks_content_type_2_metabox h3' ).append( ' <span id="content_type_2_title">(' + $(this).html().trim() + ')</span>' );
+		
 				}
 				
 			}
 			
 		});
-	
+		
 	}
 	
 	/**
-	 * We dont want to reset all tinymces on page load so set it to false
+	 * Set the Content Types that should be chosen when the page loads.
 	 *
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */	
 	$(document).ready(function(){
 		var args = new Array();
-		args['reset_tinymce'] = false;
 		args['content_type_num'] = false;
 		mp_stacks_reset_content_types(args);
 	});
@@ -81,8 +97,7 @@ jQuery(document).ready(function($){
 	//When the First Content-Type option is changed
 	$('#mp_stacks_content_metabox .brick_first_content_type').change(function() {
 		var args = new Array();
-		args['reset_tinymce'] = true;
-		args['content_type_num'] = 'one';
+		args['content_type_num'] = 1;
 		mp_stacks_reset_content_types( args );
 		
 		//Auto change to "centered" for Content-Types that should be centered by default
@@ -91,10 +106,10 @@ jQuery(document).ready(function($){
 		}
 	});
 	
+	//When the Second Content-Type option is changed
 	$('#mp_stacks_content_metabox .brick_second_content_type').change(function() {
 		var args = new Array();
-		args['reset_tinymce'] = true;
-		args['content_type_num'] = 'two';
+		args['content_type_num'] = 2;
 		mp_stacks_reset_content_types( args );
 		
 		//Auto change to "centered" for Content-Types that should be centered by default
@@ -103,36 +118,69 @@ jQuery(document).ready(function($){
 		}
 	});
 	
-	//Load in metabox fields/content through ajax for metaboxes that have it enabled
-	$( document ).on( 'mp_stacks_content_type_change', function( event, content_type, post_id, content_type_num, tinyMCE ){
+	//Load in metabox fields/content through ajax 
+	$( document ).on( 'mp_stacks_content_type_change', function( event, content_type, post_id, content_type_num ){
 		
-		console.log( 'running ajax' + content_type );
+		//console.log( 'running ajax' + content_type );
 		
-		//If this metabox content is supposed to be loaded via ajax, load it now
-		var ajax_metabox_function_name = 'mp_stacks_' + content_type + '_metabox_content';					
-		if ( ajax_metabox_function_name ){
-			//Load in the metabox content via ajax
-			var postData = {
-				action: ajax_metabox_function_name,
-				mp_core_metabox_ajax: true,
-				mp_core_metabox_post_id: post_id
-			};
+		//Get the "other" content type
+		if ( content_type_num == 1 ){
+			var other_content_type = $('#mp_stacks_content_metabox .brick_second_content_type').val();	
+			var other_content_type_num = 2;
+		}
+		else{
+			var other_content_type = $('#mp_stacks_content_metabox .brick_first_content_type').val();
+			var other_content_type_num = 1;	
+		}
+		
+		//If no Content Type has been selected, or it is set to 'none'
+		if ( content_type.length == 0 || content_type == 'none' ){
+			//Write "None" In the placeholder metabox
+			$( '#mp_stacks_content_type_' + content_type_num + '_metabox .inside' ).html( '(None)' );
+		}
+		//If a content-type has been selected
+		else{
+					
+			//Put the loading animation into the placeholder
+			$( '#mp_stacks_content_type_' + content_type_num + '_metabox .inside' ).html( '<div class="mp-core-loading-spinner"></div>' );
 			
-			//Ajax to make new stack
-			$.ajax({
-				type: "POST",
-				data: postData,
-				dataType:"html",
-				url: mp_stacks_vars.ajaxurl,
-				success: function (response) {
-					
-					//Place the content-type controls into the designated metabox (contentn-type 1 or 2)
-					$( '#mp_stacks_content_type_' + content_type_num + '_metabox .inside' ).html( response );
-					
-				}
-			}).fail(function (data) {
-				console.log(data);
-			});
+			var ajax_metabox_function_name = 'mp_stacks_' + content_type + '_metabox_content';					
+			if ( ajax_metabox_function_name ){
+				//Load in the metabox content via ajax
+				var postData = {
+					action: ajax_metabox_function_name,
+					mp_core_metabox_ajax: true,
+					mp_core_metabox_id_ajax: 'mp_stacks_' + content_type + '_metabox',
+					mp_core_metabox_post_id: post_id
+				};
+				
+				//Run the Ajax
+				$.ajax({
+					type: "POST",
+					data: postData,
+					dataType:"json",
+					url: mp_stacks_vars.ajaxurl,
+					success: function (response) {
+																		
+						//If the response is false (or "0"), The user likely needs to update their add-on
+						if ( response == 0 ){
+							$( '#mp_stacks_content_type_' + content_type_num + '_metabox .inside' ).html( 'You might need to update the Add-On for ' + content_type + '. Go to "Dashboard" > "Updates" in your WordPress.' );
+						}
+						//If we got a good response from ajax for this metabox
+						else{
+							
+							//Replace the metabox content with the ajax response. This also includes the needed CSS and JS scripts for the metabox fields.
+							mp_core_load_ajax_metabox_contents( response, '#mp_stacks_content_type_' + content_type_num + '_metabox' );
+														
+							//Trigger which allows add-ons to further maniulate metaboxes once the content-type has loaded.
+							$(document).trigger( 'mp_stacks_content_type_change_complete', [ content_type, post_id, content_type_num ] );
+						}
+						
+					}
+				}).fail(function (data) {
+					console.log(data);
+				});
+			}
 		}
 	});
 	
@@ -145,6 +193,93 @@ jQuery(document).ready(function($){
 	//Change the title from "Loading..." to "Add New Brick" or "Edit Brick"
 	$('.post-new-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.add_new_brick_title );
 	$('.post-php.post-type-mp_brick .wrap h2:first-child').html( mp_stacks_vars.edit_brick_title );
+	
+	/**
+	 * When someone changes the "Screen Size" controller for the text Content-Type
+	 *
+	 * @since    1.0.0
+	 * @link     http://mintplugins.com/doc/
+	 */	
+	$( document ).on( 'click', 'div[class*="brick_text_screen_size_controllerBBBBB"] .brick_screen_size', function(){
+				
+		var screen_size = $(this).attr( 'mp_stacks_textsize_device' );
+		var repeat_num_array = $(this).parent().parent().parent().parent().parent().attr( 'class' ).split("AAAAA");		
+		var repeat_num = repeat_num_array[1].split("BBBBB");
+		repeat_num = repeat_num[0];
+		
+		//Show the other "device" icon buttons (desktop, tablet, mobile etc) when clicked
+		if ( $(this).parent().attr('mp-area-active' ) == 'closed' ){
+			
+			//Show all the device icons
+			$(this).parent().attr('mp-area-active', 'open' );
+			$( this ).parent().find( '.brick_screen_size' ).css( 'display', 'inline-block' );
+			
+		}
+		//Hide the other "device" icon buttons (desktop, tablet, mobile etc) when clicked
+		else{
+			$(this).parent().attr('mp-area-active', 'closed' );
+		
+			//Show only the icon the user just picked
+			$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_screen_size_controllerBBBBB .brick_screen_size' ).css( 'display', 'none' );
+		
+			$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_screen_size_controllerBBBBB .' + screen_size ).css( 'display', 'inline-block' );
+			
+			
+			//Hide all text options temporarily
+			$( this ).parent().parent().parent().parent().parent().parent().find( '.mp_brick_text_option' ).css( 'display', 'none' );
+		
+			//If the screen size is "desktop", that's our default so it's a bit different
+			if ( screen_size == 'desktop' ){
+				
+				//Show the text controls for the selected screen size
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_color' + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_font_size' + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_line_height' + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_paragraph_margin_bottom' + 'BBBBB' ).css( 'display', 'inline-block' );
+				
+				//Highlight those controls
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_colorBBBBB, ' + 				
+				   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_font_sizeBBBBB, ' + 
+				   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_line_heightBBBBB, ' + 
+				   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_paragraph_margin_bottom' + 'BBBBB '
+				).animate({
+					'background-color': '#12ff00',
+				}, 500, function() {
+					// Animation complete.
+					$(this).animate({
+						'background-color': '',
+					}, 1000);
+				});
+			
+			}
+			else{
+					
+				//Show the text controls for the selected screen size
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_color_' + screen_size + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_font_size_' + screen_size + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_line_height_' + screen_size + 'BBBBB' ).css( 'display', 'inline-block' );
+				$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_paragraph_margin_bottom_' + screen_size + 'BBBBB' ).css( 'display', 'inline-block' );
+				
+			}
+		
+			//Highlight those controls
+			$( '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_color_' + screen_size + 'BBBBB, ' + 				
+			   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_font_size_' + screen_size + 'BBBBB, ' + 
+			   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_line_height_' + screen_size + 'BBBBB, ' + 
+			   '.mp_field_mp_stacks_singletext_content_type_repeaterAAAAA' + repeat_num + 'BBBBBAAAAAbrick_text_paragraph_margin_bottom_' + screen_size + 'BBBBB '
+			).animate({
+				'background-color': '#12ff00',
+			}, 500, function() {
+				// Animation complete.
+				$(this).animate({
+					'background-color': '',
+				}, 1000);
+			});
+			
+			
+		}
+		
+	});
 	
 	/**
 	 * Prevent brick editor form from submitting when Enter-Key is hit.
@@ -168,7 +303,7 @@ jQuery(document).ready(function($){
 	 */				
 	$( document ).on( 'mp_core_post_submitted', function(event) {
 	
-		parent.mp_stacks_close_lightbox();
+		parent.mp_stacks_close_lightbox( 'brick_updated' );
 		
 	});
 	
@@ -179,7 +314,7 @@ jQuery(document).ready(function($){
 	 * @link     http://mintplugins.com/doc/
 	 */
 	$( '#delete-action .submitdelete' ).on( 'click', function(event) {
-		parent.mp_stacks_close_lightbox();
+		parent.mp_stacks_close_lightbox( 'brick_deleted' );
 	});
 		
 	/**
@@ -820,10 +955,16 @@ jQuery(document).ready(function($){
 	}
 	
 	/**
-	 * When a person clicks on the "link" button in TinyMCE while on a Brick page, add the list of bricks in the current stack to the list of options for linking
-	 */	
+	 * When a person clicks on the "Add Link" button in TinyMCE while on a Brick page, add the list of bricks in the current stack to the list of options for linking
+	 *
 	 
-	 $(document).on( 'click', '.mce-i-link', function(){
+	 $(document).on( 'click', '.mp_stacks_links_button', function( event ){
+		 
+		 event.preventDefault();
+		  
+		 alert('sdgsgs');
+		 
+		 return;
 		 
 		 var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 		 
@@ -844,14 +985,8 @@ jQuery(document).ready(function($){
 				url: mp_stacks_vars.ajaxurl,
 				success: function (response) {
 					
-					//Remove existing links to existing content
-					$( '#wp-link-wrap .howto, #wp-link-wrap #search-panel').remove();
-					
-					$( '#wp-link-wrap #link-selector #link-options').after( response.output );
-					
-					//Make the results visible 
-					$( '#wp-link-wrap').addClass('search-panel-visible');
-					
+					$( '#mp_stacks_links').html( response.output );
+									
 					//Make it so that when one of the Birck URLs is clicked, it puts it into the URl field for this link
 					$( '#wp-link-wrap .mp-stacks-brick-url').on( 'click', function(){
 						
@@ -864,6 +999,7 @@ jQuery(document).ready(function($){
 			 });	
 		 }
 	 });
+	 */
 
 	 //Add Link to Addons on right side at bottom
 	$( '.post-type-mp_brick #side-sortables' ).append( '<div id="extend-mp-stacks-container"><a id="extend-mp-stacks" href="' + mp_stacks_vars.more_content_types + '" target=_blank">' + mp_stacks_vars.extend_mp_stacks_text + '</a></div>' );
@@ -878,6 +1014,10 @@ jQuery(document).ready(function($){
 		$(this).replaceWith( '<div>' + mp_stacks_vars.need_to_refresh_text + '</div>' );
 	});	
 	
+	//Check if we are open in an iframe and add a POST field if we are so that MP Stacks knows not to reload the page when saved. mp_stacks_do_not_reload_after_brick_save
+	if ( mp_stacks_inIframe() ){
+		$( '<input type="hidden" class="mp_stacks_do_not_reload_after_brick_save" name="mp_stacks_do_not_reload_after_brick_save" value="mp_stacks_do_not_reload_after_brick_save">' ).prependTo( "#post" );	
+	}
 	
 });
 
@@ -958,6 +1098,15 @@ function mp_stacks_mfp_match_height_trigger(){
 	jQuery(document).ready(function($){
 		$( '.mfp-content' ).trigger( 'mp_stacks_mfp_match_height_trigger' );	
 	});
+}
+
+//This function can be used to check if the current page is open in an iframe
+function mp_stacks_inIframe () {
+    try {
+        return window.self !== window.top;
+    } catch (e) {
+        return true;
+    }
 }
 
 //Check for old versions of Browsers that suck
