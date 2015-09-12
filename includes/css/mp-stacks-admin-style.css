@@ -1,8 +1,14 @@
 /* Stylesheet for mp_stacks admin */
 
-/* Hide Everything on an Edit Brick page until it is loaded */
-.post-type-mp_brick #poststuff{
-	opacity:0;
+#mp_stacks_content_metabox{
+	display:block;	
+}
+#side-sortables .postbox{
+	display:block;	
+}
+/* Hide the MP Stacks Category selector */
+#side-sortables #mp_stacksdiv{
+	display:none;	
 }
 
 /*Top Level duplicate subpage Menu Button*/
