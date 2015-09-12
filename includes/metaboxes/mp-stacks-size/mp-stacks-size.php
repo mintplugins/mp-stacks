@@ -13,7 +13,7 @@ function mp_stacks_size_create_meta_box(){
 		'metabox_title' => __( 'Brick Size Settings', 'mp_stacks'), 
 		'metabox_posttype' => 'mp_brick', 
 		'metabox_context' => 'side', 
-		'metabox_priority' => 'default' 
+		'metabox_priority' => 'default' ,
 	);
 	
 	/**
@@ -188,4 +188,4 @@ function mp_stacks_size_create_meta_box(){
 	global $mp_stacks_size_meta_box;
 	$mp_stacks_size_meta_box = new MP_CORE_Metabox($mp_stacks_size_add_meta_box, $mp_stacks_size_items_array);
 }
-add_action('mp_brick_metabox', 'mp_stacks_size_create_meta_box');
+add_action('mp_brick_ajax_metabox', 'mp_stacks_size_create_meta_box');

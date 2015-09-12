@@ -29,7 +29,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_title' => __( '1st Content Type', 'mp_stacks'),
 			'field_description' => 'Select the first content type to use for this brick.',
 			'field_type' => 'select',
-			'field_value' => '',
+			'field_value' => 'none',
 			'field_select_values' => $default_content_types,
 			'field_popup_help' => esc_html(
 				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-1.png" \/>
@@ -42,7 +42,7 @@ function mp_stacks_content_create_meta_box(){
 			'field_title' => __( '2nd Content Type', 'mp_stacks'),
 			'field_description' => 'Select the second content type to use for this brick.',
 			'field_type' => 'select',
-			'field_value' => '',
+			'field_value' => 'none',
 			'field_select_values' => $default_content_types,
 			'field_popup_help' => esc_html(
 				'<img class="mp-core-popup-help-float-right" src="' . MP_STACKS_PLUGIN_URL . 'assets/images/help-images/content-types/Content-Type-2.png" \/>
