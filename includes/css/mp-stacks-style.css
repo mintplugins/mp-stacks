@@ -221,64 +221,73 @@
 .mp-brick:hover .mp-brick-meta{
 	opacity:1;
 }
-.mp-brick .mp-brick-title-container{
+.mp-brick .mp-brick-title-container-top{
 	position:absolute;
 	top:0px;
 	text-align:center;
 	width:100%;
 	z-index:9999999;
 }
-.mp-brick .mp-brick-title-container .mp-brick-title{
+.mp-brick .mp-brick-title-container-bottom{
+	position:absolute;
+	bottom:0px;
+	text-align:center;
+	width:100%;
+	z-index:9999999;
+}
+.mp-brick .mp-brick-title-container-top .mp-brick-title,
+.mp-brick .mp-brick-title-container-bottom .mp-brick-title{
 	position:relative!important;
 	display:inline-block;
 	font-size:10px!important;
 	line-height:10px!important;
-	vertical-align:top
+	vertical-align:top;
 }
 .mp-brick .mp-brick-title,
 .mp-brick .mp-brick-edit-link,
 .mp-brick .mp-brick-add-before-link,
 .mp-brick .mp-brick-add-after-link,
 .mp-brick .mp-brick-reorder-bricks{
+	font-family:Open Sans, Verdana, Geneva, sans-serif!important;
+	background-color:#23282d!important;
 	background-color:#333!important;
-	color:#FFFFFF!important;
-	padding:5px 3px!important;
+	color:#eee!important;
+	padding:5px 5px!important;
 	position:absolute;
 	z-index:99999999;
 	text-decoration:none;
-	border: 1px solid #fff!important;
-	font-size:16px!important;
-	line-height:16px!important;
-	
-	-webkit-transition: width .4s ease-in-out, width .4s ease-in-out;
-	-moz-transition: width .4s ease-in-out, width .4s ease-in-out;
-	-ms-transition: width .4s ease-in-out, width .4s ease-in-out;
-	-o-transition: width .4s ease-in-out, width .4s ease-in-out;
-	transition: width .4s ease-in-out, width .4s ease-in-out;
+	border: 1px solid #eee!important;
+	font-size:14px!important;
+	line-height:18px!important;
 }
 .mp-brick .mp-brick-title,
 .mp-brick .mp-brick-edit-link{
 	top:0px;	
 }
+.mp-brick .mp-brick-edit-link:before{
+	content: '\f540';	
+	position: relative;
+    float: left;
+    font: 400 18px/1 dashicons;
+    speak: none;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-image: none!important;
+    margin-right: 2px;
+	color:rgba(240,245,250,.6);
+}
 .mp-brick .mp-brick-add-before-link{
 	top:0px;
 	right:0px;
-	width:45px;	
 	overflow:hidden;
 	white-space:nowrap;
-}
-.mp-brick .mp-brick-add-before-link:hover{
-	width:140px;
 }
 .mp-brick .mp-brick-add-after-link{
 	right:0px;
 	bottom:0px;
-	width:45px;	
 	overflow:hidden;
 	white-space:nowrap;
-}
-.mp-brick .mp-brick-add-after-link:hover{
-	width:130px;	
 }
 .mp-brick .mp-brick-reorder-bricks{
 	bottom:0px;
