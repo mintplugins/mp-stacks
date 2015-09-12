@@ -525,3 +525,8 @@ content: "\f161";
 .post-type-mp_brick #wp-link .query-results{
 	top: 135px!important;
 }
+
+/* Hide WooCommerce Messages in the Brick Editor */
+.post-type-mp_brick .woocommerce-message{
+	display:none;	
+}
