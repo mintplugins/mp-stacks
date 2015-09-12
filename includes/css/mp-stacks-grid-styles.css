@@ -21,13 +21,17 @@
 .mp-stacks-grid-item-inner{
 	overflow:hidden;	
 }
-.mp-stacks-grid-image-link{
+.mp-stacks-grid-image-link,
+.mp-stacks-grid-image-no-link{
 	display:inline-block;
 	width:100%;	
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
+.mp-stacks-grid-image-no-link{
+	float:left;
+}	
 .mp-stacks-grid-item-image-holder{
 	position:relative;
 	display:table;	
@@ -93,6 +97,7 @@
 	margin:0px;
 }
 .mp-stacks-grid-item-image{
+	float:left;
 	max-width:100%;	
 	width:100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
