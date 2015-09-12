@@ -274,8 +274,8 @@ function mp_stacks_support_admin_notice(){
 	 
 		 ?>
 		 <div class="mp-stacks-editor-title-notice updated" style="display:none;">
-			<p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?>
-			<?php echo __(' Having trouble? Feel free to email us:', 'mp_stacks' ) . ' <strong>support@mintplugins.com</strong> ' . __( 'and we\'ll be glad to help you out!', 'mp_stacks' ); ?></p>
+			<p><?php echo __( 'You are editing a "Brick" in the "Stack" called "' . $stack_info->name . '".', 'mp_stacks'); ?><br />
+			<?php echo __(' Having trouble? Feel free to email us:', 'mp_stacks' ) . ' <strong>support@mintplugins.com</strong>'; ?></p>
 		 </div>
 		 <?php
 	
@@ -352,7 +352,7 @@ function mp_stacks_edit_brick_loading_title(){
 	global $title;
 	
 	if ( $title == __( 'Add New Brick', 'mp_stacks' ) || $title == __( 'Edit Brick', 'mp_stacks' ) ){
-		$title = __( 'Loading Brick Editor...', 'mp_stacks' );
+		$title = __( 'Brick Editor', 'mp_stacks' );
 	}
 	
 }
