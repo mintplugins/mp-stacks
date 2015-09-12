@@ -189,7 +189,6 @@
 /* Links */
 .mp_brick a,
 .mp_brick a:hover{
-	display:inline-block;
 	text-decoration:none;	
 }
 
