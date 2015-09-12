@@ -709,8 +709,8 @@ function mp_stacks_brick_footer_slug( $text ){
 	
 	if ( isset( $post->post_type ) && $post->post_type == 'mp_brick' ){
 		
-		if ( isset( $post->post_name ) && !empty( $post->post_name ) ){
-			return __( 'This Brick\'s URL', 'mp_stacks' ) . ': <strong>#' . $post->post_name . '</strong><br />' . __('To make a browser scroll to this brick, link to that as the URL. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
+		if ( isset( $post->ID ) && !empty( $post->ID ) ){
+			return __( 'This Brick\'s URL', 'mp_stacks' ) . ': <strong>#' . sanitize_title( get_the_title( $post->ID ) ) . '</strong><br />' . __('To make a browser scroll to this brick, link to that as the URL. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
 		}
 		else{
 			return __( 'Thank you for creating with WordPress and MP Stacks.', 'mp_stacks' );	
@@ -721,24 +721,6 @@ function mp_stacks_brick_footer_slug( $text ){
 	return $text;
 }
 add_filter( 'admin_footer_text', 'mp_stacks_brick_footer_slug' );
-
-//Add a media button to let the user easily install the MP Buttons plugin (if the plugin isn't installed)
-function mp_stacks_install_mp_buttons_shortcode_btn( $context ){
-		
-	global $pagenow, $typenow, $wp_version;
-		
-	//Only run if MP Buttons plugin is not installed AND in Brick Editor pages
-	if ( !function_exists( 'mp_buttons_textdomain' ) && isset( $type_now ) && $type_now == 'mp_brick' ){
-			
-		//Output shortcode button
-		$context .= '<a target="_blank" href="' . admin_url( sprintf( 'options-general.php?page=mp_core_install_plugin_page_mp-buttons&action=install-plugin&mp-source=mp_core_directory&plugin=mp-buttons&plugin_api_url=' . base64_encode( 'http://mintplugins.com' ) . '&mp_core_directory_page=mp_stacks_plugin_directory&mp_core_directory_tab=content_types&_wpnonce=%s', wp_create_nonce( 'install-plugin'  ) ) ) . '" class="button" title="' . __('Install Button Creator', 'mp_core') . '">' . __( 'Install Button Creator from Mint Plugins (free)', 'mp_stacks' ) . '</a>';
-						
-	}
-	
-	//Add new button to list of buttons to output
-	return $context;
-}
-add_filter( 'media_buttons_context', 'mp_stacks_install_mp_buttons_shortcode_btn' );
 
 //Add mp-stacks-wp-queried-id to the body class on any page/post. This way, stacks can reference that ID for things like "related posts" in ajax requests.
 function mp_stacks_body_class_queried_object_id($classes) {
@@ -751,10 +733,12 @@ function mp_stacks_body_class_queried_object_id($classes) {
 add_filter('body_class', 'mp_stacks_body_class_queried_object_id');
 
 
-//remove all action that load content into the admin sidebar if we are on a "Brick Editor" page
+//Remove all actions that load content into the admin sidebar if we are on a "Brick Editor" page
 function mp_stacks_remove_admin_menu_for_brick_editor(){
 	
-	if ( get_current_screen()->post_type == 'mp_brick' ){
+	$current_screen = get_current_screen();
+		
+	if ( $current_screen->post_type == 'mp_brick' && $current_screen->base == 'post' ){
 		global $menu;
 		$menu = array();
 		remove_all_actions( 'adminmenu' );
