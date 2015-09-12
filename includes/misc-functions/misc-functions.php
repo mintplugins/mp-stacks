@@ -451,23 +451,6 @@ if (!function_exists('mp_knapstack_plugin_check')){
 	}
 }
 
-/**
-* There is a potential that some webhosts might have a limit on the numbver of meta options a single post can save at any given time. Here, we make sure that number is 5000
-*
-* @since    1.0.0
-* @link     http://bullmandesign.com/quick-tips/too-much-of-a-good-thing
-* @param    array $rules 
-* @return   array $rules 
-*/
-function mp_stacks_htaccess_contents( $rules ){
-   	
-    return $rules . "
-# Allow more custom fields - Added by MP Stacks.
-php_value max_input_vars 5000";
-
-}
-//add_filter('mod_rewrite_rules', 'mp_stacks_htaccess_contents');
-
 
 /**
 * Output JUST the css for a stack 
@@ -486,7 +469,7 @@ function mp_stacks_css_page(){
    header('Content-Type: text/css');
    
    //Output CSS for this stack
-	echo mp_stack_css( $_GET['mp_stacks_css_page'], false, false );
+	echo mp_stack_css( $_GET['mp_stacks_css_page'] );
 	
 	die();
 					
