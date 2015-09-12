@@ -26,10 +26,15 @@ function mp_brick_metabox() {
 	//Only load if we are on an mp_brick page
 	if ( $current_page->id == 'mp_brick' || $current_page->id == 'settings_page_mp_stacks_create_template_page' ){
 		
-		//Use this action hook to run the metabox creation MP Core class for brick related metaboxes
+		//Use this action hook to run the metabox creation MP Core class for brick related metaboxes. This exists purely for the name to remind of how the metabox is being loaded.
 		do_action( 'mp_brick_non_ajax_metabox' );
 		
+		//Hook Ajax-Loading Metaboxes here.
 		do_action( 'mp_brick_ajax_metabox' );
+		
+		//This is an old hook that metaboxes used to use before ajax-loading metaboxes were built for MP Stacks. 
+		//It remains here in a commented-out fashion purely as a reminder of the history of these filter names.
+		//do_action( 'mp_brick_metabox' );
 		
 	}
 	
