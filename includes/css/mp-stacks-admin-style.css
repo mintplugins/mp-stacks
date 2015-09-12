@@ -30,13 +30,21 @@
 	display:none;	
 }
 /* Make the "Submit" button fixed to the top right*/
-.post-type-mp_brick #submitdiv{
-	position: fixed;
-	z-index: 999;
-	top: 0;
-	right: 0;
-	width: 100%;
-	max-width: 300px;
+@media (min-width: 800px) {
+	.post-type-mp_brick #submitdiv{
+		position: fixed;
+		z-index: 999;
+		top: 0;
+		right: 0;
+		width: 100%;
+		max-width: 300px;
+	}
+}
+
+@media screen and (max-width: 600px){
+	#wpbody {
+		padding-top: 0px!important;
+	}
 }
 
 .post-type-mp_brick #major-publishing-actions{
@@ -50,15 +58,69 @@
 	display: none;
 	z-index: 155000;	
 }
+/* The text options like font size, color, line height, paragraph spacing */
 .mp_field.mp_brick_text_option{
-	width: 20%;
-	display: inline-block;
+	display:inline-block;
 	float:left;
 	margin-right:0px;
-	border:none;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
+	
+	margin-top: 0px;
+	padding: 12px!important;
+	border:none;
+	max-width:25%;
+	height:53px;
+}
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="bigscreen"],
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="laptop"],
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="tablet"],
+.mp_stacks_singletext_content_type_repeater_repeater div[class*="mobile"]{
+	display:none;
+}
+/* Make the 'Paragraph Height' align to the right */
+div[class*="brick_text_paragraph_margin_bottomBBBBB"]{
+	border-right:solid 1px #eee;
+}
+/* This is the screen size picker for the text areas */
+div[class*="brick_text_screen_size_controllerBBBBB"],
+div[class*="brick_text_screen_size_controllerBBBBB "]{
+	display:inline-block!important;
+	float:none!important;
+}
+.brick_screen_size_picker{
+	display:inline-block;	
+}
+.brick_screen_size{
+	display:inline-block;
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size:30px;
+	line-height:30px;
+}
+.brick_screen_size.desktop:before{
+	content: "\f472";	
+}
+.brick_screen_size.tablet:before{
+	content: "\f471";	
+}
+.brick_screen_size.mobile:before{
+	content: "\f470";	
+}
+.mp_brick_text_option .wp-picker-container{
+	margin-top:1px;
+}
+.mp_field.mp_brick_text_option .mp_title{
+	display: inline-block;
+  	margin-right: 7px;
+  	vertical-align: top;
+ 	margin-top: 4px;	
+}
+.mp_field.mp_brick_text_option em{
+	display:none;
 }
 
 /* Hide both singletext and doubletext areas by default */
@@ -68,10 +130,6 @@
 }
 
 /*Styles for the doubletext "old" text content-type */
-.mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_1_font_sizeBBBBB"],
-.mp_stacks_text_content_type_repeater_repeater div[class*="brick_line_2_font_sizeBBBBB"]{
-	width:140px;
-}
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_text_line_1BBBBB"],
 .mp_stacks_text_content_type_repeater_repeater div[class*="brick_text_line_2BBBBB"]{
 	clear:both;	
@@ -81,23 +139,14 @@
 }
 
 /* Styles for the singletext "new" text content-type */
-.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_text_font_sizeBBBBB"],
-.mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_text_font_sizeBBBBB"]{
-	width:140px;
-}
 .mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_textBBBBB"],
 .mp_stacks_singletext_content_type_repeater_repeater div[class*="brick_textBBBBB "]{
 	clear:both;	
 }
 
-/* Make the 'Paragraph Height' align to the right */
-div[class*="brick_text_paragraph_margin_bottomBBBBB"]{
-	text-align:right;	
-}
-
 /*Make the color picker sit above the text size box if they are overlapping */
-div[class*="brick_text_colorBBBBB "]{
-	z-index:10;
+.repeater_container div[class*="brick_text_color"]{
+	z-index:9999;
 }
 
 
