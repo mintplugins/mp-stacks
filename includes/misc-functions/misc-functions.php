@@ -544,6 +544,25 @@ function mp_stack_update_meta_upon_brick_save(){
 add_action( 'save_post', 'mp_stack_update_meta_upon_brick_save' );
 
 /**
+* After a Brick is saved, and all of its meta has been saved as well, die. This way, the Brick Editor doesn't need to re-load entirely before the Editor Lightbox closes. 
+* This cuts the  percieved save-time in HALF. Only do this if the window is open in a lightbox using the mp_stacks_do_not_reload_after_brick_save input field added by js.
+*
+* @since    1.0.0
+* @param    void
+* @return   void
+*/
+function mp_stacks_no_brick_editor_after_save(){
+	
+	$this_post_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : NULL;		
+	
+	if ( isset( $_POST['mp_stacks_do_not_reload_after_brick_save'] ) && $this_post_type == 'mp_brick' ){
+		die();
+	}
+	
+}
+add_action( 'save_post', 'mp_stacks_no_brick_editor_after_save', 999 );
+
+/**
  * Theme Bundle Installation Function: This function will check if we've created this Theme Bundle's Default Stacks and corresponding Pages/Posts
  * If they haven't been created - or just don't exist (they've been deleted), re-create them. 
  
