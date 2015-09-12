@@ -28,7 +28,7 @@ function mp_stacks_brick_content_output_singletext($default_content_output, $mp_
 			$brick_text = do_shortcode( html_entity_decode( $text_area['brick_text'] ) );
 			
 			//Desired Font Size
-			$brick_text_font_size = $text_area['brick_text_font_size'];
+			$default_brick_text_font_size = $text_area['brick_text_font_size'];
 								
 			//First Output
 			$content_output .= !empty($brick_text) ? '<div class="mp-stacks-text-area mp-stacks-text-area-' . $counter . '">' : NULL;
@@ -135,32 +135,85 @@ function mp_stacks_singletext_styles($css_output, $post_id){
 		 * Filter CSS Output this text
 		 */
 		 
-		//Text Color
-		$brick_text_color = $text_area_vars['brick_text_color'];
+		//Text Colors
+		$default_brick_text_color = isset( $text_area_vars['brick_text_color'] ) ? $text_area_vars['brick_text_color'] : NULL;
+		$tablet_brick_text_color = isset( $text_area_vars['brick_text_color_tablet'] ) ? $text_area_vars['brick_text_color_tablet'] : NULL;
+		$mobile_brick_text_color = isset( $text_area_vars['brick_text_color_mobile'] ) ? $text_area_vars['brick_text_color_mobile'] : NULL;
 		
 		//Text Font Size
-		$brick_text_font_size = $text_area_vars['brick_text_font_size'];
+		$default_brick_text_font_size = isset( $text_area_vars['brick_text_font_size'] ) ? $text_area_vars['brick_text_font_size'] : NULL;
+		$tablet_brick_text_font_size = isset( $text_area_vars['brick_text_font_size_tablet'] ) ? $text_area_vars['brick_text_font_size_tablet'] : NULL;
+		$mobile_brick_text_font_size = isset( $text_area_vars['brick_text_font_size_mobile'] ) ? $text_area_vars['brick_text_font_size_mobile'] : NULL;
 		
 		//Text Line Height
-		$brick_text_line_height = isset( $text_area_vars['brick_text_line_height'] ) ? $text_area_vars['brick_text_line_height'] : NULL;
+		$default_brick_text_line_height = isset( $text_area_vars['brick_text_line_height'] ) ? $text_area_vars['brick_text_line_height'] : NULL;
+		$tablet_brick_text_line_height = isset( $text_area_vars['brick_text_line_height_tablet'] ) ? $text_area_vars['brick_text_line_height_tablet'] : NULL;
+		$mobile_brick_text_line_height = isset( $text_area_vars['brick_text_line_height_mobile'] ) ? $text_area_vars['brick_text_line_height_mobile'] : NULL;
 		
 		//Text Paragraph Spacing
-		$brick_text_paragraph_margin_bottom = isset( $text_area_vars['brick_text_paragraph_margin_bottom'] ) ? $text_area_vars['brick_text_paragraph_margin_bottom'] : NULL;
+		$default_brick_text_paragraph_margin_bottom = isset( $text_area_vars['brick_text_paragraph_margin_bottom'] ) ? $text_area_vars['brick_text_paragraph_margin_bottom'] : NULL;
+		$tablet_brick_text_paragraph_margin_bottom = isset( $text_area_vars['brick_text_paragraph_margin_bottom_tablet'] ) ? $text_area_vars['brick_text_paragraph_margin_bottom_tablet'] : NULL;
+		$mobile_brick_text_paragraph_margin_bottom = isset( $text_area_vars['brick_text_paragraph_margin_bottom_mobile'] ) ? $text_area_vars['brick_text_paragraph_margin_bottom_mobile'] : NULL;
 		
-		//Text Full Style
-		$brick_text_style = !empty($brick_text_color) ? 'color: ' . $brick_text_color . '; '  : NULL;
-		$brick_text_style .= !empty($brick_text_font_size) ? 'font-size:' . $brick_text_font_size . 'px; ' : NULL;
-		$brick_text_style .= !empty($brick_text_line_height) ? 'line-height:' . $brick_text_line_height . 'px; ' : NULL;
+		//Default (Desktop) Text Full Style
+		$default_brick_text_style = !empty($default_brick_text_color) ? 'color: ' . $default_brick_text_color . '; '  : NULL;
+		$default_brick_text_style .= !empty($default_brick_text_font_size) ? 'font-size:' . $default_brick_text_font_size . 'px; ' : NULL;
+		$default_brick_text_style .= !empty($default_brick_text_line_height) ? 'line-height:' . $default_brick_text_line_height . 'px; ' : NULL;
 		
-		//Assemble css
-		if ( !empty($brick_text_style) ) {
+		//Tablet Full Style
+		$tablet_brick_text_style = !empty($tablet_brick_text_color) ? 'color: ' . $tablet_brick_text_color . '; '  : NULL;
+		$tablet_brick_text_style .= !empty($tablet_brick_text_font_size) ? 'font-size:' . $tablet_brick_text_font_size . 'px; ' : NULL;
+		$tablet_brick_text_style .= !empty($tablet_brick_text_line_height) ? 'line-height:' . $tablet_brick_text_line_height . 'px; ' : NULL;
+		
+		//Mobile Full Style
+		$mobile_brick_text_style = !empty($mobile_brick_text_color) ? 'color: ' . $mobile_brick_text_color . '; '  : NULL;
+		$mobile_brick_text_style .= !empty($mobile_brick_text_font_size) ? 'font-size:' . $mobile_brick_text_font_size . 'px; ' : NULL;
+		$mobile_brick_text_style .= !empty($mobile_brick_text_line_height) ? 'line-height:' . $mobile_brick_text_line_height . 'px; ' : NULL;
+		
+		//Assemble Default (Desktop) CSS
+		if ( !empty($default_brick_text_style) ) {
+			
+			//Desktop CSS
 			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text *, ';
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text a {' . $brick_text_style .'}';
+			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text a {' . $default_brick_text_style .'}';
+			
+			//If there is a paragraph spacing variable
+			if ( is_numeric( $default_brick_text_paragraph_margin_bottom ) ){
+				$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text p { margin-bottom:' . $default_brick_text_paragraph_margin_bottom .'px; }';
+			}
+		
 		}
 		
-		//If there is a paragraph spacing variable
-		if ( is_numeric( $brick_text_paragraph_margin_bottom ) ){
-			$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text p { margin-bottom:' . $brick_text_paragraph_margin_bottom .'px; }';
+		//Assemble Tablet CSS
+		if ( !empty($tablet_brick_text_style) ) {
+			
+			//Tablet CSS
+			$brick_text_areas_styles .= '@media (max-width: 961px) {';
+				$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text *, ';
+				$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text a {' . $tablet_brick_text_style .'}';
+				
+				//If there is a paragraph spacing variable
+				if ( is_numeric( $tablet_brick_text_paragraph_margin_bottom ) ){
+					$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text p { margin-bottom:' . $tablet_brick_text_paragraph_margin_bottom .'px; }';
+				}
+			
+			$brick_text_areas_styles .= '}';
+			
+		}
+		//Assemble Mobile CSS
+		if ( !empty($mobile_brick_text_style) ) {
+			
+			//Mobile CSS
+			$brick_text_areas_styles .= '@media (max-width: 600px) {';
+				$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text *, ';
+				$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text a {' . $mobile_brick_text_style .'}';
+				
+				//If there is a paragraph spacing variable
+				if ( is_numeric( $mobile_brick_text_paragraph_margin_bottom ) ){
+					$brick_text_areas_styles .= '#mp-brick-' . $post_id . ' .mp-stacks-text-area-' . $counter . ' .mp-brick-text p { margin-bottom:' . $mobile_brick_text_paragraph_margin_bottom .'px; }';
+				}
+				
+			$brick_text_areas_styles .= '}';
 		}
 				
 		//Increment counter
