@@ -820,7 +820,7 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 		$css_output .= '#mp-brick-' . $post_id . '[max-width~=\'600px\'] .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container .mp-brick-first-content-type{';
 			
 			//If there is no value to add below the first content-type, default to 20
-			$css_output .= !empty( $brick_min_below_c1 ) ? 'margin-bottom:' . $brick_min_below_c1 . 'px' : 'margin-bottom:20px';	
+			$css_output .= !empty( $brick_min_below_c1 ) ? 'margin-bottom:' . $brick_min_below_c1 . 'px;' : 'margin-bottom:20px';	
 		
 		$css_output .= '}';
 	}
