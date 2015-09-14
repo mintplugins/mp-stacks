@@ -387,6 +387,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 	
 	//Get WordPress Classes for this Brick
 	$post_class_array = get_post_class( 'mp-brick', $post_id );
+	$post_class_array[] = 'mp_brick';
 		
 	//Loop through each WordPress class and add it to the class string	
 	foreach ( $post_class_array as $class ){
@@ -397,7 +398,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 	$html_output .= '<div id="mp-brick-' . $post_id . '" mp-stack-id="' . $stack_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
 		
 		//HTML Anchor for this brick
-		$html_output .= '<a class="brick-anchor" name="' . sanitize_title( get_the_title($post_id) ) . '"></a>';
+		$html_output .= '<a class="brick-anchor" mp_stacks_brick_target="' . sanitize_title( get_the_title($post_id) ) . '"></a>';
 		
 		//Brick Meta Div
 		$html_output .= '<div class="mp-brick-meta">';
