@@ -122,7 +122,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				$meta_prefix . '_isotope_filter_by_text' => array(
 					'field_id'			=> $meta_prefix . '_isotope_filter_by_text',
 					'field_title' 	=> __( '"Filter By" Text', 'mp_stacks'),
-					'field_description' 	=> __( 'What should the "Filter By" Text be? Default: "Filter By:". Leave blank to hide.', 'mp_stacks' ),
+					'field_description' 	=> __( 'What should the "Filter By" Text be? Default: "Filter By:".', 'mp_stacks' ),
 					'field_type' 	=> 'textbox',
 					'field_value' => __( 'Filter By:', 'mp_stacks' ),
 					'field_showhider' => $meta_prefix . '_isotope_filter_by_showhider',
@@ -181,6 +181,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
+				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
+				'field_conditional_values' => array( 'buttons' ), 
 				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
@@ -220,6 +222,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
+				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
+				'field_conditional_values' => array( 'buttons' ), 
 				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
@@ -269,6 +273,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_description' 	=> __( '', 'mp_stacks' ),
 				'field_type' 	=> 'showhider',
 				'field_value' => '',
+				'field_conditional_id' => $meta_prefix . '_isotope_navigation',
+				'field_conditional_values' => array( 'buttons' ), 
 				
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
@@ -341,8 +347,6 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 						'field_title' 	=> __( 'Hidden Filter Buttons', 'mp_stacks'),
 						'field_description' 	=> __( 'If you want to skip showing a Filter Button and you know the "slug" for that group, enter it here (comma separated)', 'mp_stacks' ),
 						'field_type' 	=> 'textarea',
-						'field_conditional_id' => $meta_prefix . '_isotope_nav_btn_icons',
-						'field_conditional_values' => array( $meta_prefix . '_isotope_nav_btn_icons' ), 
 						'field_value' => '',
 						'field_placeholder' => 'tag1, tag2, etc',
 						'field_showhider' => $meta_prefix . '_isotope_hidden_buttons_showhider',
