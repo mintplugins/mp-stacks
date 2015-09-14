@@ -37,18 +37,8 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
 			
 			$post_id = get_the_ID();
 			
-			//For any extra code that you want in the <head>, to prevent needing to run a second loop through the Stacks, output it here. It will either be in the <head> or the Footer.
-			do_action( 'mp_stacks_before_brick_css', $post_id, $stack_id );
-			
-			$css_output .= $include_style_tags ? '
-<style id="mp-brick-css-' . $post_id . '" type="text/css">' : NULL;
-			
-				//Build Brick CSS Output (minified)
-				$css_output .= preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', mp_brick_css( $post_id, $stack_id ) );
-			
-			$css_output .= $include_style_tags ? '
-</style>
-' : NULL;
+			//Build Brick CSS Output (minified)
+			$css_output .= preg_replace(array('/\s{2,}/', '/[\t\n]/'), ' ', mp_brick_css( $post_id, $stack_id ) );
 		
 		endwhile;
 		
