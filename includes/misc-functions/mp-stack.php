@@ -329,6 +329,9 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 	//Add this brick id and content types to the global list of active bricks
 	$mp_stacks_active_bricks[$post_id] = array( $mp_stacks_first_content_type, $mp_stacks_second_content_type );
 	
+	//Make sure all the default scripts are properly enqueued
+	mp_stacks_frontend_enqueue();
+	
 	//First Output
 	$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
 	
