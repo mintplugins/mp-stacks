@@ -415,7 +415,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 					'mp-stacks-minimal-admin' => 'true',
 					'mp_stack_id' => $stack_id, 
 					'containing_page_url' => mp_core_get_current_url()
-				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick', 'mp_stacks' ) . '</a>';
+				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick (Or Double-Click)', 'mp_stacks' ) . '</a>';
 				
 				//If we want to show the Stack-Related controls for admins (actions like re-order, add brick before/after. Edit Brick always remains.)
 				if ( !empty( $show_stack_controls_for_admin ) ){
@@ -430,7 +430,9 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 						
 						//If the Stack Id has been found and it has a name we can show
 						if ( isset( $stack_info->name ) ){
-							$html_output .= '<div class="mp-brick-title-container"><div class="mp-brick-title">' . __( 'This is Brick ', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+							$html_output .= '<div class="mp-brick-title-container-top"><div class="mp-brick-title">' . __( 'Brick #', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
+							
+							$html_output .= '<div class="mp-brick-title-container-bottom"><div class="mp-brick-title">' . __( 'Brick #', 'mp_stacks' ) . $brick_number . ' in the Stack called "' . $stack_info->name . '".</div></div>';
 						}
 					}
 		
