@@ -625,16 +625,16 @@ function mp_stacks_first_content_type_css( $css_output, $post_id ){
 	}
 	
 	//1st Content Type Float
-	$first_content_type_float = get_post_meta($post_id, 'brick_float_c1', true);
-	$first_content_type_float = $first_content_type_float == 'center' || empty( $first_content_type_float) ? 'margin: 0px auto; float: none;' : 'float:' . $first_content_type_float;
+	$first_content_type_float = mp_core_get_post_meta($post_id, 'brick_float_c1' );
+	$first_content_type_float = $first_content_type_float == 'center' || empty( $first_content_type_float) ? 'margin: 0px auto; float: none;' : 'float:' . $first_content_type_float . ';';
 	
 	//If there is a float value
 	if ( !empty( $first_content_type_float ) ){
-		$css_output .= $first_content_type_float . '; ';
+		$css_output .= $first_content_type_float;
 	}
 	
 	//Content Type Left Right Padding
-	$first_content_type_padding = get_post_meta($post_id, 'brick_no_borders', true);
+	$first_content_type_padding = get_post_meta($post_id, 'brick_no_borders', 'padding:0 10px 0 10px;');
 	if ( empty( $first_content_type_padding ) ){
 		$css_output .= 'padding:0 10px 0 10px;';
 	}
