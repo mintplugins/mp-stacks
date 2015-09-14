@@ -71,8 +71,12 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		
 		$css_output = NULL;
 		
+		$first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);	
+		$second_content_type = get_post_meta($post_id, 'brick_second_content_type', true);			
+				
 		//Brick CSS
 		$css_brick_filter = apply_filters( 'mp_brick_css', '', $post_id );
+		
 		if ( !empty($css_brick_filter) ) {
 			$css_output .= '#mp-brick-' . $post_id .'{';
 			$css_output .= $css_brick_filter;
