@@ -190,6 +190,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/create-stack-forms.php' );
 		
 		/**
+		 * Additional Media Buttons
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/media-buttons.php' );
+		
+		/**
 		 * Media Filters
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/content-filters/image-content-filters.php' );
