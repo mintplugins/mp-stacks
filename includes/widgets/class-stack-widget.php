@@ -67,9 +67,6 @@ class MP_STACKS_Widget extends MP_CORE_Widget {
 		 */
 		echo mp_stack( $instance['stack_id'] );
 		
-		//Add this stack to the list of stacks in widgets so we can output the css in the footer
-		$mp_stacks_widget_stacks[$instance['stack_id']] = $instance['stack_id'];
-		
 		/**
 		 * After Hook
 		 */
