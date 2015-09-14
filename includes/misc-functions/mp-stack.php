@@ -878,25 +878,29 @@ function mp_stacks_header_css(){
 add_action( 'wp_head', 'mp_stacks_header_css', -1); 
 
 /**
- * Output css for all Stacks inside widgets in the footer. We use the global variable $mp_stacks_widget_stacks to know which ones have been displayed.
+ * Output css for all Stacks that haven't been output (for whatever reason). This also covers the css for Stack widgets.
  * Parameter: none
  */
-function mp_stacks_widgets_css(){
+function mp_stacks_extra_stacks_css(){
 	
-	global $mp_stacks_widget_stacks;
+	global $mp_stacks_on_page;
 	
-	//Loop through each stack in each widget (this array is created in the widget class)
-	if ( is_array( $mp_stacks_widget_stacks ) ){
-		foreach( $mp_stacks_widget_stacks as $widget_stack ){
+	//Create an array using the stacks that are in the css_required list but not in the css_complete list
+	foreach( $mp_stacks_on_page['css_required'] as $stack_id => $css_required ){
+		
+		//Check if this Stack id is in the css_complete list
+		if ( !in_array( $stack_id, $mp_stacks_on_page['css_complete'] ) ){
 			
 			//Output CSS for this stack
-			mp_stack_css( $widget_stack, true ); 
-						
+			mp_stack_css( $stack_id, true ); 
+			
 		}
+		
 	}
+
 	
 }
-add_action( 'wp_footer', 'mp_stacks_widgets_css' );
+add_action( 'wp_footer', 'mp_stacks_extra_stacks_css' );
 
 /**
  * Output all inline js for all Stacks late in the footer. We use the global variable $mp_stacks_inline_js inside content-type filters to generate this output string.
@@ -904,12 +908,88 @@ add_action( 'wp_footer', 'mp_stacks_widgets_css' );
  */
 function mp_stacks_inline_js(){
 	
-	global $mp_stacks_footer_inline_js;
+	$mp_stacks_footer_inline_js  = mp_stacks_get_inline_js();
 	
 	if ( !empty( $mp_stacks_footer_inline_js ) ){
-		echo '<!-- MP Stacks Inline Js Output -->';
-		echo $mp_stacks_footer_inline_js;
+		echo '<!-- MP Stacks Inline Js Output -->
+';
+		
+		//Loop through each inline js script added by MP Stacks Content-Types
+		foreach( $mp_stacks_footer_inline_js as $script_id => $script_output ){
+			echo $script_output;
+		}
 	}
 		
 }
 add_action( 'wp_footer', 'mp_stacks_inline_js', 99 );
+
+/**
+ * Get a string of all inline js for all Stacks. We use the global array variable $mp_stacks_inline_js inside content-type filters to generate this output string.
+ * Parameter: none
+ */
+function mp_stacks_get_inline_js(){
+	
+	global $mp_stacks_footer_inline_js;
+	
+	if ( is_array( $mp_stacks_footer_inline_js ) ){
+			
+		//Loop through each inline js script added by MP Stacks Content-Types
+		foreach( $mp_stacks_footer_inline_js as $script_id => $script_output ){
+			//Add the <script before and after the outputs with proper id tagging.
+			$inline_js_script_array[$script_id . '-inline-js'] = '<div id="' . $script_id . '-inline-js"><script type="text/javascript">' . $script_output . '</script></div>';
+		}
+		
+		return $inline_js_script_array;
+	
+	}
+	else{
+		return array();	
+	}
+		
+}
+
+/**
+ * Output all inline css for all Stacks late in the wp_head. We use the global variable $mp_stacks_inline_css inside content-type filters to generate this output string.
+ * Parameter: none
+ */
+function mp_stacks_inline_css(){
+	
+	$mp_stacks_footer_inline_css  = mp_stacks_get_inline_css();
+	
+	if ( !empty( $mp_stacks_footer_inline_css ) ){
+		echo '<!-- MP Stacks Inline CSS Output -->
+';
+		
+		//Loop through each inline js script added by MP Stacks Content-Types
+		foreach( $mp_stacks_footer_inline_css as $style_id => $style_output ){
+			echo $style_output;
+		}
+	}
+		
+}
+add_action( 'wp_head', 'mp_stacks_inline_css', 99 );
+
+/**
+ * Get a string of all inline css for all Stacks. We use the global array variable $mp_stacks_inline_css inside content-type filters to generate this output string.
+ * Parameter: none
+ */
+function mp_stacks_get_inline_css(){
+	
+	global $mp_stacks_footer_inline_css;
+	
+	if ( is_array( $mp_stacks_footer_inline_css ) ){
+			
+		//Loop through each inline js script added by MP Stacks Content-Types
+		foreach( $mp_stacks_footer_inline_css as $style_id => $script_output ){
+			//Add the <script before and after the outputs with proper id tagging.
+			$inline_css_script_array[ sanitize_title( $style_id . '-inline-css' ) ] = '<style id="' . sanitize_title( $style_id . '-inline-css' ) . '" mp_stacks_inline_style="' . sanitize_title( $style_id . '-inline-css' ) . '">' . $script_output . '</style>';
+		}
+		
+		return $inline_css_script_array;
+	
+	}
+	else{
+		return array();	
+	}
+		
+}
