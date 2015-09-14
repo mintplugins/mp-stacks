@@ -809,7 +809,7 @@ function mp_stacks_grid_unique_source_id( $single_repeat_array ){
 }
 
 /**
- * Output the animation JS needed for grid item in the footer for each grid.
+ * Return the animation JS needed for grid item 
  *
  * @access   public
  * @since    1.0.0
@@ -821,14 +821,78 @@ function mp_stacks_grid_unique_source_id( $single_repeat_array ){
 function mp_stacks_grid_animate_grid_items_js( $existing_grid_output, $post_id, $meta_prefix ){
 				
 	//Get JS output to animate the images on mouse over and out
-	$animation_js = mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-image', mp_core_get_post_meta( $post_id, $meta_prefix . '_image_animation_keyframes', array() ) ); 
+	$animation_js = mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-' . $meta_prefix . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-image', mp_core_get_post_meta( $post_id, $meta_prefix . '_image_animation_keyframes', array() ), true, true, 'mp-brick-' . $post_id ); 
 	
 	//Get JS output to animate the images overlays on mouse over and out
-	$animation_js .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-image-overlay',mp_core_get_post_meta( $post_id, $meta_prefix . '_image_overlay_animation_keyframes', array() ) ); 
+	$animation_js .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-' . $meta_prefix . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-image-overlay',mp_core_get_post_meta( $post_id, $meta_prefix . '_image_overlay_animation_keyframes', array() ), true, true, 'mp-brick-' . $post_id ); 
 	
 	//Get JS output to animate the background on mouse over and out
-	$animation_js .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-inner',mp_core_get_post_meta( $post_id, $meta_prefix . '_bg_animation_keyframes', array() ) ); 
+	$animation_js .= mp_core_js_mouse_over_animate_child( '#mp-brick-' . $post_id . ' .mp-stacks-grid-' . $meta_prefix . ' .mp-stacks-grid-item', '.mp-stacks-grid-item-inner',mp_core_get_post_meta( $post_id, $meta_prefix . '_bg_animation_keyframes', array() ), true, true, 'mp-brick-' . $post_id ); 
 		
 	return $existing_grid_output . $animation_js;
 }
 add_filter( 'mp_stacks_grid_js', 'mp_stacks_grid_animate_grid_items_js', 10, 3 );
+
+/**
+ * This function enqueues all the shared js scripts used by any grid-based add-on. It needs to be called in the filter: mp_stacks_brick_content_output for the grid.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_grids_enqueue_frontend_scripts( $content_type_slug ){
+	 
+	 //Enqueue velocity JS
+	wp_enqueue_script( 'velocity_js', MP_CORE_JS_SCRIPTS_URL . 'velocity.min.js', array( 'jquery' ), MP_CORE_VERSION );
+	
+	//Enqueue Waypoints JS
+	wp_enqueue_script( 'waypoints_js', MP_CORE_JS_SCRIPTS_URL . 'waypoints.min.js', array( 'jquery' ), MP_CORE_VERSION );
+	
+	//Enqueue Isotope JS
+	wp_enqueue_script( 'isotope_js', MP_CORE_JS_SCRIPTS_URL . 'isotope.pkgd.min.js', array( 'jquery' ), MP_CORE_VERSION );
+	
+	//masonry script
+	wp_enqueue_script( 'masonry' );
+	
+	//Enqueue MP Stacks Grid JS
+	wp_enqueue_script( 'mp_stacks_grid_js', MP_STACKS_PLUGIN_URL . 'includes/js/mp-stacks-grids.js', array( 'jquery', 'masonry', 'isotope_js', 'waypoints_js', 'velocity_js' ), MP_STACKS_VERSION );
+	
+}
+
+/**
+ * This function enqueues all the shared css stylesheets used by any grid-based add-on. It needs to be called in the filter: mp_brick_additional_css for the grid.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_grids_enqueue_frontend_css( $content_type_slug ){
+	 
+	//Enqueue MP stacks Grid CSS
+	wp_enqueue_style( 'mp-stacks-grid-css', MP_STACKS_PLUGIN_URL . 'includes/css/mp-stacks-grid-styles.css', MP_STACKS_VERSION );
+	
+	//Enqueue Font Awesome CSS
+	wp_enqueue_style( 'fontawesome', plugins_url( '/fonts/font-awesome-4.0.3/css/font-awesome.css', dirname( dirname( __FILE__ ) ) ) );
+	
+}
+
+/**
+ * Output the class to match the type of grid this is for the main grid container. EG if postgrid it adds "mp-stacks-grid-postgrid" to the classes.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    Void
+ * @param    $html_output_so_far String - The HTML output that has been appending for the grid at this point
+ * @param    $post_id String - the ID of the Brick where all the meta is saved.
+ * @param    $meta_prefix String - the prefix to put before each meta_field key to differentiate it from other plugins. :EG "postgrid"
+ * @return   $html_output_so_far String The Class names for the main grid containers with the isotope/masonry class name added
+*/
+function mp_stacks_grid_add_gridname_class( $classes, $post_id, $meta_prefix ){
+
+	$classes .= ' mp-stacks-grid-' . $meta_prefix;
+	
+	return $classes;
+}
+add_filter( 'mp_stacks_grid_classes', 'mp_stacks_grid_add_gridname_class', 10, 3 );
