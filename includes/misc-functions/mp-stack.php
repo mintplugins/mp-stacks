@@ -158,11 +158,11 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 			$css_output .= $mp_brick_second_content_type_mobile_css_filter;
 			$css_output .= '}';
 		}
-					
+		
 		//Additional CSS
-		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id, get_post_meta($post_id, 'brick_first_content_type', true), get_post_meta($post_id, 'brick_second_content_type', true) );
+		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id, $first_content_type, $second_content_type );
 				
-		return $css_output;	
+		return '<style id="mp-brick-css-' . $post_id . '" type="text/css">' . $css_output .'</style>';	
 				
 }
 
@@ -171,6 +171,11 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
  * Parameter: Stack ID
  */
 function mp_stack( $stack_id ){		
+	
+	global $mp_stacks_on_page;
+	
+	//This array has 2 main parts: css_required, and css_complete. Here, we add this stack to the css_required list. When the CSS is output, we add it to to the css_complete list.
+	$mp_stacks_on_page['css_required'][$stack_id] = $stack_id;
 	
 	$html_output = NULL;
 		
