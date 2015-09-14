@@ -5,6 +5,11 @@
  */
 function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {		
 	
+	global $mp_stacks_on_page;
+	
+	//This array has 2 main parts: css_required, and css_complete. Here, we add this stack to the css_required list so we know the CSS has been taken care of.
+	$mp_stacks_on_page['css_complete'][$stack_id] = $stack_id;
+	
 	$css_output = NULL;
 	
 	//Set the args for the new query
