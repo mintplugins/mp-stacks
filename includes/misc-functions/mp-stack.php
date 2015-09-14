@@ -842,7 +842,7 @@ add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2)
  * Parameter: none
  */
 function mp_stacks_header_css(){
-	
+		
 	//Loop through the query
 	if (have_posts()) : 
     	while (have_posts()) : the_post(); 
