@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.2.9
+Stable tag: 1.0.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.0 = September 22, 2015
+* Added check for css_required before looping through it in the footer. Also moved function priority to 99 so it runs after Stacks that might have been after in the wp_footer.
 
 = 1.0.2.9 = September 21, 2015
 * Remove the "View Bricks" option if the MP Stacks + Developer Plugin is not active
