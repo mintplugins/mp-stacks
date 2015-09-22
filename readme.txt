@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.1
-Stable tag: 1.0.2.8
+Tested up to: 4.3
+Stable tag: 1.0.2.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,41 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.2.9 = September 21, 2015
+* Remove the "View Bricks" option if the MP Stacks + Developer Plugin is not active
+* Load related bricks (to be seen in the "link" creator mp TinyMce) in admin upon "window.load". 
+* Add CSS shadow to all magnified lightbox popups
+* Upon Brick Update, reload JUST the brick via ajax instead of reloading the entire page.
+* Change removing hentry to Brick's ID  available in post_class filter instead of global $post->ID
+* Make isotope only filter items within the current brick using the Brick's ID selector in the JS output
+* Fire Stack CSS output at wp_head above wp_enqueue_scripts. This way, if any subsequent action needs to be called using wp_enqueue_scripts, it can (ie Google Fonts).
+* Stack/Brick CSS is no longer loaded as a separate document. All Stack/Brick CSS is now minimized and placed in the <head>. 
+* CSS Style Tags now wrap around each Brick's CSS - so that CSS can be removed/replaced via ajax when Bricks are reloaded.
+* The mp_brick function now gets the Stack ID from the Brick ID by using the mp_stack_order_STACKID meta field. Once the Brick gets its Stack ID, it saves it as postmeta under "mp_stack_id".
+* When a new Brick is created, save the mp_stack_id there and then.
+* Added action hook for new single stack page options called "mp_stacks_single_edit_page_options_table_bottom" which allows add-ons to output additional Single Stack options.
+* Added action hook which fires when a Single Stack has been updated after the nonce has been verified to allow for the saving of additional options "mp_stacks_update_stack_options"
+* Added filter hook for "/stack/" slug so people can change the slug to anything they wish. The filter is called "mp_stacks_stack_only_slug".
+* Removed word-break:break-all for items in p tags. This was causing words to break to new lines when they shouldn't.
+* MAJOR UPDATE: Brick Editor Loads Content Types via ajax now. All Add-On Metaboxes must be loaded through the "mp_brick_ajax_metabox" hook and will require MP Core 1.0.2.1 and MP Stacks 1.0.2.9
+* MAJOR UPDATE: Instead of loading the whole page again when a Brick is updated, it now only re-loads that brick via ajax.
+* Added "mp_stacks_centered_content_types" Filter Hook so add-ons can let MP Stacks know they work better as "Centered" and Brick's will auto set to be so.
+* Lightbox padding change .mfp-iframe-scaler
+* Brick Editor: Page contents are no longer hidden until it is all loaded.
+* Brick Text Controls: Added Font/Text control for different device sizes: Desktop, Tablet, Mobile.
+* Hide WooCommerce notices on Brick Editor as they are only needed in actual Dashboard.
+* Brick a tags no longer have dispay:inline-block.
+* Style updates to "Edit Brick" button. It now includes the paintbrush icon and better font style.
+* Font Awesome Added as Utility Font.
+* All Metaboxes in the Brick Editor now load-in on-demand using the Ajax load-in provided by MP Core 1.0.2.1.
+* Add Stack now uses "mp_core_shortcode_setup" hook.
+* New media-buttons.php file added for new "Add Link" option. MP Buttons install button functions are also moved here.
+* New hook for metaboxes is now called mp_brick_ajax_metabox
+* Time saving on Brick Saves: Page die() after Brick saved (if loaded in iframe).
+* Added jQuery Namespaces to grid animations so they properly cancel the animations upon Ajax reload of a brick.
+* Brick targets attr is now "mp_stacks_brick_target".
+* Removed Action Hook: "mp_stacks_before_brick_css". Use the "mp_brick_css" Filter Hook and return required Brick CSS that way instead.
 
 = 1.0.2.8 = May 17, 2015
 * Fixed bug with mp_stacks_resize_complete firing
