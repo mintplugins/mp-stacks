@@ -895,22 +895,24 @@ function mp_stacks_extra_stacks_css(){
 	
 	global $mp_stacks_on_page;
 	
-	//Create an array using the stacks that are in the css_required list but not in the css_complete list
-	foreach( $mp_stacks_on_page['css_required'] as $stack_id => $css_required ){
+	if ( isset( $mp_stacks_on_page['css_required'] ) ){
 		
-		//Check if this Stack id is in the css_complete list
-		if ( !in_array( $stack_id, $mp_stacks_on_page['css_complete'] ) ){
+		//Create an array using the stacks that are in the css_required list but not in the css_complete list
+		foreach( $mp_stacks_on_page['css_required'] as $stack_id => $css_required ){
 			
-			//Output CSS for this stack
-			mp_stack_css( $stack_id, true ); 
+			//Check if this Stack id is in the css_complete list
+			if ( !in_array( $stack_id, $mp_stacks_on_page['css_complete'] ) ){
+				
+				//Output CSS for this stack
+				mp_stack_css( $stack_id, true ); 
+				
+			}
 			
 		}
-		
 	}
-
 	
 }
-add_action( 'wp_footer', 'mp_stacks_extra_stacks_css' );
+add_action( 'wp_footer', 'mp_stacks_extra_stacks_css', 99 );
 
 /**
  * Output all inline js for all Stacks late in the footer. We use the global variable $mp_stacks_inline_js inside content-type filters to generate this output string.
