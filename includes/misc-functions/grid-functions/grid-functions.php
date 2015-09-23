@@ -884,7 +884,6 @@ function mp_stacks_grids_enqueue_frontend_css( $content_type_slug ){
  *
  * @access   public
  * @since    1.0.0
- * @param    Void
  * @param    $html_output_so_far String - The HTML output that has been appending for the grid at this point
  * @param    $post_id String - the ID of the Brick where all the meta is saved.
  * @param    $meta_prefix String - the prefix to put before each meta_field key to differentiate it from other plugins. :EG "postgrid"
@@ -897,3 +896,29 @@ function mp_stacks_grid_add_gridname_class( $classes, $post_id, $meta_prefix ){
 	return $classes;
 }
 add_filter( 'mp_stacks_grid_classes', 'mp_stacks_grid_add_gridname_class', 10, 3 );
+
+/**
+ * Output the class to match the type of grid this is for the main grid container. EG if postgrid it adds "mp-stacks-grid-postgrid" to the classes.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $postgrid_per_row Int - The number of posts the user wants per row in their grid.
+ * @return   $posts_per_row_ratio String the percentage number to use for the css output. For example: 2 posts per row will return 50 (without the percentage sign);
+*/
+function mp_stacks_grid_posts_per_row_percentage( $postgrid_per_row ){
+		
+	//Get the width % for the posts per row
+	$posts_per_row_ratio = 100/$postgrid_per_row;
+	
+	//If there is a decimal point in the number
+	if ( strpos( $posts_per_row_ratio, '.' ) !== false ){
+		
+		//We need to make the value have 1 digital after the decimal to comply with all browsers. We also don't want it to round - as the most preciese number is un-rounded.
+		//Therefore, if the number is 16.666666667, we explode at the decimal point, add the first number (16), and split the second chunk to one digit (6).
+		$posts_per_row_explosion = explode( '.', $posts_per_row_ratio );
+		$after_decimal_trimmed_value = str_split($posts_per_row_explosion[1], 1);
+		$posts_per_row_ratio = $posts_per_row_explosion[0] . '.' . $after_decimal_trimmed_value[0];
+	}
+	
+	return $posts_per_row_ratio;
+}
