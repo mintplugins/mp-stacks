@@ -282,7 +282,6 @@ function mp_stacks_support_admin_notice(){
 	 }
 	
 }
-add_action('admin_notices', 'mp_stacks_support_admin_notice');
 
 /**
  * Function which adds extra "safe" styles to wp_kses
@@ -745,6 +744,25 @@ function mp_stacks_remove_admin_menu_for_brick_editor(){
 		$menu = array();
 		remove_all_actions( 'adminmenu' );
 		remove_all_actions( 'admin_menu' );
+		
+		//Remove all Admin Notices on Brick Editor pages
+		remove_all_actions( 'admin_notices' );
+				
+		//Show admin notice about which brick the user is editing.
+		add_action('admin_notices', 'mp_stacks_support_admin_notice');
+	
 	}
 }
 add_action( 'admin_head', 'mp_stacks_remove_admin_menu_for_brick_editor' );
+
+//Add Minimal admin styling for brick editors no matter what
+function mp_stacks_remove_admin_bar_for_brick_editor(){
+	
+	$current_screen = get_current_screen();
+		
+	if ( $current_screen->post_type == 'mp_brick' && $current_screen->base == 'post' ){
+		//Hide admin items for edit brick screen - css
+		wp_enqueue_style( 'mp_stacks_minimal-admin-css', plugins_url('css/mp-stacks-minimal-admin.css', dirname(__FILE__)), MP_STACKS_VERSION );
+	}
+}
+add_action( 'admin_enqueue_scripts', 'mp_stacks_remove_admin_bar_for_brick_editor' );
