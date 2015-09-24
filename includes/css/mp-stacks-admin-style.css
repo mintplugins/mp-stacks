@@ -6,6 +6,12 @@
 #side-sortables .postbox{
 	display:block;	
 }
+
+/* Hide the "Add new Brick" button beside the "brick Editor" title */
+.post-type-mp_brick .page-title-action{
+	display:none!important;
+}
+
 /* Hide the MP Stacks Category selector */
 #side-sortables #mp_stacksdiv{
 	display:none;	
