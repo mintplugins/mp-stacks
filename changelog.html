@@ -1,4 +1,15 @@
 <p>
+<strong>= 1.0.3.1 = September 24, 2015</strong>
+<ul>
+    <li>Added function to get grid posts_per_row ratio value called mp_stacks_grid_posts_per_row_percentage.</li>
+    <li>Hide the "Add New Brick" button in the Brick Editor as it isn't needed in this location.</li>
+    <li>Changed brick slugs to "brick" - was previously 'stack'.</li>
+    <li>Make mp-stacks-queried-object-id value for ajax return "false" if "Stack Only" page as there is no Queried Object Id (parent page).</li>
+    <li>Hide all admin notices in brick editor as they aren't needed or helpful here. </li>
+    <li>Make sure that the Admin Bar and Admin sidebar are always hidden in Brick Editor - even if not open in iframe.</li>
+    <li>Use correct table prefixes for wpdb calls using $wpdb->base_prefix in mp-stack.php.</li>
+    <li>Enqueue dashicons on Stack Only pages so the paintbrush icon will display on the "Edit This Brick" button.</li>
+</ul>
 <strong>1.0.3.0 = September 22, 2015</strong>
 <ul>
     <li>Added check for css_required before looping through it in the footer. Also moved function priority to 99 so it runs after Stacks that might have been after in the wp_footer.</li>

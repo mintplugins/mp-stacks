@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.0
+Stable tag: 1.0.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,16 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.1 = September 24, 2015
+* Added function to get grid posts_per_row ratio value called mp_stacks_grid_posts_per_row_percentage.
+* Hide the "Add New Brick" button in the Brick Editor as it isn't needed in this location.
+* Changed brick slugs to "brick" - was previously 'stack'.
+* Make mp-stacks-queried-object-id value for ajax return "false" if "Stack Only" page as there is no Queried Object Id (parent page).
+* Hide all admin notices in brick editor as they aren't needed or helpful here. 
+* Make sure that the Admin Bar and Admin sidebar are always hidden in Brick Editor - even if not open in iframe.
+* Use correct table prefixes for wpdb calls using $wpdb->base_prefix in mp-stack.php.
+* Enqueue dashicons on Stack Only pages so the paintbrush icon will display on the "Edit This Brick" button.
 
 = 1.0.3.0 = September 22, 2015
 * Added check for css_required before looping through it in the footer. Also moved function priority to 99 so it runs after Stacks that might have been after in the wp_footer.
