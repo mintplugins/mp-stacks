@@ -83,6 +83,8 @@ function mp_stack_only_page(){
 		
 		$stack = get_term_by('slug', $wp_query->query_vars['mp_stack_only_page'], 'mp_stacks');
 		
+   		wp_enqueue_style( 'dashicons' );
+
 		?>
         <!DOCTYPE html>
         <html <?php language_attributes(); ?>>
