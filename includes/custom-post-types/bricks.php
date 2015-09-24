@@ -49,7 +49,7 @@ function mp_brick_post_type() {
 		'show_ui' 			=> true, 
 		'show_in_menu' 		=> false, 
 		'query_var' 		=> true,
-		'rewrite' 			=> array( 'slug' => 'stack' ),
+		'rewrite' 			=> NULL,
 		'capability_type' 	=> 'page',
 		'has_archive' 		=> false, 
 		'hierarchical' 		=> true,
