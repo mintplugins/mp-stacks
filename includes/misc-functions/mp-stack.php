@@ -301,11 +301,11 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 			
 			//If this is the main site (the "parent" site if you will)
 			if ( is_main_site( $current_blog_id ) ){
-				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
+				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->base_prefix . "postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
 			}
 			//If this is not the "main site", it is a child site in a multisite setup.
 			else{
-				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM wp_%d_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( $current_blog_id, intval( $post_id ), '%mp_stack_order_%' ) )  );
+				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->base_prefix . "%d_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( $current_blog_id, intval( $post_id ), '%mp_stack_order_%' ) )  );
 			}
 		
 			$stack_id = explode( 'mp_stack_order_', $stack_id_results[0]->meta_key );
@@ -462,7 +462,12 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 					), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 	
 					//Get number of bricks in this stack
-					$number_of_bricks = mp_core_number_postpercat( $stack_id );
+					if ( !empty( $stack_id ) ){
+						$number_of_bricks = mp_core_number_postpercat( $stack_id );
+					}
+					else{
+						$number_of_bricks = 0;
+					}
 					
 					//If this brick is being shown as part of a stack and there is more than 1 brick in that stack
 					if ( $number_of_bricks > 1 ){
