@@ -441,7 +441,7 @@ function mp_stacks_close_lightbox( action_name ){
 			//If we got this far, we just edited a Brick that was already in existence on the current page.
 			$('.mfp-iframe').load(function(){
 				
-				mp_stacks_queried_object_id = $('body').attr('class').match(/\bmp-stacks-queried-object-id-(\d+)\b/)[1]
+				mp_stacks_queried_object_id = $('body').attr('class').match(/\bmp-stacks-queried-object-id-(\d+)\b/) ? $('body').attr('class').match(/\bmp-stacks-queried-object-id-(\d+)\b/)[1] : false;
 				
 				//Reload the Brick that was updated using ajax
 				var postData = {
