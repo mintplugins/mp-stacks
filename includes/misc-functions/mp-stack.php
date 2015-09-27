@@ -234,7 +234,7 @@ function mp_stack( $stack_id ){
 		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
 			
 			//Build Brick Output
-			$html_output .= mp_brick( get_the_ID(), true, $brick_number );
+			$html_output .= mp_brick( get_the_ID(), $stack_id, $brick_number );
 			
 			$brick_number = $brick_number + 1;
 			
@@ -273,11 +273,12 @@ function mp_stack( $stack_id ){
 
 /**
  * Function which return the HTML output for a brick
- * Parameter: Post ID
+ * Parameter: Post ID - The post id for this mp_brick post.
  * Parameter: Stack ID - The Stack which is calling this brick
  * Parameter: Brick Number - This is brick number X in this Stack
+ * Parameter: Args - Additional Arguments for the function.
  */
-function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_number = NULL ){
+function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = array() ){
 	
 	global $mp_stacks_active_bricks, $wpdb;
 	
@@ -285,34 +286,39 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 	if ( !mp_core_post_exists( $post_id ) ){
 		return NULL;	
 	}
-
-	//Get the ID of the Stack this Brick belongs to. 
-	$stack_id = mp_core_get_post_meta( $post_id, 'mp_stack_id', 'no_stack_id_saved_yet' );
 	
-	if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
-		
-		//If there is no Stack ID saved to the meta of this Brick yet (Backwards Compatibility)
-		if ( $stack_id == 'no_stack_id_saved_yet' || empty( $stack_id ) ){
-			//Originally, Bricks could be part of multiple Stacks and thus, didn't save a Stack ID.
-			//Now Bricks can only belong to one Stack - but the only place the Stack ID was stored was in the key of the mp_stack_order_STACKID
+	//Setup the default args
+	$default_args = array(
+		'show_stack_controls_for_admin' => true	
+	);
+	
+	$args = wp_parse_args( $args, $default_args );
+	
+	//Get the ID of the Stack this Brick belongs to. 
+	$saved_stack_id = mp_core_get_post_meta( $post_id, 'mp_stack_id', 'no_stack_id_saved_yet' );
 			
-			//Check if this is a multisite
-			$current_blog_id = get_current_blog_id();
-			
-			//If this is the main site (the "parent" site if you will)
-			if ( is_main_site( $current_blog_id ) ){
-				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->base_prefix . "postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( intval( $post_id ), '%mp_stack_order_%' ) )  );
-			}
-			//If this is not the "main site", it is a child site in a multisite setup.
-			else{
-				$stack_id_results = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM " . $wpdb->base_prefix . "%d_postmeta WHERE post_id = '%d' AND meta_key LIKE '%s'", array( $current_blog_id, intval( $post_id ), '%mp_stack_order_%' ) )  );
-			}
+	//If there is no Stack ID saved to the meta of this Brick yet (Backwards Compatibility)
+	if ( $saved_stack_id == 'no_stack_id_saved_yet' || empty( $saved_stack_id ) ){
+		//Originally, Bricks could be part of multiple Stacks and thus, didn't save a Stack ID.
+		//Now, as of Version 1.0.2.9, Bricks can only belong to one Stack - so we'll save the $stack_id using the one passed into this function if one wasn't added to the post meta when this brick was created.
 		
-			$stack_id = explode( 'mp_stack_order_', $stack_id_results[0]->meta_key );
-			$stack_id = $stack_id[1];
+		if ( !empty( $stack_id ) ){
+
 			//Now that we have the Stack ID, save it to the Brick under the meta_key "mp_stack_id"
 			update_post_meta( $post_id, 'mp_stack_id', $stack_id );
+			$saved_stack_id = $stack_id;
+			
 		}
+	}
+	
+	//If, for some strange fringe-style reason, the Stack ID passed to this function doesn't match up with the saved one, settle that discrepancy by using the one passed to this function.
+	if ( ( !empty( $stack_id ) && $stack_id != false && $stack_id != 'false' ) && $stack_id != $saved_stack_id ){
+		update_post_meta( $post_id, 'mp_stack_id', $stack_id );	
+	}
+	
+	//If no Stack ID was passed (in ajax brick-loads for example), use the saved one.
+	if ( empty( $stack_id ) || !$stack_id || $stack_id == 'false' ){
+		$stack_id = $saved_stack_id;
 	}
 					
 	//Default outputs back to null
@@ -426,7 +432,7 @@ function mp_brick( $post_id, $show_stack_controls_for_admin = true, $brick_numbe
 				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick (Or Double-Click)', 'mp_stacks' ) . '</a>';
 				
 				//If we want to show the Stack-Related controls for admins (actions like re-order, add brick before/after. Edit Brick always remains.)
-				if ( !empty( $show_stack_controls_for_admin ) ){
+				if ( !empty( $args['show_stack_controls_for_admin'] ) && $args['show_stack_controls_for_admin'] ){
 					
 					//Get Menu Order Info for this Brick						
 					$mp_stack_order = get_post_meta( $post_id, 'mp_stack_order_' . $stack_id, true);
