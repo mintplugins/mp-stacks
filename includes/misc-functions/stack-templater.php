@@ -300,6 +300,13 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 						update_post_meta( $new_brick_id, 'mp_stack_order_' . $new_stack_id, $brick_meta_value );
 						
 					}
+					//If this meta field is the Stack ID one which tells bricks which Stack they belong to
+					elseif( $brick_meta_id == 'mp_stack_id' ){
+						
+						//Set the Stack ID to be the new one
+						update_post_meta( $new_brick_id, 'mp_stack_id', $new_stack_id );
+						
+					}
 					//If this meta field is not the stack order one
 					else{
 						
