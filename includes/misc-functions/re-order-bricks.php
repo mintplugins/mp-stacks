@@ -267,9 +267,3 @@ function mp_stacks_make_mp_brick_posts_sortable(){
 		
 }
 add_action( 'init', 'mp_stacks_make_mp_brick_posts_sortable' );
-
-/**
-* To make any post type sortable, use the code below and sub in your posttype
-*/
-//add_filter('manage_CUSTOMPOSTTYPE_posts_columns', 'mp_stacks_add_new_post_column');
-//add_action('manage_CUSTOMPOSTTYPE_posts_custom_column','mp_stacks_show_order_column');
