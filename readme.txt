@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.1
+Stable tag: 1.0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,13 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.2 = September 27, 2015
+* The mp_brick function has arg change now including the Stack ID which is optionally passed to the function. Additional arguments are now stored in an $args array in the 4th argument position. The Stack ID is now set using the Stack ID arg passed to the function. If using ajax, no Stack ID variable is passed and it is ignored or uses the $saved_stack_id.
+* When a brick is created using the MP Stacks templater, use new Stack Id for the mp_stack_id meta key.
+* Make sure that $current_screen->post_type isset before using it.
+* CSS fix for grid text holders (was outputting 2 semi-colons when only 1 was needed).
+* Add current Stack ID, in addition to the Brick ID, to the body when editing a brick using JS.
 
 = 1.0.3.1 = September 24, 2015
 * Added function to get grid posts_per_row ratio value called mp_stacks_grid_posts_per_row_percentage.

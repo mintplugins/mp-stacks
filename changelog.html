@@ -1,5 +1,13 @@
 <p>
-<strong>= 1.0.3.1 = September 24, 2015</strong>
+<strong>1.0.3.2 = September 27, 2015</strong>
+<ul>
+    <li>The mp_brick function has arg change now including the Stack ID which is optionally passed to the function. Additional arguments are now stored in an $args array in the 4th argument position. The Stack ID is now set using the Stack ID arg passed to the function. If using ajax, no Stack ID variable is passed and it is ignored or uses the $saved_stack_id.</li>
+    <li>When a brick is created using the MP Stacks templater, use new Stack Id for the mp_stack_id meta key.</li>
+    <li>Make sure that $current_screen->post_type isset before using it.</li>
+    <li>CSS fix for grid text holders (was outputting 2 semi-colons when only 1 was needed).</li>
+    <li>Add current Stack ID, in addition to the Brick ID, to the body when editing a brick using JS.</li>
+</ul>
+<strong>1.0.3.1 = September 24, 2015</strong>
 <ul>
     <li>Added function to get grid posts_per_row ratio value called mp_stacks_grid_posts_per_row_percentage.</li>
     <li>Hide the "Add New Brick" button in the Brick Editor as it isn't needed in this location.</li>
