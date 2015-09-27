@@ -151,6 +151,7 @@ jQuery(document).ready(function($){
 		if ( $(this).hasClass('mp-brick-edit-link') ){
 			//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
 			$( 'body' ).attr( 'mp-brick-current-id', $(this).attr( 'mp-brick-id' ) );
+			$( 'body' ).attr( 'mp-stack-current-id', $(this).attr( 'mp-stack-id' ) );
 		}
 		
 	});	
@@ -357,6 +358,7 @@ jQuery(document).ready(function($){
 		
 		//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
 		$( 'body' ).attr( 'mp-brick-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-brick-id' ) );
+		$( 'body' ).attr( 'mp-stack-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-stack-id' ) );
 	});	
 	
 	/**
@@ -426,6 +428,7 @@ function mp_stacks_close_lightbox( action_name ){
 		
 		//Check if a brick ID attribute exists in the body tag
 		var brick_id = $( 'body' ).attr( 'mp-brick-current-id' ) ? $( 'body' ).attr( 'mp-brick-current-id' ) : false;
+		var stack_id = $( 'body' ).attr( 'mp-stack-current-id' ) ? $( 'body' ).attr( 'mp-stack-current-id' ) : false;
 					
 		//If we added a new brick - it doesn't exist on the page yet so refresh the whole thing
 		if ( !brick_id ){
@@ -446,6 +449,7 @@ function mp_stacks_close_lightbox( action_name ){
 				//Reload the Brick that was updated using ajax
 				var postData = {
 					action: 'mp_stacks_update_brick',
+					mp_stacks_stack_id_of_brick: stack_id,
 					mp_stacks_update_brick_id: brick_id,
 					mp_stacks_queried_object_id: mp_stacks_queried_object_id
 				}
@@ -474,6 +478,7 @@ function mp_stacks_close_lightbox( action_name ){
 						
 						//Remove the current brick id from the body
 						$( 'body' ).removeAttr( 'mp-brick-current-id' );
+						$( 'body' ).removeAttr( 'mp-stack-current-id' );
 						
 						//jQuery Trigger which Add-Ons can use to update themselves when a Brick is updated.
 						$( document ).trigger( 'mp_stacks_brick_loaded_via_ajax', [brick_id] );
