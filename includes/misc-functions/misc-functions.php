@@ -739,7 +739,7 @@ function mp_stacks_remove_admin_menu_for_brick_editor(){
 	
 	$current_screen = get_current_screen();
 		
-	if ( $current_screen->post_type == 'mp_brick' && $current_screen->base == 'post' ){
+	if ( isset( $current_screen->post_type ) && isset( $current_screen->base ) && $current_screen->post_type == 'mp_brick' && $current_screen->base == 'post' ){
 		global $menu;
 		$menu = array();
 		remove_all_actions( 'adminmenu' );
