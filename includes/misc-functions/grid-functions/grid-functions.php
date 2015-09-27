@@ -157,7 +157,7 @@ function mp_stacks_grid_text_css( $post_id, $meta_prefix, $css_class, $css_defau
 		#mp-brick-' . $post_id . ' .' . $css_class . '-holder a{
 			' . mp_stacks_grid_get_text_placement_css( $placement, array( 
 					'line_height' => ($size),
-				) ) . '; ' .
+				) ) . ' ' .
 			mp_core_css_line( 'color', $color ) . 
 			mp_core_css_line( 'font-weight', $bold ? '700' : 'normal' ) . 
 			mp_core_css_line( 'font-style', $italic ? 'italic;' : 'normal' ) . 
