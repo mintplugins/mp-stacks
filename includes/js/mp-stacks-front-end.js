@@ -31,6 +31,12 @@ jQuery(document).ready(function($){
 	mp_stacks_magnificPopup = $.magnificPopup.instance;
 	
 	/**
+	 * Any Stacks that aren't added as Shortcodes (widgets, other, etc) need to have their CSS moved from the footer into the page <head>
+	 *
+	 */
+	$( '#mp-stacks-extra-stacks-css' ).appendTo( $( 'head' ) );
+	
+	/**
 	 * Modify the Magnific Popup to open using the popup source - and set sized and behaviours for Media like YouTube, JPGs, etc
 	 *
 	 */
