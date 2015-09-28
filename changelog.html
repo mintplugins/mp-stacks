@@ -1,4 +1,9 @@
 <p>
+<strong>1.0.3.3 = September 28, 2015</strong>
+<ul>
+    <li>Bugfix: Widget CSS (and other non-shortcode added stacks) weren't properly getting their CSS output since 1.0.2.9 because of the scripts now being enqueued only-as-needed by the Content-Filters themselves. They are now re-output for any "leftover" stacks added to the page after the fact at priority 99 in wp_footer and shifted to the head.</li>
+    <li>Security strengthen: Added intval() to mp_stack_id updates.</li>
+</ul>
 <strong>1.0.3.2 = September 27, 2015</strong>
 <ul>
     <li>The mp_brick function has arg change now including the Stack ID which is optionally passed to the function. Additional arguments are now stored in an $args array in the 4th argument position. The Stack ID is now set using the Stack ID arg passed to the function. If using ajax, no Stack ID variable is passed and it is ignored or uses the $saved_stack_id.</li>

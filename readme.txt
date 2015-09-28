@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.2
+Stable tag: 1.0.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.3 = September 28, 2015
+* Bugfix: Widget CSS (and other non-shortcode added stacks) weren't properly getting their CSS output since 1.0.2.9 because of the scripts now being enqueued only-as-needed by the Content-Filters themselves. They are now re-output for any "leftover" stacks added to the page after the fact at priority 99 in wp_footer and shifted to the head.
+* Security strengthen: Added intval() to mp_stack_id updates.
 
 = 1.0.3.2 = September 27, 2015
 * The mp_brick function has arg change now including the Stack ID which is optionally passed to the function. Additional arguments are now stored in an $args array in the 4th argument position. The Stack ID is now set using the Stack ID arg passed to the function. If using ajax, no Stack ID variable is passed and it is ignored or uses the $saved_stack_id.
