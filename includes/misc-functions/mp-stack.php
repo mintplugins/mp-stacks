@@ -305,7 +305,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 		if ( !empty( $stack_id ) ){
 
 			//Now that we have the Stack ID, save it to the Brick under the meta_key "mp_stack_id"
-			update_post_meta( $post_id, 'mp_stack_id', $stack_id );
+			update_post_meta( $post_id, 'mp_stack_id', intval( $stack_id ) );
 			$saved_stack_id = $stack_id;
 			
 		}
@@ -313,7 +313,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	
 	//If, for some strange fringe-style reason, the Stack ID passed to this function doesn't match up with the saved one, settle that discrepancy by using the one passed to this function.
 	if ( ( !empty( $stack_id ) && $stack_id != false && $stack_id != 'false' ) && $stack_id != $saved_stack_id ){
-		update_post_meta( $post_id, 'mp_stack_id', $stack_id );	
+		update_post_meta( $post_id, 'mp_stack_id', intval( $stack_id ) );	
 	}
 	
 	//If no Stack ID was passed (in ajax brick-loads for example), use the saved one.
@@ -859,7 +859,7 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 add_filter( 'mp_brick_additional_css', 'mp_stacks_default_brick_margins', 10, 2);
 
 /**
- * Output css for all Stacks on this page in shortcodes into the a separate CSS file which is enqueued.
+ * Output css for all Stacks on this page in shortcodes into the Document Head
  * Parameter: none
  */
 function mp_stacks_header_css(){
@@ -899,31 +899,46 @@ function mp_stacks_header_css(){
 add_action( 'wp_head', 'mp_stacks_header_css', -1); 
 
 /**
- * Output css for all Stacks that haven't been output (for whatever reason). This also covers the css for Stack widgets.
+ * Output css and js for all Stacks that haven't been output (for whatever reason). This also covers the css and js for Stack widgets.
  * Parameter: none
  */
-function mp_stacks_extra_stacks_css(){
+function mp_stacks_extra_stacks_css_and_js(){
 	
 	global $mp_stacks_on_page;
 	
 	if ( isset( $mp_stacks_on_page['css_required'] ) ){
 		
-		//Create an array using the stacks that are in the css_required list but not in the css_complete list
-		foreach( $mp_stacks_on_page['css_required'] as $stack_id => $css_required ){
-			
-			//Check if this Stack id is in the css_complete list
-			if ( !in_array( $stack_id, $mp_stacks_on_page['css_complete'] ) ){
+		//Output a container for this CSS so our JS can move the contents into the head
+		echo '<div id="mp-stacks-extra-stacks-css">';
+		
+			//Create an array using the stacks that are in the css_required list but not in the css_complete list
+			foreach( $mp_stacks_on_page['css_required'] as $stack_id => $css_required ){
 				
-				//Output CSS for this stack
-				mp_stack_css( $stack_id, true ); 
+				//Check if this Stack id is in the css_complete list
+				if ( !in_array( $stack_id, $mp_stacks_on_page['css_complete'] ) ){
+					
+					//Output CSS for this stack
+					mp_stack_css( $stack_id, true ); 
+					
+				}
 				
 			}
 			
-		}
+			//Output any CSS and JS files, and also any inline CSS or inline JS that was enqueued by the mp_stack_css calls.
+			wp_print_styles();
+			mp_stacks_inline_css();
+		
+		echo '</div>';
+		
+		echo '<div id="mp-stacks-extra-stacks-js">';
+			wp_print_scripts();
+			mp_stacks_inline_js();
+		echo '</div>';
+		
 	}
 	
 }
-add_action( 'wp_footer', 'mp_stacks_extra_stacks_css', 99 );
+add_action( 'wp_footer', 'mp_stacks_extra_stacks_css_and_js', 99 );
 
 /**
  * Output all inline js for all Stacks late in the footer. We use the global variable $mp_stacks_inline_js inside content-type filters to generate this output string.
@@ -960,6 +975,10 @@ function mp_stacks_get_inline_js(){
 		foreach( $mp_stacks_footer_inline_js as $script_id => $script_output ){
 			//Add the <script before and after the outputs with proper id tagging.
 			$inline_js_script_array[$script_id . '-inline-js'] = '<div id="' . $script_id . '-inline-js"><script type="text/javascript">' . $script_output . '</script></div>';
+			
+			//Unset this value from the global var
+			unset( $mp_stacks_footer_inline_js[$script_id] );
+			
 		}
 		
 		return $inline_js_script_array;
@@ -1006,6 +1025,10 @@ function mp_stacks_get_inline_css(){
 		foreach( $mp_stacks_footer_inline_css as $style_id => $script_output ){
 			//Add the <script before and after the outputs with proper id tagging.
 			$inline_css_script_array[ sanitize_title( $style_id . '-inline-css' ) ] = '<style id="' . sanitize_title( $style_id . '-inline-css' ) . '" mp_stacks_inline_style="' . sanitize_title( $style_id . '-inline-css' ) . '">' . $script_output . '</style>';
+			
+			//Unset this value from the global var
+			unset( $mp_stacks_footer_inline_css[$style_id] );
+			
 		}
 		
 		return $inline_css_script_array;
