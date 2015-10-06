@@ -3,7 +3,8 @@
 /* Hide left side menu  */
 #adminmenuwrap,
 #adminmenuback,
-#wpadminbar{
+#wpadminbar,
+.page-title-action{
 	display:none;	
 }
 html.wp-toolbar {
