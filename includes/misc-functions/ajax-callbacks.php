@@ -200,3 +200,147 @@ function mp_stacks_link_to_bricks_ajax() {
 	
 }
 add_action( 'wp_ajax_mp_stacks_link_to_bricks_ajax', 'mp_stacks_link_to_bricks_ajax' );
+
+/**
+ * Ajax callback Importing a Brick via Ajax
+ *
+ * @since    1.0.0
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_import_brick_via_ajax() {	
+
+	if ( !isset( $_POST['mp_brick_id'] ) ){
+		echo json_encode( array(
+			'error' => __( 'No Brick ID Passed', 'mp_stacks' )
+		));
+		die();
+	}
+	
+	if ( !isset( $_POST['mp_brick_json_to_import'] ) ){
+		echo json_encode( array(
+			'error' => __( 'No Brick JSON Passed', 'mp_stacks' )
+		));
+		die();
+	}
+	
+	//Check nonce
+	if ( !check_ajax_referer( 'mp-stacks-nonce-action-name', 'mp_stacks_nonce', false ) ){
+		echo __('Ajax Security Check', 'mp_stacks');
+		die();
+	}
+	
+	$success_array = array();
+	
+	//Decode the JSON provided by the user
+	$mp_brick_settings = json_decode( stripslashes( $_POST['mp_brick_json_to_import'] ), true );
+	
+	//If we weren't able to decode the JSON correctly
+	if ( empty( $mp_brick_settings ) ){
+		echo json_encode( array(
+			'error' => __( 'Error with Brick Code. No changes have been made. Please try again.', 'mp_stacks' )
+		));
+		die();
+	}
+	
+	//Does this brick post exist yet?
+	if ( get_post_status( $_POST['mp_brick_id'] ) != 'publish' ){
+		
+		//If we didn't get all the things we need to create this post
+		if ( !isset( $_POST['mp_stack_id'] ) || !isset( $_POST['mp_stack_order'] ) ){
+			echo json_encode( array(
+				'error' => __( 'Error: No Stack ID or Order were passed. Please refresh and try again.', 'mp_stacks' )
+			));
+			die();
+		}
+		
+		//If it's not, Publish this post (brick)
+		$this_new_brick = array(
+			'ID'          => $_POST['mp_brick_id'],
+			'post_status' => 'publish'
+		);
+		wp_update_post( $this_new_brick );	 
+		
+		//Add the MP Stacks taxonomy term to this post (or "brick").
+		wp_set_object_terms(  $_POST['mp_brick_id'], intval( $_POST['mp_stack_id'] ), 'mp_stacks' );
+		//Make sure this new brick is in the right stack
+		update_post_meta( $_POST['mp_brick_id'], 'mp_stack_order_' . $_POST['mp_stack_id'], $_POST['mp_stack_order'] );
+		//This custom meta value for the mp_stack_id was added in Version 1.0.2.9
+		update_post_meta( $_POST['mp_brick_id'], 'mp_stack_id', $_POST['mp_stack_id'] );
+		
+	}
+	
+	//Loop through each meta option provided for this brick
+	foreach( $mp_brick_settings as $meta_key => $brick_meta_value ){
+		
+		//Sanitize the key
+		$meta_key = sanitize_text_field( $meta_key );
+		
+		//If this is the stack order, we don't need to save it because it will be handled by the Stack
+		if ( stripos( $meta_key, 'mp_stack_order' ) !== false ){ 
+			//Make sure this new brick is in the right stack
+			update_post_meta( $_POST['mp_brick_id'], 'mp_stack_order_' . $_POST['mp_stack_id'], $_POST['mp_stack_order'] );
+		}
+		else{
+		
+			//If this is a repeater, sanitize each value and key
+			if ( is_array( $brick_meta_value['value'] ) ){
+				
+				//Reset our checked meta variable
+				$brick_meta_checked_value = array();
+				
+				$repeat_counter = 0;
+								
+				//Loop through each repeat in this repeater
+				foreach( $brick_meta_value['value'] as $repeat ){
+					
+					//Loop through each field in this repeat
+					foreach( $repeat as $field_id => $field_value_array ){
+						
+						//If this should be an imported attachment
+						if ( isset( $field_value_array['attachment'] ) && $field_value_array['attachment'] ){
+							$brick_meta_checked_value[$repeat_counter][$field_id] = mp_stack_check_value_for_attachment( sanitize_text_field( $field_value_array['value'] ) );
+						}
+						else{
+							$brick_meta_checked_value[$repeat_counter][$field_id] = sanitize_text_field( $field_value_array['value'] );
+						}
+						
+					}
+					
+					$repeat_counter = $repeat_counter + 1;
+					
+				}
+				
+				
+			}
+			//If this is not a repeater
+			else{
+				
+				//If this should be an imported attachment
+				if ( isset( $brick_meta_value['attachment'] ) && $brick_meta_value['attachment'] ){
+					$brick_meta_checked_value = mp_stack_check_value_for_attachment( sanitize_text_field( $brick_meta_value['value'] ));
+				}
+				else{
+					$brick_meta_checked_value = isset( $brick_meta_value['value'] ) ? sanitize_text_field( $brick_meta_value['value'] ) : NULL;
+				}
+				
+			}
+		
+		}
+		
+		//Add the meta key/value to the post	
+		update_post_meta( $_POST['mp_brick_id'], $meta_key, $brick_meta_checked_value );
+			 
+	}
+	
+	//Make sure the MP Stack ID is correct
+	update_post_meta( $_POST['mp_brick_id'], 'mp_stack_id', $_POST['mp_stack_id'] );
+	
+	$success_array['success'] = __( 'Brick Import Successful', 'mp_stacks' ) ;
+	
+	echo json_encode( $success_array );
+	
+	die();
+
+}
+add_action( 'wp_ajax_mp_stacks_import_brick_via_ajax', 'mp_stacks_import_brick_via_ajax' );
