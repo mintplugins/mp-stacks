@@ -64,7 +64,6 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 				'other_normal_meta_key' => array( 
 					'value' => $meta_value,
 					'attachment' => false,
-					'required_add_on' => 'mp_stacks_features' 
 				),
 				
 				'repeater_meta_key' => array( 
@@ -72,16 +71,13 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 						'key1' => array( 
 							'value' => 'Key Value 1',
 							'attachment' => false,
-							'required_add_on' => 'mp_stacks_features' 
 						),
 						'key2' => array( 
 							'value' => 'Key Value 2',
 							'attachment' => false,
-							'required_add_on' => 'mp_stacks_features' 
 						),
 					),
 					'attachment' => false,
-					'required_add_on' => 'mp_stacks_features' 
 				)
 			),
 			'brick_2' => array(
@@ -91,7 +87,6 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 				'other_normal_meta_data' => array( 
 					'value' => $meta_value,
 					'attachment' => false,
-					'required_add_on' => 'mp_stacks_features' 
 				)
 			)
 		)	
@@ -141,9 +136,6 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 			
 			//Get all meta field keys for this brick
 			$brick_meta_keys = get_post_custom_keys( $post_id ); 
-			
-			//reset required add-on
-			$required_add_on = NULL;
 						
 			//Loop through all meta fields attached to this brick
 			foreach ( $brick_meta_keys as $meta_key ){
@@ -428,6 +420,10 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 		);
 		
 		$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+		
+		if ( !$attach_id ){
+			return NULL;
+		}
 			
 		// we must first include the image.php file
 		// for the function wp_generate_attachment_metadata() to work
@@ -446,4 +442,90 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 	
 	return $meta_value;
 							
+}
+
+/**
+ * Get the JSON for all of a Brick's meta settings. This will not check for attachments and import the way a Stack template does.
+ */
+function mp_stacks_brick_json( $brick_id ){
+	
+	//Get this brick's post id
+	$post_id = $brick_id;
+	
+	//Build Default Brick Output
+	$mp_stack_template_array = array(
+		'brick_title' => get_the_title( $post_id ),
+	);
+	
+	//Get all meta field keys for this brick
+	$brick_meta_keys = get_post_custom_keys( $post_id ); 
+				
+	//Loop through all meta fields attached to this brick
+	foreach ( $brick_meta_keys as $meta_key ){
+		
+		//If this is the stack order, we don't need to save it because it will be handled by the Stack
+		if ( stripos( $meta_key, 'mp_stack_order' ) !== false ){ 
+		
+		}
+		elseif( $meta_key == 'mp_stack_id' ){
+			
+		}
+		else{
+		
+			//Get the value of this meta key
+			$meta_value = get_post_meta( $post_id, $meta_key, true );
+			
+			//If this is a repeater	
+			if ( is_array( $meta_value ) ){
+				
+				$meta_value_array = array();
+				$repeat_counter = 0;
+				
+				//Loop through each repeat in this repeater
+				foreach( $meta_value as $repeat ){
+					
+					if ( is_array( $repeat ) ){							
+						//Loop through each field in this repeat
+						foreach( $repeat as $field_id => $field_value ){
+						
+							//Add this field_value_array to the parent's meta_value_array
+							$meta_value_array['value'][$repeat_counter][$field_id] = array( 
+								'value' => apply_filters( 'mp_stacks_template_metafield_value', $field_value, $field_id ),
+								//'attachment' => false //While this value is set to be false here, it is merely a default that is not used in this scenario but is in others (eg Theme Bundles)
+							);								
+							
+						}
+					}
+					
+					//Increment Repeat Counter
+					$repeat_counter = $repeat_counter+1;
+				}
+
+			}
+			else{
+			
+				//Set up the standard meta_value_array
+				$meta_value_array = array( 
+					'value' => apply_filters( 'mp_stacks_template_metafield_value', $meta_value, $meta_key ),
+					//'attachment' => false //While this value is set to be false here, it is merely a default that is not used in this scenario but is in others (eg Theme Bundles)
+				);	
+			}
+			
+			//Add post meta fields to the array for this brick
+			$mp_brick_template_array[$meta_key] = $meta_value_array;
+		}			
+		
+	}
+	
+	//Filter-in any extra fields we want to save for this brick. 
+	$brick_meta = $mp_brick_template_array;
+		
+	$content_type_1 = isset( $mp_brick_template_array['brick_first_content_type']['value'] ) ? $mp_brick_template_array['brick_first_content_type']['value'] : NULL;
+	$content_type_2 = isset( $mp_brick_template_array['brick_second_content_type']['value'] ) ? $mp_brick_template_array['brick_second_content_type']['value'] : NULL;
+	//Filter-in any extra fields we want to save for this brick. 
+	$brick_meta = apply_filters( 'mp_stacks_template_extra_meta', $brick_meta, $content_type_1, $content_type_2 );
+	$mp_brick_template_array = $brick_meta;
+	
+	return json_encode( $mp_brick_template_array );
+				
 }
