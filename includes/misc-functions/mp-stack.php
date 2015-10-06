@@ -205,21 +205,24 @@ function mp_stack( $stack_id ){
 	
 	$term_exists = get_term_by('id', $stack_id, 'mp_stacks');
 	
-	//If this stack doesn't exist
-	if (!$term_exists){
-		$html_output .= '<div class="mp-brick no-brick">';
-			$html_output .= '<div class="mp-brick-inner">';
-				$html_output .= '<div class="mp-brick-content-types">';
-						$html_output .= '<div class="mp-brick-content-types-inner">';
-							$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
-								$html_output .= '<p style="padding:20px;">';
-									$html_output .=  __('Oops! This stack doesn\'t exist. It may have been deleted. You should remove it by editing this:', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . get_edit_post_link() . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
-								$html_output .= '</p>';
-							$html_output .= '</div>';		
+	//If this stack doesn't exist (only show error to logged-in users) 
+	if ( !$term_exists ){
+		
+		if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
+			$html_output .= '<div class="mp-brick no-brick">';
+				$html_output .= '<div class="mp-brick-inner">';
+					$html_output .= '<div class="mp-brick-content-types">';
+							$html_output .= '<div class="mp-brick-content-types-inner">';
+								$html_output .= '<div class="mp-brick-content-type-container mp-brick-centered">';
+									$html_output .= '<p style="padding:20px;">';
+										$html_output .=  __('Oops! This stack doesn\'t exist. It may have been deleted. You should remove it by editing this:', 'mp_stacks') . '<br /><a class="mp-brick-add-new-link" href="' . get_edit_post_link() . '" >' . __( 'Edit', 'mp_stacks' ) . '</a>';
+									$html_output .= '</p>';
+								$html_output .= '</div>';		
+						$html_output .= '</div>';		
 					$html_output .= '</div>';		
-				$html_output .= '</div>';		
-			$html_output .= '</div>';
-		$html_output .= '</div>';		
+				$html_output .= '</div>';
+			$html_output .= '</div>';	
+		}
 	}
 	//If there are bricks in this stack
 	elseif ( $mp_stack_query->have_posts() ) {
@@ -981,7 +984,7 @@ function mp_stacks_get_inline_js(){
 			
 		}
 		
-		return $inline_js_script_array;
+		return !empty( $inline_js_script_array ) ? $inline_js_script_array : array();
 	
 	}
 	else{
@@ -1031,7 +1034,7 @@ function mp_stacks_get_inline_css(){
 			
 		}
 		
-		return $inline_css_script_array;
+		return !empty( $inline_css_script_array ) ? $inline_css_script_array : array();
 	
 	}
 	else{
