@@ -888,6 +888,95 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	//When a user click the "Brick Export" icon in the bottom right of the Brick Editor area
+	$( '#mp-stacks-main-export-brick-link' ).on( 'click', function( event ){
+		
+		//This will reset all of the options for exporting a brick so the user can start fresh when the dialog opens
+		$( '#mp-stacks-import-brick-form' ).css( 'display', 'none' );
+		$( '#mp-stacks-export-brick' ).css( 'display', '' );
+		$( '.mp-stacks-brick-export-action-choice.import-brick' ).css( 'width', '50%' ).removeClass( 'mp-stacks-brick-import-selected' ); 
+		//remove any errors that may have previously displayed 
+		$( '.mp-stacks-import-brick-error' ).remove();
+		
+	});
+	
+	/**
+	 * When the "Import Brick" link is clicked.
+	 */	
+	$( '#mp-stacks-import-brick' ).on( 'click', function( event ){
+	
+		event.preventDefault();
+		
+		//Show the form to import a Brick's JSON code
+		$( '#mp-stacks-import-brick-form' ).css( 'display', 'inline-block' );
+				
+		//Hide the export Brick Option
+		$( '#mp-stacks-export-brick' ).css( 'display', 'none' );
+		
+		//Make the "Import" side take up all the space
+		$( '.mp-stacks-brick-export-action-choice.import-brick' ).css( 'width', '100%' ).addClass( 'mp-stacks-brick-import-selected' ); 
+		
+		//remove any errors that may have previously displayed 
+		$( '.mp-stacks-import-brick-error' ).remove();
+	});
+	
+	/**
+	 * When the "Import Brick" form is submitted.
+	 */	
+	$( '#mp-stacks-import-brick-submit-btn' ).on( 'click', function( event ){
+		
+		//remove any errors that may have previously displayed 
+		$( '.mp-stacks-import-brick-error' ).remove();
+		
+		//Confirm that when the user hits "Submit" that they actually meant to
+		var confirmation = confirm("This will overwrite ALL settings that are currently entered for this Brick. Make sure you only use code from trusted sources. Are you sure you want to do this?");
+		if ( !confirmation ){
+			return false;
+		}
+		
+		event.preventDefault();
+		
+		var mp_brick_id = $( this ).attr( 'mp-brick-id' );
+		var mp_stack_id = $( this ).attr( 'mp-stack-id' );
+		var mp_stack_order = $( this ).attr( 'mp-stack-order' );
+		var mp_brick_json_to_import = $( '#mp-brick-json-to-import' ).val();
+		
+		//Now we will do the actual Brick Import part using ajax
+		 var mp_stacks_import_brick_postData = {
+			action: 'mp_stacks_import_brick_via_ajax',
+			mp_stacks_nonce: mp_stacks_vars.ajax_nonce_value,
+			mp_brick_id: mp_brick_id,
+			mp_stack_id: mp_stack_id,
+			mp_stack_order: mp_stack_order,
+			mp_brick_json_to_import: mp_brick_json_to_import
+		 };
+		
+		 //Ajax to make new stack
+		 $.ajax({
+			type: "POST",
+			data: mp_stacks_import_brick_postData,
+			dataType:"json",
+			url: mp_stacks_vars.ajaxurl,
+			success: function (response) {
+				
+				//If there was  an error, output the error message
+				if ( response.error ){
+					$( '.mp-stacks-import-brick-action-description').after( '<div class="mp-stacks-import-brick-error">' + response.error + '</div>' );
+				}
+				//If this was successful
+				else{
+					$( document ).trigger( 'mp_core_post_submitted' );
+					location.reload();
+				}
+				
+								
+			}
+		 }).fail(function (data) {
+			console.log(data);
+		 });	
+				
+	});
+	
 	/**
 	 * Modify the Magnific Popup to open using the popup source - and set sized for height of content
 	 *
