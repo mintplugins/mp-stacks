@@ -368,25 +368,78 @@ jQuery(document).ready(function($){
 	});	
 	
 	/**
+	 * Upon page load, perform smooth scroll upon page load when a Brick's URL (hash) is in the page URL
+	 *
+	 */
+	 if( window.location.hash ) {
+	
+		var mp_stacks_hash = window.location.hash.replace("#", "");
+		mp_stacks_hash = mp_stacks_hash ? mp_stacks_hash : 'NULL';
+		
+		var target = $('[mp_stacks_brick_target=' + mp_stacks_hash +']');
+		
+		if (target.length) {
+			
+			$('html,body').animate({
+				scrollTop: target.offset().top
+			}, 500, function(){
+				//window.location.hash = href;	
+			});
+			
+			return false;
+		
+		}
+		else{
+			//console.log('No Bricks found with this hash. ' + mp_stacks_hash);	
+		}
+	}
+	
+	/**
+	 * Upon hash change, perform smooth scroll upon page load when a Brick's URL (hash) is in the page URL
+	 *
+	 */
+	$(window).on('hashchange', function() {
+    	var mp_stacks_hash = window.location.hash.replace("#", "");
+		mp_stacks_hash = mp_stacks_hash ? mp_stacks_hash : 'NULL';
+		
+		//console.log( 'hashchange' );
+		
+		var target = $('[mp_stacks_brick_target=' + mp_stacks_hash +']');
+		
+		if (target.length) {
+			
+			$('html,body').animate({
+				scrollTop: target.offset().top
+			}, 500, function(){
+				//window.location.hash = href;	
+			});
+			
+		return false;
+		
+		}
+		else{
+			//console.log('No bricks found with this hash:' + mp_stacks_hash +']');	
+		}
+	})
+	
+	/**
 	 * Perform smooth scroll when brick's achored are linked to
 	 *
 	 */
-	$(function() {
-	  $('a[href*=#]:not([href=#])').click(function() {
+	 $('a[href*=#]:not([href=#])').click(function() {
 		var href = $.attr(this, 'href');
 		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-		  var mp_stacks_hash = this.hash.slice(1);
-		  var target = $('[mp_stacks_brick_target=' + this.hash.slice(1) +']');
-		  if (target.length) {
-			$('html,body').animate({
-			  scrollTop: target.offset().top
+			var mp_stacks_hash = this.hash.slice(1);
+			var target = $('[mp_stacks_brick_target=' + this.hash.slice(1) +']');
+			if (target.length) {
+				$('html,body').animate({
+				scrollTop: target.offset().top
 			}, 500, function(){
-				 window.location.hash = href;	
+				window.location.hash = href;	
 			});
 			return false;
-		  }
 		}
-	  });
+		}
 	});
 		
 	/**
