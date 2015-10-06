@@ -100,10 +100,13 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 			
 			//Save this posts's order for each stack (this will only be 1 Stack here and 1 loop)
 			foreach($_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
-				update_post_meta( $post_id, 'mp_stack_order_' . $mp_stack_id, $mp_stack_order_value );
 				
-				//This custom meta value for the mp_stack_id was added in Version 1.0.2.9
-				update_post_meta( $post_id, 'mp_stack_id', $mp_stack_id );
+				if ( !empty( $mp_stack_id ) ){
+					update_post_meta( $post_id, 'mp_stack_order_' . $mp_stack_id, $mp_stack_order_value );
+					
+					//This custom meta value for the mp_stack_id was added in Version 1.0.2.9
+					update_post_meta( $post_id, 'mp_stack_id', $mp_stack_id );
+				}
 			}
 			
 			//Make sure this new brick is set to be published - Firefox was saving them as drafts for some reason...
