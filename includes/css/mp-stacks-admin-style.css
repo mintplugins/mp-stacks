@@ -532,7 +532,106 @@ content: "\f161";
 	top: 135px!important;
 }
 
-/* Hide WooCommerce Messages in the Brick Editor */
-.post-type-mp_brick .woocommerce-message{
-	display:none;	
+/* Hide notices in the Brick Editor */
+.post-type-mp_brick .woocommerce-message,
+.post-type-mp_brick .notice,
+.post-type-mp_brick .error{
+	display:none!important;	
+}
+
+#mp-stacks-copy-brick-link,
+#mp-stacks-paste-brick-link{
+	text-decoration:none!important;		
+}
+
+/* Hide the div which holds the brick json when copying a brick */
+#mp-brick-json{
+	
+}
+
+/*Export/Import a Brick Module Styles*/
+.mp-stacks-brick-export-import-container{
+	display:table;
+	width:100%;
+	height:100%;	
+}
+.mp-stacks-brick-export-action-choice{
+	display:table-cell;
+	vertical-align:middle;	
+	text-align:center;
+	cursor:pointer;
+	color:#fff;
+	padding: 50px;
+}
+.mp-stacks-brick-export-action-choice.export-brick{
+	background-color:#24A45A;
+	width:50%;
+}
+.mp-stacks-export-brick-action-title,
+.mp-stacks-import-brick-action-title{
+	font-size:25px;	
+	line-height:45px;
+	text-decoration:none;
+}
+.mp-stacks-export-brick-action-description,
+.mp-stacks-import-brick-action-description,
+#mp-stacks-main-export-brick-link:hover .dashicons,
+#mp-stacks-export-brick-link{
+	text-decoration:none;	
+}
+.mp-stacks-brick-export-action-choice.export-brick:hover{
+	background-color:#03682E;
+}
+.mp-stacks-export-brick-action-icon{
+	display: inline-block;
+	vertical-align: top;
+}
+.mp-stacks-export-brick-action-icon:before{
+	display:inline-block;
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f317";
+	font-size:100px;
+	line-height:100px;
+}
+/* Import Brick Button */
+.mp-stacks-brick-export-action-choice.import-brick{
+	background-color:#24A45A;
+	width:50%;
+}
+.mp-stacks-brick-export-action-choice.import-brick:hover{
+	background-color:#03682E;
+}
+.mp-stacks-import-brick-action-icon{
+	display: inline-block;
+	vertical-align: top;
+}
+.mp-stacks-import-brick-action-icon:before{
+	display:inline-block;
+	font-family: dashicons;
+	speak: none;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	content: "\f316";
+	font-size:100px;
+	line-height:100px;
+}
+/* Import Brick Form */
+#mp-stacks-import-brick-form{
+	display:none;
+	max-width: 300px;
+	padding:15px;	
+}
+.mp-stacks-brick-import-selected:hover{
+	background-color:#24A45A!important;
+}
+.mp-stacks-import-brick-error{
+	margin:10px 0px 0px 0px;
+	padding:10px;
+	color:#F00;
+	background-color:#FFF;
+	display:inline-block;	
+	border-left: 3px solid #F00;
 }
