@@ -24,16 +24,12 @@
 	 */
 	function mp_stacks_templates_add_default_template( $installed_templates ){ 
 		
-		
-		$realpath    = str_replace("\\", "/", dirname(__FILE__));
-		$url_path = substr_replace(str_replace($_SERVER['DOCUMENT_ROOT'], '', $realpath), "", 10000);
-		
 		$installed_templates['mp_stacks_default_template_array'] = array(
 			'template_slug' => 'default_template',
 			'template_title' => 'Default Template',
 			'template_description' => __('This is a default, general purpose Stack that comes with MP Stacks.', 'mp_stacks' ),
 			'template_tags' => 'General Purpose, Default',
-			'template_preview_img' => $url_path . '/images/preview_thumbnail.jpg',
+			'template_preview_img' => plugins_url( '/images/preview_thumbnail.jpg', __FILE__ ),
 			'template_demo_url' => 'http://demo.mintplugins.com/just-mp-stacks/stack/default',
 		);
 		
