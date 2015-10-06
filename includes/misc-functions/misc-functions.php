@@ -707,21 +707,110 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 function mp_stacks_brick_footer_slug( $text ){
 	
 	global $post;
-	
+		
 	if ( isset( $post->post_type ) && $post->post_type == 'mp_brick' ){
 		
 		if ( isset( $post->ID ) && !empty( $post->ID ) ){
-			return __( 'This Brick\'s URL', 'mp_stacks' ) . ': <strong>#' . sanitize_title( get_the_title( $post->ID ) ) . '</strong><br />' . __('To make a browser scroll to this brick, link to that as the URL. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
+			
+			$bruck_url_slug = sanitize_title( get_the_title( $post->ID ) );
+			
+			if ( !empty( $bruck_url_slug ) ) {
+				return __( 'This Brick\'s URL', 'mp_stacks' ) . ': <strong>#' . sanitize_title( get_the_title( $post->ID ) ) . '</strong><br />' . __('To make a browser scroll to this brick, link to that as the URL. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
+			}
+			else{
+				return __('To make a browser scroll to this brick, first give it a title at the very top of this page. For further explanation', 'mp_stacks' ) . ' <a target="_blank" href="https://mintplugins.com/support/brick-urls/">' . __( 'Click Here', 'mp_stacks' ) . '.</a>';	
+			}
 		}
 		else{
 			return __( 'Thank you for creating with WordPress and MP Stacks.', 'mp_stacks' );	
 		}
+				
+	}
+
+	return $text;
+	
+}
+add_filter( 'admin_footer_text', 'mp_stacks_brick_footer_slug' );
+
+//This function outputs the links to copy and paste a Brick on the bottom right hand side of the Brick Editor. It replaces the WordPress version info on Brick Editor pages.
+function mp_stacks_exportimport_brick_link( $text ){
+	
+	global $post;
+	
+	$return_output = NULL;
 		
+	if ( isset( $post->post_type ) && $post->post_type == 'mp_brick' && isset( $post->ID ) ){
+		
+		//Add links to copy/paste brick settings
+		$return_output .=  '<a id="mp-stacks-main-export-brick-link" href="#TB_inline?width=640&inlineId=mp-stacks-export-brick-thickbox" class="thickbox mp-stacks-export-brick-thickbox" title="' . __('Export/Import Brick Settings', 'mp_core') . '"><span class="dashicons dashicons-external"></span></a>';	
+		
+		ob_start();
+		?>
+		
+		<div id="mp-stacks-export-brick-thickbox" style="display: none;">
+			<div class="wrap" style="font-family: \'Helvetica Neue\', Helvetica, Arial, sans-serif;">
+			
+            <div class="mp-stacks-brick-export-import-container">
+            
+            	<a id="mp-stacks-export-brick-link" href="<?php echo esc_url( add_query_arg( array( 
+					'mp_stacks_brick_json' => true, 
+					'mp_brick_id' => $post->ID
+					), get_bloginfo( 'wpurl' ) ) ); ?>">
+                    <div id="mp-stacks-export-brick" class="mp-stacks-brick-export-action-choice export-brick">
+                        <div class="mp-stacks-export-brick-action-icon"></div>
+                        <div class="mp-stacks-export-brick-action-title"><?php echo __( 'Export this Brick', 'mp_stacks' ); ?></div>
+                        <div class="mp-stacks-export-brick-action-description"><?php echo __( 'Export all the settings and options for this brick to save or use for another Brick.', 'mp_stacks' ); ?></div>
+                    </div>
+                </a>
+                
+                <div id="mp-stacks-import-brick" class="mp-stacks-brick-export-action-choice import-brick">
+                    <div class="mp-stacks-import-brick-action-icon"></div>
+                    <div class="mp-stacks-import-brick-action-title"><?php echo __( 'Import a Brick', 'mp_stacks' ); ?></div>
+                    <div class="mp-stacks-import-brick-action-description"><?php echo __( 'This will overwrite all existing options for this Brick with a different Brick\'s options.', 'mp_stacks' ); ?></div>
+                 
+                 <div class="mp-stacks-clearedfix"></div>   
+                 
+                 <div id="mp-stacks-import-brick-form">   
+                 <?php
+				 
+					//If this is a new brick is being saved.
+					if ( isset( $_GET['mp_stack_order_new'] ) && isset( $_GET['mp_stack_id'] ) ){
+						
+						$stack_id = $_GET['mp_stack_id'];
+						$stack_order = $_GET['mp_stack_order_new'];
+					}
+					else{
+						
+						$stack_id = get_post_meta( $post->ID, 'mp_stack_id', true );
+						$stack_order = mp_core_get_post_meta( $post->ID, 'mp_stack_order_' . $stack_id );
+						
+					}
+			
+				 ?>
+                     <textarea id="mp-brick-json-to-import" class="mp-stacks-import-brick-textarea" rows="6" cols="30" placeholder="<?php echo __( 'Copy and Paste the Brick Code you have previously exported', 'mp_stacks' ); ?>"></textarea>
+                     <div class="button" id="mp-stacks-import-brick-submit-btn" mp-brick-id="<?php echo $post->ID; ?>" mp-stack-id="<?php echo $stack_id; ?>" mp-stack-order="<?php echo $stack_order; ?>"><?php echo __( 'Overwrite Brick', 'mp_stacks' ); ?></div>
+                 </div>
+                 
+                </div>
+            </div>
+        			
+			<div id="mp-brick-json"></div>
+			
+			</div>
+		</div>
+        
+        <?php
+		
+		$return_output .= ob_get_clean();
+		
+		return $return_output;
 	}
 	
 	return $text;
+	
 }
-add_filter( 'admin_footer_text', 'mp_stacks_brick_footer_slug' );
+add_filter( 'update_footer', 'mp_stacks_exportimport_brick_link', 11 );
+add_filter( 'core_update_footer', 'mp_stacks_exportimport_brick_link', 11 );
 
 //Add mp-stacks-wp-queried-id to the body class on any page/post. This way, stacks can reference that ID for things like "related posts" in ajax requests.
 function mp_stacks_body_class_queried_object_id($classes) {
@@ -766,3 +855,30 @@ function mp_stacks_remove_admin_bar_for_brick_editor(){
 	}
 }
 add_action( 'admin_enqueue_scripts', 'mp_stacks_remove_admin_bar_for_brick_editor' );
+
+/**
+ * Output the JSON for a Brick when requested by a POST
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    array $wp See link for description.
+ * @return   void
+ */
+function mp_stacks_display_brick_json(){
+	
+	//If a stack id has been passed to the URL
+	if ( isset( $_GET['mp_stacks_brick_json'] ) && isset( $_GET['mp_brick_id'] ) && current_user_can( 'delete_pages' ) ){
+		
+		//Convert this page to a zip file
+		header('Content-disposition: attachment; filename='. sanitize_title(get_the_title( $_GET['mp_brick_id'] )) . '-' . $_GET['mp_brick_id'] . '.txt');
+		header('Content-type: application/octet-stream');
+					
+		//Output the JSON for this brick
+		echo mp_stacks_brick_json( intval( $_GET['mp_brick_id'] ) );
+		
+		die();
+		
+	}
+}
+add_action( 'init', 'mp_stacks_display_brick_json' );
