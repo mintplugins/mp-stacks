@@ -12,7 +12,7 @@ function mp_stacks_admin_enqueue(){
 		wp_enqueue_style( 'mp_stacks_minimal-admin-css', plugins_url('css/mp-stacks-minimal-admin.css', dirname(__FILE__)), MP_STACKS_VERSION );
 		
 		//Append minimal admin variable to all urls if set
-		wp_enqueue_script( 'mp_stacks_minimal-admin-js', plugins_url('js/mp-stacks-minimal-admin.js', dirname(__FILE__)), array('jquery'), MP_STACKS_VERSION, true );	
+		//wp_enqueue_script( 'mp_stacks_minimal-admin-js', plugins_url('js/mp-stacks-minimal-admin.js', dirname(__FILE__)), array('jquery'), MP_STACKS_VERSION, true );	
 	}
 	
 	//lightbox
