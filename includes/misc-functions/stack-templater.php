@@ -21,6 +21,9 @@
  */
 function mp_stack_template_array( $stack_id, $args = array() ){		
 	
+	//Attempt to increase the time limit to make sure we don't time out on servers with really low timeout settings. This won't work if safe_mode is on for PHP.
+	set_time_limit( 300 );
+	
 	//Set defaults for args		
 	$args_defaults = array();
 	
@@ -245,6 +248,9 @@ function mp_stacks_duplicate_stack( $original_stack_id, $new_stack_name ){
  * Returns New Stack's ID
  */
 function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_stack_name ){
+	
+	//Attempt to increase the time limit to make sure we don't time out on servers with really low timeout settings. This won't work if safe_mode is on for PHP.
+	set_time_limit( 300 );
 	
 	//Make new stack
 	$new_stack_array = wp_insert_term(
