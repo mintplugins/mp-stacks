@@ -266,6 +266,11 @@ function mp_stacks_include_files(){
 		 * Stack Widget
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/widgets/class-stack-widget.php' );
+		
+		/**
+		 * Stack Theme Bundle-Related Functions
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/theme-bundle-installation.php' );
 	
 	}
 }
