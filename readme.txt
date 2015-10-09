@@ -44,6 +44,15 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.3.4 = October 6, 2015
+* Default Stack template Preview image path changed to use plugins_url. This is more precise if the wp-content directory is moved by some web hosts.
+* Hide all default notice types on Brick Editor as they are not needed or helpful there.
+* Added ability to import/export individual Bricks.
+* Fixed smooth scrolls for Brick URLs UPON page loads. This was broken since version 1.0.2.9
+* We no longer enqueue the minimal admin js. This js added the minimal admin URL variable to all links on the Brick Editor. Not needed anymore with style updates.
+* Only show the "Oops this stack doesn't exist" if the user is admin. It's not super helpful to front-end users.
+* Made some changes to the Stack Templater functions to simplify.
+
 = 1.0.3.3 = September 28, 2015
 * Bugfix: Widget CSS (and other non-shortcode added stacks) weren't properly getting their CSS output since 1.0.2.9 because of the scripts now being enqueued only-as-needed by the Content-Filters themselves. They are now re-output for any "leftover" stacks added to the page after the fact at priority 99 in wp_footer and shifted to the head.
 * Security strengthen: Added intval() to mp_stack_id updates.
