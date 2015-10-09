@@ -1,4 +1,18 @@
 <p>
+<strong>1.0.3.4 = October 6, 2015</strong>
+<ul>
+    <li>Default Stack template Preview image path changed to use plugins_url. This is more precise if the wp-content directory is moved by some web hosts.</li>
+    <li>Hide all default notice types on Brick Editor as they are not needed or helpful there.</li>
+    <li>Added ability to import/export individual Bricks.</li>
+    <li>Fixed smooth scrolls for Brick URLs UPON page loads. This was broken since version 1.0.2.9</li>
+    <li>We no longer enqueue the minimal admin js. This js added the minimal admin URL variable to all links on the Brick Editor. Not needed anymore with style updates.</li>
+    <li>Only show the "Oops this stack doesn't exist" if the user is admin. It's not super helpful to front-end users.</li>
+    <li>Made some minor changes to the Stack Templater functions to simplify.</li>
+    <li>Changed "Extend" to "Expand: for add-ons link in Brick Editor.
+    <li>Added "No Stacks found" for if there's no Stacks</li>
+    <li>Moved all Theme Bundle installation functions to new file dedicated to those functions from misc-functions to theme-bundle-installation.php</li>
+    <li>Attempt to set_time_limit for Stack Template creation functions. This is a backup in case some smaller servers have timeout limitations for PHP. Will only work if safe_mode is off.</li>
+</ul>
 <strong>1.0.3.3 = September 28, 2015</strong>
 <ul>
     <li>Bugfix: Widget CSS (and other non-shortcode added stacks) weren't properly getting their CSS output since 1.0.2.9 because of the scripts now being enqueued only-as-needed by the Content-Filters themselves. They are now re-output for any "leftover" stacks added to the page after the fact at priority 99 in wp_footer and shifted to the head.</li>
@@ -36,7 +50,7 @@
     <li>Change removing hentry to Brick's ID  available in post_class filter instead of global $post->ID</li>
     <li>Make isotope only filter items within the current brick using the Brick's ID selector in the JS output</li>
     <li>Fire Stack CSS output at wp_head above wp_enqueue_scripts. This way, if any subsequent action needs to be called using wp_enqueue_scripts, it can (ie Google Fonts).</li>
-    <li>Stack/Brick CSS is no longer loaded as a separate document. All Stack/Brick CSS is now minimized and placed in the *head*. </li>
+    <li>Stack/Brick CSS is no longer loaded as a separate document. All Stack/Brick CSS is now minimized and placed in the *head<li>. </li>
     <li>CSS Style Tags now wrap around each Brick's CSS - so that CSS can be removed/replaced via ajax when Bricks are reloaded.</li>
     <li>The mp_brick function now gets the Stack ID from the Brick ID by using the mp_stack_order_STACKID meta field. Once the Brick gets its Stack ID, it saves it as postmeta under "mp_stack_id".</li>
     <li>When a new Brick is created, save the mp_stack_id there and then.</li>

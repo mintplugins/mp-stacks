@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.3
+Stable tag: 1.0.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -51,7 +51,11 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * Fixed smooth scrolls for Brick URLs UPON page loads. This was broken since version 1.0.2.9
 * We no longer enqueue the minimal admin js. This js added the minimal admin URL variable to all links on the Brick Editor. Not needed anymore with style updates.
 * Only show the "Oops this stack doesn't exist" if the user is admin. It's not super helpful to front-end users.
-* Made some changes to the Stack Templater functions to simplify.
+* Made some minor changes to the Stack Templater functions to simplify.
+* Changed "Extend" to "Expand: for add-ons link in Brick Editor.
+* Added "No Stacks found" for if there's no Stacks
+* Moved all Theme Bundle installation functions to new file dedicated to those functions from misc-functions to theme-bundle-installation.php
+* Attempt to set_time_limit for Stack Template creation functions. This is a backup in case some smaller servers have timeout limitations for PHP. Will only work if safe_mode is off.
 
 = 1.0.3.3 = September 28, 2015
 * Bugfix: Widget CSS (and other non-shortcode added stacks) weren't properly getting their CSS output since 1.0.2.9 because of the scripts now being enqueued only-as-needed by the Content-Filters themselves. They are now re-output for any "leftover" stacks added to the page after the fact at priority 99 in wp_footer and shifted to the head.
