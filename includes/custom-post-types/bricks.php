@@ -85,6 +85,7 @@ function mp_stacks_taxonomy() {
 		'add_new_item'        => __( 'Add New Stack', 'mp_core' ),
 		'new_item_name'       => __( 'New Stack Name', 'mp_core' ),
 		'menu_name'           => __( 'Manage Stacks', 'mp_core' ),
+		'not_found'           => __( 'No Stacks found.', 'mp_core' ),
 	); 	
 
 	register_taxonomy(  
