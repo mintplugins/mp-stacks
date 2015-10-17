@@ -193,8 +193,8 @@ function mp_stack_template_array( $stack_id, $args = array() ){
 			
 			//Filter-in any extra fields we want to save for this brick. 
 			$brick_meta = $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter];
-			$content_type_1 = $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_first_content_type']['value'];
-			$content_type_2 =$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_second_content_type']['value'];
+			$content_type_1 = isset( $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_first_content_type']['value'] ) ? $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_first_content_type']['value'] : NULL;
+			$content_type_2 = isset( $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_second_content_type'] ) ? $mp_stack_template_array['stack_bricks']['brick_' . $brick_counter]['brick_second_content_type']['value'] : NULL;
 			//Filter-in any extra fields we want to save for this brick. 
 			$brick_meta = apply_filters( 'mp_stacks_template_extra_meta', $brick_meta, $content_type_1, $content_type_2 );
 			$mp_stack_template_array['stack_bricks']['brick_' . $brick_counter] = $brick_meta;
