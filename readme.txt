@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.4
+Stable tag: 1.0.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.5 = October 17, 2015
+* Make sure content type values exist for Stack Templater before filtering them.
+* For any Grid Isotope Filter Buttons, add an 'active' class when clicked. The class is called "mp-stacks-isotope-filter-button-active".
 
 = 1.0.3.4 = October 6, 2015
 * Default Stack template Preview image path changed to use plugins_url. This is more precise if the wp-content directory is moved by some web hosts.
