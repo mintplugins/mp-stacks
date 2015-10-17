@@ -493,7 +493,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						//If this is the "All" Filter Button
 						if ( $tax_term_counter == 0 ){
 														 							
-							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all" data-filter="*">';					
+							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all mp-stacks-isotope-filter-button-active" data-filter="*">';					
 							
 								//If icons are enabled and we're on the "All" button
 								if ( $enable_button_icons ){	
@@ -872,7 +872,12 @@ function mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array,
 		//If this Filter Group is a WordPress Taxonomy
 		if ( $filter_group_array['is_wordpress_taxonomy'] ){			
 			
-			$wp_tax_terms = get_terms( $filter_group_slug );			
+			$args = array(
+				'orderby'           => apply_filters( 'mp_stacks_isotope_controls_orderby', 'name' ), 
+				'order'             => apply_filters( 'mp_stacks_isotope_controls_order', 'ASC' ),
+			); 
+
+			$wp_tax_terms = get_terms( $filter_group_slug, $args );			
 			
 			//Loop through each tax term
 			foreach( $wp_tax_terms as $wp_tax_term ){

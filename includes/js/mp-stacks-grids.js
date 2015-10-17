@@ -213,4 +213,10 @@ jQuery(document).ready(function($){
 		$(this).attr("title", title);
 	});
 	
+	//When any Isotope button is clicked, add an active class so it can be styled. Also remove any existing active classes
+	$( document ).on( 'click', '.mp-stacks-grid-isotope-button', function(){
+		$( '.mp-stacks-grid-isotope-button' ).removeClass( 'mp-stacks-isotope-filter-button-active' );
+		$( this ).addClass( 'mp-stacks-isotope-filter-button-active' );
+	});
+	
 });
