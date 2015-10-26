@@ -875,7 +875,7 @@ function mp_stacks_grids_enqueue_frontend_css( $content_type_slug ){
 	wp_enqueue_style( 'mp-stacks-grid-css', MP_STACKS_PLUGIN_URL . 'includes/css/mp-stacks-grid-styles.css', MP_STACKS_VERSION );
 	
 	//Enqueue Font Awesome CSS
-	wp_enqueue_style( 'fontawesome', plugins_url( '/fonts/font-awesome-4.0.3/css/font-awesome.css', dirname( dirname( __FILE__ ) ) ) );
+	wp_enqueue_style( 'fontawesome', MP_STACKS_PLUGIN_URL . 'includes/fonts/font-awesome/css/font-awesome.css?ver=' . MP_STACKS_VERSION );
 	
 }
 
