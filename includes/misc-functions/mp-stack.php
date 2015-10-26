@@ -927,14 +927,19 @@ function mp_stacks_extra_stacks_css_and_js(){
 				
 			}
 			
-			//Output any CSS and JS files, and also any inline CSS or inline JS that was enqueued by the mp_stack_css calls.
+			//Output any style that were enqueued in the footer after priority 10.
 			wp_print_styles();
+			
+			//Output any inline CSS that was enqueued by the mp_stack_css calls.
 			mp_stacks_inline_css();
 		
 		echo '</div>';
 		
 		echo '<div id="mp-stacks-extra-stacks-js">';
-			wp_print_scripts();
+			//Output any scripts that were enqueued in the footer after priority 10.
+			wp_print_footer_scripts();
+			
+			//Output any inline JS that was enqueued by the mp_stack function.
 			mp_stacks_inline_js();
 		echo '</div>';
 		
