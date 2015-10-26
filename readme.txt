@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.5
+Stable tag: 1.0.3.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,11 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.6 = October 26, 2015
+* Upgraded Font Awesome to 4.4.0
+* Added "mp_stacks_refresh_this_script_upon_brick_update" url arg handling so that js scripts that need to be refreshed when bricks are updated, can be.
+* If adding a new brick, wait 1 second before refreshing so it is created prior to the refresh for sure.
 
 = 1.0.3.5 = October 17, 2015
 * Make sure content type values exist for Stack Templater before filtering them.
