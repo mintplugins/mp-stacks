@@ -619,8 +619,10 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 				//if this script has already been output to the page
 				else{
 					
-					//Replace the script that already exists with itself so that it re-runs
-					//$('script[src="' + script_output_src + '"]').replaceWith( '<script type="text/javascript" src="' + script_output_src + '">    /script>' );
+					if ( $('script[src*="mp_stacks_refresh_this_script_upon_brick_update"]').length !== 0 ){
+						//Replace the script that already exists with itself so that it re-runs
+						$('script[src="' + script_output_src + '"]').replaceWith( '<script type="text/javascript" src="' + script_output_src + '">    /script>' );
+					}
 					
 				}
 				
