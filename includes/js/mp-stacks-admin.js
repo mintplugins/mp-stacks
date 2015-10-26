@@ -966,7 +966,12 @@ jQuery(document).ready(function($){
 				//If this was successful
 				else{
 					$( document ).trigger( 'mp_core_post_submitted' );
-					location.reload();
+					
+					var wait_for_brick_to_be_created_before_refreshing = setInterval( function(){
+						clearInterval( wait_for_brick_to_be_created_before_refreshing );
+						location.reload();
+					}, 1000 );
+					
 				}
 				
 								
