@@ -402,7 +402,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	$post_class_string = apply_filters( 'mp_stacks_brick_class', $post_class_string, $post_id );
 	
 	//Make sure main class names for mp-bricks are added to the brick class.
-	$post_class_string .=  'mp_brick mp-brick';
+	$post_class_string .=  ' mp_brick mp-brick';
 									   
 	//Actual output
 	$html_output .= '<div id="mp-brick-' . $post_id . '" mp-stack-id="' . $stack_id . '" class="' . $post_class_string . '" ' . $extra_brick_attributes . '>';
