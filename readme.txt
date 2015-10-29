@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.6
+Stable tag: 1.0.3.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.7 = October 29, 2015
+* Bricks no longer use the get_post_class classes as they don't act like normal WordPress posts. This fixes compatibility issues with BuddyPress
+* Make default content setup for Theme Bundles happen via ajax to prevent as many page refreshes - which was confusing for some users.
 
 = 1.0.3.6 = October 26, 2015
 * Upgraded Font Awesome to 4.4.0
