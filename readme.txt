@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.7
+Stable tag: 1.0.3.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.3.8 = October 29, 2015
+* Fix bug where class names get squished for Bricks from get_post_class change in 1.0.3.7
 
 = 1.0.3.7 = October 29, 2015
 * Bricks no longer use the get_post_class classes as they don't act like normal WordPress posts. This fixes compatibility issues with BuddyPress
