@@ -189,6 +189,7 @@
 /*Isotope Filter Buttons*/
 .button.mp-stacks-grid-isotope-button{
 	display:none;
+	line-height:0.1;
 }
 .button.mp-stacks-grid-orderby-select{
 	vertical-align:middle;	
@@ -232,6 +233,13 @@
 .mp-stacks-grid-isotope-button,
 .mp-stacks-grid-orderby-select{
 	margin-left:12px;	
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid-isotope-filterby-text-left{
+	margin-bottom:10px;
+	display:block!important;
+}
+.mp-brick[max-width~='600px'] .mp-stacks-grid-isotope-sort-select{
+	margin-bottom:10px;
 }
 .mp-stacks-grid-orderby-select{
 	margin-right:12px;	
