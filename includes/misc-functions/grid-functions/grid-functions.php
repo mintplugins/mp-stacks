@@ -555,19 +555,29 @@ class MP_Stacks_Grid_Load_More{
 		//Check spacing (padding) around posts to see if we need to add some specially to our load more button(s)
 		$post_spacing = mp_core_get_post_meta($post_id, $args['meta_prefix'] . '_post_spacing', '20');
 		$load_more_spacing = $post_spacing == 0 ? 'padding:20px;' : 'padding-bottom:' . $post_spacing . 'px';
+		
+		//If we are loading more after the user has chosen a specific category using the "from scratch" isotope behavior
+		if ( isset( $_POST['mp_stacks_grid_filter_tax'] ) && isset( $_POST['mp_stacks_grid_filter_term'] ) ){
+			$user_chosen_tax = $_POST['mp_stacks_grid_filter_tax'];
+			$user_chosen_term = $_POST['mp_stacks_grid_filter_term'];
+		}
+		else{
+			$user_chosen_tax = NULL;
+			$user_chosen_term = NULL;
+		}	
 			
 		//If we are using the ajax_load_more_style
 		if ( $load_more_behaviour == 'ajax_load_more' ){
 			
 			//If there are no more posts in this taxonomy
 			if ( $args['total_posts'] <= $args['post_offset'] ){
-				
+			
 				//Return without a button
-				return NULL;		
+				return '<div class="mp-stacks-grid-load-more-container" style="display:none;">' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';			
 			}
 			
 			//Button
-			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
+			return '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button" tax="' . $user_chosen_tax . '" term="' . $user_chosen_term . '">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
 				
 		
 		}
@@ -578,11 +588,11 @@ class MP_Stacks_Grid_Load_More{
 			if ( $args['total_posts'] <= $args['post_offset'] ){
 				
 				//Return without a button
-				return NULL;		
+				return '<div class="mp-stacks-grid-load-more-container" style="display:none;">' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';		
 			}
 		
 			//JS for the Load More Button
-			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
+			$load_more_output = '<div class="mp-stacks-grid-load-more-container" style="' . $load_more_spacing . '"><a mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_brick_offset="' . $args['post_offset'] . '" mp_stacks_grid_orderby="' . $args['orderby'] . '" mp_stacks_grid_loading_text="' . __('Loading...', 'mp_stacks' ) . '" mp_stacks_grid_ajax_prefix=' . $args['meta_prefix'] . ' class="button mp-stacks-grid-load-more-button" tax="' . $user_chosen_tax . '" term="' . $user_chosen_term . '">' . $load_more_button_text . '</a>' . mp_stacks_grid_loading_more_animation( 'none' ) . '</div>';	
 				
 			//If we are not doing ajax
 			if ( !defined('DOING_AJAX') ){
