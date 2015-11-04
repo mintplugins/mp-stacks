@@ -42,14 +42,37 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 		
 			$meta_prefix . '_isotope' => array(
 				'field_id'			=> $meta_prefix . '_isotope',
-				'field_title' 	=> __( 'Enable Isotope Sorting?', 'mp_stacks'),
-				'field_description' 	=> __( 'Would you like to enable Isotope for sorting these social feeds?', 'mp_stacks' ),
+				'field_title' 	=> __( 'Enable Isotope Filtering?', 'mp_stacks'),
+				'field_description' 	=> __( 'Would you like to enable Isotope for filtering this grid?', 'mp_stacks' ),
 				'field_type' 	=> 'checkbox',
 				'field_value' => '',
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
+		);
+		//Check if we should add the behavior options based on the addon plugin (on by default - disable in the plugin by returning false to this filter.)
+		$include_behavior_options = apply_filters( $meta_prefix . '_isotope_include_behavior_options', true );
+		
+		//If there are orderby options available to choose from (assigned by addon plugins)
+		if ( $include_behavior_options ){	
 			
-			$meta_prefix . '_isotope_filter_groups' => array(
+			$new_fields[$meta_prefix . '_isotope_filtering_behavior'] = array(
+			
+				'field_id'			=> $meta_prefix . '_isotope_filtering_behavior',
+				'field_title' 	=> __( 'Filtering Behavior?', 'mp_stacks'),
+				'field_description' 	=> __( 'How should the filtering behave?', 'mp_stacks' ),
+				'field_type' 	=> 'select',
+				'field_value' => 'default_isotope',
+				'field_select_values' => array( 
+					'default_isotope' => __( 'Default Isotope: Sort ONLY items on page. (Good if you have a small number of items)', 'mp_stacks' ),
+					'reload_from_scratch' => __( 'Reload all items when clicked. (Better if you have a lot of items).', 'mp_stacks' ),
+				),
+				'field_conditional_id' => $meta_prefix . '_isotope',
+				'field_conditional_values' => array( $meta_prefix . '_isotope' ), 
+				'field_showhider' => $meta_prefix . '_isotope_settings',
+			);
+		}
+		
+		$new_fields[$meta_prefix . '_isotope_filter_groups'] = array(
 				'field_id'			=> $meta_prefix . '_isotope_filter_groups',
 				'field_title' 	=> __( 'Filtering Groups:', 'mp_stacks'),
 				'field_description' 	=> __( 'Which filter groups should be included?', 'mp_stacks' ),
@@ -59,8 +82,8 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_value' => '',
 				'field_select_values' => apply_filters( $meta_prefix . '_isotope_filter_groups', array() ),
 				'field_showhider' => $meta_prefix . '_isotope_settings',
-			),
 		);
+		
 		//Check if we should add the orderby options based on the addon plugin
 		$order_by_options = apply_filters( $meta_prefix . '_isotope_orderby_options', array(), $meta_prefix );
 		
@@ -68,7 +91,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 		if ( !empty( $order_by_options ) && is_array( $order_by_options ) ){
 			$new_fields[$meta_prefix . '_isotope_orderby_options'] = array(
 					'field_id'			=> $meta_prefix . '_isotope_orderby_options',
-					'field_title' 	=> __( 'Ordering Options:', 'mp_stacks'),
+					'field_title' 	=> __( 'Include Ordering Options for the User?', 'mp_stacks'),
 					'field_description' 	=> __( 'Which ordering options should be included?', 'mp_stacks' ),
 					'field_type' 	=> 'multiple_checkboxes',
 					'field_conditional_id' => $meta_prefix . '_isotope',
@@ -81,7 +104,7 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 		}
 						
 		$more_new_fields = array(
-				$meta_prefix . '_isotope_navigation' => array(
+			$meta_prefix . '_isotope_navigation' => array(
 				'field_id'			=> $meta_prefix . '_isotope_navigation',
 				'field_title' 	=> __( 'Isotope Navigation', 'mp_stacks'),
 				'field_description' 	=> __( 'What type of Navigation should Isotope use?', 'mp_stacks' ),
@@ -351,6 +374,27 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 						'field_placeholder' => 'tag1, tag2, etc',
 						'field_showhider' => $meta_prefix . '_isotope_hidden_buttons_showhider',
 					),
+					
+			$meta_prefix . '_isotope_layout_mode' => array(
+				'field_id'			=> $meta_prefix . '_isotope_layout_mode',
+				'field_title' 	=> __( 'Isotope Layout Mode', 'mp_stacks'),
+				'field_description' 	=> __( 'Which layout mode should Isotope use? For a description of these options see ', 'mp_stacks' ) . '<a href="http://isotope.metafizzy.co/layout-modes.html" target="_blank">' . __( 'this page.', 'mp_stacks' ) . '</a>',
+				'field_type' 	=> 'select',
+				'field_conditional_id' => $meta_prefix . '_isotope',
+				'field_conditional_values' => array( $meta_prefix . '_isotope' ), 
+				'field_value' => 'masonry',
+				'field_select_values' => array( 
+					'masonry' => __( 'Masonry', 'mp_stacks' ),
+					'fitRows' => __( 'Fit Rows', 'mp_stacks' ),
+					'cellByRow' => __( 'Cells By Row', 'mp_stacks' ),
+					'vertical' => __( 'Vertical', 'mp_stacks' ),
+					'masonryHorizontal' => __( 'Masonry Horizontal', 'mp_stacks' ),
+					'fitColumns' => __( 'Fit Columns', 'mp_stacks' ),
+					'cellsByColumn' => __( 'Cells By Column', 'mp_stacks' ),
+					'horizontal' => __( 'Horizontal', 'mp_stacks' ),
+				),
+				'field_showhider' => $meta_prefix . '_isotope_settings',
+			),
 	);
 	
 	$new_fields = array_merge( $new_fields, $more_new_fields );
@@ -386,11 +430,16 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	$isotope_filtering_on = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope', false );
 	
 	//Get the array containing all taxonomies and tax terms by which we should do Isotope Filtering. Each Tax is a dropdown or button group.
-	$master_filter_groups_array = mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array, $filter_groups_to_include, $all_isotope_filter_groups );
+	$master_filter_groups_array = mp_stacks_grids_isotope_set_master_filter_groups_array( $post_id, $meta_prefix, $sources_array, $filter_groups_to_include, $all_isotope_filter_groups );
 	
 	//Buttons to skip
 	$buttons_to_skip = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_hidden_buttons' );
 	$buttons_to_skip = str_replace( ' ,', ',', explode( ',', trim( $buttons_to_skip ) ) );
+	
+	//Filtering Behavior
+	$filtering_behavior = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filtering_behavior', 'default_isotope' );
+	$load_more_behaviour = mp_core_get_post_meta($post_id, $meta_prefix  . '_load_more_behaviour', 'ajax_load_more' );
+	$filtering_behavior = $load_more_behaviour == 'pagination' ? 'default_isotope' : $filtering_behavior;
 		
 	if ( !$master_filter_groups_array ){
 		return false;	
@@ -398,65 +447,82 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	
 	//If we should show the isotope navigation for sorting these items
 	if ( $isotope_filtering_on ){
-		
+				
 		$isotope_sorting_type = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_navigation', 'buttons' );
 						
 		//Output the "Filter By" text
 		$filter_by_text = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filter_by_text', 'Filter By:' );
 		$filter_by_position = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filter_by_position', 'left' );
-		$return_html .= !empty( $filter_by_text ) ? '<div class="mp-stacks-grid-isotope-filterby-text mp-stacks-grid-isotope-filterby-text-' . $filter_by_position . '">' . $filter_by_text . '</div>' : NULL;
-						
+		$filter_by_html = !empty( $filter_by_text ) ? '<div class="mp-stacks-grid-isotope-filterby-text mp-stacks-grid-isotope-filterby-text-' . $filter_by_position . '">' . $filter_by_text . '</div>' : NULL;
+		//We have at least one filtering option so add the "Filter By" html now that we know that.
+		foreach( $master_filter_groups_array as $taxonomy_name => $taxonomy ){
+			foreach( $taxonomy as $tax_term ){
+				if( count( $taxonomy ) == 1 ){
+					continue;	
+				}
+				else{
+					$return_html .= $filter_by_html;
+					break;
+				}
+			}
+			break;
+		}
+				
 		//If we should use a dropdown for sorting
 		if ( $isotope_sorting_type == 'dropdown' ){
 			
-			//Hook any additional code that should appear before the first filtering dropdown
-			$return_html = apply_filters( 'mp_stacks_isotopes_before_first_dropdown', $return_html, $post_id );
-								
-			//Now that we have all the "taxonomies" separated out into an array, loop through them and only export Isotope Filter Groups for each
-			$tax_counter = 0;
-			foreach( $master_filter_groups_array as $taxonomy_name => $taxonomy ){
-				
-				//If this filter group has only the "All" Category, skip it
-				if( count( $taxonomy ) == 1 ){
-					continue;
-				}
-				
-				$return_html .= '<select id="mp-isotope-sort-select-' . $post_id . '" class="button mp-stacks-grid-isotope-sort-select" value="*">';
-										
-					//Loop through each tax term in this taxonomy
-					$tax_term_counter = 0;
-					foreach( $taxonomy as $tax_term ){
-						
-						//If this is the "All" Filter
-						if ( $tax_term_counter == 0 ){
-							$return_html .= '<option value="*">' . $tax_term['name'] . '</option>';
-							
-							//Hook any additional items to the start - after the "All" Button
-							$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_start', $return_html, $post_id, 'select' );
-												
-						}
-						else{
-							if ( !in_array( $tax_term['slug'], $buttons_to_skip ) ){
-								
-								//Get the number of posts in this term
-								$term_info = get_term_by('name', $tax_term['name'], $taxonomy_name);
-								$term_count = $term_info ? ' (' . $term_info->count . ')' : NULL;
-								
-								$return_html .= '<option disabled value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">' . $tax_term['name'] . $term_count . '</option>';		
-							}
-						}
-						
-						$tax_term_counter = $tax_term_counter  + 1;
+			$return_html .= '<div id="mp-stacks-grid-isotope-sort-container-' . $post_id . '" class="mp-stacks-grid-isotope-sort-container" mp_stacks_grid_isotope_behavior="' . $filtering_behavior . '">';
+			
+				//Hook any additional code that should appear before the first filtering dropdown
+				$return_html = apply_filters( 'mp_stacks_isotopes_before_first_dropdown', $return_html, $post_id );
+									
+				//Now that we have all the "taxonomies" separated out into an array, loop through them and only export Isotope Filter Groups for each
+				$tax_counter = 0;
+				foreach( $master_filter_groups_array as $taxonomy_name => $taxonomy ){
+					
+					//If this filter group has only the "All" Category, skip it
+					if( count( $taxonomy ) == 1 ){
+						continue;
 					}
 					
-					//Hook any additional items to the end
-					$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_end', $return_html, $post_id );
+					$return_html .= '<select id="mp-isotope-sort-select-' . $post_id . '-' . $tax_counter . '" class="button mp-stacks-grid-isotope-sort-select" value="*" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">';
+											
+						//Loop through each tax term in this taxonomy
+						$tax_term_counter = 0;
+						foreach( $taxonomy as $tax_term ){
+							
+							//If this is the "All" Filter
+							if ( $tax_term_counter == 0 ){
+								$return_html .= '<option value="*" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">' . $tax_term['name'] . '</option>';
+								
+								//Hook any additional items to the start - after the "All" Button
+								$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_start', $return_html, $post_id, 'select' );
+													
+							}
+							else{
+								if ( !in_array( $tax_term['slug'], $buttons_to_skip ) ){
+									
+									//Get the number of posts in this term
+									$term_info = get_term_by('name', $tax_term['name'], $taxonomy_name);
+									$term_count = $term_info ? ' (' . $term_info->count . ')' : NULL;
+									
+									$return_html .= '<option ' . ( $filtering_behavior == 'default_isotope' ? 'disabled' : NULL ) . ' value="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']" tax="' . $taxonomy_name  . '" term="' . $tax_term['slug'] . '" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">' . $tax_term['name'] . $term_count . '</option>';		
+								}
+							}
+							
+							$tax_term_counter = $tax_term_counter  + 1;
+						}
+						
+						//Hook any additional items to the end
+						$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_end', $return_html, $post_id );
+					
+					$return_html .= '</select>';
 				
-				$return_html .= '</select>';
+					$tax_counter = $tax_counter + 1;
+					
+				}
 			
-				$tax_counter = $tax_counter + 1;
-				
-			}
+			$return_html .= '</div>';
 			
 		}
 		//If we should use buttons for sorting
@@ -472,11 +538,11 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 			foreach( $master_filter_groups_array as $taxonomy_name => $taxonomy ){
 								
 				//If this filter group has only the "All" Category, skip it
-				if( count( $taxonomy ) == 1 ){
+				if( count( $taxonomy ) == 1 ){					
 					continue;
 				}
 				
-				$return_html .= '<div id="mp-stacks-grid-isotope-sort-container-' . $post_id . '" class="mp-stacks-grid-isotope-sort-container" >';
+				$return_html .= '<div id="mp-stacks-grid-isotope-sort-container-' . $post_id . '" taxonomy="' . $taxonomy_name . '" class="mp-stacks-grid-isotope-sort-container" mp_stacks_grid_isotope_behavior="' . $filtering_behavior . '">';
 					
 					$source_counter = 0;
 					
@@ -493,7 +559,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						//If this is the "All" Filter Button
 						if ( $tax_term_counter == 0 ){
 														 							
-							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all mp-stacks-isotope-filter-button-active" data-filter="*">';					
+							$return_html .= '<div class="button mp-stacks-grid-isotope-button mp-stacks-grid-isotope-button-all mp-stacks-isotope-filter-button-active" data-filter="*" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">';					
 							
 								//If icons are enabled and we're on the "All" button
 								if ( $enable_button_icons ){	
@@ -539,7 +605,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 							
 							$button_text = $tax_term['name'];
 							
-							$return_html .= '<div class="button mp-stacks-grid-isotope-button" data-filter="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']">';
+							$return_html .= '<div class="button mp-stacks-grid-isotope-button" data-filter="[mp_stacks_grid_isotope_taxonomy_' . $taxonomy_name . '*=\'' . $tax_term['slug'] . ',\']" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '" tax="' . $taxonomy_name  . '" term="' . $tax_term['slug'] . '">';
 									
 						
 							if ( $enable_button_icons ){
@@ -837,10 +903,14 @@ function mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $brick_
  *
  * @access   public
  * @since    1.0.0
+ * @param    $post_id String - The id of the brick where these settings are configured.
+ * @param    $meta_prefix String - TThe prefix of the gird. IE 'postgird', 'eventgrid' etc.
  * @param    $sources_array Array - The repeater array from which the grid is populated.
+ * @param    $filter_groups_to_include Array 
+ * @param    $all_isotope_filter_groups Array 
  * @return   $master_filter_groups_array Array - An Array that contains each key being the taxonomy and the value being an array of tax_terms in that taxonomy
  */
-function mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array, $filter_groups_to_include, $all_isotope_filter_groups ){
+function mp_stacks_grids_isotope_set_master_filter_groups_array( $post_id, $meta_prefix, $sources_array, $filter_groups_to_include, $all_isotope_filter_groups ){
 	
 	$master_filter_groups_array = array();
 	
@@ -871,9 +941,9 @@ function mp_stacks_grids_isotope_set_master_filter_groups_array( $sources_array,
 		
 		//If this Filter Group is a WordPress Taxonomy
 		if ( $filter_group_array['is_wordpress_taxonomy'] ){			
-			
+						
 			$args = array(
-				'orderby'           => apply_filters( 'mp_stacks_isotope_controls_orderby', 'name' ), 
+				'orderby'           => apply_filters( 'mp_stacks_isotope_controls_orderby', 'slug' ), 
 				'order'             => apply_filters( 'mp_stacks_isotope_controls_order', 'ASC' ),
 			); 
 
@@ -1032,6 +1102,17 @@ function mp_stacks_grid_isotope_nav_btns_css( $post_id, $meta_prefix ){
 		$post_spacing = mp_core_get_post_meta($post_id, $meta_prefix . '_post_spacing', '20');
 	
 		$button_text_size = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_nav_btn_text_size', 20 );	
+		
+		//If the behavior is 'load from scratch', show all filter buttons by default.
+		$isotope_behavior = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filtering_behavior', 'default_isotope' );
+		$load_more_behaviour = mp_core_get_post_meta($post_id, $meta_prefix  . '_load_more_behaviour', 'ajax_load_more' );
+		$isotope_behavior = $load_more_behaviour == 'pagination' ? 'default_isotope' : $isotope_behavior;
+		
+		if ( $isotope_behavior == 'reload_from_scratch' ){
+			$css_output .= '#mp-brick-' . $post_id . ' .button.mp-stacks-grid-isotope-button{
+				display:inline-block!important;
+			}';
+		}
 	
 		//Isotope Nav Container
 		$css_output .= '#mp-brick-' . $post_id . ' .mp-stacks-grid-isotope-sort-container{';
@@ -1266,12 +1347,45 @@ function mp_stacks_grid_add_isotope_class( $classes, $post_id, $meta_prefix ){
 	$isotope = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope', false );
 	
 	if ( $isotope || $masonry ) {
+			
 		$classes .= ' mp-stacks-grid-isotope';
 	}
 	
 	return $classes;
 }
 add_filter( 'mp_stacks_grid_classes', 'mp_stacks_grid_add_isotope_class', 10, 3 );
+
+/**
+ * Output the isotope/masonry layout mode so the grid knows how to layout the items. This uses isotope's "layoutMode'.
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    Void
+ * @param    $attributes String - any attributes that have been created thus far for the grid div. 
+ * @param    $post_id String - the ID of the Brick where all the meta is saved.
+ * @param    $meta_prefix String - the prefix to put before each meta_field key to differentiate it from other plugins. :EG "postgrid"
+ * @return   $attributes String - any attributes that have been created thus far for the grid div. 
+*/
+function mp_stacks_grid_layout_mode( $attributes, $post_id, $meta_prefix ){
+		
+	//Get the layout mode 
+	$layout_mode = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_layout_mode', 'masonry' );
+	$layout_mode = apply_filters( 'mp_stacks_grid_isotope_layout_mode', $layout_mode, $post_id );
+	
+	//Check if we should apply Masonry to this grid
+	$masonry = mp_core_get_post_meta( $post_id, $meta_prefix . '_masonry' );
+	//Check whether Isotope Sorting should be on
+	$isotope = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope', false );
+	
+	if ( $isotope || $masonry ) {
+		
+		return $attributes . ' layout_mode="' . $layout_mode . '" ';
+	}
+	else{
+		return $attributes;
+	}
+}
+add_filter( 'mp_stacks_grid_attributes', 'mp_stacks_grid_layout_mode', 10, 3 );
 
 /**
  * Output the isotope/masonry class name in the grid main container if needed.
@@ -1330,8 +1444,8 @@ add_filter( 'mp_stacks_grid_before', 'mp_stacks_grid_isotope_filtering_buttons',
  * @return   $html_output_so_far String The output for the grid before this hook, with some javascript which shows any isotope filter buttons that are hidden and can control this grid item.
 */
 function mp_stacks_grid_isotope_show_buttons_with_post_js( $html_output_so_far, $sources_array, $post_id, $meta_prefix, $grid_post_id, $source_counter ){
-						
-	return $html_output_so_far . mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $post_id, $meta_prefix, $grid_post_id, $source_counter );
+		
+	return $html_output_so_far . mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $post_id, $meta_prefix, $grid_post_id, $source_counter );	
 							
 }
 add_filter( 'mp_stacks_grid_inside_grid_item_top', 'mp_stacks_grid_isotope_show_buttons_with_post_js', 10, 6 );
@@ -1355,7 +1469,9 @@ function mp_stacks_isotope_masonry_grid_item_class( $grid_item_class_string, $po
 	$isotope = mp_core_get_post_meta_checkbox( $post_id, $meta_prefix . '_isotope', false );
 	
 	if ( $isotope || $masonry ) {
+
 		$grid_item_class_string .= ' mp-stacks-grid-item-masonry';
+		
 	}
 	
 	return $grid_item_class_string;
