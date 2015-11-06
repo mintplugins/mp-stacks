@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.3.9
+Stable tag: 1.0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.4.0 = November 6, 2015
+* Fix: Remove all Isotope Layout Modes that aren't included by default with Isotope.
 
 = 1.0.3.9 = November 5, 2015
 * Make Grid Isotope Filter Buttons have gaps between them when stack on mobile.
