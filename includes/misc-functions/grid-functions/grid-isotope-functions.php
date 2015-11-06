@@ -386,12 +386,6 @@ function mp_stacks_grid_isotope_meta( $meta_prefix ){
 				'field_select_values' => array( 
 					'masonry' => __( 'Masonry', 'mp_stacks' ),
 					'fitRows' => __( 'Fit Rows', 'mp_stacks' ),
-					'cellByRow' => __( 'Cells By Row', 'mp_stacks' ),
-					'vertical' => __( 'Vertical', 'mp_stacks' ),
-					'masonryHorizontal' => __( 'Masonry Horizontal', 'mp_stacks' ),
-					'fitColumns' => __( 'Fit Columns', 'mp_stacks' ),
-					'cellsByColumn' => __( 'Cells By Column', 'mp_stacks' ),
-					'horizontal' => __( 'Horizontal', 'mp_stacks' ),
 				),
 				'field_showhider' => $meta_prefix . '_isotope_settings',
 			),
