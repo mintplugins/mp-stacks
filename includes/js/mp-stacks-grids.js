@@ -95,9 +95,9 @@ jQuery(document).ready(function($){
 	var mp_stacks_grid_filter_value = '*';
 	
 	//Initialize Grid Isotopes
-	$( '.mp-stacks-grid-isotope' ).imagesLoaded( function(){
-		
-		var layout_mode = $(this )[0].elements[0] ? $(this )[0].elements[0].attributes[1].nodeValue : 'masonry';
+	$( '.mp-stacks-grid-isotope' ).imagesLoaded( function( instance ){
+						
+		var layout_mode = instance.elements[0] ? instance.elements[0].attributes['layout_mode'].value : 'masonry';
 		
 		$('.mp-stacks-grid-isotope').isotope({
 		  // main isotope options
@@ -112,10 +112,10 @@ jQuery(document).ready(function($){
 	//Re-Initialize Grid Isotopes when Ajax is done
 	$( document ).ajaxComplete(function() {
 		
-		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
-
-			var layout_mode = $(this )[0].elements[0] ? $(this )[0].elements[0].attributes[1].nodeValue : 'masonry';
-		
+		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function( instance ){
+			
+			var layout_mode = instance.elements[0] ? instance.elements[0].attributes['layout_mode'].value : 'masonry';
+					
 			//Then relayout isotope with the user's currently chosen filter
 			$('.mp-stacks-grid-isotope').isotope({
 			  // main isotope options
@@ -142,9 +142,9 @@ jQuery(document).ready(function($){
 	//Re-Initialize Grid Isotopes when page is resized
 	$( document ).on( 'mp_stacks_resize_complete', function() {
 		
-		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function(){
-			
-			var layout_mode = $(this )[0].elements[0] ? $(this )[0].elements[0].attributes[1].nodeValue : 'masonry';
+		$( '.mp-stacks-grid-isotope' ).imagesLoaded(function( instance ){
+						
+			var layout_mode = instance.elements[0] ? instance.elements[0].attributes['layout_mode'].value : 'masonry';
 		
 			$('.mp-stacks-grid-isotope').isotope({
 			  // main isotope options
