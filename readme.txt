@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.0
+Stable tag: 1.0.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.4.1 = November 6, 2015
+* Make Isotope layout_mode use the array key 'layout_mode' instead of a number because the order is different in firefox. 
 
 = 1.0.4.0 = November 6, 2015
 * Fix: Remove all Isotope Layout Modes that aren't included by default with Isotope.
