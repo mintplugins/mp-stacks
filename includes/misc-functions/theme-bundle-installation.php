@@ -257,8 +257,8 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					$new_post_id = wp_insert_post( $default_post );
 					
 					//Add this post to the list of default posts we've created for this stack template
-					$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;			
-				
+					$previously_created_default_stacks[$stack_template_slug]['post_id'] = $new_post_id;		
+									
 				}
 				//If a default corresponding post does exist, make sure it has the current default stack too.
 				else{
@@ -271,6 +271,21 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					// Update the post into the database
 					wp_update_post( $default_post );
   				
+				}
+				
+				//If this corresponding post is supposed to be on the Primary Navigation Menu
+				if ( isset( $other_info['add_to_primary_menu'] ) && $other_info['add_to_primary_menu'] ){
+					
+					//Add this post_id to the list of items that should be added to the menu
+					$mp_core_options['new_menu_items'][$previously_created_default_stacks[$stack_template_slug]['post_id']] = array(
+						'menu_item_object_id' => $previously_created_default_stacks[$stack_template_slug]['post_id'],
+						'menu_item_object' => $post_type,
+						'menu_item_type' => 'post_type',
+						
+					);
+					
+					update_option( 'mp_core_options', $mp_core_options );
+					
 				}
 				
 			}
@@ -543,3 +558,56 @@ function mp_stacks_set_up_theme_bundle_default_content_via_ajax(){
 		
 }
 add_action( 'wp_ajax_mp_stacks_set_up_theme_bundle_default_content', 'mp_stacks_set_up_theme_bundle_default_content_via_ajax' );
+
+/**
+ * This will set up a Primary Menu for a Theme Bundle of any Stack Templates have been set to 'add_to_primary_menu' 
+ *
+ * @since 1.0
+ * @param void
+ * @return void
+ */
+function mp_stacks_theme_bundle_setup_primary_menu( $theme_bundle_slug ){
+	
+	global $mp_core_options;
+	
+	//Filter to allow for custom menu items added by the custom-install-functions.php file in the Theme Bundle
+	$mp_core_options['new_menu_items'] = apply_filters( 'mp_stacks_theme_bundle_install_menu_items', $mp_core_options['new_menu_items'], $theme_bundle_slug );
+	
+	//Check if we should set up a new menu
+	if ( isset( $mp_core_options['new_menu_items'] ) && is_array( $mp_core_options['new_menu_items'] ) ){
+		
+		//Check if a menu with this name already exists
+		$menu_name = $mp_core_options['mp_stacks_theme_bundle_being_installed']['fancy_title'] . ' ' . __( 'Menu', 'mp_stacks' );
+		$menu_exists = wp_get_nav_menu_object( $menu_name );
+		
+		//If the menu does not exist
+		if ( !$menu_exists ){
+			
+			//Create a new menu
+			$menu_id = wp_create_nav_menu( $menu_name );
+			
+			//Loop through each item that should be on the menu.
+			foreach( $mp_core_options['new_menu_items'] as $new_menu_item_id => $new_menu_item_data ){
+				
+				wp_update_nav_menu_item( $menu_id, 0, array(
+						'menu-item-object-id' => $new_menu_item_data['menu_item_object_id'],
+						'menu-item-object' => $new_menu_item_data['menu_item_object'],
+						'menu-item-type' => $new_menu_item_data['menu_item_type'],
+						'menu-item-status' => 'publish'
+					)
+				);
+									   
+			}
+			
+			//Make this menu the primary one
+			set_theme_mod( 'nav_menu_locations', array ( 
+					'primary' => $menu_id,
+				) 
+			);
+		}
+	}
+	
+	unset( $mp_core_options['new_menu_items'] );
+	
+}
+add_action( 'mp_stacks_additional_installation_actions', 'mp_stacks_theme_bundle_setup_primary_menu' );
