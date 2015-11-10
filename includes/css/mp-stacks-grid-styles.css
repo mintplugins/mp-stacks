@@ -202,6 +202,10 @@
 .mp-stacks-grid-isotope-btn-text{
 	display:inline-block;
 	vertical-align:middle;
+	line-height:1;
+}
+.mp-stacks-grid-isotope-icon:before{
+	float:left;	
 }
 /* Isotope image icons */
 .mp-stacks-grid-isotope-icon *{
