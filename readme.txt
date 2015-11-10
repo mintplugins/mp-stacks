@@ -47,6 +47,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 = 1.0.4.2 = November 10, 2015
 * Icon fix for isotope buttons. Should fix vertical alignment issue for isotope filter buttons.
 * Add ability have to have Theme Bundles set up a Primary Menu when doing installation.
+* Move the "mp_stacks_theme_bundle_install_menu_items" filter inside the check if it exists
 
 = 1.0.4.1 = November 6, 2015
 * Make Isotope layout_mode use the array key 'layout_mode' instead of a number because the order is different in firefox. 
