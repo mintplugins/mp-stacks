@@ -570,11 +570,11 @@ function mp_stacks_theme_bundle_setup_primary_menu( $theme_bundle_slug ){
 	
 	global $mp_core_options;
 	
-	//Filter to allow for custom menu items added by the custom-install-functions.php file in the Theme Bundle
-	$mp_core_options['new_menu_items'] = apply_filters( 'mp_stacks_theme_bundle_install_menu_items', $mp_core_options['new_menu_items'], $theme_bundle_slug );
-	
 	//Check if we should set up a new menu
 	if ( isset( $mp_core_options['new_menu_items'] ) && is_array( $mp_core_options['new_menu_items'] ) ){
+		
+		//Filter to allow for custom menu items added by the custom-install-functions.php file in the Theme Bundle
+		$mp_core_options['new_menu_items'] = apply_filters( 'mp_stacks_theme_bundle_install_menu_items', $mp_core_options['new_menu_items'], $theme_bundle_slug );
 		
 		//Check if a menu with this name already exists
 		$menu_name = $mp_core_options['mp_stacks_theme_bundle_being_installed']['fancy_title'] . ' ' . __( 'Menu', 'mp_stacks' );
