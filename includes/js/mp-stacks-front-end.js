@@ -359,41 +359,16 @@ jQuery(document).ready(function($){
 	 *
 	 */
 	$(document).on('dblclick', '.mp-brick', function(){ 
-		//Call the function which opens our customized magnific popup for mp stacks
-		mp_stacks_magnific_editor($(this).find('.mp-brick-edit-link').attr('href'));
-		
-		//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
-		$( 'body' ).attr( 'mp-brick-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-brick-id' ) );
-		$( 'body' ).attr( 'mp-stack-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-stack-id' ) );
+		if( $(this).find('.mp-brick-edit-link').attr('href') ){
+			//Call the function which opens our customized magnific popup for mp stacks
+			mp_stacks_magnific_editor($(this).find('.mp-brick-edit-link').attr('href'));
+			
+			//Put the Brick's ID in an Attribute for the popup window so that ajax can refresh the Brick upon save.
+			$( 'body' ).attr( 'mp-brick-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-brick-id' ) );
+			$( 'body' ).attr( 'mp-stack-current-id', $(this).find( '.mp-brick-edit-link' ).attr( 'mp-stack-id' ) );
+		}
 	});	
-	
-	/**
-	 * Upon page load, perform smooth scroll upon page load when a Brick's URL (hash) is in the page URL
-	 *
-	 */
-	 if( window.location.hash ) {
-	
-		var mp_stacks_hash = window.location.hash.replace("#", "");
-		mp_stacks_hash = mp_stacks_hash ? mp_stacks_hash : 'NULL';
 		
-		var target = $('[mp_stacks_brick_target=' + mp_stacks_hash +']');
-		
-		if (target.length) {
-			
-			$('html,body').animate({
-				scrollTop: target.offset().top
-			}, 500, function(){
-				//window.location.hash = href;	
-			});
-			
-			return false;
-		
-		}
-		else{
-			//console.log('No Bricks found with this hash. ' + mp_stacks_hash);	
-		}
-	}
-	
 	/**
 	 * Upon hash change, perform smooth scroll upon page load when a Brick's URL (hash) is in the page URL
 	 *
