@@ -167,23 +167,14 @@
 .mp-brick-text-line-1 p .button,
 .mp-brick-text-line-2 p .button,
 .mp-brick-text p .button{
-	margin-left:10px;
-}
-.mp-brick-text-line-1 p .button:first-child,
-.mp-brick-text-line-2 p .button:first-child,
-.mp-brick-text p .button:first-child{
-	margin-left:0px;
-}
-.mp-brick[max-width~='600px'] .mp-brick-text-line-1 p .button,
-.mp-brick[max-width~='600px'] .mp-brick-text-line-2 p .button,
-.mp-brick[max-width~='600px'] .mp-brick-text p .button{
-	margin-left:0px;
+	margin-right:10px;
 	margin-bottom:10px;
 }
-.mp-brick[max-width~='600px'] .mp-brick-text-line-1 p .button:last-child,
-.mp-brick[max-width~='600px'] .mp-brick-text-line-2 p .button:last-child,
-.mp-brick[max-width~='600px'] .mp-brick-text p .button:last-child{
-	margin-bottom:0;
+.mp-brick-text-line-1 p .button:last-child,
+.mp-brick-text-line-2 p .button:last-child,
+.mp-brick-text p .button:last-child{
+	margin-right:0px;
+	margin-bottom:0px;
 }
 
 /* Links */
@@ -388,4 +379,8 @@
 	height:100%;
 	max-width:640px!important;
 	max-height:360px!important;
+}
+
+.mp-stack .mp-brick img{
+	margin:0;	
 }
