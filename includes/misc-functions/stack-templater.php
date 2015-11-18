@@ -374,8 +374,15 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 	//Get the wp upload dir
 	$wp_upload_dir = wp_upload_dir();
 	
-	//Check if this attachment has been created or not	
-	$attachment_already_created = mp_core_get_attachment_id_from_url( $wp_upload_dir['url'] . '/' . basename( $meta_value ) );
+	//If this is a text area with HTML and it has an <img tag in it, each attachment needs to be checked manually
+	if ( strpos( $meta_value, '&lt;p&gt;&lt;img' ) !== false ){
+		$attachment_already_created = false; //We do this check later on where it makes more sense
+	}
+	//If this is a normal meta value field and its attachment has already been created
+	else{
+		//Check if this attachment has been created or not	
+		$attachment_already_created = mp_core_get_attachment_id_from_url( $wp_upload_dir['url'] . '/' . basename( $meta_value ) );
+	}
 	
 	//If this attachment has NOT already been created
 	if ( !$attachment_already_created ){
@@ -400,51 +407,179 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 		
 		//By this point, the $wp_filesystem global should be working, so let's use it get our plugin
 		global $wp_filesystem;
-												
-		//Get the image
-		$saved_file = $wp_filesystem->get_contents( $meta_value );
-		
-		$wp_upload_dir = wp_upload_dir();
 			
-		//Get the filename only of this attachment
-		$attachment_path = parse_url( $meta_value, PHP_URL_PATH);
-		$attachment_parts = pathinfo($attachment_path);
-		
-		//Move the image to the uploads directory
-		$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+		//Check if this field contains any HTML img tags
+		if ( strpos( $meta_value, '&lt;p&gt;&lt;img' ) !== false ){
 			
-		//Check filetype	
-		$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
-		
-		//Create attachment array
-		$attachment = array(
-			'guid' => $wp_upload_dir['url'] . '/' . $attachment_parts['basename'], 
-			'post_mime_type' => $wp_filetype['type'],
-			'post_title' => preg_replace( '/\.[^.]+$/', '', $attachment_parts['basename'] ),
-			'post_content' => '',
-			'post_status' => 'inherit'
-		);
-		
-		$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
-		
-		if ( !$attach_id ){
-			return NULL;
+			//Get the URL in each img tag's "src" attribute
+			$value_explode_results = explode( 'src=&quot;', $meta_value );
+			
+			$rebuilt_field_value = NULL;
+			
+			$mail_sent = false;
+			
+			$exploded_loop_counter  = 0;
+			
+			//Loop through each exploded string
+			if ( is_array( $value_explode_results ) ){
+				foreach( $value_explode_results as $value_explode_result ){
+					
+					if ( $exploded_loop_counter == 0 ){
+						$exploded_loop_counter = $exploded_loop_counter + 1;
+						continue;	
+					}
+					
+					$exploded_loop_counter = $exploded_loop_counter + 1;
+															
+					//Get the image url
+					$temp_explode_holder = explode( '&quot', $value_explode_result );
+					$img_url = $temp_explode_holder[0];
+					
+					//Check if this attachment has been created or not	
+					$attachment_already_created = mp_core_get_attachment_id_from_url( $wp_upload_dir['url'] . '/' . basename( $img_url ) );
+					
+					if ( !$attachment_already_created ){						
+						//Get the image
+						$saved_file = $wp_filesystem->get_contents( $img_url );
+						
+						$wp_upload_dir = wp_upload_dir();
+							
+						//Get the filename only of this attachment
+						$attachment_path = parse_url( $img_url, PHP_URL_PATH);
+						$attachment_parts = pathinfo($attachment_path);
+						
+						//Move the image to the uploads directory
+						$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+							
+						//Check filetype	
+						$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
+						
+						//Create attachment array
+						$attachment = array(
+							'guid' => $wp_upload_dir['url'] . '/' . $attachment_parts['basename'], 
+							'post_mime_type' => $wp_filetype['type'],
+							'post_title' => preg_replace( '/\.[^.]+$/', '', $attachment_parts['basename'] ),
+							'post_content' => '',
+							'post_status' => 'inherit'
+						);
+						
+						$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+						
+						if ( !$attach_id ){
+							return NULL;
+						}
+							
+						// we must first include the image.php file
+						// for the function wp_generate_attachment_metadata() to work
+						
+						require_once( ABSPATH . 'wp-admin/includes/image.php' );
+						
+						$attach_data = wp_generate_attachment_metadata( $attach_id, $wp_upload_dir['path'] . '/' . $attachment_parts['basename']  );
+						
+						wp_update_attachment_metadata( $attach_id, $attach_data );
+						
+						$meta_value = str_replace( 'src=&quot;' . $img_url, 'src=&quot;' . $wp_upload_dir['url'] . '/' . $attachment_parts['basename'] , $meta_value );
+					}
+					else{
+						$meta_value = str_replace( 'src=&quot;' . $img_url, 'src=&quot;' . $wp_upload_dir['url'] . '/' . basename( $img_url ), $meta_value );
+					}
+					
+				}
+			}
 		}
+		//If this is not a text area containing an img html tag...
+		else{							
+												
+			//Get the image
+			$saved_file = $wp_filesystem->get_contents( $meta_value );
 			
-		// we must first include the image.php file
-		// for the function wp_generate_attachment_metadata() to work
-		
-		require_once( ABSPATH . 'wp-admin/includes/image.php' );
-		
-		$attach_data = wp_generate_attachment_metadata( $attach_id, $wp_upload_dir['path'] . '/' . $attachment_parts['basename']  );
-		
-		wp_update_attachment_metadata( $attach_id, $attach_data );
+			$wp_upload_dir = wp_upload_dir();
+				
+			//Get the filename only of this attachment
+			$attachment_path = parse_url( $meta_value, PHP_URL_PATH);
+			$attachment_parts = pathinfo($attachment_path);
+			
+			//Move the image to the uploads directory
+			$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+				
+			//Check filetype	
+			$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
+			
+			//Create attachment array
+			$attachment = array(
+				'guid' => $wp_upload_dir['url'] . '/' . $attachment_parts['basename'], 
+				'post_mime_type' => $wp_filetype['type'],
+				'post_title' => preg_replace( '/\.[^.]+$/', '', $attachment_parts['basename'] ),
+				'post_content' => '',
+				'post_status' => 'inherit'
+			);
+			
+			$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+			
+			if ( !$attach_id ){
+				return NULL;
+			}
+				
+			// we must first include the image.php file
+			// for the function wp_generate_attachment_metadata() to work
+			
+			require_once( ABSPATH . 'wp-admin/includes/image.php' );
+			
+			$attach_data = wp_generate_attachment_metadata( $attach_id, $wp_upload_dir['path'] . '/' . $attachment_parts['basename']  );
+			
+			wp_update_attachment_metadata( $attach_id, $attach_data );
+			
+			//Tell the meta key where the new attachment is located. 
+			//This works whether this is a new or old attachment - as the attachments are not overwritten so the URL should always be this:
+			$meta_value = $wp_upload_dir['url'] . '/' . basename( $meta_value );
+	
+		}
 														
 	}//End of: If this attachment has NOT already been created
 	
-	//Tell the meta key where the new attachment is located. 
-	//This works whether this is a new or old attachment - as the attachments are not overwritten so the URL should always be this:
-	$meta_value = $wp_upload_dir['url'] . '/' . basename( $meta_value );
+	//If this attachment HAS already been created, make sure the URL to it is correct
+	else{
+		
+		//Check if this field contains any HTML img tags
+		if ( strpos( $meta_value, '&lt;p&gt;&lt;img' ) !== false ){
+			
+			//Get the URL in each img tag's "src" attribute
+			$value_explode_results = explode( 'src=&quot;', $meta_value );
+			
+			$rebuilt_field_value = NULL;
+			
+			$mail_sent = false;
+			
+			$exploded_loop_counter  = 0;
+			
+			//Loop through each exploded string
+			if ( is_array( $value_explode_results ) ){
+				foreach( $value_explode_results as $value_explode_result ){
+					
+					if ( $exploded_loop_counter == 0 ){
+						$exploded_loop_counter = $exploded_loop_counter + 1;
+						continue;	
+					}
+					
+					$exploded_loop_counter = $exploded_loop_counter + 1;
+															
+					//Get the image url
+					$temp_explode_holder = explode( '&quot', $value_explode_result );
+					$img_url = $temp_explode_holder[0];
+					
+					$meta_value = str_replace( 'src=&quot;' . $img_url, 'src=&quot;' . $wp_upload_dir['url'] . '/' . basename( $img_url ), $meta_value );
+					
+				}
+			}
+		}
+		//If this is not a text area containing an img html tag...
+		else{	
+		
+			//Tell the meta key where the new attachment is located. 
+			//This works whether this is a new or old attachment - as the attachments are not overwritten so the URL should always be this:
+			$meta_value = $wp_upload_dir['url'] . '/' . basename( $meta_value );	
+		}
+	}
 	
 	return $meta_value;
 							
