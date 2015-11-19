@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.2
+Stable tag: 1.0.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,11 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.4.3 = November 18, 2015
+* Stack Templater now does a search for attachments in text areas.
+* Make Double Click for Brick Editor only fire if logged in. This previously didn't open the Brick Editor - but it would try - resulting in a js error if double clicked and logged out.
+* Make buttons in text areas have better default margins for mobile.
 
 = 1.0.4.2 = November 10, 2015
 * Icon fix for isotope buttons. Should fix vertical alignment issue for isotope filter buttons.
