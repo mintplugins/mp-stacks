@@ -235,16 +235,23 @@ function mp_stack( $stack_id ){
 					
 		//Set the default for the brick counter
 		$brick_number = 1;
-					
-		//Loop through the stack group		
-		while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
-			
-			//Build Brick Output
-			$html_output .= mp_brick( get_the_ID(), $stack_id, $brick_number );
-			
-			$brick_number = $brick_number + 1;
-			
-		endwhile;
+		
+		//Run Brick Functions? 
+		//This Filter allows you to tell a Stack whether you want to execute the Brick functions or not. 
+		//This is useful for restricting/changing the output of a Stack for something like password entry - without running/enqueueing all of the scripts inside the mp_brick function.
+		$run_mp_brick_functions = apply_filters( 'mp_stacks_execute_mp_brick_in_mp_stack', true, $stack_id );
+		
+		if ( $run_mp_brick_functions ){			
+			//Loop through the stack group		
+			while( $mp_stack_query->have_posts() ) : $mp_stack_query->the_post(); 
+				
+				//Build Brick Output
+				$html_output .= mp_brick( get_the_ID(), $stack_id, $brick_number );
+				
+				$brick_number = $brick_number + 1;
+				
+			endwhile;
+		}
 	
 	}
 	//If there aren't any bricks in this stack
@@ -267,7 +274,7 @@ function mp_stack( $stack_id ){
 	
 	$html_output .= '</div>';
 	
-	//Filter for adding output to the html output 
+	//Filter for adding/changing the HTML output of a Stack.
 	$html_output = apply_filters( 'mp_stacks_html_output', $html_output, $stack_id );
 	
 	//Reset query
@@ -348,11 +355,24 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	//Make sure all the default scripts are properly enqueued
 	mp_stacks_frontend_enqueue();
 	
-	//First Output
-	$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
+	//Run Brick Functions? 
+	//This Filter allows you to tell a Stack whether you want to execute the Brick functions or not. 
+	//This is useful for restricting/changing the output of a Stack for something like password entry - without running/enqueueing all of the scripts inside the mp_brick function.
+	$do_brick_content_output = apply_filters( 'mp_stacks_execute_content_types_in_brick', true, $post_id );
 	
-	//Second Output	
-	$second_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $second_output, $mp_stacks_second_content_type, $post_id) : NULL;
+	//If we should run the content type filters as normal...
+	if ( $do_brick_content_output ){
+		//First Output
+		$first_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $first_output, $mp_stacks_first_content_type, $post_id) : NULL;
+		
+		//Second Output	
+		$second_output = has_filter('mp_stacks_brick_content_output') ? apply_filters( 'mp_stacks_brick_content_output', $second_output, $mp_stacks_second_content_type, $post_id) : NULL;
+	}
+	//If we should NOT run the content type filters as normal...filter in what should be there in their place. Don't filter normal Content-Type output here.
+	else{
+		$first_output = has_filter('mp_stacks_brick_non_content_output') ? apply_filters( 'mp_stacks_brick_non_content_output', NULL, $mp_stacks_first_content_type, $post_id) : NULL;
+		$second_output = has_filter('mp_stacks_brick_non_content_output') ? apply_filters( 'mp_stacks_brick_non_content_output', NULL, $mp_stacks_second_content_type, $post_id) : NULL;
+	}
 	
 	//Centered - dont use left and right
 	if ($post_specific_alignment == "centered"){
