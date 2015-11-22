@@ -18,14 +18,14 @@
  * @since    1.0.0
  * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
  * @see      get_bloginfo()
- * @param    array $wp See link for description.
+ * @param    int $post_id Optional. If passed it will use the id of the brick passed. If not it will check in the $_POST var for 'mp_stacks_ajax_brick_id'
  * @return   void
  */
-function mp_stacks_update_brick() {	
+function mp_stacks_brick_ajax( $post_id = false ) {	
 	
 	global $wp_scripts;
 	
-	$brick_id = sanitize_text_field( $_POST['mp_stacks_update_brick_id'] );
+	$brick_id = !empty( $post_id ) ? $post_id : sanitize_text_field( $_POST['mp_stacks_ajax_brick_id'] );
 	$brick_css = mp_brick_css( $brick_id );
 	$brick_html = mp_brick( $brick_id );
 	
@@ -64,17 +64,81 @@ function mp_stacks_update_brick() {
 	$return_array['success_type'] = !empty( $brick_html ) ? 'brick_updated' : 'brick_deleted';
 	$return_array['brick_css'] = $brick_css ? $brick_css : '';
 	$return_array['brick_html'] = $brick_html ? $brick_html : '';
-	$return_array['brick_footer_enqueued_scripts_array'] = $footer_scripts_array;
-	$return_array['brick_footer_inline_scripts_array'] = mp_stacks_get_inline_js();
-	$return_array['brick_enqueued_css_styles_array'] = $footer_styles_array;
-	$return_array['brick_inline_css_styles_array'] = mp_stacks_get_inline_css();
+	$return_array['footer_enqueued_scripts_array'] = $footer_scripts_array;
+	$return_array['footer_inline_scripts_array'] = mp_stacks_get_inline_js();
+	$return_array['enqueued_css_styles_array'] = $footer_styles_array;
+	$return_array['inline_css_styles_array'] = mp_stacks_get_inline_css();
 	
 	echo json_encode( $return_array );
 	die();
 			
 }
-add_action( 'wp_ajax_mp_stacks_update_brick', 'mp_stacks_update_brick' );
-add_action( 'wp_ajax_nopriv_mp_stacks_update_brick', 'mp_stacks_update_brick' );
+add_action( 'wp_ajax_mp_stacks_ajax_brick', 'mp_stacks_brick_ajax' );
+add_action( 'wp_ajax_nopriv_mp_stacks_ajax_brick', 'mp_stacks_brick_ajax' );
+
+/**
+ * Ajax callback for updating a stack
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    int $stack_id Optional. If passed it will use the id of the stack passed. If not it will check in the $_POST var for 'mp_stacks_ajax_stack_id'
+ * @return   void
+ */
+function mp_stacks_stack_ajax( $stack_id = false ) {	
+	
+	global $wp_scripts;
+	
+	$stack_id = !empty( $stack_id ) ? $stack_id : sanitize_text_field( $_POST['mp_stacks_ajax_stack_id'] );
+	$stack_css = '<style type="text/css">' . mp_stack_css( $stack_id ) . '</style>';
+	$stack_html = mp_stack( $stack_id );
+	
+	//Remove emojis from the enqueued scripts and styles for this ajax call.
+	remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
+	remove_action( 'wp_print_styles', 'print_emoji_styles' );
+	
+	//Get the needed css stylesheets
+	ob_start();
+	wp_print_styles();
+	$footer_css_string = ob_get_clean();
+	
+	//Explode the styles so we can get the url of each stylesheet
+	$footer_css_explode = explode( "href='", $footer_css_string );
+	foreach( $footer_css_explode as $style_id_chunk ){
+		$temp_styles_explode_holder = explode( "'", $style_id_chunk );
+		$footer_styles_array[]  = $temp_styles_explode_holder[0];
+	}
+	unset( $footer_styles_array[0] );
+	
+	//Get the needed js scripts
+	ob_start();
+	wp_print_scripts();
+	$footer_scripts_string = ob_get_clean();
+	
+	//Explode the footer scripts so we can get the actual url for each one
+	$footer_scripts_explode = explode( "<script type='text/javascript' src='", $footer_scripts_string );
+	foreach( $footer_scripts_explode as $script_url_chunk ){
+		$temp_explode_holder = explode( "'", $script_url_chunk );
+		$footer_scripts_array[] = htmlspecialchars_decode( $temp_explode_holder[0] );
+	}
+	unset( $footer_scripts_array[0] );
+	
+	//Create the array that will be returned to the front-end js
+	$return_array['success'] = true;
+	$return_array['success_type'] = !empty( $stack_html ) ? 'stack_updated' : 'stack_deleted';
+	$return_array['stack_css'] = $stack_css ? $stack_css : '';
+	$return_array['stack_html'] = $stack_html ? $stack_html : '';
+	$return_array['footer_enqueued_scripts_array'] = $footer_scripts_array;
+	$return_array['footer_inline_scripts_array'] = mp_stacks_get_inline_js();
+	$return_array['enqueued_css_styles_array'] = $footer_styles_array;
+	$return_array['inline_css_styles_array'] = mp_stacks_get_inline_css();
+	
+	echo json_encode( $return_array );
+	die();
+			
+}
+add_action( 'wp_ajax_mp_stacks_ajax_stack', 'mp_stacks_stack_ajax' );
+add_action( 'wp_ajax_nopriv_mp_stacks_ajax_stack', 'mp_stacks_stack_ajax' );
 
 /**
  * Ajax callback for Create New Stack button
