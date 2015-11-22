@@ -160,8 +160,11 @@ function mp_brick_css( $post_id, $stack_id = NULL ){
 		
 		//Additional CSS
 		$css_output .= apply_filters( 'mp_brick_additional_css', '', $post_id, $first_content_type, $second_content_type );
+		
+		//Check if we should add the stack class.
+		$stack_class = !empty( $stack_id ) ? ' class="mp-stack-css-' . $stack_id . '" ' : NULL;
 				
-		return '<style id="mp-brick-css-' . $post_id . '" type="text/css">' . $css_output .'</style>';	
+		return '<style id="mp-brick-css-' . $post_id . '" type="text/css" ' . $stack_class . '>' . $css_output .'</style>';	
 				
 }
 
