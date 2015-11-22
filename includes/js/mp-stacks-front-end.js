@@ -482,9 +482,9 @@ function mp_stacks_close_lightbox( action_name ){
 				
 				//Reload the Brick that was updated using ajax
 				var postData = {
-					action: 'mp_stacks_update_brick',
+					action: 'mp_stacks_ajax_brick',
 					mp_stacks_stack_id_of_brick: stack_id,
-					mp_stacks_update_brick_id: brick_id,
+					mp_stacks_ajax_brick_id: brick_id,
 					mp_stacks_queried_object_id: mp_stacks_queried_object_id
 				}
 				
@@ -503,7 +503,7 @@ function mp_stacks_close_lightbox( action_name ){
 						if ( response.success ){
 							
 							//Update the brick on the page by passing the ajax response to our JS function.
-							mp_stacks_update_brick( response, brick_id );
+							mp_stacks_load_ajax_brick( response, brick_id, false, false );
 							
 						}
 						
@@ -513,9 +513,6 @@ function mp_stacks_close_lightbox( action_name ){
 						//Remove the current brick id from the body
 						$( 'body' ).removeAttr( 'mp-brick-current-id' );
 						$( 'body' ).removeAttr( 'mp-stack-current-id' );
-						
-						//jQuery Trigger which Add-Ons can use to update themselves when a Brick is updated.
-						$( document ).trigger( 'mp_stacks_brick_loaded_via_ajax', [brick_id] );
 						
 					}
 				}).fail(function (data) {
@@ -529,10 +526,21 @@ function mp_stacks_close_lightbox( action_name ){
 }
 
 /**
- * Function which, when called, replaces a brick with the ajax information returned containing the new brick's HTML, JS, and CSS.
+ * Function which, when called, loads a brick with the ajax information returned containing the new brick's HTML, JS, and CSS.
+ * The loaded brick will be placed on the page using the "load_container_id" argument. If given it will
+ * load the Brick into the Container ID passed. If false, it will try and replace the Brick with the loaded Brick (or "Update" it).
  *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @see      function_name()
+ * @param    array $ajax_response The response from the 'mp_stacks_brick_ajax' function.
+ * @param    int   $brick_id The ID of the brick that is being loaded
+ * @param    string $load_container_id If this is not empty, it will load the brick into this container
+ * @param    string $load_style This is the way that the Brick will be loaded into the $load_container_id. Options are "append", "prepend", "html".
+ * @return   void
  */
-function mp_stacks_update_brick( ajax_response, brick_id ){
+
+function mp_stacks_load_ajax_brick( ajax_response, brick_id, load_container_id, load_style ){
 	
 	jQuery(document).ready(function($){							
 	
@@ -545,7 +553,7 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 		$( document ).trigger( 'mp_stacks_before_ajax_brick_update', [this_brick_string] );
 
 		//Loop through all the enqueued css stylesheets that were passed back from ajax
-		$.each( ajax_response.brick_enqueued_css_styles_array, function( stylesheet_counter, stylesheet_href ) {
+		$.each( ajax_response.enqueued_css_styles_array, function( stylesheet_counter, stylesheet_href ) {
 			
 			//If this stylesheet has not already been output to the page
 			if ( $('link[href="' + stylesheet_href + '"]').length === 0 ){
@@ -558,11 +566,16 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 		});
 		
 		//Put the Brick's CSS into the <head> of this document
-		$( this_brick_css_string ).replaceWith( ajax_response.brick_css );
+		if ( $( this_brick_css_string ) ){
+			$( this_brick_css_string ).replaceWith( ajax_response.brick_css );
+		}
+		else{
+			$( 'head' ).append( ajax_response.brick_css );
+		}	
 		
 		//Loop through all inline css scripts
-		if ( ajax_response.brick_footer_inline_scripts_array ){
-			$.each( ajax_response.brick_inline_css_styles_array, function( css_id, css_output ) {
+		if ( ajax_response.inline_css_styles_array ){
+			$.each( ajax_response.inline_css_styles_array, function( css_id, css_output ) {
 				
 				//If this inline css has not already been output to the page
 				if ( $('style[mp_stacks_inline_style="' + css_id + '"]').length === 0 ){
@@ -576,13 +589,27 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 			});
 		}
 		
-		//Replace the Brick's HTML 
-		$( this_brick_string ).replaceWith( ajax_response.brick_html );
+		//If we should load this Brick's HTML into a container on the page
+		if ( load_container_id ){ 
+			if ( load_style == 'append' ){
+				$( load_container_id ).append( ajax_response.brick_html );
+			}
+			else if( load_style == 'prepend' ){
+				$( load_container_id ).prepend( ajax_response.brick_html );
+			}
+			else if( load_style == 'html' ){
+				$( load_container_id ).html( ajax_response.brick_html );
+			}
+		}
+		//If we should replace a Brick that is already on the page
+		else{
+			$( this_brick_string ).replaceWith( ajax_response.brick_html );
+		}
 		
 		//Loop through all the enqueued scripts that were passed back from ajax
-		if ( ajax_response.brick_footer_enqueued_scripts_array ){
+		if ( ajax_response.footer_enqueued_scripts_array ){
 			
-			$.each( ajax_response.brick_footer_enqueued_scripts_array, function( script_counter, script_output_src ) {
+			$.each( ajax_response.footer_enqueued_scripts_array, function( script_counter, script_output_src ) {
 				
 				//If this script has not already been output to the page
 				if ( $('script[src="' + script_output_src + '"]').length === 0 ){
@@ -594,6 +621,7 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 				//if this script has already been output to the page
 				else{
 					
+					//If this script should be refreshed when a brick gets updated via ajax
 					if ( $('script[src*="mp_stacks_refresh_this_script_upon_brick_update"]').length !== 0 ){
 						//Replace the script that already exists with itself so that it re-runs
 						$('script[src="' + script_output_src + '"]').replaceWith( '<script type="text/javascript" src="' + script_output_src + '">    /script>' );
@@ -605,8 +633,8 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 		}
 				
 		//Loop through all inline js scripts
-		if ( ajax_response.brick_footer_inline_scripts_array ){
-			$.each( ajax_response.brick_footer_inline_scripts_array, function( script_id, script_output ) {
+		if ( ajax_response.footer_inline_scripts_array ){
+			$.each( ajax_response.footer_inline_scripts_array, function( script_id, script_output ) {
 				
 				//Remove this inline script if it already existed on this page previously
 				$( 'body #' + script_id ).remove();
@@ -620,8 +648,135 @@ function mp_stacks_update_brick( ajax_response, brick_id ){
 		//This trigger is used to fire any functions that need to happen after a brick is updated via ajax
 		$( document ).trigger( 'mp_stacks_after_ajax_brick_update', [this_brick_string] );
 		
+		//jQuery Trigger which Add-Ons can use to update themselves when a Brick is updated.
+		$( document ).trigger( 'mp_stacks_brick_loaded_via_ajax', [brick_id] );
+		
 	});
 }
+
+/**
+ * Function which, when called, loads a Stack with the ajax information returned containing the Stacks's HTML, JS, and CSS.
+ * The loaded Stack will be placed on the page using the "load_container_id" argument. If given it will
+ * load the Stack into the Container ID passed. If false, it will try and replace the Stack with the loaded Stack (or "Update" it).
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com/doc/
+ * @see      function_name()
+ * @param    array $ajax_response The response from the 'mp_stacks_brick_ajax' function.
+ * @param    int   $stack_id The ID of the Stack that is being loaded
+ * @param    string $load_container_id If this is not empty, it will load the brick into this container
+ * @param    string $load_style This is the way that the Brick will be loaded into the $load_container_id. Options are "append", "prepend", "html".
+ * @return   void
+ */
+
+function mp_stacks_load_ajax_stack( ajax_response, stack_id, load_container_id, load_style ){
+	
+	jQuery(document).ready(function($){							
+	
+		var this_stack_css_string = '.mp-stack-css-' + stack_id;
+		var this_stack_string = '#mp_stack_' + stack_id;
+		
+		//This trigger is used to fire any functions that need to happen before a stack is updated via ajax
+		$( document ).trigger( 'mp_stacks_before_ajax_stack_update', [this_stack_string] );
+		
+		//Loop through all the enqueued css stylesheets that were passed back from ajax
+		$.each( ajax_response.enqueued_css_styles_array, function( stylesheet_counter, stylesheet_href ) {
+			
+			//If this stylesheet has not already been output to the page
+			if ( $('link[href="' + stylesheet_href + '"]').length === 0 ){
+				
+				//Output this stylesheet link into the document head so the browser loads it
+				$( 'head' ).append( '<link rel="stylesheet" href="' + stylesheet_href + '" />' );
+				
+			}
+			
+		});
+		
+		//Remove any style tags that are already assigned to this stack.
+		$( this_stack_css_string ).remove();
+		//Put the Stacks's CSS into the <head> of this document
+		$( 'head' ).append( ajax_response.stack_css );
+			
+		
+		//Loop through all inline css scripts
+		if ( ajax_response.inline_css_styles_array ){
+			$.each( ajax_response.inline_css_styles_array, function( css_id, css_output ) {
+				
+				//If this inline css has not already been output to the page
+				if ( $('style[mp_stacks_inline_style="' + css_id + '"]').length === 0 ){
+										
+					//Add this inline css to the <head> using the updated, ajax-passed code
+					$( 'head' ).append( css_output );
+					
+				}
+
+				
+			});
+		}
+		
+		//If we should load this Brick's HTML into a container on the page
+		if ( load_container_id ){ 
+			if ( load_style == 'append' ){
+				$( load_container_id ).append( ajax_response.stack_html );
+			}
+			else if( load_style == 'prepend' ){
+				$( load_container_id ).prepend( ajax_response.stack_html );
+			}
+			else if( load_style == 'html' ){
+				$( load_container_id ).html( ajax_response.stack_html );
+			}
+		}
+		//If we should replace a Brick that is already on the page
+		else{
+			$( this_stack_string ).replaceWith( ajax_response.stack_html );
+		}
+		
+		//Loop through all the enqueued scripts that were passed back from ajax
+		if ( ajax_response.footer_enqueued_scripts_array ){
+			
+			$.each( ajax_response.footer_enqueued_scripts_array, function( script_counter, script_output_src ) {
+				
+				//If this script has not already been output to the page
+				if ( $('script[src="' + script_output_src + '"]').length === 0 ){
+										
+					//Output this script into the footer so the browser loads it
+					$( 'head' ).append( '<script type="text/javascript" src="' + script_output_src + '"></script>' );
+					
+				}
+				//if this script has already been output to the page
+				else{
+					
+					//If this script should be refreshed when a brick gets updated via ajax
+					if ( $('script[src*="mp_stacks_refresh_this_script_upon_brick_update"]').length !== 0 ){
+						//Replace the script that already exists with itself so that it re-runs
+						$('script[src="' + script_output_src + '"]').replaceWith( '<script type="text/javascript" src="' + script_output_src + '">    /script>' );
+					}
+					
+				}
+				
+			});
+		}
+				
+		//Loop through all inline js scripts
+		if ( ajax_response.footer_inline_scripts_array ){
+			$.each( ajax_response.footer_inline_scripts_array, function( script_id, script_output ) {
+				
+				//Remove this inline script if it already existed on this page previously
+				$( 'body #' + script_id ).remove();
+				
+				//Add this inline script back using the updated, ajax-passed code
+				$( 'body' ).append( script_output );
+				
+			});
+		}
+		
+		//jQuery Trigger which Add-Ons can use to update themselves when a Brick is updated.
+		$( document ).trigger( 'mp_stacks_brick_loaded_via_ajax', [stack_id] );
+		
+	});
+}
+
+
 //This function can be used to set an iframe's height to match the height of its contents.
 function mp_stacks_mfp_match_height(iframe) {
 	
