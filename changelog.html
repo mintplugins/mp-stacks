@@ -1,4 +1,14 @@
 <p>
+<strong>= 1.0.4.4 = November 22, 2015</strong>
+<ul>
+	<li>Js Function "mp_stacks_update_brick" changed to "mp_stacks_load_ajax_brick". Also a new function called "mp_stacks_load_ajax_stack" was added to allow the ajax loading of a stack.</li>
+    <li>Ajax callback function for loading a Brick via ajax changed from "mp_stacks_update_brick" to "mp_stacks_brick_ajax". Also a new function added called "mp_stacks_stack_ajax" for loading a full stack via ajax.</li>
+    <li>Custom Shortcode button for "Add Link" is now removed with TinyMCE plugins now properly loading in MP Core 1.0.2.7.</li>
+    <li>Added MP Stack class to style tags for brick called "mp-stack-css-STACKID".</li>
+    <li>Added filter flag called "mp_stacks_execute_mp_brick_in_mp_stack" which allows you to check whether a Stack's output should be executed. For example, you might want to require a password before a Brick's/Stack's Content is executed. This fixes a bug where Brick styles and scripts were still enqueued even if the HTML for the Brick was not. </li>
+    <li>Added filter flag called "mp_stacks_execute_content_types_in_brick" which allows to check whether a Brick's Content Types should be executed or if alternate output should be applied.</li>
+    <li>Added filter to Bricks for alternate Content output if Content Types shouldn't be shown (IE for a Password Protected Brick) called "mp_stacks_brick_non_content_output".</li>
+</ul>
 <strong>= 1.0.4.3 = November 18, 2015</strong>
 <ul>
 	<li>Stack Templater now does a search for attachments in text areas.</li>

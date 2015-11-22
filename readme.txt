@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.3
+Stable tag: 1.0.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,10 +44,20 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.4.4 = November 22, 2015
+* Js Function "mp_stacks_update_brick" changed to "mp_stacks_load_ajax_brick". Also a new function called "mp_stacks_load_ajax_stack" was added to allow the ajax loading of a stack.
+* Ajax callback function for loading a Brick via ajax changed from "mp_stacks_update_brick" to "mp_stacks_brick_ajax". Also a new function added called "mp_stacks_stack_ajax" for loading a full stack via ajax.
+* Custom Shortcode button for "Add Link" is now removed with TinyMCE plugins now properly loading in MP Core 1.0.2.7.
+* Added MP Stack class to style tags for brick called "mp-stack-css-STACKID".
+* Added filter flag called "mp_stacks_execute_mp_brick_in_mp_stack" which allows you to check whether a Stack's output should be executed. For example, you might want to require a password before a Brick's/Stack's Content is executed. This fixes a bug where Brick styles and scripts were still enqueued even if the HTML for the Brick was not. 
+* Added filter flag called "mp_stacks_execute_content_types_in_brick" which allows to check whether a Brick's Content Types should be executed or if alternate output should be applied.
+* Added filter to Bricks for alternate Content output if Content Types shouldn't be shown (IE for a Password Protected Brick) called "mp_stacks_brick_non_content_output".
+
 = 1.0.4.3 = November 18, 2015
 * Stack Templater now does a search for attachments in text areas.
 * Make Double Click for Brick Editor only fire if logged in. This previously didn't open the Brick Editor - but it would try - resulting in a js error if double clicked and logged out.
 * Make buttons in text areas have better default margins for mobile.
+* Removed JS for Brick URLS on Page Load. This happens without that script and was causing some bugs.
 
 = 1.0.4.2 = November 10, 2015
 * Icon fix for isotope buttons. Should fix vertical alignment issue for isotope filter buttons.
