@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.4
+Stable tag: 1.0.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,15 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.4.5 = December 10, 2015, 2015
+* Fix bug with WordPress 4.4 where Brick Descriptions were entered as NULL - they need to be a blank string now.
+* Add relative positioning to brick container divs
+* Make sure MP Stacks fronend enqueue only runs once.
+* Add filter for mp_stacks_brick_alignment
+* Remove support notice in Brick Editor - was causing a weird jumping effect.
+* Update elementQuery js script.
+* Changed min height default from 50px to 10px to have better preset for short bricks (like navigation).
 
 = 1.0.4.4 = November 22, 2015
 * Js Function "mp_stacks_update_brick" changed to "mp_stacks_load_ajax_brick". Also a new function called "mp_stacks_load_ajax_stack" was added to allow the ajax loading of a stack.
