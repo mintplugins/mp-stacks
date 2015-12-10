@@ -341,7 +341,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	$html_output = NULL;			
 	
 	//Alignment
-	$post_specific_alignment = get_post_meta($post_id, 'brick_alignment', true);
+	$post_specific_alignment = apply_filters( 'mp_stacks_brick_alignment', get_post_meta($post_id, 'brick_alignment', true), $post_id );
 	
 	//First Media Type
 	$mp_stacks_first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);
@@ -398,14 +398,14 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	$second_content_type_display = empty( $second_output ) ? 'style="display:block;"' : NULL;				
 	
 	//First Content Type HTML output
-	$content_output .= '<div id="mp-brick-' . $post_id . '-first-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+	$content_output .= '<div id="mp-brick-' . $post_id . '-first-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . ' mp-stacks-content-type-' . $mp_stacks_first_content_type . '">';
 		$content_output .= '<div id="mp-brick-' . $post_id . '-first-content-type" class="mp-brick-first-content-type" ' . $first_content_type_display . '>';
 			$content_output .= $first_output;
 		$content_output .= '</div>';
 	$content_output .= '</div>';
 	
 	//Second Content Type HTML output
-	$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . '">';
+	$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . ' mp-stacks-content-type' . $mp_stacks_second_content_type . '">';
 		$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type" class="mp-brick-second-content-type" ' . $second_content_type_display . '>';
 			$content_output .= $second_output;
 		$content_output .= '</div>';
@@ -632,7 +632,7 @@ function mp_stacks_default_brick_inner_css( $css_output, $post_id ){
 	
 	//Min brick height
 	$brick_min_height = get_post_meta($post_id, 'brick_min_height', true);
-	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '50';
+	$brick_min_height = !empty($brick_min_height) ? $brick_min_height : '10';
 	
 	//Min content-type margin Above
 	$brick_content_type_margin_above_below = mp_core_get_post_meta($post_id, 'brick_min_above_below', 50);
@@ -763,7 +763,7 @@ add_filter( 'mp_brick_second_content_type_css_filter', 'mp_stacks_second_content
 function mp_stacks_first_container_css( $css_output, $post_id ){
 	
 	//Get the alignment
-	$alignment = mp_core_get_post_meta($post_id, 'brick_alignment', 'leftright' );
+	$alignment = apply_filters( 'mp_stacks_brick_alignment', mp_core_get_post_meta($post_id, 'brick_alignment', 'leftright' ), $post_id );
 		
 	//If alignment in centered, we don't apply the split percentage
 	if ( $alignment != 'leftright' ){
@@ -792,7 +792,7 @@ add_filter( 'mp_brick_first_container_css', 'mp_stacks_first_container_css', 10,
 function mp_stacks_second_container_css( $css_output, $post_id ){
 	
 	//Get the alignment
-	$alignment = get_post_meta($post_id, 'brick_alignment', true);
+	$alignment = apply_filters( 'mp_stacks_brick_alignment', mp_core_get_post_meta($post_id, 'brick_alignment', 'leftright' ), $post_id );
 	
 	//If alignment in centered, we don't apply the split percentage
 	if ( $alignment != 'leftright' ){
@@ -824,7 +824,7 @@ add_filter( 'mp_brick_second_container_css', 'mp_stacks_second_container_css', 1
 function mp_stacks_default_brick_margins( $css_output, $post_id ){
 	
 	//Check alignment
-	$brick_alignment = mp_core_get_post_meta( $post_id, 'brick_alignment', 'leftright' );
+	$brick_alignment = apply_filters( 'mp_stacks_brick_alignment', mp_core_get_post_meta($post_id, 'brick_alignment', 'leftright' ), $post_id );
 	
 	//Check if there is a content type in slot #2
 	$mp_stacks_second_content_type = mp_core_get_post_meta($post_id, 'brick_second_content_type', 'none');
