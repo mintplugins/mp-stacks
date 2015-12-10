@@ -52,6 +52,14 @@ add_action('admin_enqueue_scripts', 'mp_stacks_admin_enqueue');
  */
 function mp_stacks_frontend_enqueue(){
 		
+		global $mp_stacks_enqueue_flag;
+		
+		if ( $mp_stacks_enqueue_flag ){
+			return;	
+		}
+		
+		$mp_stacks_enqueue_flag = true;
+		
 		//Main MP Stacks CSS
 		wp_enqueue_style( 'mp_stacks_style', plugins_url('css/mp-stacks-style.css', dirname(__FILE__)), MP_STACKS_VERSION );
 	
