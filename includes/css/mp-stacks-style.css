@@ -46,6 +46,7 @@
 	display:block;
 	width:100%;
 	margin: 0px auto;
+	position:relative;
 	z-index:1;	
 }
 .mp-brick .mp-brick-inner{
@@ -61,6 +62,7 @@
 .mp-brick .mp-brick-content-type-container{
 	display:table-cell; 
 	vertical-align:middle;
+	position:relative;
 	z-index:2;
 	width: 50%; 
 	text-align:center;
