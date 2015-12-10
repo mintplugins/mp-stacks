@@ -86,7 +86,7 @@ function mp_stacks_size_create_meta_box(){
 				'field_title' 	=> __( 'Minimum Height:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the smallest height this brick could ever be. (in pixels)',
 				'field_type' 	=> 'number',
-				'field_value' => '50',
+				'field_value' => '10',
 				'field_showhider'  => 'brick_centered_inner_margins_showhider',
 			),
 			array(
