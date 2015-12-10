@@ -257,7 +257,7 @@ function mp_stacks_create_stack_from_template( $mp_stack_template_array, $new_st
 		$new_stack_name, // the term 
 		'mp_stacks', // the taxonomy
 		array(
-			'description'=> isset( $mp_stack_template_array['stack_description'] ) ? $mp_stack_template_array['stack_description'] : NULL,
+			'description'=> isset( $mp_stack_template_array['stack_description'] ) ? $mp_stack_template_array['stack_description'] : '',
 			'slug' => wp_unique_term_slug( sanitize_title($new_stack_name), (object) array( 'parent' => 0, 'taxonomy' => 'mp_stacks' ) ),
 		)
 	);
