@@ -679,7 +679,7 @@ function mp_stacks_remove_admin_menu_for_brick_editor(){
 		remove_all_actions( 'admin_notices' );
 				
 		//Show admin notice about which brick the user is editing.
-		add_action('admin_notices', 'mp_stacks_support_admin_notice');
+		//add_action('admin_notices', 'mp_stacks_support_admin_notice');
 	
 	}
 }
