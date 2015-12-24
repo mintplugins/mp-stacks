@@ -405,7 +405,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	$content_output .= '</div>';
 	
 	//Second Content Type HTML output
-	$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . ' mp-stacks-content-type' . $mp_stacks_second_content_type . '">';
+	$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type-container" class="mp-brick-content-type-container ' . $brick_container_classes . ' mp-stacks-content-type-' . $mp_stacks_second_content_type . '">';
 		$content_output .= '<div id="mp-brick-' . $post_id . '-second-content-type" class="mp-brick-second-content-type" ' . $second_content_type_display . '>';
 			$content_output .= $second_output;
 		$content_output .= '</div>';

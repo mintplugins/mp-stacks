@@ -723,3 +723,19 @@ function mp_stacks_display_brick_json(){
 	}
 }
 add_action( 'init', 'mp_stacks_display_brick_json' );
+
+/**
+ * JetPack loads a strange file that can break image sizes called devicepx. This line removes it from loading and fixes those bugs it causes.
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com
+ * @see      get_bloginfo()
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_remove_devicepx(){
+	
+	wp_dequeue_script('devicepx');
+		
+}
+add_action('wp_enqueue_scripts', 'mp_stacks_remove_devicepx', 20);
