@@ -127,7 +127,7 @@ function mp_stacks_theme_bundle_default_items_notice(){
 							
 		<div class="welcome-panel">
 			<div class="welcome-panel-content">
-				<h3><?php echo __( 'Installation Successful!', 'mp_stacks' ); ?></h3>
+				<h2><?php echo __( 'Installation Successful!', 'mp_stacks' ); ?></h2>
 				<p class="about-description"><?php echo __( 'You\'re all ready to go with the ', 'mp_stacks' ) . $mp_core_options['mp_stacks_theme_bundle_being_installed']['fancy_title']; ?></p>
 				<div class="welcome-panel-column-container">
 				<div class="welcome-panel-column">
@@ -611,3 +611,51 @@ function mp_stacks_theme_bundle_setup_primary_menu( $theme_bundle_slug ){
 	
 }
 add_action( 'mp_stacks_additional_installation_actions', 'mp_stacks_theme_bundle_setup_primary_menu' );
+
+/**
+ * If the user uploaded this plugin as a theme, delete that theme copy now.
+ *
+ * @since 1.0
+ * @global $wpdb
+ * @global $mp_core_options
+ * @return void
+ */
+function mp_stacks_remove_matching_theme( $theme_bundle_slug ){
+	
+	global $mp_core_options;
+	
+	$hyphen_slug = str_replace("_", "-", $theme_bundle_slug );	
+			
+	//Set the method for the wp filesystem
+	$method = ''; // Normally you leave this an empty string and it figures it out by itself, but you can override the filesystem method here
+	
+	//Get credentials for wp filesystem
+	if (false === ($creds = request_filesystem_credentials( admin_url(), $method, false, false) ) ) {
+	
+		// if we get here, then we don't have credentials yet,
+		// but have just produced a form for the user to fill in, 
+		// so stop processing for now
+		
+		return true; // stop the normal page form from displaying
+	}
+	
+	//Now we have some credentials, try to get the wp_filesystem running
+	if ( ! WP_Filesystem($creds) ) {
+		// our credentials were no good, ask the user for them again
+		request_filesystem_credentials($url, $method, true, false);
+		return true;
+	}
+	
+	//By this point, the $wp_filesystem global should be working, so let's use it get our plugin.
+	global $wp_filesystem;
+	
+	$themes_dir = $wp_filesystem->wp_themes_dir();
+	$corresponding_theme_dir = $themes_dir . $hyphen_slug . '/';
+	
+	if($wp_filesystem->is_dir($corresponding_theme_dir)){
+		//Remove the theme duplicate of this plugin
+		mp_core_remove_directory( $corresponding_theme_dir );
+	}
+	
+}
+add_action( 'mp_stacks_additional_installation_actions', 'mp_stacks_remove_matching_theme' );
