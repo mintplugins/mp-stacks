@@ -428,7 +428,6 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 	
 	//Buttons to skip
 	$buttons_to_skip = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_hidden_buttons' );
-	$buttons_to_skip = str_replace( ' ,', ',', explode( ',', trim( $buttons_to_skip ) ) );
 	
 	//Filtering Behavior
 	$filtering_behavior = mp_core_get_post_meta( $post_id, $meta_prefix . '_isotope_filtering_behavior', 'default_isotope' );
@@ -494,7 +493,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 													
 							}
 							else{
-								if ( !in_array( $tax_term['slug'], $buttons_to_skip ) ){
+								if ( strpos( $buttons_to_skip, $tax_term['slug'] ) === false ){
 									
 									//Get the number of posts in this term
 									$term_info = get_term_by('name', $tax_term['name'], $taxonomy_name);
@@ -593,7 +592,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						else{
 							
 							//If we should skip this button
-							if ( in_array( $tax_term['slug'], $buttons_to_skip ) ){
+							if ( strpos( $buttons_to_skip, $tax_term['slug'] ) !== false ){
 								continue;
 							}
 							
