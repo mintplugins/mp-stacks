@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.5
+Stable tag: 1.0.4.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,7 +44,12 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
-= 1.0.4.5 = December 10, 2015, 2015
+= 1.0.4.6 = December 24, 2015
+* Dequeue promblematic script from jetpack called "devicepx".
+* Isotope Buttons to skip now uses strpos instead of in_array.
+* Remove matching theme upon activation if the user accidentally uploaded a Theme Bundle as a "Theme" instead of as a "Plugin".
+
+= 1.0.4.5 = December 10, 2015
 * Fix bug with WordPress 4.4 where Brick Descriptions were entered as NULL - they need to be a blank string now.
 * Add relative positioning to brick container divs
 * Make sure MP Stacks fronend enqueue only runs once.
