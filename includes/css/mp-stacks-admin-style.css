@@ -77,7 +77,7 @@
 	padding: 12px!important;
 	border:none;
 	max-width:25%;
-	height:53px;
+	/*height:53px;*/
 }
 .mp_stacks_singletext_content_type_repeater_repeater div[class*="bigscreen"],
 .mp_stacks_singletext_content_type_repeater_repeater div[class*="laptop"],
@@ -124,6 +124,9 @@ div[class*="brick_text_screen_size_controllerBBBBB "]{
   	margin-right: 7px;
   	vertical-align: top;
  	margin-top: 4px;	
+}
+.mp_field.mp_brick_text_option .wp-picker-container{
+	display:block;
 }
 .mp_field.mp_brick_text_option em{
 	display:none;
