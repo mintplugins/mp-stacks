@@ -47,7 +47,7 @@ function mp_stacks_image_create_meta_box(){
 				'field_id'			=> 'brick_main_image_link_url',
 				'field_title' 	=> __( 'Link URL', 'mp_stacks'),
 				'field_description' 	=> 'Enter the URL the above image will go to when clicked. EG: http://mylink.com',
-				'field_type' 	=> 'url',
+				'field_type' 	=> 'textbox',
 				'field_value' => '',
 				'field_showhider' => 'brick_main_image_link_showhider',
 			),
