@@ -549,6 +549,10 @@ function mp_stacks_load_ajax_brick( ajax_response, brick_id, load_container_id, 
 		
 		$( document ).off( '.mp-brick-' + brick_id, "**" );
 		
+		$( '.mp-brick-' + brick_id ).each( function(){
+			$( this ).off();
+		});
+		
 		//This trigger is used to fire any functions that need to happen before a brick is updated via ajax
 		$( document ).trigger( 'mp_stacks_before_ajax_brick_update', [this_brick_string] );
 
