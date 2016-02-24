@@ -194,7 +194,7 @@ class MP_Stacks_Welcome {
                 <h3><?php _e( 'How to add Bricks to your Stack', 'mp_stacks' );?></h3>
                 	
                     <ol>
-                    	<li><?php _e( 'View the page you made by clicking "View Page"', 'mp_stacks' );?></li>
+                    	<li><?php _e( 'View the page you made.', 'mp_stacks' );?></li>
                         <li><?php _e( 'When the page loads, there will be a red area that says "Add New Brick". Click on it and go!', 'mp_stacks' );?></li>
                     </ol>
                                      
