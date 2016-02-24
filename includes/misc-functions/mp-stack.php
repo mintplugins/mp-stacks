@@ -916,7 +916,7 @@ function mp_stacks_header_css(){
 	wp_reset_postdata();
 		
 }
-add_action( 'wp_head', 'mp_stacks_header_css', -1); 
+add_action( 'wp_head', 'mp_stacks_header_css', -1 ); 
 
 /**
  * Output css and js for all Stacks that haven't been output (for whatever reason). This also covers the css and js for Stack widgets.
