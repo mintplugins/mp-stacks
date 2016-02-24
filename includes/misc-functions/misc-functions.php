@@ -455,7 +455,7 @@ if (!function_exists('mp_knapstack_plugin_check')){
 * Output JUST the css for a stack 
 *
 * @since    1.0.0
-* @link     http://bullmandesign.com/quick-tips/too-much-of-a-good-thing
+* @link     https://mintplugins.com/
 * @param    array $rules 
 * @return   array $rules 
 */
@@ -474,6 +474,31 @@ function mp_stacks_css_page(){
 					
 }
 add_action('init', 'mp_stacks_css_page');
+
+
+/**
+* Output JUST the css for a brick 
+*
+* @since    1.0.0
+* @link     https://mintplugins.com/
+* @param    array $rules 
+* @return   array $rules 
+*/
+function mp_stacks_brick_css_page(){
+   	
+   if ( !isset( $_GET['mp_brick_css_page'] )){
+	   return false;
+   }
+   
+   header('Content-Type: text/css');
+   
+   //Output CSS for this stack
+	echo mp_brick_css( $_GET['mp_brick_css_page'] );
+	
+	die();
+					
+}
+add_action('init', 'mp_stacks_brick_css_page');
 
 /**
 * Get the time() when a Stack was last modified
