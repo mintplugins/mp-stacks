@@ -340,27 +340,57 @@ function mp_stacks_grid_highlight_text_html( $args ){
  *
  * @access   public
  * @since    1.0.0
+ * @param	 $included_areas array telling which options to include. 
  * @return   array
  */
-function mp_stacks_get_text_position_options(){
+function mp_stacks_get_text_position_options( $included_areas = array() ){
 	
-	return array( 
-		'below_image_left' => __( 'Below Image, Left', 'mp_stacks' ),
-		'below_image_right' => __( 'Below Image, Right', 'mp_stacks' ),
-		'below_image_centered' => __( 'Below Image, Centered', 'mp_stacks' ),
-		
-		'over_image_top_left' => __( 'Over Image, Top-Left', 'mp_stacks' ),
-		'over_image_top_right' => __( 'Over Image, Top-Right', 'mp_stacks' ),
-		'over_image_top_centered' => __( 'Over Image, Top-Centered', 'mp_stacks' ),
-		
-		'over_image_middle_left' => __( 'Over Image, Middle-Left', 'mp_stacks' ),
-		'over_image_middle_right' => __( 'Over Image, Middle-Right', 'mp_stacks' ),
-		'over_image_middle_centered' => __( 'Over Image, Middle-Centered', 'mp_stacks' ),
-		
-		'over_image_bottom_left' => __( 'Over Image, Bottom-Left', 'mp_stacks' ),
-		'over_image_bottom_right' => __( 'Over Image, Bottom-Right', 'mp_stacks' ),
-		'over_image_bottom_centered' => __( 'Over Image, Bottom-Centered', 'mp_stacks' ),
+	$default_areas = array( 
+		'above' => false,
+		'over' => true,
+		'below' => true,
 	);
+	
+	$included_areas = wp_parse_args( $included_areas, $default_areas );
+	
+	$position_options = array();
+	
+	//If we should include the "Above" Areas
+	if ( $included_areas['above'] ){
+		
+		$position_options['above_image_left'] = __( 'Above Image, Left', 'mp_stacks' );
+		$position_options['above_image_right'] = __( 'Above Image, Right', 'mp_stacks' );
+		$position_options['above_image_centered'] = __( 'Above Image, Centered', 'mp_stacks' );
+		
+	}
+	//If we should include the "Over" Areas
+	if ( $included_areas['over'] ){
+		
+		$position_options['over_image_top_left'] = __( 'Over Image, Top-Left', 'mp_stacks' );
+		$position_options['over_image_top_right'] =__( 'Over Image, Top-Right', 'mp_stacks' );
+		$position_options['over_image_top_centered'] = __( 'Over Image, Top-Centered', 'mp_stacks' );
+		
+		$position_options['over_image_middle_left'] = __( 'Over Image, Middle-Left', 'mp_stacks' );
+		$position_options['over_image_middle_right'] = __( 'Over Image, Middle-Right', 'mp_stacks' );
+		$position_options['over_image_middle_centered'] = __( 'Over Image, Middle-Centered', 'mp_stacks' );
+		
+		$position_options['over_image_bottom_left'] = __( 'Over Image, Bottom-Left', 'mp_stacks' );
+		$position_options['over_image_bottom_right'] = __( 'Over Image, Bottom-Right', 'mp_stacks' );
+		$position_options['over_image_bottom_centered'] = __( 'Over Image, Bottom-Centered', 'mp_stacks' );
+		
+	}
+	//If we should include the "Below" Areas
+	if ( $included_areas['below'] ){
+		
+		$position_options['below_image_left'] = __( 'Below Image, Left', 'mp_stacks' );
+		$position_options['below_image_right'] = __( 'Below Image, Right', 'mp_stacks' );
+		$position_options['below_image_centered'] = __( 'Below Image, Centered', 'mp_stacks' );
+		
+	}
+	
+	return $position_options;
+	
+	
 	
 }
 
