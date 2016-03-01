@@ -44,6 +44,16 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.4.7 = February X, 2016
+* Remove height setting from Brick Text Options in Brick Editor
+* Remove inline-block css from .mp-brick * - was affecting all items and wasn't necessary.
+* When updating Brick, remove all Jquery events that were attached to the brick class.
+* Added option for grid text positions to include only what they need.
+* Added mp_stacks_brick_css_page function which creates a CSS file for a Brick's css.
+* Remove the (now confusing) "View Page" instruction from MP Stacks Welcome page. This button was removed by WordPress itself.
+* Changed "main image link url" metabox to be text so that #hashtag urls can be entered.
+* Added License File so people know that MP Stacks is GPL :)
+
 = 1.0.4.6 = December 24, 2015
 * Dequeue promblematic script from jetpack called "devicepx".
 * Isotope Buttons to skip now uses strpos instead of in_array.
