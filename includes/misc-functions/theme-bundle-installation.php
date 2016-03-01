@@ -425,6 +425,7 @@ function mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug ){
 					  text-align:center;
 					  color:#fff;
 					  font-family:Verdana, Geneva, sans-serif;
+					  margin:0px;
 					}
 					
 					.container {
