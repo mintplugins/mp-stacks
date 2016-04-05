@@ -50,6 +50,19 @@ function mp_stacks_size_create_meta_box(){
 			'field_type'  => 'showhider',
 		),
 			array(
+				'field_id'			=> 'brick_vertical_alignment_c1',
+				'field_title' 	=> __( '1st Content-Type - Vertical Alignment:', 'mp_stacks'),
+				'field_description' 	=> 'Select the vertical alignment for the 1st Content-Type.',
+				'field_type' 	=> 'select',
+				'field_select_values' => array( 
+					'top' => __( 'Top', 'mp_stacks' ),
+					'middle' => __( 'Middle', 'mp_stacks' ),
+					'bottom' => __( 'Bottom', 'mp_stacks' ),
+				),
+				'field_value' => 'middle',
+				'field_showhider'  => 'brick_centered_inner_margins_showhider',
+			),
+			array(
 				'field_id'			=> 'brick_min_above_c1',
 				'field_title' 	=> __( '1st Content-Type - Space Above:', 'mp_stacks'),
 				'field_description' 	=> 'Enter the space above the 1st Content-Type (in pixels) for this brick. Default: 0',
@@ -63,6 +76,19 @@ function mp_stacks_size_create_meta_box(){
 				'field_description' 	=> 'Enter the space below the 1st Content-Type (in pixels) for this brick. Default: 20',
 				'field_type' 	=> 'number',
 				'field_value' => '',
+				'field_showhider'  => 'brick_centered_inner_margins_showhider',
+			),
+			array(
+				'field_id'			=> 'brick_vertical_alignment_c2',
+				'field_title' 	=> __( '2nd Content-Type - Vertical Alignment:', 'mp_stacks'),
+				'field_description' 	=> 'Select the vertical alignment for the 2nd Content-Type.',
+				'field_type' 	=> 'select',
+				'field_select_values' => array( 
+					'top' => __( 'Top', 'mp_stacks' ),
+					'middle' => __( 'Middle', 'mp_stacks' ),
+					'bottom' => __( 'Bottom', 'mp_stacks' ),
+				),
+				'field_value' => 'middle',
 				'field_showhider'  => 'brick_centered_inner_margins_showhider',
 			),
 			array(

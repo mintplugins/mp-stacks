@@ -871,6 +871,14 @@ function mp_stacks_default_brick_margins( $css_output, $post_id ){
 		$css_output .= 'margin-top:' . $brick_min_above_c2 . 'px;';
 		$css_output .= 'margin-bottom:' . $brick_min_below_c2 . 'px;';	
 	$css_output .= '}';
+	
+	//Set the vertical alignment for each content type
+	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container:nth-child(1){';
+		$css_output .= 'vertical-align:' . mp_core_get_post_meta( $post_id, 'brick_vertical_alignment_c1', 'middle' ) . ';';
+	$css_output .= '}';
+	$css_output .= '#mp-brick-' . $post_id . ' .mp-brick-content-types > .mp-brick-content-types-inner > .mp-brick-content-type-container:nth-child(2){';
+		$css_output .= 'vertical-align:' . mp_core_get_post_meta( $post_id, 'brick_vertical_alignment_c2', 'middle' ) . ';';
+	$css_output .= '}';
 					
 	//Return CSS Output
 	return $css_output;
