@@ -192,42 +192,15 @@ function mp_stacks_grid_get_text_placement_css( $placement_string, $args ){
 	
 	$text_line_height = $args['line_height'] . 'px';
 	
-	if( $placement_string == 'below_image_left' ){
+	if( strpos( $placement_string, 'left' ) !== false ){
 		
 		$css_output = 'text-align:left;';
 	}
-	else if(  $placement_string == 'below_image_right' ){
+	else if(  strpos( $placement_string, 'right' ) !== false ){
 		$css_output = 'text-align:right;';
 	}
-	else if(  $placement_string == 'below_image_centered' ){
+	else if( strpos( $placement_string, 'centered' ) !== false ){
 		$css_output = 'text-align:center;';
-	}
-	else if(  $placement_string == 'over_image_top_left' ){
-		$css_output = 'text-align:left; ';
-	}
-	else if(  $placement_string == 'over_image_top_right' ){
-		$css_output = 'text-align:right; ';
-	}
-	else if(  $placement_string == 'over_image_top_centered' ){
-		$css_output = 'text-align:center; ';
-	}
-	else if(  $placement_string == 'over_image_middle_left' ){
-		$css_output = 'text-align:left; ';
-	}
-	else if(  $placement_string == 'over_image_middle_right' ){
-		$css_output = 'text-align:right; ';
-	}
-	else if(  $placement_string == 'over_image_middle_centered' ){
-		$css_output = 'text-align:center; ';
-	}
-	else if(  $placement_string == 'over_image_bottom_left' ){
-		$css_output = 'text-align:left; ';
-	}
-	else if(  $placement_string == 'over_image_bottom_right' ){
-		$css_output = 'text-align:right; ';
-	}
-	else if(  $placement_string == 'over_image_bottom_centered' ){
-		$css_output = 'text-align:center; ';
 	}
 	
 	return $css_output;
