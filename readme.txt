@@ -44,6 +44,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
+= 1.0.4.8 = April 4, 2016
+* Added fix for Grid Text placements
+
 = 1.0.4.7 = April 4, 2016
 * Remove height setting from Brick Text Options in Brick Editor
 * Remove inline-block css from .mp-brick * - was affecting all items and wasn't necessary.
