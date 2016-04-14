@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.3
-Stable tag: 1.0.4.6
+Stable tag: 1.0.4.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.4.9 = April 14, 2016
+* Smooth Scroll change for jquery update in WordPress 4.5.
 
 = 1.0.4.8 = April 4, 2016
 * Added fix for Grid Text placements
