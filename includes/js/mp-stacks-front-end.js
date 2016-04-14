@@ -401,20 +401,20 @@ jQuery(document).ready(function($){
 	 * Perform smooth scroll when brick's achored are linked to
 	 *
 	 */
-	 $('a[href*=#]:not([href=#])').click(function() {
-		var href = $.attr(this, 'href');
-		if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-			var mp_stacks_hash = this.hash.slice(1);
-			var target = $('[mp_stacks_brick_target=' + this.hash.slice(1) +']');
-			if (target.length) {
-				$('html,body').animate({
+	$(window).on('hashchange',function(){ 
+			
+		var target = $('[mp_stacks_brick_target=' + location.hash.slice(1) +']');
+		
+		if (target.length) {
+			$('html,body').animate({
 				scrollTop: target.offset().top
 			}, 500, function(){
 				window.location.hash = href;	
 			});
-			return false;
 		}
-		}
+		
+		return false;
+
 	});
 		
 	/**
