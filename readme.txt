@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.3
-Stable tag: 1.0.4.9
+Tested up to: 4.5
+Stable tag: 1.0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.0 = April 17, 2016
+* Further fixes to the Brick anchor scrolls
 
 = 1.0.4.9 = April 14, 2016
 * Smooth Scroll change for jquery update in WordPress 4.5.
