@@ -923,6 +923,7 @@ function mp_stacks_grid_posts_per_row_percentage( $postgrid_per_row ){
 	//Get the width % for the posts per row
 	$posts_per_row_ratio = 100/$postgrid_per_row;
 	
+	/*
 	//If there is a decimal point in the number
 	if ( strpos( $posts_per_row_ratio, '.' ) !== false ){
 		
@@ -932,6 +933,7 @@ function mp_stacks_grid_posts_per_row_percentage( $postgrid_per_row ){
 		$after_decimal_trimmed_value = str_split($posts_per_row_explosion[1], 1);
 		$posts_per_row_ratio = $posts_per_row_explosion[0] . '.' . $after_decimal_trimmed_value[0];
 	}
+	*/
 	
 	return $posts_per_row_ratio;
 }
