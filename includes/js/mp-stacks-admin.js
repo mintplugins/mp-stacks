@@ -287,12 +287,8 @@ jQuery(document).ready(function($){
 	 * @since    1.0.0
 	 * @link     http://mintplugins.com/doc/
 	 */		
-	$(document).on("keyup keypress", '#post', function(e) {
-	  var code = e.keyCode || e.which; 
-	  if (code == 13) {               
-		e.preventDefault();
-		return false;
-	  }
+	$(document).on("keypress", "#post :input[type=submit]", function(event) {
+		return event.keyCode != 13;
 	});
 
 	/**
