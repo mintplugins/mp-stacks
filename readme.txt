@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.0.5.0
+Stable tag: 1.0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.1 = April 21, 2016
+* Fixed issue with enter/newline key not working in text areas.
 
 = 1.0.5.0 = April 17, 2016
 * Further fixes to the Brick anchor scrolls
