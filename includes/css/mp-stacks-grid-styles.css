@@ -18,6 +18,9 @@
 	box-sizing: border-box;         /* Opera/IE 8+ */
 	vertical-align:top;
 }
+.mp-stacks-grid-no-spacing{
+	margin:-1px;
+}
 .mp-stacks-grid-item-inner{
 	overflow:hidden;	
 }
