@@ -322,9 +322,11 @@ select.brick_second_content_type{
 	content: "\f107";
 	margin-right:5px;
 }
-#TB_ajaxContent{
+#TB_window{
 	overflow:scroll;
-	height:100%!important;	
+}
+#TB_ajaxContent{
+	overflow:visible;
 }
 
 /**
