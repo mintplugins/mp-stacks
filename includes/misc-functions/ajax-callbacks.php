@@ -13,7 +13,7 @@
  */
 
 /**
- * Ajax callback for updating a brick
+ * Ajax callback for displaying a brick
  *
  * @since    1.0.0
  * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
@@ -77,7 +77,7 @@ add_action( 'wp_ajax_mp_stacks_ajax_brick', 'mp_stacks_brick_ajax' );
 add_action( 'wp_ajax_nopriv_mp_stacks_ajax_brick', 'mp_stacks_brick_ajax' );
 
 /**
- * Ajax callback for updating a stack
+ * Ajax callback for displaying a stack
  *
  * @since    1.0.0
  * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
