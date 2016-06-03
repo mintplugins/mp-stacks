@@ -709,6 +709,11 @@ function mp_stacks_grid_overlay_mobile_css( $post_id, $repeater_name, $grid_pref
 		
 		//Get the repeater holding these values
 		$animation_repeater = mp_core_get_post_meta( $post_id, $repeater_name );
+		
+		if ( !is_array( $animation_repeater ) ){
+			return NULL;	
+		}
+		
 		$animation_repeater = array_reverse( $animation_repeater );
 		
 		$css_output = '#mp-brick-' . $post_id . ' .mp-stacks-' . $grid_prefix . ' .mp-stacks-grid-item-image-overlay{';
@@ -937,3 +942,25 @@ function mp_stacks_grid_posts_per_row_percentage( $postgrid_per_row ){
 	
 	return $posts_per_row_ratio;
 }
+
+/**
+ * If a grid is set to be with no spacing between grid items, add the mp-stacks-grid-no-spacing
+ *
+ * @access   public
+ * @since    1.0.0
+ * @param    $class_string The string of class names
+ * @param    $post_id Int - TThe id of the Brick holding the grid
+ * @param    $meta_prefix String - the meta_prefix of grid this is (postgird, linkgrid, etc)
+ * @return   $posts_per_row_ratio String the percentage number to use for the css output. For example: 2 posts per row will return 50 (without the percentage sign);
+*/
+function mp_stacks_grid_no_spacing_class( $class_string, $post_id, $meta_prefix ){
+		
+	$spacing = mp_core_get_post_meta( $post_id, $meta_prefix . '_spacing' );
+		
+	if ( empty( $spacing ) || $spacing == 0 || $spacing == '0' ){
+		$class_string .= ' mp-stacks-grid-no-spacing';
+	}
+	
+	return $class_string;
+}
+add_filter( 'mp_stacks_grid_item_classes', 'mp_stacks_grid_no_spacing_class', 10, 3 );
