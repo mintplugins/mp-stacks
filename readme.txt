@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.0.5.1
+Stable tag: 1.0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,11 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.2 = June 3, 2016
+* Fixes for Thickbox Popup Styling
+* Make Grids with no spacing have their items overlap by 1px
+* Fix for animation-skip CSS on iPhone/iPad
 
 = 1.0.5.1 = April 21, 2016
 * Fixed issue with enter/newline key not working in text areas.
