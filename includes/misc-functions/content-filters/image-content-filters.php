@@ -11,8 +11,8 @@ function mp_stacks_brick_content_output_image($default_content_output, $mp_stack
 		$content_output = NULL;
 		
 		//Get main image URL
-		$brick_main_image = get_post_meta($post_id, 'brick_main_image', true);			
-	
+		$brick_main_image = do_shortcode( get_post_meta($post_id, 'brick_main_image', true) );			
+			
 		//Get Link URL
 		$brick_url = get_post_meta($post_id, 'brick_main_image_link_url', true);
 		

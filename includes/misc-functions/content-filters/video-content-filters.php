@@ -12,7 +12,7 @@ function mp_stacks_brick_content_output_video($default_content_output, $mp_stack
 		$content_output = NULL;
 		
 		//Get video URL
-		$brick_video = get_post_meta($post_id, 'brick_video_url', true);
+		$brick_video = do_shortcode( htmlspecialchars_decode( get_post_meta($post_id, 'brick_video_url', true) ) );
 						
 		//Get video max width
 		$brick_video_max_width = get_post_meta($post_id, 'brick_video_max_width', true);

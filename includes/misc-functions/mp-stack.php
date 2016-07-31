@@ -571,7 +571,7 @@ add_filter( 'mp_brick_bg_css', 'mp_stacks_default_brick_bg_css', 10, 2);
 function mp_stacks_default_brick_bg_after_css( $css_output, $post_id ){
 	
 	//Get background image URL
-	$brick_bg_image = get_post_meta($post_id, 'brick_bg_image', true);
+	$brick_bg_image = do_shortcode( get_post_meta($post_id, 'brick_bg_image', true) );
 	
 	if ( !empty( $brick_bg_image ) ){
 		$brick_bg_image = is_ssl() ? str_replace( 'http://', 'https://', $brick_bg_image ) : $brick_bg_image;
