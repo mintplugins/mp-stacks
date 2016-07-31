@@ -193,6 +193,7 @@
 .button.mp-stacks-grid-isotope-button{
 	display:none;
 	line-height:0.1;
+	cursor:pointer;
 }
 .button.mp-stacks-grid-orderby-select{
 	vertical-align:middle;	
