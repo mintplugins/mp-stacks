@@ -243,11 +243,6 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/stack-only-page.php' );
 		
 		/**
-		 * Customizer Options
-		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/customizer/customizer.php' );
-		
-		/**
 		 * Welcome Page
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );
@@ -276,16 +271,6 @@ function mp_stacks_include_files(){
 		 * Stack Theme Bundle-Related Functions
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/theme-bundle-installation.php' );
-		
-		/**
-		 * Custom Shortcodes in MP Stacks
-		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcodes.php' );
-		
-		/**
-		 * Compatible Plugin functions
-		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/compatible-plugins/compatible-plugins.php' );
 	
 	}
 }
