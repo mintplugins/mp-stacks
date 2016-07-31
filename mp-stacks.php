@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://mintplugins.com
 Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
-Version: 1.0.5.2
+Version: 1.0.5.3
 Author: Mint Plugins
 Author URI: http://mintplugins.com
 Text Domain: mp_stacks
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_VERSION' ) )
-	define( 'MP_STACKS_VERSION', '1.0.5.2' );
+	define( 'MP_STACKS_VERSION', '1.0.5.3' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_PLUGIN_URL' ) )
@@ -243,6 +243,11 @@ function mp_stacks_include_files(){
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/stack-only-page.php' );
 		
 		/**
+		 * Customizer Options
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/customizer/customizer.php' );
+		
+		/**
 		 * Welcome Page
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/welcome.php' );
@@ -271,6 +276,16 @@ function mp_stacks_include_files(){
 		 * Stack Theme Bundle-Related Functions
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/theme-bundle-installation.php' );
+		
+		/**
+		 * Custom Shortcodes in MP Stacks
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcodes.php' );
+		
+		/**
+		 * Compatible Plugin functions
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/compatible-plugins/compatible-plugins.php' );
 	
 	}
 }

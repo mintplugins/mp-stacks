@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.0.5.2
+Stable tag: 1.0.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,11 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.3 = July 30, 2016
+* Set isotope filter buttons to have CSS properly "cursor:pointer". This fixes a strange bug in iPhone safari which made them unclickable.
+* Make images in text areas max to 100%. This prevents an image in a text-area from being wider than a Brick.
+* Add do_shortcode to image, video, and background image fields.
 
 = 1.0.5.2 = June 3, 2016
 * Fixes for Thickbox Popup Styling
