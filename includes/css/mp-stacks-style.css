@@ -132,6 +132,11 @@
 	text-align:left;
 }
 
+.mp-stacks-text-areas img{
+	max-width:100%;
+	height:auto!important;
+}
+
 /*Make sure any tags inside a text area paragraph are set to be inline-block;*/
 .mp-brick p *{
 	/*display:inline-block;*/
@@ -339,6 +344,7 @@
 	max-width:100%!important;
 	z-index: 3;
 	position: relative;
+	box-sizing: border-box;
 }
 
 /* For Lightbox Popups that should fill the whole screen */
