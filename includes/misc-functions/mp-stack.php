@@ -7,8 +7,15 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
 	
 	global $mp_stacks_on_page;
 	
-	//This array has 2 main parts: css_required, and css_complete. Here, we add this stack to the css_required list so we know the CSS has been taken care of.
-	$mp_stacks_on_page['css_complete'][$stack_id] = $stack_id;
+	//Check if we should act as if we are logged in or not
+	$css_required = apply_filters( 'mp_stacks_css_required', true, current_filter() );
+	
+	if ( !$css_required ){
+		return NULL;
+	}
+	
+	//This array has 2 main parts: css_required, and css_complete. Here, we add this stack to the css_required list. When the CSS is output, we add it to to the css_complete list.
+	$mp_stacks_on_page['css_required'][$stack_id] = $stack_id;
 	
 	$css_output = NULL;
 	
@@ -64,6 +71,13 @@ function mp_stack_css( $stack_id, $echo = false, $include_style_tags = true ) {
  */
 function mp_brick_css( $post_id, $stack_id = NULL ){
 		
+		//Check if we should act as if we are logged in or not
+		$css_required = apply_filters( 'mp_stacks_css_required', true, current_filter() );
+		
+		if ( !$css_required ){
+			return NULL;
+		}
+	
 		$css_output = NULL;
 		
 		$first_content_type = get_post_meta($post_id, 'brick_first_content_type', true);	
@@ -211,7 +225,7 @@ function mp_stack( $stack_id ){
 	//If this stack doesn't exist (only show error to logged-in users) 
 	if ( !$term_exists ){
 		
-		if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
+		if ( $act_as_logged_in && current_user_can('edit_theme_options') ) {
 			$html_output .= '<div class="mp-brick no-brick">';
 				$html_output .= '<div class="mp-brick-inner">';
 					$html_output .= '<div class="mp-brick-content-types">';
@@ -306,6 +320,9 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 	);
 	
 	$args = wp_parse_args( $args, $default_args );
+	
+	//Check if we should act as if we are logged in or not
+	$act_as_logged_in = apply_filters( 'mp_stacks_act_as_logged_in', is_user_logged_in(), current_filter() );
 	
 	//Get the ID of the Stack this Brick belongs to. 
 	$saved_stack_id = mp_core_get_post_meta( $post_id, 'mp_stack_id', 'no_stack_id_saved_yet' );
@@ -443,7 +460,7 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 			$html_output .= apply_filters( 'mp_stacks_brick_meta_output', NULL, $post_id );
 				
 			//Edit Brick Link
-			if ( is_user_logged_in() && current_user_can('edit_theme_options') ) {
+			if ( $act_as_logged_in == true && current_user_can('edit_theme_options') ) {
 				
 				$html_output .= '<a class="mp-brick-edit-link" mp-brick-id="' . $post_id . '" mp-stack-id="' . $stack_id . '" href="' . mp_core_add_query_arg( array( 
 					'mp-stacks-minimal-admin' => 'true',
@@ -934,6 +951,13 @@ function mp_stacks_extra_stacks_css_and_js(){
 	
 	global $mp_stacks_on_page;
 	
+	//Check if we should act as if we are logged in or not
+	$css_required = apply_filters( 'mp_stacks_css_required', true, current_filter() );
+	
+	if ( !$css_required ){
+		return NULL;
+	}
+	
 	if ( isset( $mp_stacks_on_page['css_required'] ) ){
 		
 		//Output a container for this CSS so our JS can move the contents into the head
@@ -1029,7 +1053,7 @@ function mp_stacks_get_inline_js(){
  */
 function mp_stacks_inline_css(){
 	
-	$mp_stacks_footer_inline_css  = mp_stacks_get_inline_css();
+	$mp_stacks_footer_inline_css = mp_stacks_get_inline_css();
 	
 	if ( !empty( $mp_stacks_footer_inline_css ) ){
 		echo '<!-- MP Stacks Inline CSS Output -->
