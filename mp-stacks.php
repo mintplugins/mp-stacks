@@ -271,6 +271,11 @@ function mp_stacks_include_files(){
 		 * Stack Theme Bundle-Related Functions
 		 */
 		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/theme-bundle-installation.php' );
+		/**
+		 * Compatible Plugin functions
+		 */
+		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/compatible-plugins/compatible-plugins.php' );
+
 	
 	}
 }
