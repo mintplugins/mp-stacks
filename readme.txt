@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.5
-Stable tag: 1.0.5.4
+Stable tag: 1.0.5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.5 = October 11, 2016
+* Load updater on init (returning if not admin later) to make it work with wpcli updates.
 
 = 1.0.5.4 = September 20, 2016
 * Added filters for mp_stacks_css_required and mp_stacks_act_as_logged_in. This is to add compatibility with plugins like Yoast SEO.
