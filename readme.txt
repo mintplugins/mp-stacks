@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.5
-Stable tag: 1.0.5.5
+Tested up to: 4.6
+Stable tag: 1.0.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in
 
 == Description ==
 
-Build pages using the MP Stacks plugin by making "Bricks". Each Brick can have its own background image, colour, size, and 2 "Content-Types". 
+Build pages using the MP Stacks plugin by making "Bricks". Each Brick can have its own background image, colour, size, and 2 "Content-Types".
 
 There are 3 Content-Types built into the MP Stacks Plugin: Video, Image, and Text.
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.6 = November 3, 2016
+* Make sure $mp_stacks_on_page['css_complete'] is array before using it as one.
 
 = 1.0.5.5 = October 11, 2016
 * Load updater on init (returning if not admin later) to make it work with wpcli updates.
@@ -103,7 +106,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * Ajax callback function for loading a Brick via ajax changed from "mp_stacks_update_brick" to "mp_stacks_brick_ajax". Also a new function added called "mp_stacks_stack_ajax" for loading a full stack via ajax.
 * Custom Shortcode button for "Add Link" is now removed with TinyMCE plugins now properly loading in MP Core 1.0.2.7.
 * Added MP Stack class to style tags for brick called "mp-stack-css-STACKID".
-* Added filter flag called "mp_stacks_execute_mp_brick_in_mp_stack" which allows you to check whether a Stack's output should be executed. For example, you might want to require a password before a Brick's/Stack's Content is executed. This fixes a bug where Brick styles and scripts were still enqueued even if the HTML for the Brick was not. 
+* Added filter flag called "mp_stacks_execute_mp_brick_in_mp_stack" which allows you to check whether a Stack's output should be executed. For example, you might want to require a password before a Brick's/Stack's Content is executed. This fixes a bug where Brick styles and scripts were still enqueued even if the HTML for the Brick was not.
 * Added filter flag called "mp_stacks_execute_content_types_in_brick" which allows to check whether a Brick's Content Types should be executed or if alternate output should be applied.
 * Added filter to Bricks for alternate Content output if Content Types shouldn't be shown (IE for a Password Protected Brick) called "mp_stacks_brick_non_content_output".
 
@@ -119,7 +122,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * Move the "mp_stacks_theme_bundle_install_menu_items" filter inside the check if it exists
 
 = 1.0.4.1 = November 6, 2015
-* Make Isotope layout_mode use the array key 'layout_mode' instead of a number because the order is different in firefox. 
+* Make Isotope layout_mode use the array key 'layout_mode' instead of a number because the order is different in firefox.
 
 = 1.0.4.0 = November 6, 2015
 * Fix: Remove all Isotope Layout Modes that aren't included by default with Isotope.
@@ -173,7 +176,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * Hide the "Add New Brick" button in the Brick Editor as it isn't needed in this location.
 * Changed brick slugs to "brick" - was previously 'stack'.
 * Make mp-stacks-queried-object-id value for ajax return "false" if "Stack Only" page as there is no Queried Object Id (parent page).
-* Hide all admin notices in brick editor as they aren't needed or helpful here. 
+* Hide all admin notices in brick editor as they aren't needed or helpful here.
 * Make sure that the Admin Bar and Admin sidebar are always hidden in Brick Editor - even if not open in iframe.
 * Use correct table prefixes for wpdb calls using $wpdb->base_prefix in mp-stack.php.
 * Enqueue dashicons on Stack Only pages so the paintbrush icon will display on the "Edit This Brick" button.
@@ -183,13 +186,13 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 = 1.0.2.9 = September 21, 2015
 * Remove the "View Bricks" option if the MP Stacks + Developer Plugin is not active
-* Load related bricks (to be seen in the "link" creator mp TinyMce) in admin upon "window.load". 
+* Load related bricks (to be seen in the "link" creator mp TinyMce) in admin upon "window.load".
 * Add CSS shadow to all magnified lightbox popups
 * Upon Brick Update, reload JUST the brick via ajax instead of reloading the entire page.
 * Change removing hentry to Brick's ID  available in post_class filter instead of global $post->ID
 * Make isotope only filter items within the current brick using the Brick's ID selector in the JS output
 * Fire Stack CSS output at wp_head above wp_enqueue_scripts. This way, if any subsequent action needs to be called using wp_enqueue_scripts, it can (ie Google Fonts).
-* Stack/Brick CSS is no longer loaded as a separate document. All Stack/Brick CSS is now minimized and placed in the <head>. 
+* Stack/Brick CSS is no longer loaded as a separate document. All Stack/Brick CSS is now minimized and placed in the <head>.
 * CSS Style Tags now wrap around each Brick's CSS - so that CSS can be removed/replaced via ajax when Bricks are reloaded.
 * The mp_brick function now gets the Stack ID from the Brick ID by using the mp_stack_order_STACKID meta field. Once the Brick gets its Stack ID, it saves it as postmeta under "mp_stack_id".
 * When a new Brick is created, save the mp_stack_id there and then.
@@ -354,7 +357,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 * Removed mp_brick_container_css Filter Hook
 * Added mp_brick_first_container_css Filter Hook
 * Added mp_brick_second_container_css Filter Hook
-* Changed Text Content Type to be repeatable 
+* Changed Text Content Type to be repeatable
 * Added backwards compatibility function for text content types to auto update their formatting to be repeaters
 * Added Grid Functions for Add-ons to share and use
 * Added Brick/Stack Titles on each Brick
@@ -403,7 +406,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 = 1.0.0.8 = March 22, 2014
 * Removed priority of 1 from Brick size settings metabox action
-* Add-on directory now links to https://mintplugins 
+* Add-on directory now links to https://mintplugins
 
 = 1.0.0.7 = March 8, 2014
 * Enqueue Magnific in normal wp_enqueue_scripts vs mp_stacks_enqueue
@@ -413,7 +416,7 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 = 1.0.0.5 = March 5, 2014
 * Better responsive Handling
-* Double click on bricks to edit them 
+* Double click on bricks to edit them
 * mp_stacks_metabox becomes mp_stacks_size_metabox
 * Content Type Margins added to size metabox
 
