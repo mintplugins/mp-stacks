@@ -222,6 +222,9 @@ function mp_stack( $stack_id ){
 
 	$term_exists = get_term_by('id', $stack_id, 'mp_stacks');
 
+	//Check if we should act as if we are logged in or not
+	$act_as_logged_in = apply_filters( 'mp_stacks_act_as_logged_in', is_user_logged_in(), current_filter() );
+
 	//If this stack doesn't exist (only show error to logged-in users)
 	if ( !$term_exists ){
 
@@ -911,7 +914,7 @@ function mp_stacks_header_css(){
 
 	//Loop through the query
 	if (have_posts()) :
-    	while (have_posts()) : the_post();
+		while (have_posts()) : the_post();
 
 			$content = get_the_content();
 
@@ -935,7 +938,7 @@ function mp_stacks_header_css(){
 
 		endwhile; // end of the loop.
 
-    endif;
+	endif;
 
 	//Reset the main loop
 	wp_reset_postdata();
