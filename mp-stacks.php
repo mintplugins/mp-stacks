@@ -3,7 +3,7 @@
 Plugin Name: MP Stacks
 Plugin URI: http://mintplugins.com
 Description: An amazing Page Builder for WordPress. Content-Types go in a Brick, Bricks go in a Stack, Stacks go on a page.
-Version: 1.0.5.6
+Version: 1.0.5.7
 Author: Mint Plugins
 Author URI: http://mintplugins.com
 Text Domain: mp_stacks
@@ -13,18 +13,18 @@ License: GPL2
 
 /*  Copyright 2016  Phil Johnston  (email : support@mintplugins.com)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as
-    published by the Free Software Mint Plugins Core.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License, version 2, as
+	published by the Free Software Mint Plugins Core.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Mint Plugins Core, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Mint Plugins Core, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 /*
@@ -34,7 +34,7 @@ License: GPL2
 */
 // Plugin version
 if( !defined( 'MP_STACKS_VERSION' ) )
-	define( 'MP_STACKS_VERSION', '1.0.5.6' );
+	define( 'MP_STACKS_VERSION', '1.0.5.7' );
 
 // Plugin Folder URL
 if( !defined( 'MP_STACKS_PLUGIN_URL' ) )
