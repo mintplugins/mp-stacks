@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.6
-Stable tag: 1.0.5.7
+Tested up to: 4.7
+Stable tag: 1.0.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.8 = February 12, 2017
+* Fix: Stacks were not updating properly after update.
 
 = 1.0.5.7 = November 14, 2016
 * Fix: $act_as_login was not defined if a Stack was removed from the page in the mp_stack function.
