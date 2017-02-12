@@ -935,7 +935,9 @@ function mp_stacks_header_css(){
 					mp_stack_css( $val[2], true );
 
 					// Now that this Stack's CSS has been output into the document head, remove it from the list of css_required
-					unset( $mp_stacks_on_page['css_required'][$val[2]] );
+					if( isset( $mp_stacks_on_page['css_required'][$val[2]] ) ){
+						unset( $mp_stacks_on_page['css_required'][$val[2]] );
+					}
 					$mp_stacks_on_page['css_complete'][$val[2]] = $val[2];
 
 					//Enqueue the CSS for this stack
@@ -983,7 +985,9 @@ function mp_stacks_extra_stacks_css_and_js(){
 					//Output CSS for this stack
 					mp_stack_css( $stack_id, true );
 
-					unset( $mp_stacks_on_page['css_required'][$stack_id] );
+					if( isset( $mp_stacks_on_page['css_required'][$stack_id] ) ){
+						unset( $mp_stacks_on_page['css_required'][$stack_id] );
+					}
 					$mp_stacks_on_page['css_complete'][$stack_id] = $stack_id;
 
 				}
