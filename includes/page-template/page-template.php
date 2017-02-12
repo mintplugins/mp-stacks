@@ -35,54 +35,56 @@ class MP_Stacks_Page_Templaer {
 
 
         /**
-         * Returns an instance of this class. 
+         * Returns an instance of this class.
          */
         public static function get_instance() {
 
                 if( null == self::$instance ) {
                         self::$instance = new MP_Stacks_Page_Templaer();
-                } 
+                }
 
                 return self::$instance;
 
-        } 
+        }
 
         /**
          * Initializes the plugin by setting filters and administration functions.
          */
         private function __construct() {
 
-                $this->templates = array();
+				// Add your templates to this array.
+                $this->templates = array(
+                        'mp-stacks-page-template.php'     => 'Optimize page for MP Stacks',
+                );
 
+				// Filter the page templates shown in the dropdown
+                add_filter(
+					'theme_page_templates',
+					 array( $this, 'dropdown_pages' ),
+				10, 4 );
 
                 // Add a filter to the attributes metabox to inject template into the cache.
                 add_filter(
 					'page_attributes_dropdown_pages_args',
-					 array( $this, 'register_project_templates' ) 
+					 array( $this, 'register_project_templates' )
 				);
 
 
                 // Add a filter to the save post to inject out template into the page cache
                 add_filter(
-					'wp_insert_post_data', 
-					array( $this, 'register_project_templates' ) 
+					'wp_insert_post_data',
+					array( $this, 'register_project_templates' )
 				);
 
 
-                // Add a filter to the template include to determine if the page has our 
+                // Add a filter to the template include to determine if the page has our
 				// template assigned and return it's path
                 add_filter(
-					'template_include', 
-					array( $this, 'view_project_template') 
+					'template_include',
+					array( $this, 'view_project_template')
 				);
 
-
-                // Add your templates to this array.
-                $this->templates = array(
-                        'mp-stacks-page-template.php'     => 'Optimize page for MP Stacks',
-                );
-				
-        } 
+        }
 
 
         /**
@@ -90,49 +92,89 @@ class MP_Stacks_Page_Templaer {
          * into thinking the template file exists where it doens't really exist.
          *
          */
-
         public function register_project_templates( $atts ) {
 
-		// Get theme object
-		$theme = wp_get_theme();
+				// Get theme object
+				$theme = wp_get_theme();
 
                 // Create the key used for the themes cache
                 $cache_key = 'page_templates-' . md5( $theme->get_theme_root() . '/' . $theme->get_stylesheet() );
-					
+
                 // Retrieve existing page templates
 				$templates = $theme->get_page_templates();
-				
+
 				//Default for stack_template_exists var
 				$stack_template_exists = false;
-				
+
 				//If this theme does not have a page template for MP Stacks already
 				foreach( $templates as $template_name ){
-					
+
 					if ( strpos( 'Stack', $template_name) !== false ){
 						$stack_template_exists = true;
 					}
-					
+
 				}
-				
+
 				//Check the title of the default page template as well - This filter: https://core.trac.wordpress.org/ticket/27178
 				$default_page_template_title = apply_filters( 'default_page_template_title', __('Default Template') );
-				
+
 				if ( strpos( $default_page_template_title, 'Stack' ) !== false ){
 					$stack_template_exists = true;
 				}
-				
+
 				if ( !$stack_template_exists ){
-				
+
 					// Add our template(s) to the list of existing templates by merging the arrays
 					$templates = array_merge( $templates, $this->templates );
-	
+
 					// Replace existing value in cache
 					wp_cache_set( $cache_key, $templates, 'themes', 1800 );
 				}
 
                 return $atts;
 
-        } 
+        }
+
+		/**
+         * Adds our template to the page template dropdown
+         *
+         */
+        public function dropdown_pages( $templates, $theme, $post, $post_type ) {
+
+                // Create the key used for the themes cache
+                $cache_key = 'page_templates-' . md5( $theme->get_theme_root() . '/' . $theme->get_stylesheet() );
+
+				//Default for stack_template_exists var
+				$stack_template_exists = false;
+
+				//If this theme does not have a page template for MP Stacks already
+				foreach( $templates as $template_name ){
+
+					if ( strpos( 'Stack', $template_name) !== false ){
+						$stack_template_exists = true;
+					}
+
+				}
+
+				//Check the title of the default page template as well - This filter: https://core.trac.wordpress.org/ticket/27178
+				$default_page_template_title = apply_filters( 'default_page_template_title', __('Default Template') );
+
+				if ( strpos( $default_page_template_title, 'Stack' ) !== false ){
+					$stack_template_exists = true;
+				}
+
+				if ( !$stack_template_exists ){
+
+					// Add our template(s) to the list of existing templates by merging the arrays
+					$templates = array_merge( $templates, $this->templates );
+
+					// Replace existing value in cache
+					wp_cache_set( $cache_key, $templates, 'themes', 1800 );
+				}
+
+                return $templates;
+
+        }
 
         /**
          * Checks if the template is assigned to the page
@@ -140,34 +182,34 @@ class MP_Stacks_Page_Templaer {
         public function view_project_template( $template ) {
 
                 global $post;
-				
+
 				if ( !isset( $post->ID ) ){
-					return $template;	
+					return $template;
 				}
 
-                if (!isset($this->templates[get_post_meta( 
-					$post->ID, '_wp_page_template', true 
+                if (!isset($this->templates[get_post_meta(
+					$post->ID, '_wp_page_template', true
 				)] ) ) {
-					
-                        return $template;
-						
-                } 
 
-                $file = plugin_dir_path(__FILE__). get_post_meta( 
-					$post->ID, '_wp_page_template', true 
+                        return $template;
+
+                }
+
+                $file = plugin_dir_path(__FILE__). get_post_meta(
+					$post->ID, '_wp_page_template', true
 				);
-				
+
                 // Just to be safe, we check if the file exist first
                 if( file_exists( $file ) ) {
                         return $file;
-                } 
+                }
 				else { echo $file; }
 
                 return $template;
 
-        } 
+        }
 
 
-} 
+}
 
 add_action( 'plugins_loaded', array( 'MP_Stacks_Page_Templaer', 'get_instance' ) );
