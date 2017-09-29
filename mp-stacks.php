@@ -192,7 +192,7 @@ function mp_stacks_include_files(){
 		/**
 		 * Shortcodes
 		 */
-		require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcodes.php' );
+		//require( MP_STACKS_PLUGIN_DIR . 'includes/misc-functions/shortcodes.php' );
 
 		/**
 		 * Additional Media Buttons
