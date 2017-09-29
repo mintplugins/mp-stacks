@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 1.0.5.8
+Tested up to: 4.8
+Stable tag: 1.0.5.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.5.9 = September 29, 2017
+* Change/Fix: Removed knapstack plugin checker function which was being used instead of correct function from theme bundles.
+* Change: For single stack views, make the page title the title of the stack. 
 
 = 1.0.5.8 = February 12, 2017
 * Fix: Stacks were not updating properly after update.
