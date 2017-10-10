@@ -825,7 +825,7 @@ function mp_stacks_second_container_css( $css_output, $post_id ){
 	$brick_split_percentage = get_post_meta($post_id, 'brick_split_percentage', true);
 
 	//Find what's left for our right brick by subtracting the percentage of the first brick
-	$brick_split_percentage = 100 - $brick_split_percentage;
+	$brick_split_percentage = is_numeric( $brick_split_percentage ) ? 100 - $brick_split_percentage : NULL;
 
 	//If there split percentage value
 	if ( !empty( $brick_split_percentage ) ){
