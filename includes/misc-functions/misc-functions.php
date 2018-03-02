@@ -731,3 +731,18 @@ function mp_stacks_remove_devicepx(){
 
 }
 add_action('wp_enqueue_scripts', 'mp_stacks_remove_devicepx', 20);
+
+/**
+ * JetPack loads file through their service called photon, but this breaks the resizing we do in MP core.
+ * Unfortunately this is the only way to workaround this right now.
+ *
+ * @since    1.0.0
+ * @link     http://mintplugins.com
+ * @see      get_bloginfo()
+ * @param    void
+ * @return   void
+ */
+function mp_stacks_no_jetpack_photon() {
+    add_filter( 'jetpack_photon_development_mode', '__return_true');
+}
+add_action('wp', 'mp_stacks_no_jetpack_photon');
