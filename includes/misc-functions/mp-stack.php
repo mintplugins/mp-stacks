@@ -916,42 +916,34 @@ function mp_stacks_header_css(){
 
 	global $mp_stacks_on_page;
 
-	//Loop through the query
-	if (have_posts()) :
-		while (have_posts()) : the_post();
+	// We purposefully don't use get_the_content() here. It does not pass the content
+	// through the 'the_content' filter. This means that get_the_content() will not
+	// auto-embed videos or expand shortcodes, among other things.
+	$post_content = get_post( get_the_ID() )->post_content;
 
-			$content = get_the_content();
+	//Execute all MP Stack shortcodes
+	if ( has_shortcode( $post_content, 'mp_stack' ) ) {
 
-			//Execute all MP Stack shortcodes
-			if ( has_shortcode( $content, 'mp_stack' ) ){
+		//Find all mp_stack short codes
+		preg_match_all("/(\[mp_stack stack=\")(.*?)(\"\])/", $post_content, $matches, PREG_SET_ORDER);
 
-				//Find all mp_stack short codes
-				preg_match_all("/(\[mp_stack stack=\")(.*?)(\"\])/", get_the_content(), $matches, PREG_SET_ORDER);
+		//Loop through each stack shortcode
+		foreach ($matches as $val) {
 
-				//Loop through each stack shortcode
-				foreach ($matches as $val) {
+			//Output CSS for this stack
+			mp_stack_css( $val[2], true );
 
-					//Output CSS for this stack
-					mp_stack_css( $val[2], true );
-
-					// Now that this Stack's CSS has been output into the document head, remove it from the list of css_required
-					if( isset( $mp_stacks_on_page['css_required'][$val[2]] ) ){
-						unset( $mp_stacks_on_page['css_required'][$val[2]] );
-					}
-					$mp_stacks_on_page['css_complete'][$val[2]] = $val[2];
-
-					//Enqueue the CSS for this stack
-					//wp_enqueue_style( 'mp_stacks_css_' . $val[2], mp_core_add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) );
-
-				}
+			// Now that this Stack's CSS has been output into the document head, remove it from the list of css_required
+			if( isset( $mp_stacks_on_page['css_required'][$val[2]] ) ){
+				unset( $mp_stacks_on_page['css_required'][$val[2]] );
 			}
+			$mp_stacks_on_page['css_complete'][$val[2]] = $val[2];
 
-		endwhile; // end of the loop.
+			//Enqueue the CSS for this stack
+			//wp_enqueue_style( 'mp_stacks_css_' . $val[2], mp_core_add_query_arg( array( 'mp_stacks_css_page' => $val[2] ), get_bloginfo( 'wpurl') ), false, mp_stack_last_modified($val[2]) );
 
-	endif;
-
-	//Reset the main loop
-	wp_reset_postdata();
+		}
+	}
 
 }
 add_action( 'wp_head', 'mp_stacks_header_css', -1 );
