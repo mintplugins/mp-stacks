@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.8
-Stable tag: 1.0.6.0
+Tested up to: 4.9.4
+Stable tag: 1.0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,10 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.1 = March 1, 2017
+* Fixed: Implement workaround for problems caused by Jetpack Photon
+* Fixed: No longer use get_the_content so that oEmbeds are properly executed within text areas.
 
 = 1.0.6.0 = October 10, 2017
 * Fixed: PHP7 issue with brick split percentage
