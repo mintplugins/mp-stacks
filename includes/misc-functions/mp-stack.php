@@ -945,6 +945,9 @@ function mp_stacks_header_css(){
 		}
 	}
 
+	//Reset the main loop
+	wp_reset_postdata();
+
 }
 add_action( 'wp_head', 'mp_stacks_header_css', -1 );
 
