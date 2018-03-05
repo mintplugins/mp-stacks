@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 1.0.6.1
+Stable tag: 1.0.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.2 = March 5, 2017
+* Fixed: Reset the loop after header CSS output
 
 = 1.0.6.1 = March 1, 2017
 * Fixed: Implement workaround for problems caused by Jetpack Photon
