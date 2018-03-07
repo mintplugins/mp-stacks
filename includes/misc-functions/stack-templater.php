@@ -571,7 +571,7 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 
 				curl_close($ch);
 
-				fclose($file);
+				fclose($saved_file);
 
 			}
 
