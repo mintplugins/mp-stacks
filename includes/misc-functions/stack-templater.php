@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Functions Stack Template
  *
@@ -438,18 +438,52 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 					//Check if this attachment has been created or not
 					$attachment_already_created = mp_core_get_attachment_id_from_url( $wp_upload_dir['url'] . '/' . basename( $img_url ) );
 
+					//Get the filename only of this attachment
+					$attachment_path = parse_url( $img_url, PHP_URL_PATH);
+					$attachment_parts = pathinfo($attachment_path);
+
 					if ( !$attachment_already_created ){
-						//Get the image
-						$saved_file = $wp_filesystem->get_contents( $img_url );
 
-						$wp_upload_dir = wp_upload_dir();
+                        $wp_upload_dir = wp_upload_dir();
 
-						//Get the filename only of this attachment
-						$attachment_path = parse_url( $img_url, PHP_URL_PATH);
-						$attachment_parts = pathinfo($attachment_path);
+                        //if 'allow_url_fopen' is available, do it the right way using the WP Filesystem api
+            			if( ini_get('allow_url_fopen') ) {
 
-						//Move the image to the uploads directory
-						$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+    						//Get the image
+    						$saved_file = $wp_filesystem->get_contents( $img_url );
+
+    						//Move the image to the uploads directory
+    						$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+
+                        } else{
+
+            				// Initializing curl
+            				$ch = curl_init();
+
+            				//Return Transfer
+            				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            				//File to fetch
+            				curl_setopt($ch, CURLOPT_URL, $img_url );
+
+            				//Open/Create new file
+            				$file = fopen($wp_upload_dir['path'] . '/' . $attachment_parts['basename'], 'w');
+
+            				//Put contents of plugin_download_link in this new file
+            				curl_setopt($ch, CURLOPT_FILE, $file ); #output
+
+            				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);// allow redirects
+
+            				//Set User Agent
+            				curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5'); //set user agent
+
+            				// Getting results
+            				$result =  curl_exec($ch); // Getting jSON result string
+
+            				curl_close($ch);
+
+            				fclose($file);
+                        }
 
 						//Check filetype
 						$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
@@ -463,9 +497,11 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 							'post_status' => 'inherit'
 						);
 
-						$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+						if ( file_exists( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] ) ) {
+							$attach_id = wp_insert_attachment( $attachment, $wp_upload_dir['path'] . '/' . $attachment_parts['basename'] );
+						}
 
-						if ( !$attach_id ){
+						if ( !isset( $attach_id ) || ! $attach_id ){
 							return NULL;
 						}
 
@@ -490,17 +526,54 @@ function mp_stack_check_value_for_attachment( $meta_value ){
 		//If this is not a text area containing an img html tag...
 		else{
 
-			//Get the image
-			$saved_file = $wp_filesystem->get_contents( $meta_value );
-
-			$wp_upload_dir = wp_upload_dir();
-
 			//Get the filename only of this attachment
 			$attachment_path = parse_url( $meta_value, PHP_URL_PATH);
 			$attachment_parts = pathinfo($attachment_path);
 
-			//Move the image to the uploads directory
-			$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+			//if 'allow_url_fopen' is available, do it the right way using the WP Filesystem api
+			if( ini_get('allow_url_fopen') ) {
+
+				//Get the image
+				$saved_file = $wp_filesystem->get_contents( $meta_value );
+
+				$wp_upload_dir = wp_upload_dir();
+
+				//Move the image to the uploads directory
+				$wp_filesystem->put_contents( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], $saved_file, FS_CHMOD_FILE);
+
+			} else{
+
+				// Initializing curl
+				$ch = curl_init();
+
+				//Return Transfer
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+				//File to fetch
+				curl_setopt($ch, CURLOPT_URL, $meta_value );
+
+				//Open/Create new file
+				$saved_file = fopen( $wp_upload_dir['path'] . '/' . $attachment_parts['basename'], 'w');
+
+				//Put contents of plugin_download_link in this new file
+				curl_setopt($ch, CURLOPT_FILE, $saved_file ); #output
+
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);// allow redirects
+
+				//Set User Agent
+				curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5'); //set user agent
+
+				// Getting results
+				$result = curl_exec($ch); // Getting jSON result string
+
+				// Info about this curl call
+				//print_r( curl_getinfo($ch) );
+
+				curl_close($ch);
+
+				fclose($file);
+
+			}
 
 			//Check filetype
 			$wp_filetype = wp_check_filetype($attachment_parts['basename'], NULL );
