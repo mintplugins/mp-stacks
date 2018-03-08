@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 1.0.6.2
+Stable tag: 1.0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,10 +44,14 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 == Changelog ==
 
-= 1.0.6.2 = March 5, 2017
+= 1.0.6.3 = March 7, 2018
+* Fix Stack Templater to fallback to CURL for sites with allow_url_fopen disabled
+* Update plugin checker/installer for allow_url_fopen fix
+
+= 1.0.6.2 = March 5, 2018
 * Fixed: Reset the loop after header CSS output
 
-= 1.0.6.1 = March 1, 2017
+= 1.0.6.1 = March 1, 2018
 * Fixed: Implement workaround for problems caused by Jetpack Photon
 * Fixed: No longer use get_the_content so that oEmbeds are properly executed within text areas.
 
