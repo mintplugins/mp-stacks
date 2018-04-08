@@ -11,7 +11,7 @@ function mp_stacks_display_mp_stack( $atts ) {
 	$vars = shortcode_atts( array('stack' => NULL), $atts );
 
 	//Return the stack HTML output - pass the function the stack id
-	return mp_stack( $vars['stack'] );
+	return mp_stack( absint( str_replace( '"', '', $vars['stack'] ) ) );
 }
 add_shortcode( 'mp_stack', 'mp_stacks_display_mp_stack' );
 
