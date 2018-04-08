@@ -199,6 +199,20 @@ function mp_stacks_addTinyMCELinkClasses( $wp ) {
 add_action( 'mp_core_editor_styles', 'mp_stacks_addTinyMCELinkClasses' );
 
 /**
+ * Add mp_stack stylesheet to the Gutenberg styles, so that the shortcode is replaced with the MP Stack icon
+ *
+ * @since    1.0.0
+ * @link     http://codex.wordpress.org/Function_Reference/add_editor_style
+ * @see      get_bloginfo()
+ * @param    array $wp See link for description.
+ * @return   void
+ */
+function mp_stacks_gutenbergtheme_editor_styles() {
+	wp_enqueue_style( 'mp_stacks_gutenbergthemeblocks_style', plugins_url( '/css/', dirname(__FILE__) ) . 'mp-stacks-tinyMCE-style.css' );
+}
+add_action( 'enqueue_block_editor_assets', 'mp_stacks_gutenbergtheme_editor_styles' );
+
+/**
  * Get all the brick titles in this stack
  *
  * @since    1.0.0
