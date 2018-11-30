@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 4.9.4
-Stable tag: 1.0.6.3
+Stable tag: 1.0.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.4 = November 30, 2018
+* Fix widgets for PHP 7.2
 
 = 1.0.6.3 = March 7, 2018
 * Fix Stack Templater to fallback to CURL for sites with allow_url_fopen disabled
