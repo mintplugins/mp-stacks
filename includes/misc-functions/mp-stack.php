@@ -916,6 +916,12 @@ function mp_stacks_header_css(){
 
 	global $mp_stacks_on_page;
 
+	$post_id = get_the_ID();
+
+	if ( ! $post_id ) {
+		return false;
+	}
+	
 	// We purposefully don't use get_the_content() here. It does not pass the content
 	// through the 'the_content' filter. This means that get_the_content() will not
 	// auto-embed videos or expand shortcodes, among other things.
