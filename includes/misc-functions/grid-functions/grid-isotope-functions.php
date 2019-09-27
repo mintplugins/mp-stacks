@@ -737,7 +737,7 @@ function mp_stacks_grid_item_isotope_filter_attributes( $sources_array, $grid_po
 
 			//Loop through each tax term
 			foreach( $tax_terms as $tax_term ){
-				$attr_value .= $tax_term->slug . ', ';
+				$attr_value .= ( isset( $tax_term->slug ) ? $tax_term->slug : '' ) . ', ';
 			}
 
 			$isotope_taxonomy_attributes .= ' mp_stacks_grid_isotope_taxonomy_' . $tax_slug . '="' . $attr_value . '" ';
@@ -841,10 +841,10 @@ function mp_stacks_grid_isotope_show_buttons_with_posts( $sources_array, $brick_
 			foreach( $tax_terms as $tax_term ){
 
 				$isotope_button_selectors .= '
-				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-button[data-filter*=\"\'' . $tax_term->slug . ',\'\"]").css( "display", "inline-block" );';
+				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-button[data-filter*=\"\'' . ( isset( $tax_term->slug ) ? $tax_term->slug : '' ) . ',\'\"]").css( "display", "inline-block" );';
 
 				$isotope_button_selectors .= '
-				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-sort-select option[value*=\"\'' . $tax_term->slug . ',\'\"]").attr( "disabled", false );';
+				$( "#mp-brick-' . $brick_id . ' .mp-stacks-grid-isotope-sort-select option[value*=\"\'' . ( isset( $tax_term->slug ) ? $tax_term->slug : '' ) . ',\'\"]").attr( "disabled", false );';
 
 
 			}
