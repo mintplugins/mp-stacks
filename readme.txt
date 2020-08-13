@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 4.9.4
-Stable tag: 1.0.6.4
+Tested up to: 5.5
+Stable tag: 1.0.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.5 = August 12, 2020
+* Fix WordPress 5.5 metabox title breakage issue
 
 = 1.0.6.4 = November 30, 2018
 * Fix widgets for PHP 7.2
