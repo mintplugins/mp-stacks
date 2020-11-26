@@ -478,7 +478,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						continue;
 					}
 
-					$return_html .= '<select id="mp-isotope-sort-select-' . $post_id . '-' . $tax_counter . '" class="button mp-stacks-grid-isotope-sort-select" value="*" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">';
+					$return_html .= '<label><select id="mp-isotope-sort-select-' . $post_id . '-' . $tax_counter . '" class="button mp-stacks-grid-isotope-sort-select" value="*" mp_stacks_grid_post_id="' . $post_id . '" mp_stacks_grid_ajax_prefix="' . $meta_prefix . '">';
 
 						//Loop through each tax term in this taxonomy
 						$tax_term_counter = 0;
@@ -509,7 +509,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
 						//Hook any additional items to the end
 						$return_html = apply_filters( 'mp_stacks_isotopes_additional_options_end', $return_html, $post_id );
 
-					$return_html .= '</select>';
+					$return_html .= '</select></label>';
 
 					$tax_counter = $tax_counter + 1;
 
