@@ -470,7 +470,6 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 				$html_output .= '<a class="mp-brick-edit-link" mp-brick-id="' . $post_id . '" mp-stack-id="' . $stack_id . '" href="' . mp_core_add_query_arg( array(
 					'mp-stacks-minimal-admin' => 'true',
 					'mp_stack_id' => $stack_id,
-					'containing_page_url' => mp_core_get_current_url()
 				), get_edit_post_link( $post_id ) )  . '" >' . __( 'Edit This Brick (Or Double-Click)', 'mp_stacks' ) . '</a>';
 
 				//If we want to show the Stack-Related controls for admins (actions like re-order, add brick before/after. Edit Brick always remains.)
@@ -498,7 +497,6 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 						'mp-stacks-minimal-admin' => 'true',
 						'mp_stack_id' => $stack_id,
 						'mp_stack_order_new' => $mp_stack_order - 1 ,
-						'containing_page_url' => mp_core_get_current_url()
 					), admin_url( 'post-new.php' ) ) . '" >' . __( '+ Add Brick Before', 'mp_stacks' ) . '</a>';
 
 					$html_output .= '<a class="mp-brick-add-after-link" href="' . mp_core_add_query_arg( array(
@@ -506,7 +504,6 @@ function mp_brick( $post_id, $stack_id = NULL, $brick_number = NULL, $args = arr
 						'mp-stacks-minimal-admin' => 'true',
 						'mp_stack_id' => $stack_id,
 						'mp_stack_order_new' => $mp_stack_order + 1,
-						'containing_page_url' => mp_core_get_current_url()
 					), admin_url( 'post-new.php' ) )  . '" >' . __( '+ Add Brick After', 'mp_stacks' ) . '</a>';
 
 					//Get number of bricks in this stack
