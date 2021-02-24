@@ -3,8 +3,8 @@ Contributors: johnstonphilip, mintplugins
 Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
-Tested up to: 5.5
-Stable tag: 1.0.6.6
+Tested up to: 5.7
+Stable tag: 1.0.6.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.7 = February 23, 2021
+* Remove unused containing_page_url variable from brick editor URL.
 
 = 1.0.6.6 = November 26, 2020
 * Add label wrapper around isotope select fields
