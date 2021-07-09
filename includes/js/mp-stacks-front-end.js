@@ -28,7 +28,7 @@ jQuery(document).ready(function($){
 
 	}
 
-	mp_stacks_magnificPopup = $.magnificPopup.instance;
+	mp_stacks_magnificPopup = $.magnificPopup;
 
 	/**
 	 * Any Stacks that aren't added as Shortcodes (widgets, other, etc) need to have their CSS moved from the footer into the page <head>
