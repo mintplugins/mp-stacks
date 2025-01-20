@@ -6,8 +6,8 @@
 	display:block;
 	text-decoration:none;
 }
-.mp-brick[max-width~='600px'] .mp-stacks-grid{ 
-	margin: 0px;	
+.mp-brick[max-width~='600px'] .mp-stacks-grid{
+	margin: 0px;
 }
 .mp-stacks-grid-item{
 	position:relative;
@@ -22,22 +22,22 @@
 	margin:-1px;
 }
 .mp-stacks-grid-item-inner{
-	overflow:hidden;	
+	overflow:hidden;
 }
 .mp-stacks-grid-image-link,
 .mp-stacks-grid-image-no-link{
 	display:inline-block;
-	width:100%;	
+	width:100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp-stacks-grid-image-no-link{
 	float:left;
-}	
+}
 .mp-stacks-grid-item-image-holder{
 	position:relative;
-	display:table;	
+	display:table;
 	width:100%;
 	overflow:hidden;
 	margin: 0px auto;
@@ -64,27 +64,27 @@
 	left:0px;
 	bottom:0px;
 	right:0px;
-	display:block;	
+	display:block;
 	overflow:hidden;
 	z-index: 99999999;
-	
+
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp-stacks-grid-over-image-text-container-top .mp-stacks-grid-over-image-text-container-table-cell{
 	display:table-cell;
-	vertical-align:top;	
+	vertical-align:top;
 	width:100%;
 }
 .mp-stacks-grid-over-image-text-container-middle .mp-stacks-grid-over-image-text-container-table-cell{
 	display:table-cell;
-	vertical-align:middle;	
+	vertical-align:middle;
 	width:100%;
 }
 .mp-stacks-grid-over-image-text-container-bottom .mp-stacks-grid-over-image-text-container-table-cell{
 	display:table-cell;
-	vertical-align:bottom;	
+	vertical-align:bottom;
 	width:100%;
 }
 .mp-stacks-grid-over-image-text-container-table{
@@ -101,16 +101,16 @@
 }
 .mp-stacks-grid-item-image{
 	float:left;
-	max-width:100%;	
+	max-width:100%;
 	width:100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */		
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp-stacks-grid-item-title-holder{
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */	
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp-stacks-grid-item-title,
 .mp-stacks-grid-item-excerpt{
@@ -145,17 +145,17 @@
 .mp-stacks-grid-item-price-highlight{
 	display: inline;
     padding-left: 0!important;
-    padding-right: 0!important;	
+    padding-right: 0!important;
 }
 
-.mp-stacks-grid-item-excerpt-holder, 
+.mp-stacks-grid-item-excerpt-holder,
 .mp-stacks-grid-item-excerpt-holder a{
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
-	box-sizing: border-box;         /* Opera/IE 8+ */			
+	box-sizing: border-box;         /* Opera/IE 8+ */
 }
 .mp-stacks-grid-item-excerpt-holder{
-	display: inline-block;	
+	display: inline-block;
 	padding-top:5px;
 }
 .mp-stacks-grid-item-clearedfix:after {
@@ -167,19 +167,19 @@
 }
 .mp-stacks-grid-item .mp-stacks-grid-item-image{
 	padding:0px;
-	margin:0px;	
+	margin:0px;
 }
-.mp-brick[max-width~='850px'] .mp-stacks-grid .mp-stacks-grid-item{ 
+.mp-brick[max-width~='850px'] .mp-stacks-grid .mp-stacks-grid-item{
 	width:50%!important;
 }
-.mp-brick[max-width~='600px'] .mp-stacks-grid .mp-stacks-grid-item{ 
+.mp-brick[max-width~='600px'] .mp-stacks-grid .mp-stacks-grid-item{
 	width:100%!important;
 }
 .mp-stacks-grid-load-more-button{
-	margin-top:20px;	
+	margin-top:20px;
 }
 .mp-stacks-grid-read-more{
-	white-space: nowrap;	
+	white-space: nowrap;
 }
 .mp-stacks-grid-load-more-container #posts-navigation{
 	margin:0px;
@@ -195,11 +195,8 @@
 	line-height:0.1;
 	cursor:pointer;
 }
-.button.mp-stacks-grid-orderby-select{
-	vertical-align:middle;	
-}
 .button.mp-stacks-grid-isotope-button-all{
-	display:inline-block;	
+	display:inline-block;
 }
 /* Icons used in isotope navigation */
 .mp-stacks-grid-isotope-icon,
@@ -209,11 +206,11 @@
 	line-height:1;
 }
 .mp-stacks-grid-isotope-icon:before{
-	float:left;	
+	float:left;
 }
 /* Isotope image icons */
 .mp-stacks-grid-isotope-icon *{
-	width:100%;	
+	width:100%;
 	margin:0!important;
 	padding:0!important;
 }
@@ -230,17 +227,17 @@
 }
 .mp-stacks-grid-isotope-icon-all-1,
 .mp-stacks-grid-isotope-icon-all-3{
-	margin-right:5%!important;	
+	margin-right:5%!important;
 }
 .mp-stacks-grid-isotope-icon-all-1,
 .mp-stacks-grid-isotope-icon-all-2{
-	margin-bottom:5%!important;	
+	margin-bottom:5%!important;
 }
 /* Isotope Spacing betweetn Dropdown Menus/Buttons */
 .mp-stacks-grid-isotope-sort-select,
 .mp-stacks-grid-isotope-button,
 .mp-stacks-grid-orderby-select{
-	margin-left:12px;	
+	margin-left:12px;
 }
 .mp-brick[max-width~='600px'] .mp-stacks-grid-isotope-filterby-text-left{
 	margin-bottom:10px;
@@ -250,16 +247,16 @@
 	margin-bottom:10px;
 }
 .mp-stacks-grid-orderby-select{
-	margin-right:12px;	
+	margin-right:12px;
 }
 .mp-stacks-grid-isotope-filterby-text-left{
-	display:inline-block;	
+	display:inline-block;
 }
 .mp-stacks-grid-isotope-filterby-text-above{
-	display:block;	
+	display:block;
 }
 .mp-stacks-grid-isotope-sort-container{
-	display:inline-block;	
+	display:inline-block;
 }
 
 /* Grid Loading More animation style starts here. - Code from http://codepen.io/DanielleMoser/pen/vEMmeN
@@ -288,11 +285,11 @@ To get the HTML output call the mp_stacks_grid_loading_more_animation function
   margin: 0px 5px 5px 0;
   opacity: 0;
 /*animation*/
-     /* Chrome, Safari, Opera */ 
+     /* Chrome, Safari, Opera */
   -webkit-animation-name: gotime;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: ease-in;
-  /* Standard*/ 
+  /* Standard*/
   animation-name: gotime;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in;
@@ -315,84 +312,84 @@ To get the HTML output call the mp_stacks_grid_loading_more_animation function
 
 /*animation timing specifics -- Edit this section to for timing adjustments*/
 .one {
-    /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+    /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: 0s;
-  /* Standard*/ 
-  animation-duration: 5.5s; 
+  /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: 0s;
-  
+
 }
 
 .two {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: 0.15s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: 0.15s;
 }
 
 .three {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: 0.25s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: 0.25s;
 }
 
 .four {
- /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+ /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: 0.25s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: 0.25s;
 }
 
 .five {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration:5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration:5.5s;
   -webkit-animation-delay: .3s;
-   /* Standard*/ 
-  animation-duration:5.5s; 
+   /* Standard*/
+  animation-duration:5.5s;
   animation-delay: .3s;
 }
 
 .six {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s;  
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: .35s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: .35s;
 }
 
 .seven {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: .4s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: .4s;
 }
 
 .eight {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
   -webkit-animation-delay: .45s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: .45s;
 }
 
 .nine {
-  /* Chrome, Safari, Opera */ 
-  -webkit-animation-duration: 5.5s; 
+  /* Chrome, Safari, Opera */
+  -webkit-animation-duration: 5.5s;
     -webkit-animation-delay: .5s;
-   /* Standard*/ 
-  animation-duration: 5.5s; 
+   /* Standard*/
+  animation-duration: 5.5s;
   animation-delay: .5s;
 }
 
@@ -400,7 +397,7 @@ To get the HTML output call the mp_stacks_grid_loading_more_animation function
 
 /*-------AVOID EDITING BELOW IF POSSIBLE, UNLESS CLEANING IT UP, THEN BE MY GUEST-------*/
 
-/*COLORS: 
+/*COLORS:
 1. Orange: #f9f9f9
 2. Yellow: #f9f9f9
 3. Red: #f9f9f9
@@ -409,9 +406,9 @@ To get the HTML output call the mp_stacks_grid_loading_more_animation function
 6. Green: #f9f9f9
 */
 
-/* Animation -- Chrome, Safari, Opera */ 
+/* Animation -- Chrome, Safari, Opera */
 @-webkit-keyframes gotime {
-/*--Lightest-- */ 
+/*--Lightest-- */
   0%{background: #f9f9f9;
 opacity: 0;}
   1.5%{background: #f9f9f9;
@@ -544,9 +541,9 @@ opacity: 0.1;}
 opacity: 0.0;}
 }
 
-/*Animation -- Standard*/ 
+/*Animation -- Standard*/
   @keyframes gotime {
-/*--ORANGE-- */ 
+/*--ORANGE-- */
   0%{background: #f9f9f9;
 opacity: 0;}
   1.5%{background: #f9f9f9;

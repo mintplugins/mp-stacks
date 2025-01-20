@@ -1529,7 +1529,7 @@ function mp_stacks_grid_orderby_output( $post_id, $meta_prefix ){
 		$default_orderby = empty( $url_order_by ) ? mp_core_get_post_meta($post_id, $meta_prefix . '_default_orderby', 'date') : $url_order_by;
 
 		//Add an orderby dropdown menu before the first isotope dropdown
-		$return_html .= '<select class="button mp-stacks-grid-orderby-select" id="mp-isotope-sort-select-' . $post_id . '" class="mp-stacks-grid-orderby-select" value="' . $default_orderby . '">';
+		$return_html .= '<label><select class="button mp-stacks-grid-orderby-select" id="mp-isotope-sort-select-' . $post_id . '" class="mp-stacks-grid-orderby-select" value="' . $default_orderby . '">';
 
 			//Nicely named orderby options
 			$nicelynamed_orderby_options = apply_filters( $meta_prefix . '_isotope_orderby_options', array(), $meta_prefix );
@@ -1541,7 +1541,7 @@ function mp_stacks_grid_orderby_output( $post_id, $meta_prefix ){
 
 			}
 
-		$return_html .= '</select>';
+		$return_html .= '</select></label>';
 
 	}
 

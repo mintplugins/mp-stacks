@@ -4,7 +4,7 @@ Donate link: https://mintplugins.com/
 Tags: page, shortcode, design
 Requires at least: 3.5
 Tested up to: 5.7
-Stable tag: 1.0.6.7
+Stable tag: 1.0.6.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,6 +43,9 @@ See full instructions at http://mintplugins.com/support/mp-stacks-support/
 
 
 == Changelog ==
+
+= 1.0.6.8 = June 9, 2021
+* Add label wrapper around isotope sorting options, and fix vertical alignment when used alongside other filter buttons.
 
 = 1.0.6.7 = February 23, 2021
 * Remove unused containing_page_url variable from brick editor URL.
