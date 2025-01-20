@@ -327,7 +327,8 @@ jQuery(document).ready(function($){
 	 */
 	var stack_id = mp_stacks_getQueryVariable('mp_stack_id');
 
-	stack_id_checkbox = '#in-mp_stacks-' + stack_id;
+	stack_id_checkbox = '#mp_stackschecklist input[value="' + stack_id + '"]';
+	
 
 	$(stack_id_checkbox).prop('checked', true);
 
