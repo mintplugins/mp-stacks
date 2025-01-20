@@ -709,7 +709,7 @@ function mp_stacks_grids_isotope_filtering_html( $post_id, $meta_prefix, $source
  * @param    $source_parent_num int - The source iteration number (in the sources_array) that the post in question was "born" from.
  * @return   $string String - A string that contains all of the attributes needed to match isotope sorting for all categories for this single grid item.
  */
-function mp_stacks_grid_item_isotope_filter_attributes( $sources_array, $grid_post_id = NULL, $brick_id, $meta_prefix, $source_parent_num ){
+function mp_stacks_grid_item_isotope_filter_attributes( $sources_array, $grid_post_id, $brick_id, $meta_prefix, $source_parent_num ){
 
 	$isotope_taxonomy_attributes = NULL;
 
@@ -1493,7 +1493,7 @@ function mp_stacks_grid_order_by( $post_id, $meta_prefix ){
 	//If we are doing ajax
 	else{
 		//Get the order by from the ajax POST
-		$orderby = isset( $_POST['mp_stacks_grid_orderby'] ) ? $_POST['mp_stacks_grid_orderby'] : NULL;
+		$orderby = isset( $_POST['mp_stacks_grid_orderby'] ) ? sanitize_text_field( $_POST['mp_stacks_grid_orderby'] ) : NULL;
 
 		//If no orderby is set in the URL, get the default orderby setting saved to the brick
 		$orderby = empty( $orderby ) ? mp_core_get_post_meta($post_id, $meta_prefix . '_default_orderby', 'date') : $orderby;

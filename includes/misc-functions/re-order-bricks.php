@@ -57,19 +57,19 @@ function mp_stacks_display_brick_mp_stack_order_input_field() {
 			wp_nonce_field( plugin_basename( __FILE__ ), 'mp_stacks_mp_stack_order_nonce' );	
 						
 			//Create a field for the new brick's stack and its order position within that stack
-			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . $_GET['mp_stack_id'] . ']" value="' . $_GET['mp_stack_order_new'] . '">';
+			echo '<input type="hidden" class="mp_stack_order" name="mp_stack_order[' . absint( $_GET['mp_stack_id'] ) . ']" value="' . absint( $_GET['mp_stack_order_new'] ) . '">';
 										
 		}
 		//When editing an existing brick. I'm leaving this here so I can check the order by inspecting the source code for troubleshooting purposes for now.
 		//Notice the field has no "name" attribute and no nonce.
 		elseif( isset( $_GET['post'] ) && isset( $_GET['mp_stack_id'] ) ){
 			
-			$post_id = 	$_GET['post'];
-			$stack_id = $_GET['mp_stack_id'];
+			$post_id = 	absint( $_GET['post'] );
+			$stack_id = absint( $_GET['mp_stack_id'] );
 			$stack_order = mp_core_get_post_meta( $post_id, 'mp_stack_order_' . $stack_id );
 									
 			//Create a field for the new brick's stack and its order position within that stack
-			echo '<input type="hidden" class="mp_stack_order" value="' . $stack_order . '">';
+			echo '<input type="hidden" class="mp_stack_order" value="' . esc_attr( $stack_order ) . '">';
 		}
 	
 	}
@@ -89,7 +89,7 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 	//This is only run if this is a new brick
 	if ( isset( $_POST['mp_stack_order'] ) && isset( $_POST['mp_stacks_mp_stack_order_nonce'] ) ){
 			
-		if ( ! wp_verify_nonce( $_POST['mp_stacks_mp_stack_order_nonce'], plugin_basename( __FILE__ ) )  ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( $_POST['mp_stacks_mp_stack_order_nonce'] ), plugin_basename( __FILE__ ) )  ) {
 		
 			//We won't kill the page, but we at least will only run the function if the nonce passes
 			// die( 'Security check' ); 
@@ -99,13 +99,13 @@ function mp_stacks_save_brick_mp_stack_order( $post_id ) {
 			global $wpdb;
 			
 			//Save this posts's order for each stack (this will only be 1 Stack here and 1 loop)
-			foreach($_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
+			foreach( $_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
 				
 				if ( !empty( $mp_stack_id ) ){
-					update_post_meta( $post_id, 'mp_stack_order_' . $mp_stack_id, $mp_stack_order_value );
+					update_post_meta( $post_id, 'mp_stack_order_' . absint( $mp_stack_id ), absint( $mp_stack_order_value ) );
 					
 					//This custom meta value for the mp_stack_id was added in Version 1.0.2.9
-					update_post_meta( $post_id, 'mp_stack_id', $mp_stack_id );
+					update_post_meta( $post_id, 'mp_stack_id',  absint( $mp_stack_id ) );
 				}
 			}
 			
@@ -183,30 +183,24 @@ function mp_stacks_reorder_posts_on_submit(){
 	//Only do this if the mp_submitted_order field has been submitted
 	if ( isset( $_GET['mp_submitted_order'] ) ){
 					
-		//No hooks are available to do a custom "nonce" check here as best we can!
-		if ( strpos($_SERVER['HTTP_REFERER'], admin_url() ) === false ) {
-			
-			 //We can't kill the page, but we at least will only run the function if it was submitted from our current url
-			 die( 'Security check' ); 	
-			 
+		if ( ! wp_verify_nonce( sanitize_text_field( $_GET['mp_submitted_order_nonce'] ), 'mp_submitted_order_nonce' )  ) {
+			die( 'Security check' ); 	
 		}
-		else{
 			
-			//Loop through each value in the GET variable
-			foreach ($_GET as $key => $value) { 
-				//If this value starts with 'mp_order'
-				if ( strpos($key, 'mp_stack_order') !== false ){
-					
-					//Extract the post id 
-					$exploded = explode( '_mp_brick_', $key );
-					$post_id = $exploded[1];
-					
-					//Extract the stack id 
-					$stack_id = explode( 'mp_stack_order_', $exploded[0] );
-					$stack_id = $stack_id[1];
-					
-					update_post_meta( $post_id, 'mp_stack_order_' . $stack_id, $value );
-				}
+		//Loop through each value in the GET variable
+		foreach ( $_GET as $key => $value) { 
+			//If this value starts with 'mp_order'
+			if ( strpos($key, 'mp_stack_order') !== false ){
+				
+				//Extract the post id 
+				$exploded = explode( '_mp_brick_', $key );
+				$post_id = $exploded[1];
+				
+				//Extract the stack id 
+				$stack_id = explode( 'mp_stack_order_', $exploded[0] );
+				$stack_id = $stack_id[1];
+				
+				update_post_meta( absint( $post_id ), 'mp_stack_order_' . absint( $stack_id ), absint( $value ) );
 			}
 		}
 	}
@@ -239,7 +233,7 @@ function mp_stacks_show_order_column($name){
    global $post;
   
   //Get this stack id
-  $stack_id = !empty($_GET['mp_stacks']) ? $_GET['mp_stacks'] : 0;
+  $stack_id = !empty($_GET['mp_stacks']) ? absint( $_GET['mp_stacks'] ) : 0;
   
   if ( !$stack_id )
 		return;
@@ -250,6 +244,7 @@ function mp_stacks_show_order_column($name){
 	  $order = empty($order) || $order == 'NaN' ? 1000 : $order;
       echo '<input type="hidden" class="mp_stack_order_input" name="mp_stack_order_' . $stack_id . '_mp_brick_' . $post->ID . '" value="' . $order . '">';
 	  echo '<input type="hidden" name="mp_submitted_order" value="true">';
+	  wp_nonce_field( 'mp_submitted_order_nonce', 'mp_submitted_order_nonce' );
 	  echo '<div class="menu-order-drag-button"><img src="' . plugins_url( 'assets/images/grippy_large.png', dirname(dirname(__FILE__))) . '"/></div>';
       break;
    default:

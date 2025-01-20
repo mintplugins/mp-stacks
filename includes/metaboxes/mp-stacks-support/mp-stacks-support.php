@@ -10,7 +10,7 @@ function mp_stacks_support_admin_notice(){
 		return; 
 	 }
 	 
-	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
+	 $stack_info = get_term( absint( $_GET['mp_stack_id'] ), 'mp_stacks' );
 	 
 	 ?>
 	 <div class="updated">
@@ -35,7 +35,7 @@ function mp_stacks_double_click_tip(){
 		return; 
 	 }
 	 
-	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
+	 $stack_info = get_term( absint( $_GET['mp_stack_id'] ), 'mp_stacks' );
 	 
 	 ?>
 	 <div class="updated">

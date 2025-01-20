@@ -147,7 +147,7 @@ class MP_Stacks_Welcome {
 		$selected = isset( $_GET['page'] ) ? $_GET['page'] : 'mp-stacks-about';
 		?>
 		<h2 class="nav-tab-wrapper">
-			<a class="nav-tab <?php echo $selected == 'mp-stacks-about' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( mp_core_add_query_arg( array( 'page' => 'mp-stacks-about' ), 'index.php' ) ) ); ?>">
+			<a class="nav-tab <?php echo esc_attr( $selected == 'mp-stacks-about' ? 'nav-tab-active' : '' ); ?>" href="<?php echo esc_url( admin_url( mp_core_add_query_arg( array( 'page' => 'mp-stacks-about' ), 'index.php' ) ) ); ?>">
 				<?php _e( 'Getting Started', 'mp_stacks' ); ?>
 			</a>
             <?php /*

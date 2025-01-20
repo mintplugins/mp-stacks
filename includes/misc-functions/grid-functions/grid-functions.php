@@ -561,8 +561,8 @@ class MP_Stacks_Grid_Load_More{
 		
 		//If we are loading more after the user has chosen a specific category using the "from scratch" isotope behavior
 		if ( isset( $_POST['mp_stacks_grid_filter_tax'] ) && isset( $_POST['mp_stacks_grid_filter_term'] ) ){
-			$user_chosen_tax = $_POST['mp_stacks_grid_filter_tax'];
-			$user_chosen_term = $_POST['mp_stacks_grid_filter_term'];
+			$user_chosen_tax = sanitize_text_field( $_POST['mp_stacks_grid_filter_tax'] );
+			$user_chosen_term = sanitize_text_field( $_POST['mp_stacks_grid_filter_term'] );
 		}
 		else{
 			$user_chosen_tax = NULL;

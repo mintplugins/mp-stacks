@@ -17,7 +17,14 @@ function mp_stacks_content_create_meta_box(){
 	);
 	
 	//Set up and filter the default content types available.
-	$default_content_types = apply_filters( 'mp_stacks_default_content_types', array('none' => 'None', 'singletext' => 'Text', 'image' => 'Image', 'video' => 'Video') );
+	$default_content_types = apply_filters( 'mp_stacks_default_content_types', array(
+		'none' => 'None', 
+		'postgrid' => 'PostGrid',
+		'singletext' => 'Text', 
+		'image' => 'Image', 
+		'video' => 'Video',
+		//
+	) );
 	
 	/**
 	 * Array which stores all info about the options within the metabox
@@ -112,7 +119,7 @@ function mp_stacks_default_content_types_doubletext( $default_content_types ){
 	//If there is a post id in the URL (ie this has been saved)
 	if ( isset( $_GET['post'] ) ){
 		
-		$post_id = $_GET['post'];
+		$post_id = absint( $_GET['post'] );
 		
 		//Check what is currently saved in each content type slot
 		$ct_1 = mp_core_get_post_meta( $post_id, 'brick_first_content_type' );
@@ -120,11 +127,23 @@ function mp_stacks_default_content_types_doubletext( $default_content_types ){
 		
 		//If this content-type was previously saved as a 'text', it's an "old" brick.
 		if ( $ct_1 == 'text' || $ct_2 == 'text' ){
-			$default_content_types = array('none' => 'None', 'text' => 'Text', 'image' => 'Image', 'video' => 'Video');
+			$default_content_types = array(
+				'none' => 'None', 
+				'postgrid' => 'PostGrid',
+				'singletext' => 'Text', 
+				'image' => 'Image', 
+				'video' => 'Video',
+			);
 		}
 		//If this content-type hasn't been saved as 'text', give them the new, simpler 'singletext' option.
 		else{
-			$default_content_types = array('none' => 'None', 'singletext' => 'Text', 'image' => 'Image', 'video' => 'Video');
+			$default_content_types = array(
+				'none' => 'None', 
+				'postgrid' => 'PostGrid',
+				'singletext' => 'Text', 
+				'image' => 'Image', 
+				'video' => 'Video',
+			);
 		}
 		
 	}

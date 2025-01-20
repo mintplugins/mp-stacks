@@ -247,7 +247,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 					if( isset( $_POST[ $plugin_name_slug . '_license_key' ] ) ) {
 
 						//If it has, store it in the license_key variable
-						$license_key = $_POST[ $plugin_name_slug . '_license_key' ];
+						$license_key = sanitize_text_field( $_POST[ $plugin_name_slug . '_license_key' ] );
 
 						//Check nonce
 						if( ! check_admin_referer( $plugin_name_slug . '_nonce', $plugin_name_slug . '_nonce' ) )
@@ -333,7 +333,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 						if( isset( $_POST[ $plugin_name_slug . '_license_key' ] ) ) {
 
 							//If there is a submitted license, store it in the license_key variable
-							$license_key = $_POST[ $plugin_name_slug . '_license_key' ];
+							$license_key = sanitize_text_field( $_POST[ $plugin_name_slug . '_license_key' ] );
 
 							//Check nonce
 							if( ! check_admin_referer( $plugin_name_slug . '_nonce', $plugin_name_slug . '_nonce' ) )
@@ -441,7 +441,7 @@ if ( !class_exists( 'MP_CORE_Plugin_Checker' ) ){
 			}
 
 			//Set redirect to referring page when complete
-			$redirect_after_install_url = $_SERVER['HTTP_REFERER'];
+			$redirect_after_install_url = sanitize_text_field( $_SERVER['HTTP_REFERER'] );
 
 			//Check if we should redirect to the theme page - option is set when new MP theme activated
 			$theme_page_redirect = get_option('mp_core_theme_redirect_after_install');

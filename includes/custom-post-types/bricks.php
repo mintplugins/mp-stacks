@@ -149,7 +149,7 @@ function mp_stacks_restrict_bricks_by_stack() {
 	$post_type = 'mp_brick'; // change HERE
 	$taxonomy = 'mp_stacks'; // change HERE
 	if ($typenow == $post_type) {
-		$selected = isset($_GET[$taxonomy]) ? $_GET[$taxonomy] : '';
+		$selected = isset( $_GET[$taxonomy] ) ? sanitize_text_field( $_GET[$taxonomy] ) : '';
 		$info_taxonomy = get_taxonomy($taxonomy);
 		wp_dropdown_categories(array(
 			'show_option_all' => __("Show All {$info_taxonomy->label}"),
@@ -279,7 +279,7 @@ function mp_stacks_order_admin_bricks( $query ){
 	if( !is_admin() )
         return;
 		
-	$stack_id = !empty($_GET['mp_stacks']) ? $_GET['mp_stacks'] : false;
+	$stack_id = !empty($_GET['mp_stacks']) ? absint( $_GET['mp_stacks'] ) : false;
 	
 	if ( !$stack_id )
 		return;

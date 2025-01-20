@@ -52,7 +52,7 @@ add_action( 'admin_head', 'mp_stacks_hide_single_stack_edit_page_from_wp_menu' )
 function mp_stacks_single_stack_edit_page_contents(){
 	
 	//Get the Stack ID we are managing on this page
-	$stack_id = isset( $_GET['stack_id'] ) ? $_GET['stack_id'] : false;
+	$stack_id = isset( $_GET['stack_id'] ) ? absint( $_GET['stack_id'] ) : false;
 	
 	//If no Stack ID has been defined, output error and quit
 	if ( !$stack_id ){
@@ -181,7 +181,7 @@ function mp_stacks_update_stack(){
 		//Action which can be used to save additional Stack Options
 		do_action( 'mp_stacks_update_stack_options', $stack_id );
 		
-		$mp_stacks_options['just_updated_stack'] = $_POST['mp_stack_name'];
+		$mp_stacks_options['just_updated_stack'] = sanitize_text_field( $_POST['mp_stack_name'] );
 		
 	}
 }
@@ -209,7 +209,7 @@ function mp_stacks_change_stack_id(){
 			array(
 				'taxonomy' => 'mp_stacks',
 				'field'    => 'id',
-				'terms'    => array( $_POST['old_stack_id'] ),
+				'terms'    => array( absint( $_POST['old_stack_id'] ) ),
 				'operator' => 'IN'
 			)
 		)
@@ -226,16 +226,16 @@ function mp_stacks_change_stack_id(){
 			$post_id = get_the_ID();
 			
 			//Find the old stack order value
-			$old_stack_order_value = get_post_meta( $post_id, 'mp_stack_order_' . $_POST['old_stack_id'], true );
+			$old_stack_order_value = get_post_meta( $post_id, 'mp_stack_order_' . absint( $_POST['old_stack_id'] ), true );
 			
 			//Update stack order to use the new stack id and old stack order value
-			update_post_meta( $post_id, 'mp_stack_order_' . $_POST['new_stack_id'], $old_stack_order_value );
+			update_post_meta( $post_id, 'mp_stack_order_' . absint( $_POST['new_stack_id'] ), $old_stack_order_value );
 			
 			//Update the stack ID attached to this Brick
-			update_post_meta( $post_id, 'mp_stack_id', $_POST['new_stack_id'] );
+			update_post_meta( $post_id, 'mp_stack_id', absint( $_POST['new_stack_id'] ) );
 			
 			//Delete old stack order meta value
-			delete_post_meta( $post_id, 'mp_stack_order_' . $_POST['old_stack_id'] );
+			delete_post_meta( $post_id, 'mp_stack_order_' . absint( $_POST['old_stack_id'] ) );
 			
 			
 		endwhile;

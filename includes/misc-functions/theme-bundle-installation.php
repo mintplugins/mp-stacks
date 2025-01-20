@@ -533,7 +533,7 @@ function mp_stacks_set_up_theme_bundle_default_content_via_ajax(){
 	global $mp_core_options;
 	$mp_core_options = get_option('mp_core_options');
 
-	$theme_bundle_slug = $_POST['mp_theme_bundle_slug'];
+	$theme_bundle_slug = sanitize_text_field( $_POST['mp_theme_bundle_slug'] );
 
 	//Continue Setting up the default Stacks and corresponsing posts
 	$setup_success = mp_stacks_theme_bundle_create_default_pages( $theme_bundle_slug );

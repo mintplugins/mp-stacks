@@ -282,7 +282,7 @@ function mp_stacks_support_admin_notice(){
 		 return;
 	 }
 
-	 $stack_info = get_term( $_GET['mp_stack_id'], 'mp_stacks' );
+	 $stack_info = get_term( absint( $_GET['mp_stack_id'] ), 'mp_stacks' );
 
 	 if ( isset( $stack_info->name ) ){
 
@@ -423,7 +423,7 @@ add_filter( 'wp_prepare_themes_for_js', 'mp_stacks_add_knapstack_to_themes' );
 function mp_stacks_prepare_knapstack_for_install(){
 
 	//If knapstack already exists and we don't need to prepare it for installation, get out of here
-	if ( !isset( $_GET['mp_stacks_install_knapstack'] ) ){
+	if ( ! isset( $_GET['mp_stacks_install_knapstack'] ) ){
 			return;
 	}
 
@@ -449,7 +449,7 @@ function mp_stacks_css_page(){
    header('Content-Type: text/css');
 
    //Output CSS for this stack
-	echo mp_stack_css( $_GET['mp_stacks_css_page'] );
+	echo mp_stack_css( absint( $_GET['mp_stacks_css_page'] ) );
 
 	die();
 
@@ -474,7 +474,7 @@ function mp_stacks_brick_css_page(){
    header('Content-Type: text/css');
 
    //Output CSS for this stack
-	echo mp_brick_css( $_GET['mp_brick_css_page'] );
+	echo mp_brick_css( absint( $_GET['mp_brick_css_page'] ) );
 
 	die();
 
@@ -507,7 +507,7 @@ function mp_stack_last_modified( $stack_id ){
 function mp_stack_update_meta_upon_brick_save(){
 
 	//Check if post type has been set
-	$this_post_type = isset( $_POST['post_type'] ) ? $_POST['post_type'] : NULL;
+	$this_post_type = isset( $_POST['post_type'] ) ? sanitize_text_field( $_POST['post_type'] ) : NULL;
 
 	//If this is a brick in MP Stacks
 	if ( $this_post_type != 'mp_brick' || !isset( $_POST['mp_stack_order'] ) || !is_array( $_POST['mp_stack_order'] ) ){
@@ -516,7 +516,7 @@ function mp_stack_update_meta_upon_brick_save(){
 
 	//Get the Stack ID this brick is in
 	foreach($_POST['mp_stack_order'] as $mp_stack_id => $mp_stack_order_value){
-		$stack_id = $mp_stack_id;
+		$stack_id = absint( $mp_stack_id );
 	}
 
 	//Get the pre-existing Stack Meta
@@ -623,8 +623,8 @@ function mp_stacks_exportimport_brick_link( $text ){
 					//If this is a new brick is being saved.
 					if ( isset( $_GET['mp_stack_order_new'] ) && isset( $_GET['mp_stack_id'] ) ){
 
-						$stack_id = $_GET['mp_stack_id'];
-						$stack_order = $_GET['mp_stack_order_new'];
+						$stack_id = absint( $_GET['mp_stack_id'] );
+						$stack_order = absint( $_GET['mp_stack_order_new'] );
 					}
 					else{
 
@@ -718,11 +718,11 @@ function mp_stacks_display_brick_json(){
 	if ( isset( $_GET['mp_stacks_brick_json'] ) && isset( $_GET['mp_brick_id'] ) && current_user_can( 'delete_pages' ) ){
 
 		//Convert this page to a zip file
-		header('Content-disposition: attachment; filename='. sanitize_title(get_the_title( $_GET['mp_brick_id'] )) . '-' . $_GET['mp_brick_id'] . '.txt');
+		header('Content-disposition: attachment; filename='. sanitize_title(get_the_title( absint( $_GET['mp_brick_id'] ) )) . '-' . absint( $_GET['mp_brick_id'] ) . '.txt');
 		header('Content-type: application/octet-stream');
 
 		//Output the JSON for this brick
-		echo mp_stacks_brick_json( intval( $_GET['mp_brick_id'] ) );
+		echo mp_stacks_brick_json( absint( $_GET['mp_brick_id'] ) );
 
 		die();
 

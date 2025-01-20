@@ -89,7 +89,7 @@ function mp_stacks_stack_ajax( $stack_id = false ) {
 
 	global $wp_scripts;
 
-	$stack_id = !empty( $stack_id ) ? $stack_id : sanitize_text_field( $_POST['mp_stacks_ajax_stack_id'] );
+	$stack_id = !empty( $stack_id ) ? $stack_id : absint( $_POST['mp_stacks_ajax_stack_id'] );
 	$stack_css = '<style type="text/css">' . mp_stack_css( $stack_id ) . '</style>';
 	$stack_html = mp_stack( $stack_id );
 
@@ -157,10 +157,10 @@ function mp_stacks_add_new_stack_ajax() {
 		die();
 	}
 
-	$new_stack_name = $_POST['mp_stacks_new_stack_name'];
-	$mp_stacks_new_stack_source_type = $_POST['mp_stacks_new_stack_source_type'];
-	$new_stack_duplicate_id = $_POST['mp_stacks_new_stack_duplicate_id'];
-	$new_stack_template_slug = $_POST['mp_stacks_new_stack_template_slug'];
+	$new_stack_name = sanitize_text_field( $_POST['mp_stacks_new_stack_name'] );
+	$mp_stacks_new_stack_source_type = sanitize_text_field( $_POST['mp_stacks_new_stack_source_type'] );
+	$new_stack_duplicate_id = absint( $_POST['mp_stacks_new_stack_duplicate_id'] );
+	$new_stack_template_slug = sanitize_text_field( $_POST['mp_stacks_new_stack_template_slug'] );
 
 	if( !empty( $new_stack_name ) && current_user_can('edit_theme_options') ) {
 
@@ -233,7 +233,7 @@ function mp_stacks_link_to_bricks_ajax() {
 	if ( isset( $_POST['mp_stack_id'] ) ){
 
 		//Get all the brick titles in this stack
-		$brick_titles_in_stack = mp_stacks_get_brick_titles_in_stack( $_POST['mp_stack_id'] );
+		$brick_titles_in_stack = mp_stacks_get_brick_titles_in_stack( absint( $_POST['mp_stack_id'] ) );
 
 	}
 	else{
@@ -308,7 +308,7 @@ function mp_stacks_import_brick_via_ajax() {
 	}
 
 	//Does this brick post exist yet?
-	if ( get_post_status( $_POST['mp_brick_id'] ) != 'publish' ){
+	if ( get_post_status( absint( $_POST['mp_brick_id'] ) ) != 'publish' ){
 
 		//If we didn't get all the things we need to create this post
 		if ( !isset( $_POST['mp_stack_id'] ) || !isset( $_POST['mp_stack_order'] ) ){
@@ -320,17 +320,17 @@ function mp_stacks_import_brick_via_ajax() {
 
 		//If it's not, Publish this post (brick)
 		$this_new_brick = array(
-			'ID'          => $_POST['mp_brick_id'],
+			'ID'          => absint( $_POST['mp_brick_id'] ),
 			'post_status' => 'publish'
 		);
 		wp_update_post( $this_new_brick );
 
 		//Add the MP Stacks taxonomy term to this post (or "brick").
-		wp_set_object_terms(  $_POST['mp_brick_id'], intval( $_POST['mp_stack_id'] ), 'mp_stacks' );
+		wp_set_object_terms( absint( $_POST['mp_brick_id'] ), absint( $_POST['mp_stack_id'] ), 'mp_stacks' );
 		//Make sure this new brick is in the right stack
-		update_post_meta( $_POST['mp_brick_id'], 'mp_stack_order_' . $_POST['mp_stack_id'], $_POST['mp_stack_order'] );
+		update_post_meta( absint( $_POST['mp_brick_id'] ), 'mp_stack_order_' . absint( $_POST['mp_stack_id'] ), absint( $_POST['mp_stack_order'] ) );
 		//This custom meta value for the mp_stack_id was added in Version 1.0.2.9
-		update_post_meta( $_POST['mp_brick_id'], 'mp_stack_id', $_POST['mp_stack_id'] );
+		update_post_meta( absint( $_POST['mp_brick_id'] ), 'mp_stack_id', absint( $_POST['mp_stack_id'] ) );
 
 	}
 
@@ -343,7 +343,7 @@ function mp_stacks_import_brick_via_ajax() {
 		//If this is the stack order, we don't need to save it because it will be handled by the Stack
 		if ( stripos( $meta_key, 'mp_stack_order' ) !== false ){
 			//Make sure this new brick is in the right stack
-			update_post_meta( $_POST['mp_brick_id'], 'mp_stack_order_' . $_POST['mp_stack_id'], $_POST['mp_stack_order'] );
+			update_post_meta( absint( $_POST['mp_brick_id'] ), 'mp_stack_order_' . absint( $_POST['mp_stack_id'] ), absint( $_POST['mp_stack_order'] ) );
 		}
 		else{
 
@@ -393,12 +393,12 @@ function mp_stacks_import_brick_via_ajax() {
 		}
 
 		//Add the meta key/value to the post
-		update_post_meta( $_POST['mp_brick_id'], $meta_key, $brick_meta_checked_value );
+		update_post_meta( absint( $_POST['mp_brick_id'] ), $meta_key, $brick_meta_checked_value );
 
 	}
 
 	//Make sure the MP Stack ID is correct
-	update_post_meta( $_POST['mp_brick_id'], 'mp_stack_id', $_POST['mp_stack_id'] );
+	update_post_meta( $_POST['mp_brick_id'], 'mp_stack_id', absint( $_POST['mp_stack_id'] ) );
 
 	$success_array['success'] = __( 'Brick Import Successful', 'mp_stacks' ) ;
 

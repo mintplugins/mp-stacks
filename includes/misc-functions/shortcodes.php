@@ -32,7 +32,7 @@ function mp_stacks_the_title_shortcode(){
 	}
 	//If we are doing ajax, get the parent's post id from the AJAX-passed $POST['mp_stacks_queried_object_id']
 	else{
-		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? $_POST['mp_stacks_queried_object_id'] : '';
+		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? absint( $_POST['mp_stacks_queried_object_id'] ) : '';
 	}
 
     return get_the_title( $queried_id );
@@ -56,7 +56,7 @@ function mp_stacks_the_content_shortcode(){
 	}
 	//If we are doing ajax, get the parent's post id from the AJAX-passed $POST['mp_stacks_queried_object_id']
 	else{
-		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? $_POST['mp_stacks_queried_object_id'] : '';
+		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? absint( $_POST['mp_stacks_queried_object_id'] ) : '';
 	}
 
     return apply_filters('the_content', get_post_field('post_content', $queried_id ) );
@@ -83,7 +83,7 @@ function mp_stacks_custom_meta_shortcode( $atts ){
 	}
 	//If we are doing ajax, get the parent's post id from the AJAX-passed $POST['mp_stacks_queried_object_id']
 	else{
-		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? $_POST['mp_stacks_queried_object_id'] : '';
+		$queried_id = isset( $_POST['mp_stacks_queried_object_id'] ) ? absint( $_POST['mp_stacks_queried_object_id'] ) : '';
 	}
 
     return get_post_meta( $queried_id, $vars['meta_key'], true );
